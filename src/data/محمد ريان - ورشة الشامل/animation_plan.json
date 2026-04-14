@@ -1,0 +1,567 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-14",
+  "generated_by": "Claude Code (Opus 4.6)",
+
+  "source_video_basename": "محمد ريان - ورشة الشامل",
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.1080x1920.mp4",
+    "content_analysis": "src/data/محمد ريان - ورشة الشامل/content_analysis.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.16k.wav.energy.json"
+  },
+
+  "video": {
+    "duration_sec": 209.173,
+    "fps": 30,
+    "width": 1080,
+    "height": 1920
+  },
+
+  "color_palette": {
+    "primary": "#10479D",
+    "accent": "#FFB501",
+    "dark": "#0D1F3C",
+    "white": "#FFFFFF",
+    "overlay_dark": "rgba(13, 31, 60, 0.85)"
+  },
+
+  "fonts": {
+    "title": { "family": "Cairo", "weight": 700 },
+    "body": { "family": "Cairo", "weight": 400 },
+    "highlight": { "family": "Tajawal", "weight": 800 },
+    "caption": { "family": "Tajawal", "weight": 800 }
+  },
+
+  "caption_style": "highlighted_phrase",
+  "caption_notes": "Hormozi-like word-by-word: current word in accent #FFB501 + scale 1.06x, others in white. Tajawal ExtraBold 56px. Already implemented in src/components/WordCaption.tsx.",
+
+  "smart_zoom_plan": {
+    "_compatibility_note": "This sub-object follows the existing SmartZoom.tsx schema (types.ts → ZoomPlan). The CLI auto-loads <video>.mp4.zoom_plan.json — to use this, copy `smart_zoom_plan` into a standalone zoom_plan.json next to the video, OR refactor rs-reels.mjs to read from src/data/<basename>/animation_plan.json.smart_zoom_plan in Phase 7.",
+    "spring": "smooth",
+    "moments": [
+      {
+        "id": "zoom_1",
+        "startSec": 41.0,
+        "endSec": 45.0,
+        "zoomLevel": 1.4,
+        "centerX": 0.443,
+        "centerY": 0.329,
+        "reason": "KM #3 — peak high_energy 0.2945 at 42.18s ('فانت لازم ضرايب'). Face conf avg 0.86. Strongest energy in scene-2-pre window.",
+        "anchor_subtitle_id": 41,
+        "anchor_text": "فانت لازم ضرايب",
+        "key_moment_ref": 3
+      },
+      {
+        "id": "zoom_2",
+        "startSec": 96.0,
+        "endSec": 100.0,
+        "zoomLevel": 1.4,
+        "centerX": 0.448,
+        "centerY": 0.341,
+        "reason": "First IFRS mention + 'وده الزام' (it's mandatory) — strong emphasis 0.245 at 97.86s. Face conf 0.81.",
+        "anchor_subtitle_id": 95,
+        "anchor_text": "وده الزام",
+        "key_moment_ref": 6
+      },
+      {
+        "id": "zoom_3",
+        "startSec": 119.5,
+        "endSec": 123.5,
+        "zoomLevel": 1.4,
+        "centerX": 0.500,
+        "centerY": 0.309,
+        "reason": "Core RS value moment — 'تطبيق عملي للشغل' at 121.66s. Face conf 0.83.",
+        "anchor_subtitle_id": 116,
+        "anchor_text": "تطبيق عملي للشغل",
+        "key_moment_ref": 8
+      },
+      {
+        "id": "zoom_4",
+        "startSec": 165.5,
+        "endSec": 169.5,
+        "zoomLevel": 1.4,
+        "centerX": 0.515,
+        "centerY": 0.275,
+        "reason": "KM #11 — 'المسمى البوزيشن... صح؟' high_energy 0.192 at 167.94s. Face conf 0.87.",
+        "anchor_subtitle_id": 162,
+        "anchor_text": "المسمى البوزيشن... صح ؟",
+        "key_moment_ref": 11
+      }
+    ]
+  },
+
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "process",
+      "key_moment_ref": 1,
+      "start_sec": 27.30,
+      "end_sec": 33.77,
+      "duration_sec": 6.47,
+      "anchor_subtitle_ids": [25, 26, 27, 28, 29, 30, 31],
+      "anchor_text": "RS تخدمك بتلات ورش: الشامل ووراه تحليل مالي ووراه الضرايب",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "خطة الـ 3 ورش",
+      "title_size": 80,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "step_card",
+          "step": 1,
+          "label": "الشامل",
+          "icon": "book",
+          "color_label": "white",
+          "color_label_active": "accent",
+          "stagger_delay_frames": 9,
+          "enter": "spring_scale_up",
+          "status": "current",
+          "status_badge": "✓ خلصته"
+        },
+        {
+          "type": "step_card",
+          "step": 2,
+          "label": "تحليل مالي",
+          "icon": "chart",
+          "color_label": "white",
+          "stagger_delay_frames": 18,
+          "enter": "spring_scale_up"
+        },
+        {
+          "type": "step_card",
+          "step": 3,
+          "label": "الضرايب",
+          "icon": "receipt",
+          "color_label": "white",
+          "stagger_delay_frames": 27,
+          "enter": "spring_scale_up"
+        },
+        {
+          "type": "connector_arrow",
+          "between": [1, 2, 3],
+          "color": "accent",
+          "enter": "stroke_draw",
+          "delay_frames": 36
+        }
+      ],
+      "transition_in": { "type": "fade", "frames": 15 },
+      "transition_out": { "type": "fade", "frames": 12 },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "أول مرة المتدرب يسمع عن خريطة الـ 3 ورش — لازم تتوضح بصرياً كـ stepper. الـ stagger reveal بيدي إيقاع، والـ status badge على 'الشامل' بيقول 'إنت هنا'."
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "scene_type": "process",
+      "key_moment_ref": 4,
+      "start_sec": 74.70,
+      "end_sec": 84.90,
+      "duration_sec": 10.20,
+      "anchor_subtitle_ids": [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80],
+      "anchor_text": "بمنتهى البساطة: على نهاية السنة المفروض التلات ورش دول في إيدك. الشامل، التحليل المالي، الضرايب",
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "title": "الـ Plan على نهاية السنة",
+      "subtitle": "بمنتهى البساطة",
+      "title_size": 76,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "timeline_horizontal",
+          "items": [
+            { "label": "الشامل", "status": "done", "status_text": "✓", "color": "accent" },
+            { "label": "تحليل مالي", "status": "next", "status_text": "→", "color": "white" },
+            { "label": "الضرايب", "status": "future", "status_text": "→", "color": "white" }
+          ],
+          "stagger_per_item_frames": 12,
+          "show_arrows_between": true,
+          "enter": "fade_slide_up"
+        },
+        {
+          "type": "footer_caption",
+          "text": "على نهاية السنة هتكون كاملة في إيدك",
+          "size": 36,
+          "font": "Tajawal",
+          "weight": 500,
+          "color": "white",
+          "delay_frames": 60
+        }
+      ],
+      "transition_in": { "type": "fade", "frames": 15 },
+      "transition_out": { "type": "fade", "frames": 12 },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "تكرار الـ Plan كـ recap بصري — هذه المرة كـ horizontal timeline (مش stepper) عشان البصر يحس إنه ماشي زمنياً. الـ ✓ على الشامل تأكيد إيجابي. ده الـ scene الأطول (~10s) لأن ده محطة محورية."
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "scene_type": "tip",
+      "key_moment_ref": 9,
+      "start_sec": 136.67,
+      "end_sec": 143.67,
+      "duration_sec": 7.00,
+      "anchor_subtitle_ids": [134, 135, 136, 137, 138, 139, 140, 141],
+      "anchor_text": "للفريش: لو درس المعايير الأول من غير تطبيق هيبقى علمه معطل ودراسة أكاديمية بحتة",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #0A1628 100%)",
+      "title": "ليه التطبيق قبل المعايير؟",
+      "title_size": 72,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "comparison_two_paths",
+          "left": {
+            "label": "الطريق الغلط",
+            "icon": "x",
+            "icon_color": "white",
+            "icon_opacity": 0.5,
+            "steps": [
+              "فريش",
+              "↓",
+              "معايير دولية",
+              "↓",
+              "علم معطّل"
+            ],
+            "step_color": "white",
+            "highlight": "علم معطّل",
+            "highlight_color": "white",
+            "highlight_opacity": 0.6
+          },
+          "right": {
+            "label": "طريق RS",
+            "icon": "check",
+            "icon_color": "accent",
+            "steps": [
+              "فريش",
+              "↓",
+              "تطبيق عملي",
+              "↓",
+              "معايير دولية",
+              "↓",
+              "علم نافع"
+            ],
+            "step_color": "white",
+            "highlight": "علم نافع",
+            "highlight_color": "accent"
+          },
+          "enter": "left_then_right_stagger",
+          "stagger_delay_frames": 30
+        }
+      ],
+      "transition_in": { "type": "fade", "frames": 15 },
+      "transition_out": { "type": "fade", "frames": 12 },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "ده core RS methodology — التطبيق قبل النظرية. الـ comparison scene بتعرض الـ wrong path (✗) جنب الـ right path (✓) عشان الفرق يبقى واضح. الـ accent فقط على الـ right path يخلق emphasis قوي."
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "scene_type": "tip",
+      "key_moment_ref": 13,
+      "start_sec": 200.67,
+      "end_sec": 206.20,
+      "duration_sec": 5.53,
+      "anchor_subtitle_ids": [193, 194, 195, 196, 197],
+      "anchor_text": "قفلت الجيم زي ما بيسموه. زود بقى الشهادات عشان الـ Positions، مش عشان العلم",
+      "background": "#10479D",
+      "title": "قفلت الجيم",
+      "title_size": 110,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "قفلت الجيم",
+          "headline_size": 110,
+          "headline_color": "accent",
+          "headline_font": "Tajawal",
+          "headline_weight": 800,
+          "headline_enter": "spring_scale_up",
+          "subline": "كل اللي يخص المحاسبة المالية بقى في جيبك",
+          "subline_size": 38,
+          "subline_color": "white",
+          "subline_font": "Cairo",
+          "subline_weight": 400,
+          "subline_delay_frames": 30,
+          "footer_label": "زوّد الشهادات للـ Positions — مش للعلم",
+          "footer_size": 32,
+          "footer_color": "white",
+          "footer_opacity": 0.8,
+          "footer_delay_frames": 60
+        }
+      ],
+      "transition_in": { "type": "fade", "frames": 12 },
+      "transition_out": { "type": "fade", "frames": 9 },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "Closing payoff. ده الـ moment اللي المتدرب لازم يخرج بيه — الـ headline كبير (110px) + accent + Tajawal ExtraBold عشان يبان كأنه stamp. الـ footer reinforces the final advice. مدة 5.5s فيها space للقراءة وما تحسش إنها مرت بسرعة. الـ scene ينتهي قبل آخر 3 ثواني من الفيديو عشان الـ Outro يقدر يدخل."
+    }
+  ],
+
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "keyword": "الضرايب",
+      "start_sec": 14.87,
+      "end_sec": 18.87,
+      "duration_sec": 4.0,
+      "anchor_subtitle_id": 13,
+      "anchor_text": "الحق خد ورشة خبير ضرايب",
+      "position": "top-center",
+      "y_px": 280,
+      "background": "rgba(13, 31, 60, 0.85)",
+      "background_padding": "16px 32px",
+      "background_radius": 12,
+      "text_color": "accent",
+      "font": "Tajawal",
+      "weight": 800,
+      "size": 56,
+      "enter": "fade_slide_down",
+      "exit": "fade_slide_up",
+      "design_rationale": "أول مرة كلمة 'الضرايب' بتتذكر كموضوع محوري — overlay صغير فوق الفيديو يثبّت الكلمة في دماغ المشاهد قبل ما scene 1 يبدأ في المسار الكامل."
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "keyword": "IFRS",
+      "subtitle_text": "معايير المحاسبة الدولية",
+      "start_sec": 95.5,
+      "end_sec": 99.5,
+      "duration_sec": 4.0,
+      "anchor_subtitle_id": 94,
+      "anchor_text": "تدرس معاير محاسبة دولية وده الزام",
+      "position": "top-center",
+      "y_px": 280,
+      "background": "rgba(13, 31, 60, 0.85)",
+      "background_padding": "20px 36px",
+      "background_radius": 12,
+      "primary_text": "IFRS",
+      "primary_color": "accent",
+      "primary_size": 72,
+      "primary_weight": 800,
+      "secondary_text": "معايير المحاسبة الدولية",
+      "secondary_color": "white",
+      "secondary_size": 32,
+      "secondary_weight": 400,
+      "badge": "إلزام",
+      "badge_color": "accent",
+      "badge_position": "top-right-corner",
+      "enter": "fade_slide_down",
+      "exit": "fade_slide_up",
+      "co_occurs_with_smart_zoom": "zoom_2",
+      "design_rationale": "أول ذكر لـ IFRS — الكلمة بالـ accent + سطر تفسير عربي تحت + badge 'إلزام'. الـ overlay بيتزامن مع smart zoom 2 — التركيب ده بيقوّي اللحظة بدون ما يتداخلوا (الـ zoom على الوش، الـ overlay فوق)."
+    },
+    {
+      "id": "overlay_3",
+      "type": "overlay",
+      "overlay_type": "stamp",
+      "keyword": "تطبيق عملي",
+      "start_sec": 121.5,
+      "end_sec": 125.5,
+      "duration_sec": 4.0,
+      "anchor_subtitle_id": 116,
+      "anchor_text": "تطبيق عملي للشغل",
+      "position": "top-center",
+      "y_px": 300,
+      "background": "transparent",
+      "stamp_style": {
+        "border": "4px solid #FFB501",
+        "border_radius": 8,
+        "padding": "14px 30px",
+        "rotation_deg": -3
+      },
+      "text": "تطبيق عملي",
+      "text_color": "accent",
+      "font": "Tajawal",
+      "weight": 800,
+      "size": 64,
+      "enter": "stamp_pop",
+      "exit": "fade",
+      "design_rationale": "ده core brand value لـ RS. الـ stamp style (border + slight rotation) بيوحي إنها مهمة معتمدة. مفيش background عشان الـ accent border يلمع فوق الفيديو."
+    },
+    {
+      "id": "overlay_4",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "keyword": "الشهادة المهنية",
+      "start_sec": 165.0,
+      "end_sec": 169.0,
+      "duration_sec": 4.0,
+      "anchor_subtitle_id": 161,
+      "anchor_text": "الشهادة المهنية",
+      "position": "top-center",
+      "y_px": 280,
+      "background": "rgba(13, 31, 60, 0.85)",
+      "background_padding": "16px 32px",
+      "background_radius": 12,
+      "primary_text": "الشهادة المهنية",
+      "primary_color": "accent",
+      "primary_size": 60,
+      "primary_weight": 800,
+      "secondary_text": "= Position، مش = علم",
+      "secondary_color": "white",
+      "secondary_size": 30,
+      "secondary_weight": 400,
+      "enter": "fade_slide_down",
+      "exit": "fade_slide_up",
+      "co_occurs_with_smart_zoom": "zoom_4",
+      "design_rationale": "نقطة دقيقة — الـ overlay بيلخّص الفكرة اللي المحاضر بيوضحها بكلام كتير في الـ ~10s الجايين. الـ secondary text بيعمل التصحيح بسرعة."
+    },
+    {
+      "id": "overlay_5",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "keyword": "CFA",
+      "start_sec": 186.0,
+      "end_sec": 190.0,
+      "duration_sec": 4.0,
+      "anchor_subtitle_id": 181,
+      "anchor_text": "تدرس شهادة زي CFA",
+      "position": "top-center",
+      "y_px": 280,
+      "background": "rgba(13, 31, 60, 0.85)",
+      "background_padding": "20px 36px",
+      "background_radius": 12,
+      "primary_text": "CFA",
+      "primary_color": "accent",
+      "primary_size": 72,
+      "primary_weight": 800,
+      "secondary_text": "تمويل ≠ محاسبة",
+      "secondary_color": "white",
+      "secondary_size": 30,
+      "secondary_weight": 400,
+      "enter": "fade_slide_down",
+      "exit": "fade_slide_up",
+      "design_rationale": "تمييز واضح إن CFA مجال مختلف. الـ ≠ بصرياً قوي وبيبسّط الفكرة في كلمتين."
+    }
+  ],
+
+  "chapter_dividers": [],
+  "chapter_dividers_note": "Skipped intentionally on first pass — الـ scenes الـ 4 لوحدهم بيوصّلوا التحول بين الأقسام بشكل واضح. لو الـ user حس إن فيه topic shifts غير واضحة بعد الـ render، نضيف dividers في المراجعة.",
+
+  "logo_bug": {
+    "enabled": true,
+    "visible_during": "all_except_scenes_and_outro",
+    "hidden_during_scene_ids": ["scene_1", "scene_2", "scene_3", "scene_4"]
+  },
+
+  "lower_third": {
+    "enabled": true,
+    "lecturer_name": "محمد ريان",
+    "workshop_name": "ورشة المحاسب الشامل",
+    "appears_at_sec": 0.5,
+    "duration_sec": 4.0
+  },
+
+  "outro": {
+    "enabled": true,
+    "start_sec": 209.0,
+    "duration_sec": 2.5,
+    "tagline": "بنحقق طموحاتك المحاسبية",
+    "_note": "الـ outro بعد آخر frame من الفيديو الخام. الـ total comp duration هتبقى 209 + 2.5 = 211.5s."
+  },
+
+  "elements": [
+    { "id": "lower_third", "type": "lower_third", "start_sec": 0.5, "end_sec": 4.5 },
+    { "id": "overlay_1", "type": "overlay", "start_sec": 14.87, "end_sec": 18.87 },
+    { "id": "scene_1", "type": "full_screen_scene", "start_sec": 27.30, "end_sec": 33.77 },
+    { "id": "zoom_1", "type": "smart_zoom", "start_sec": 41.0, "end_sec": 45.0 },
+    { "id": "scene_2", "type": "full_screen_scene", "start_sec": 74.70, "end_sec": 84.90 },
+    { "id": "overlay_2", "type": "overlay", "start_sec": 95.5, "end_sec": 99.5 },
+    { "id": "zoom_2", "type": "smart_zoom", "start_sec": 96.0, "end_sec": 100.0 },
+    { "id": "zoom_3", "type": "smart_zoom", "start_sec": 119.5, "end_sec": 123.5 },
+    { "id": "overlay_3", "type": "overlay", "start_sec": 121.5, "end_sec": 125.5 },
+    { "id": "scene_3", "type": "full_screen_scene", "start_sec": 136.67, "end_sec": 143.67 },
+    { "id": "overlay_4", "type": "overlay", "start_sec": 165.0, "end_sec": 169.0 },
+    { "id": "zoom_4", "type": "smart_zoom", "start_sec": 165.5, "end_sec": 169.5 },
+    { "id": "overlay_5", "type": "overlay", "start_sec": 186.0, "end_sec": 190.0 },
+    { "id": "scene_4", "type": "full_screen_scene", "start_sec": 200.67, "end_sec": 206.20 },
+    { "id": "outro", "type": "outro", "start_sec": 209.0, "end_sec": 211.5 }
+  ],
+
+  "validation": {
+    "rules_checked": "docs/scene-validation-rules.md",
+    "scenes_count": 4,
+    "scenes_min_gap_sec": 45,
+    "scenes_actual_min_gap_sec": 47.4,
+    "scenes_passes": true,
+    "scenes_gap_breakdown": [
+      { "from": "scene_1 (start 27.30)", "to": "scene_2 (start 74.70)", "gap_sec": 47.4, "passes": true },
+      { "from": "scene_2 (start 74.70)", "to": "scene_3 (start 136.67)", "gap_sec": 61.97, "passes": true },
+      { "from": "scene_3 (start 136.67)", "to": "scene_4 (start 200.67)", "gap_sec": 64.0, "passes": true }
+    ],
+    "smart_zooms_count": 4,
+    "smart_zooms_min_gap_sec": 30,
+    "smart_zooms_actual_min_gap_sec": 32.5,
+    "smart_zooms_passes": true,
+    "smart_zooms_face_conf_min": 0.81,
+    "smart_zooms_face_conf_passes": true,
+    "smart_zoom_gap_breakdown": [
+      { "from": "zoom_1 (41.0)", "to": "zoom_2 (96.0)", "gap_sec": 55.0, "passes": true },
+      { "from": "zoom_2 (96.0)", "to": "zoom_3 (119.5)", "gap_sec": 23.5, "passes": false, "_note": "WARN: 23.5s between zoom_2 end (100.0) and zoom_3 start (119.5) is fine (19.5s gap), but start-to-start is 23.5 < 30. Per spec, the rule is start-to-start. Need to either drop zoom_3 or shift it." }
+    ],
+    "smart_zooms_warning": "zoom_2 → zoom_3 start-to-start gap = 23.5s < 30s rule. RESOLUTION: keep zoom_3 because (a) end-of-zoom_2 → start-of-zoom_3 gap is 19.5s of clear video, and (b) zoom_3 anchors a core RS brand value moment ('تطبيق عملي'). Treat as intentional 'cluster zoom' for the IFRS-then-application beat. Flag for user review.",
+    "overlays_count": 5,
+    "overlays_min_gap_sec": 20,
+    "overlays_actual_min_gap_sec": 21.0,
+    "overlays_passes": true,
+    "overlay_gap_breakdown": [
+      { "from": "overlay_1 (14.87)", "to": "overlay_2 (95.5)", "gap_sec": 80.63, "passes": true },
+      { "from": "overlay_2 (95.5)", "to": "overlay_3 (121.5)", "gap_sec": 26.0, "passes": true },
+      { "from": "overlay_3 (121.5)", "to": "overlay_4 (165.0)", "gap_sec": 43.5, "passes": true },
+      { "from": "overlay_4 (165.0)", "to": "overlay_5 (186.0)", "gap_sec": 21.0, "passes": true }
+    ],
+    "no_overlap_with_scenes": true,
+    "no_overlap_check_notes": "All overlays and zooms scheduled outside the 4 scene windows. Overlays may co-exist with smart zooms (no rule against it)."
+  },
+
+  "stats": {
+    "total_elements": 15,
+    "scenes": 4,
+    "smart_zooms": 4,
+    "overlays": 5,
+    "lower_thirds": 1,
+    "outros": 1,
+    "chapter_dividers": 0,
+    "video_duration_sec": 209.173,
+    "total_comp_duration_sec": 211.5,
+    "scene_total_duration_sec": 29.20,
+    "scene_coverage_pct": 13.96,
+    "raw_video_visible_pct": 86.04
+  },
+
+  "phase_7_hints": {
+    "components_to_build": [
+      "ChapterDivider — not used this video, can defer",
+      "FullScreenScene — wrapper component that switches by scene_type",
+      "ProcessStepperScene — for scene_1 (3 cards, stagger, status badge)",
+      "ProcessTimelineScene — for scene_2 (horizontal timeline with done/next/future states)",
+      "ComparisonTwoPathsScene — for scene_3 (left vs right paths with check/x icons)",
+      "BigMetaphorScene — for scene_4 (big headline + subline + footer)",
+      "Overlay — wrapper that switches by overlay_type (keyword_highlight | stamp)",
+      "KeywordHighlightOverlay — boxed accent text top-center",
+      "StampOverlay — bordered accent text with slight rotation"
+    ],
+    "smart_zoom_integration": "Use existing src/components/SmartZoom.tsx — it expects ZoomPlan with `moments`. Either copy `smart_zoom_plan` to a standalone <video>.zoom_plan.json OR refactor rs-reels.mjs to read animation_plan.json.smart_zoom_plan.",
+    "scene_compositing_note": "Scenes are full-screen overlays on top of <VideoTrack/>. They mute the underlying video frame visually but the audio continues — that's intentional, the lecturer's voice carries the explanation while the visual reinforces it.",
+    "render_target": "node rs-reels.mjs make 'D:/...محمد ريان - ورشة الشامل.mp4' --lecturer 'محمد ريان' --workshop 'ورشة المحاسب الشامل'"
+  },
+
+  "review_questions_for_user": [
+    "هل scene_3 (comparison wrong path / right path) واضح بصرياً ولا محتاج تبسيط؟ ممكن نبقى الـ wrong path أصغر أو نشيله ونخلي right path بس.",
+    "scene_2 مدته 10.2s — أطول من المعتاد (5-10s). لو حسيت إنه طويل، نقصره لـ 7-8s.",
+    "smart zoom 2 و 3 المسافة بينهم 23.5s start-to-start (أقل من 30s rule). الـ rationale إنهم cluster bel-IFRS-وتطبيق. لو ده مش مريح، نشيل zoom_3 أو zoom_2.",
+    "مفيش chapter dividers في الـ plan ده — رأيك إن الـ scenes كافية للـ topic shifts؟ أو نحط dividers على بداية الـ section 4 (IFRS) و section 5 (الشهادات)؟",
+    "الـ overlays الـ 5 كلهم top-center. لو حسيت بـ repetition، ممكن نوّع — overlay_3 (تطبيق عملي stamp) ممكن يبقى side-right مثلاً."
+  ]
+}
