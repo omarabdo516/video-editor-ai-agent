@@ -14,7 +14,7 @@
 - Audio energy عالية في النقطة دي
 
 ### ❌ لا تقترح لو:
-- آخر Full-Screen Scene كانت من أقل من **45 ثانية**
+- آخر Full-Screen Scene كانت من أقل من **15 ثانية**
 - المدة أقل من **5 ثواني**
 - المحتوى بسيط ومش محتاج توضيح بصري (overlay كافي)
 - المحاضر بيشاور بإيده على حاجة مهمة في الكادر
@@ -22,12 +22,19 @@
 - المحاضر في نص حوار أو بيرد على سؤال
 
 ### الحدود:
-- **المدة لكل scene:** 5-10 ثواني
-- **Spacing (إجباري):** 45 ثانية على الأقل بين بداية كل scene والـ scene اللي بعدها. 60 ثانية مثالي.
-- **Total count = content-driven.** مفيش cap ثابت على عدد الـ scenes في الفيديو. العدد بيطلع من:
-  1. كل الـ high/medium importance key_moments في `content_analysis.json` اللي تقدر تعيش جنب بعض ضمن قاعدة الـ 45s spacing
-  2. الـ upper bound العملي: الـ scenes ما تغطيش أكتر من ~50% من مدة الفيديو
-- **أمثلة:** فيديو 3:30 → 3-5 scenes · 5 min → 4-7 · 10 min → 8-12 · 15 min → 12-18
+- **المدة لكل scene:** 5-8 ثواني (أقصر في الـ reels القصيرة)
+- **Spacing (إجباري):** **15 ثانية** على الأقل بين بداية كل scene والـ scene اللي بعدها.
+  - السبب: معظم الريلز 60-90 ثانية، وفي المدة دي لازم يحصل scenes متعددة عشان نكسر الملل.
+  - الـ rule القديم (45s) كان مناسب للفيديوهات الطويلة، لكن Omar صحّحه: "45s دا كتير أوي... عايزها 15 ثانية عشان نكسر الملل".
+- **Total count = content-driven.** مفيش cap ثابت على عدد الـ scenes. العدد بيطلع من:
+  1. كل الـ high/medium importance key_moments في `content_analysis.json` اللي تحترم الـ 15s spacing
+  2. الـ upper bound العملي: الـ scenes ما تغطيش أكتر من ~60% من مدة الفيديو (عشان المحاضر يفضل ظاهر كمان)
+- **أمثلة:**
+  - 60s reel → 3-4 scenes (عادي)
+  - 90s reel → 5-6 scenes
+  - 2 min → 7-8 scenes
+  - 3:30 → 10-13 scenes (لو المحتوى بيستحق)
+  - 5 min → 15+ scenes
 - **transition:** fade 15 frames دخول / 12 frames خروج
 
 ---
@@ -90,9 +97,11 @@
 
 | النوع | الحد الأدنى بين عنصرين | المدة | المكان | Total count |
 |-------|----------------------|-------|--------|-------------|
-| Full-Screen Scene | 45 ثانية | 5-10s | full screen | content-driven (ما فيش cap) |
+| Full-Screen Scene | **15 ثانية** | 5-8s | full screen | content-driven (ما فيش cap) |
 | Overlay | 20 ثانية | 3-5s | top / sides | content-driven |
 | Smart Zoom | 30 ثانية | 3-5s | على الوش | content-driven |
 | Chapter Divider | حسب الأقسام | 2-3s | full screen | = عدد sections |
 
 **مهم:** كل العناصر دي بيتحكم فيها الـ spacing rule (الحد الأدنى بين عنصرين من نفس النوع)، مش cap ثابت على العدد الكلي. العدد الكلي بيطلع من الـ content analysis + الـ gaps المتاحة.
+
+**ملاحظة على الـ Smart Zoom vs Scene:** الـ smart zoom spacing لسه 30s لأنه transform subtle على الوش — لو بيحصل كل 15s ممكن يحس الـ viewer بـ dizziness. الـ scene مختلف — كل scene محتوى بصري مختلف، فـ 15s spacing مناسب.
