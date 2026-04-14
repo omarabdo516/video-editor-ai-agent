@@ -22,8 +22,12 @@
 - المحاضر في نص حوار أو بيرد على سؤال
 
 ### الحدود:
-- **حد أقصى:** 1 كل 60 ثانية (مثالي) / 1 كل 45 ثانية (minimum)
-- **المدة:** 5-10 ثواني
+- **المدة لكل scene:** 5-10 ثواني
+- **Spacing (إجباري):** 45 ثانية على الأقل بين بداية كل scene والـ scene اللي بعدها. 60 ثانية مثالي.
+- **Total count = content-driven.** مفيش cap ثابت على عدد الـ scenes في الفيديو. العدد بيطلع من:
+  1. كل الـ high/medium importance key_moments في `content_analysis.json` اللي تقدر تعيش جنب بعض ضمن قاعدة الـ 45s spacing
+  2. الـ upper bound العملي: الـ scenes ما تغطيش أكتر من ~50% من مدة الفيديو
+- **أمثلة:** فيديو 3:30 → 3-5 scenes · 5 min → 4-7 · 10 min → 8-12 · 15 min → 12-18
 - **transition:** fade 15 frames دخول / 12 frames خروج
 
 ---
@@ -84,9 +88,11 @@
 
 ## ملخص القواعد
 
-| النوع | الحد الأدنى بين عنصرين | المدة | المكان |
-|-------|----------------------|-------|--------|
-| Full-Screen Scene | 45 ثانية | 5-10s | full screen |
-| Overlay | 20 ثانية | 3-5s | top / sides |
-| Smart Zoom | 30 ثانية | 3-5s | على الوش |
-| Chapter Divider | حسب الأقسام | 2-3s | full screen |
+| النوع | الحد الأدنى بين عنصرين | المدة | المكان | Total count |
+|-------|----------------------|-------|--------|-------------|
+| Full-Screen Scene | 45 ثانية | 5-10s | full screen | content-driven (ما فيش cap) |
+| Overlay | 20 ثانية | 3-5s | top / sides | content-driven |
+| Smart Zoom | 30 ثانية | 3-5s | على الوش | content-driven |
+| Chapter Divider | حسب الأقسام | 2-3s | full screen | = عدد sections |
+
+**مهم:** كل العناصر دي بيتحكم فيها الـ spacing rule (الحد الأدنى بين عنصرين من نفس النوع)، مش cap ثابت على العدد الكلي. العدد الكلي بيطلع من الـ content analysis + الـ gaps المتاحة.

@@ -47,6 +47,12 @@
 - **السبب:** Omar ملاحظة: "طبيعة الريلز ان مهم يكون في حاجة بتحصل كل 4 ثواني مثلا عشان المشاهد ميملش فازاي نظبط حاجة زي كدا؟" — الحل: 3-tier event system (major / micro / continuous).
 - **المصدر:** "محمد ريان - ورشة الشامل" (Apr 2026)
 
+### Scene count is content-driven, never capped
+- **القاعدة:** عدد الـ full-screen scenes بيطلع من الـ content_analysis + spacing rule (45s min). مفيش cap ثابت زي "4-5 max". لو الفيديو محتاج 10 scenes وده يحترم الـ 45s spacing، هنعمل 10 scenes.
+- **السبب:** Omar قال "لأ انا مش عايز limit 4-5 scenes انا عايز حسب وضع الفيديو لو محتاج أكتر يبقي نضيف أكتر عادي" لما لخّصت الـ workflow في الـ next session وذكرت "4-5 scenes limit" بدون context.
+- **الأثر:** phase-6 selection loop لازم يختار كل الـ high/medium key_moments اللي تحترم spacing، مش يوقف عند target.
+- **المصدر:** "محمد ريان - ورشة الشامل" follow-up (Apr 2026)
+
 ---
 
 ## ❌ حاجات مش بيحبها
