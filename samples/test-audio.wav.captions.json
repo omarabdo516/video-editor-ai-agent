@@ -1,0 +1,8 @@
+{
+  "source": "samples/test-audio.wav",
+  "model": "tiny",
+  "language": "ar",
+  "segmentCount": 0,
+  "totalDuration": 0,
+  "segments": []
+}

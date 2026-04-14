@@ -1,0 +1,50 @@
+export const tokens = {
+  comp: {
+    width: 1080,
+    height: 1920,
+    fps: 30,
+  },
+  colors: {
+    primary: '#10479D',
+    accent: '#FFB501',
+    dark: '#0D1F3C',
+    white: '#FFFFFF',
+    overlay: 'rgba(13, 31, 60, 0.85)',
+  },
+  fonts: {
+    heading: 'Cairo',
+    body: 'Tajawal',
+    headingWeight: 700,
+    bodyWeight: 800,
+  },
+  captions: {
+    fontSize: 56,
+    lineHeight: 1.35,
+    maxWidth: 820,
+    position: { x: 540, y: 1420 },
+    wordsPerChunk: 6,
+    activeColor: '#FFB501',
+    inactiveColor: '#FFFFFF',
+  },
+  logoBug: {
+    position: { x: 540, y: 143 },
+    width: 170,
+    opacity: 0.9,
+  },
+  lowerThird: {
+    durationSec: 4,
+    startDelaySec: 0.5,
+    slideDurationSec: 0.4,
+    y: 1100,
+    nameSize: 72,
+    titleSize: 44,
+    barWidth: 820,
+    barHeight: 180,
+  },
+  outro: {
+    durationSec: 2.5,
+    logoWidth: 420,
+    tagline: 'بنحقق طموحاتك المحاسبية',
+    taglineSize: 56,
+  },
+} as const;

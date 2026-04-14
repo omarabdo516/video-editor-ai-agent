@@ -1,0 +1,29 @@
+{
+  "name": "video-editor-ai-agent",
+  "version": "0.3.0",
+  "description": "AI Video Editor Agent — Arabic lecturer Reels pipeline (Remotion + faster-whisper + MediaPipe + librosa)",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "rs-reels": "./rs-reels.mjs"
+  },
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render",
+    "make": "node rs-reels.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.448",
+    "@remotion/google-fonts": "^4.0.448",
+    "@remotion/media-utils": "^4.0.448",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.448"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@types/react": "^18.3.28",
+    "@types/react-dom": "^18.3.7",
+    "typescript": "^5.9.3"
+  }
+}

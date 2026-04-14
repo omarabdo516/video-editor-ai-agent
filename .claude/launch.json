@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "remotion-studio",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["remotion", "studio"],
+      "port": 3000,
+      "autoPort": false,
+      "cwd": "C:\\Users\\PUZZLE\\Documents\\Claude\\video-editor-ai-agent"
+    }
+  ]
+}

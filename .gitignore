@@ -1,0 +1,55 @@
+# ─── Dependencies ───
+node_modules/
+.pnp/
+.pnp.js
+
+# ─── Build outputs ───
+dist/
+build/
+out/
+.cache/
+
+# ─── Auto-generated render props (rewritten on every render) ───
+.props/
+
+# ─── TypeScript incremental build cache ───
+tsconfig.tsbuildinfo
+
+# ─── Per-video files anywhere (always too large or ephemeral) ───
+# These live next to the source video on the user's drive, never in the repo.
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.wav
+*.mp3
+*.flac
+*.aac
+*.m4a
+
+# Large image source files
+*.psd
+
+# Per-video pipeline outputs (face_map, energy, captions, zoom plans, metadata)
+# These are derived from the source video and live next to it.
+*.face_map.json
+*.energy.json
+*.zoom_plan.json
+*.metadata.json
+*.captions.json
+*.captions.srt
+# But keep tiny test fixtures in samples/
+!samples/**
+
+# ─── Per-project working dirs (populated at runtime, never committed) ───
+data/
+input/
+output/
+
+# ─── OS files ───
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
