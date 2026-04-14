@@ -1,5 +1,34 @@
 # Video Editor AI Agent — Claude Code Instructions
 
+## 📍 Next Up — اللي بنبدأ فيه دلوقتي
+
+> **آخر تحديث:** 2026-04-14 — انتهت Phase A + B + C في session سابق. الـ session ده جديد.
+
+**الحالة:** Phase 0 + 1 + 2 + 3 + 4 + 8 خلصوا. Phase 7 جزئي (basic components + SmartZoom). Phase 5 + 6 + 9 + B لسه ما بدوش.
+
+**الخطوة الجاية:** **Phase 5 — Content Analysis**
+
+اقرأ بالترتيب:
+1. الملف ده بالكامل (CLAUDE.md)
+2. [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — قواعد البراند الإجبارية
+3. [`docs/design-system.md`](docs/design-system.md) — design rationale
+4. [`feedback/style_evolution.md`](feedback/style_evolution.md) — تفضيلات المستخدم
+5. [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) — تفاصيل Phase 5
+
+**اللي تـ Phase 5 محتاجاه (موجود فعلاً):**
+- `<video>.mp4.captions.json` — output من Phase 2 (faster-whisper) ← بعد ما المستخدم يـ approve في الـ subtitle editor
+- `<video>.16k.wav.energy.json` — output من Phase B (librosa)
+- `<video>.1080x1920.mp4.metadata.json` — output من Phase B (ffprobe)
+
+**اللي Phase 5 هتطلعه:**
+- `<video>.content_analysis.json` — sections + key_moments + keywords + emphasis_moments
+
+**Test fixture:** الفيديو اللي بنختبر بيه `D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.mp4` — كل الـ inputs الـ Phase 5 محتاجاها موجودة جنبه فعلاً.
+
+**قبل ما تبدأ Phase 5:** اسأل المستخدم "نبدأ Phase 5 على الفيديو الـ test ده ولا فيديو تاني؟" + استنى موافقة على أي تعديل كبير.
+
+---
+
 ## 🎯 المشروع ده إيه
 
 **Video Editor AI Agent** = نظام آلي لمونتاج الريلز التعليمية العربية. بياخد فيديو خام لمحاضر، وبيطلع ريل 9:16 احترافي مع كابشنز متزامنة، Smart Zoom على الوش في لحظات الحماس، lower-third، logo bug، outro، وفي المستقبل: Full-screen scenes + overlays + animation planning ذكي.
