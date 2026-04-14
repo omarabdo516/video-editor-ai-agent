@@ -199,7 +199,20 @@ function main() {
   }
 
   // ─── Pass 5: materialize each event with timing + side data ───────────────
-  const microEvents = finalEvents.map((ev, i) => materialize(ev, i, captions, faces));
+  const materialized = finalEvents.map((ev, i) => materialize(ev, i, captions, faces));
+
+  // ─── Pass 6: re-enforce min gap on materialized start_sec ────────────────
+  // Different types subtract different lead-ins (word_pop -0.15, underline -0.20),
+  // so two events that were 3.00s apart in peak time can end up 2.95s apart in
+  // materialized start_sec. Drop any event that violates the final spacing.
+  const microEvents = [];
+  for (const ev of materialized) {
+    if (!ev) continue;
+    const last = microEvents[microEvents.length - 1];
+    if (!last || ev.start_sec - last.start_sec >= MIN_MICRO_GAP_SEC) {
+      microEvents.push(ev);
+    }
+  }
 
   // ─── Write back to animation_plan.json ───────────────────────────────────
   plan.micro_events = microEvents;

@@ -343,7 +343,17 @@ function loadAnimationPlan(sourceVideoPath, previewSeconds) {
   }
 }
 
-async function renderRemotion({ videoPath, captionsPath, lecturer, workshop, output, previewSeconds, sourceVideoPath }) {
+async function renderRemotion({
+  videoPath,
+  captionsPath,
+  lecturer,
+  workshop,
+  output,
+  previewSeconds,
+  fromSec,
+  toSec,
+  sourceVideoPath,
+}) {
   // Build props file
   const propsDir = path.join(__dirname, '.props');
   if (!existsSync(propsDir)) mkdirSync(propsDir, { recursive: true });
@@ -351,9 +361,15 @@ async function renderRemotion({ videoPath, captionsPath, lecturer, workshop, out
 
   const captions = JSON.parse(readFileSync(captionsPath, 'utf8'));
 
-  // If a preview length is set, truncate captions to match
+  // Range mode vs Preview mode:
+  //   --from X --to Y → renders frames [X*fps, Y*fps] from the FULL composition.
+  //                     Captions + plan stay intact. Output is (Y-X) seconds long.
+  //   --preview N     → truncates everything to [0, N]. Composition is short.
+  //                     Useful for quickly validating the start of a long video.
+  const useRange = fromSec != null || toSec != null;
+
   let usedCaptions = captions;
-  if (previewSeconds) {
+  if (previewSeconds && !useRange) {
     const cutoff = Number(previewSeconds);
     const segs = captions.segments.filter((s) => s.start < cutoff);
     usedCaptions = {
@@ -364,11 +380,14 @@ async function renderRemotion({ videoPath, captionsPath, lecturer, workshop, out
     };
   }
 
-  // Phase 6 animation plan supersedes the legacy zoom_plan when present
-  const animationPlan = loadAnimationPlan(sourceVideoPath || videoPath, previewSeconds);
+  // Phase 6 animation plan supersedes the legacy zoom_plan when present.
+  // In range mode, pass the plan UNMODIFIED so Reel.tsx gets absolute times.
+  // In preview mode, truncate so the composition is short.
+  const planPreviewCutoff = useRange ? null : previewSeconds;
+  const animationPlan = loadAnimationPlan(sourceVideoPath || videoPath, planPreviewCutoff);
   const zoomPlan = animationPlan?.smart_zoom_plan
     ? null // smart_zoom_plan is read from animationPlan inside Reel.tsx
-    : loadZoomPlan(sourceVideoPath || videoPath, previewSeconds);
+    : loadZoomPlan(sourceVideoPath || videoPath, planPreviewCutoff);
 
   // Spin up local video server
   const { server, url: videoUrl } = await startVideoServer(videoPath);
@@ -397,6 +416,20 @@ async function renderRemotion({ videoPath, captionsPath, lecturer, workshop, out
       '--hardware-acceleration=if-possible',
       '--log=info',
     ];
+
+    // Range mode: translate seconds → frame indices and pass --frames=start-end.
+    // Remotion renders only those frames from the full composition.
+    if (useRange) {
+      const fps = 30; // tokens.comp.fps — hardcoded here to avoid importing TS
+      const from = Math.max(0, Math.floor(Number(fromSec ?? 0) * fps));
+      const to = toSec != null
+        ? Math.max(from + 1, Math.floor(Number(toSec) * fps))
+        : null;
+      const frameSpec = to != null ? `${from}-${to}` : `${from}`;
+      renderArgs.push(`--frames=${frameSpec}`);
+      console.log(`⏱  range render: frames ${frameSpec} (${fromSec ?? 0}s → ${toSec ?? '∞'}s)`);
+    }
+
     await runAsync('node', renderArgs, { cwd: __dirname });
   } finally {
     server.close();
@@ -542,6 +575,153 @@ async function runEdit(videoPath, { previewSeconds }) {
   server.close();
 }
 
+// ─── doctor: pre-flight health check ─────────────────────────────────────
+async function runDoctor() {
+  const RESET = '\x1b[0m';
+  const GREEN = '\x1b[32m';
+  const YELLOW = '\x1b[33m';
+  const RED = '\x1b[31m';
+  const DIM = '\x1b[2m';
+
+  console.log('\n🩺 RS Reels — Doctor');
+  console.log('─'.repeat(50));
+
+  let failCount = 0;
+  let warnCount = 0;
+
+  function pass(msg) { console.log(`${GREEN}✓${RESET} ${msg}`); }
+  function warn(msg) { console.log(`${YELLOW}⚠${RESET} ${msg}`); warnCount++; }
+  function fail(msg) { console.log(`${RED}✗${RESET} ${msg}`); failCount++; }
+  function info(msg) { console.log(`${DIM}·${RESET} ${msg}`); }
+
+  // 1. Python venv
+  if (fileExists(WHISPER_VENV_PYTHON)) {
+    pass(`whisper venv: ${WHISPER_VENV_PYTHON}`);
+
+    // Check Python deps (faster-whisper, librosa, mediapipe, torch+CUDA)
+    const probe = spawnSync(
+      WHISPER_VENV_PYTHON,
+      ['-c', "import faster_whisper, librosa, mediapipe; import torch; print('OK', torch.__version__, torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'no-gpu')"],
+      { encoding: 'utf8' },
+    );
+    if (probe.status === 0) {
+      const out = probe.stdout.trim();
+      pass(`python deps: faster_whisper · librosa · mediapipe · torch`);
+      const parts = out.split(' ');
+      const torchVer = parts[1] || '?';
+      const cuda = parts[2] === 'True';
+      if (cuda) {
+        const gpu = parts.slice(3).join(' ');
+        pass(`CUDA: available · torch ${torchVer} · ${gpu}`);
+      } else {
+        warn(`CUDA: NOT available — torch ${torchVer} — render will be CPU only`);
+      }
+    } else {
+      fail(`python deps: import failed — ${probe.stderr?.trim() || probe.stdout?.trim() || 'unknown'}`);
+    }
+  } else {
+    fail(`whisper venv NOT FOUND: ${WHISPER_VENV_PYTHON}`);
+    fail('  → Create it: `cd _tools && uv venv whisper-env && uv pip install faster-whisper librosa mediapipe torch`');
+  }
+
+  // 2. FFmpeg
+  const ffmpegPath = 'C:/ffmpeg/bin/ffmpeg.exe';
+  if (fileExists(ffmpegPath)) {
+    const ver = spawnSync(ffmpegPath, ['-version'], { encoding: 'utf8' });
+    const firstLine = ver.stdout?.split('\n')[0] || 'ffmpeg';
+    pass(`ffmpeg: ${firstLine.replace(/^ffmpeg version /, 'v')}`);
+  } else {
+    fail(`ffmpeg NOT FOUND at ${ffmpegPath}`);
+    fail('  → Install from https://ffmpeg.org/download.html');
+  }
+
+  // 3. Node module deps
+  const remotionCli = path.join(__dirname, 'node_modules', '@remotion', 'cli', 'remotion-cli.js');
+  if (fileExists(remotionCli)) {
+    const pkgJson = JSON.parse(readFileSync(path.join(__dirname, 'package.json'), 'utf8'));
+    const remotionVer = pkgJson.dependencies?.remotion || pkgJson.devDependencies?.remotion || '?';
+    pass(`@remotion: installed (${remotionVer})`);
+  } else {
+    fail('@remotion NOT installed in node_modules — run `npm install`');
+  }
+
+  const editorModules = path.join(__dirname, 'subtitle-editor', 'node_modules');
+  if (existsSync(editorModules)) {
+    pass('subtitle-editor node_modules: installed');
+  } else {
+    warn('subtitle-editor node_modules: MISSING — run `cd subtitle-editor && npm install` before `rs-reels edit`');
+  }
+
+  // 4. Required Python scripts
+  const requiredScripts = ['video_metadata.py', 'face_detect.py', 'audio_energy.py', 'transcribe.py'];
+  const missing = requiredScripts.filter(
+    (s) => !fileExists(path.join(__dirname, 'scripts', s)),
+  );
+  if (missing.length === 0) {
+    pass(`scripts/: ${requiredScripts.join(' · ')}`);
+  } else {
+    fail(`scripts/ MISSING: ${missing.join(', ')}`);
+  }
+
+  // 5. Brand assets
+  const brandLogo = path.join(__dirname, 'brands', 'rs', 'assets', 'logo.png');
+  const publicLogo = path.join(__dirname, 'public', 'logo.png');
+  if (fileExists(brandLogo)) pass('brands/rs/assets/logo.png: present');
+  else warn('brands/rs/assets/logo.png: MISSING');
+  if (fileExists(publicLogo)) pass('public/logo.png: present (used by staticFile)');
+  else warn('public/logo.png: MISSING — logo bug + outro will be empty');
+
+  // 6. TypeScript check (slow, optional)
+  if (!process.argv.includes('--fast')) {
+    info('running tsc --noEmit (skip with --fast)...');
+    // On Windows, npx is npx.cmd. Avoid shell:true to silence a Node 24
+    // deprecation about arg escaping.
+    const npxBin = process.platform === 'win32' ? 'npx.cmd' : 'npx';
+    const tsc = spawnSync(npxBin, ['tsc', '--noEmit'], {
+      cwd: __dirname,
+      encoding: 'utf8',
+    });
+    if (tsc.status === 0) {
+      pass('tsc --noEmit: clean');
+    } else {
+      fail('tsc --noEmit: FAILED');
+      if (tsc.stdout) console.log(tsc.stdout);
+      if (tsc.stderr) console.log(tsc.stderr);
+    }
+  } else {
+    info('skipping tsc --noEmit (--fast)');
+  }
+
+  // 7. Plans in src/data/ — validate any that exist
+  const dataDir = path.join(__dirname, 'src', 'data');
+  if (existsSync(dataDir)) {
+    const entries = existsSync(dataDir)
+      ? (await import('node:fs')).readdirSync(dataDir, { withFileTypes: true })
+      : [];
+    const projects = entries.filter((e) => e.isDirectory());
+    if (projects.length > 0) {
+      info(`found ${projects.length} project(s) in src/data/`);
+      for (const p of projects) {
+        const planPath = path.join(dataDir, p.name, 'animation_plan.json');
+        if (fileExists(planPath)) {
+          info(`  → ${p.name} — run: node scripts/validate_plan.mjs "${p.name}"`);
+        }
+      }
+    }
+  }
+
+  // ─── Final ────────────────────────────────────────────────────────────────
+  console.log('─'.repeat(50));
+  if (failCount > 0) {
+    console.log(`${RED}FAIL${RESET} ${failCount} critical issue(s), ${warnCount} warning(s)`);
+    process.exit(1);
+  } else if (warnCount > 0) {
+    console.log(`${YELLOW}READY${RESET} with ${warnCount} warning(s)`);
+  } else {
+    console.log(`${GREEN}READY${RESET} all systems go 🚀`);
+  }
+}
+
 // ─── phase 1: preprocessing (audio + metadata + face_map + energy) ────────
 function runPhase1(videoPath) {
   console.log('\n=== Phase 1: Pre-processing ===\n');
@@ -574,18 +754,31 @@ async function main() {
   const args = parseArgs(process.argv);
   const [cmd, videoArg] = args._;
 
-  const VALID_CMDS = ['make', 'studio', 'phase1', 'edit'];
+  const VALID_CMDS = ['make', 'studio', 'phase1', 'edit', 'doctor'];
 
-  if (!cmd || !videoArg || !VALID_CMDS.includes(cmd)) {
+  if (!cmd || (cmd !== 'doctor' && !videoArg) || !VALID_CMDS.includes(cmd)) {
     console.log('Usage:');
-    console.log('  rs-reels make   <video> --lecturer "Name" --workshop "Title" [--output reel.mp4] [--preview seconds]');
+    console.log('  rs-reels make   <video> --lecturer "Name" --workshop "Title" [--output reel.mp4]');
+    console.log('                                                              [--preview seconds]');
+    console.log('                                                              [--from sec --to sec]   # range render');
     console.log('  rs-reels studio <video> --lecturer "Name" --workshop "Title" [--preview seconds]');
     console.log('  rs-reels phase1 <video>');
-    console.log('  rs-reels edit   <video>                              # opens the subtitle editor');
+    console.log('  rs-reels edit   <video>                                      # opens the subtitle editor');
+    console.log('  rs-reels doctor                                              # pre-flight health check');
     console.log('\nCommon flags: --skip-audio --skip-transcribe --dry');
     console.log('\nphase1 = audio + 1080x1920 scale + metadata + face_map + audio_energy');
     console.log('edit   = serves the video + captions on :7777, runs the Vite editor on :5173');
+    console.log('doctor = verifies venv, ffmpeg, deps, CUDA, and tsc pass');
+    console.log('\nRange render example:');
+    console.log('  node rs-reels.mjs make video.mp4 --lecturer "X" --workshop "Y" \\');
+    console.log('    --skip-audio --skip-transcribe --from 70 --to 90 --output preview.mp4');
     process.exit(1);
+  }
+
+  // Doctor runs without a video argument
+  if (cmd === 'doctor') {
+    await runDoctor();
+    return;
   }
 
   const videoPath = abs(videoArg);
@@ -658,6 +851,8 @@ async function main() {
     workshop,
     output,
     previewSeconds: args.flags.preview,
+    fromSec: args.flags.from != null ? Number(args.flags.from) : null,
+    toSec: args.flags.to != null ? Number(args.flags.to) : null,
   });
 
   console.log(`\n✅ Done: ${output}`);

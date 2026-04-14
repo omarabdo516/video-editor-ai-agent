@@ -805,15 +805,6 @@
       "source": "gap_fill"
     },
     {
-      "id": "micro_5",
-      "type": "caption_underline",
-      "start_sec": 12.31,
-      "end_sec": 13.51,
-      "anchor_subtitle_id": 11,
-      "intensity": "medium",
-      "source": "emphasis"
-    },
-    {
       "id": "micro_6",
       "type": "word_pop",
       "start_sec": 21.53,
@@ -1069,15 +1060,15 @@
   ],
   "micro_events_generated_at": "2026-04-14",
   "micro_events_stats": {
-    "total": 30,
-    "cadence_sec": 6.97,
+    "total": 29,
+    "cadence_sec": 7.21,
     "by_type": {
       "word_pop": 20,
-      "caption_underline": 7,
-      "mini_zoom": 3
+      "mini_zoom": 3,
+      "caption_underline": 6
     },
     "by_source": {
-      "emphasis": 16,
+      "emphasis": 15,
       "gap_fill": 14
     }
   }
