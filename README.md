@@ -54,19 +54,35 @@ node rs-reels.mjs make path/to/lecture.mp4 \
 # 1. Pre-processing only (audio + face_map + energy + metadata)
 node rs-reels.mjs phase1 path/to/lecture.mp4
 
-# 2. Open Remotion Studio to preview before render
+# 2. Edit captions in the visual subtitle editor (Vite + wavesurfer.js)
+#    Auto-loads the video + captions, runs at http://localhost:5173
+node rs-reels.mjs edit path/to/lecture.mp4
+
+# 3. Open Remotion Studio to preview the final reel before render
 node rs-reels.mjs studio path/to/lecture.mp4 \
   --lecturer "..." --workshop "..." \
   --skip-audio --skip-transcribe
 ```
 
-### Edit captions manually
+### Edit captions visually (recommended)
+
+The `edit` command opens a full-featured browser-based subtitle editor:
+
+- **Waveform** with draggable regions per caption (resize to retime)
+- **Subtitle list** with word-count badges (5–7 = green, otherwise amber)
+- **Edit panel** for timing inputs + text + Split / Merge / Delete / Move-word-to-prev/next
+- **Keyboard shortcuts:** Space (play), arrows (seek/navigate), Ctrl+Z (undo), Ctrl+Shift+Z (redo), Delete, S (split at playhead), M (merge with next), Ctrl+Shift+← / → (move first/last word)
+- **Approve & Save** button writes a `captions.json` ready for the agent
+
+### Edit captions in any text editor (alternative)
+
+If you'd rather use VS Code, Subtitle Edit, Aegisub, etc.:
 
 ```bash
 # Export the auto-transcribed captions to .srt for hand-editing
 node caps.js export path/to/lecture.mp4.captions.json
 
-# (edit the .srt in VS Code, Subtitle Edit, Aegisub, etc.)
+# (edit the .srt in your editor of choice)
 
 # Re-import the edited .srt back to .json (preserves word timings proportionally)
 node caps.js import path/to/lecture.mp4.captions.srt
@@ -129,7 +145,7 @@ video-editor-ai-agent/
 │   ├── Root.tsx
 │   ├── Reel.tsx                ← main composition
 │   ├── tokens.ts               ← runtime design tokens
-│   ├── types.ts
+│   ├── types.ts                ← shared types (also imported by subtitle-editor via @agent/*)
 │   ├── preview-props.json      ← auto-written by `studio` command
 │   ├── components/
 │   │   ├── VideoTrack.tsx
@@ -141,6 +157,31 @@ video-editor-ai-agent/
 │   └── utils/
 │       ├── chunk.ts
 │       └── fonts.ts
+│
+├── subtitle-editor/            ← Vite + React + wavesurfer.js (Phase 3 / C)
+│   ├── package.json            ← independent deps (React 19, Tailwind v4, Zustand)
+│   ├── vite.config.ts
+│   ├── tsconfig.app.json       ← path alias @agent/* → ../src/*
+│   ├── index.html
+│   └── src/
+│       ├── App.tsx             ← layout (toolbar / video / list / waveform / edit)
+│       ├── main.tsx
+│       ├── index.css           ← Tailwind v4 + Cairo/Tajawal + RTL
+│       ├── store/useSubtitleStore.ts  ← Zustand with 50-step undo/redo
+│       ├── components/
+│       │   ├── VideoPlayer.tsx
+│       │   ├── WaveformTimeline.tsx   ← wavesurfer + Regions + Timeline
+│       │   ├── SubtitleList.tsx       ← search + word-count badges
+│       │   ├── SubtitleEditPanel.tsx  ← timing + text + Split/Merge/Move-word
+│       │   ├── Toolbar.tsx            ← Import/Export/Approve/Undo/Redo
+│       │   ├── KeyboardHandler.tsx    ← global keyboard shortcuts
+│       │   └── Dropzone.tsx           ← drag-drop video + .srt/.json
+│       ├── store/
+│       ├── types/subtitle.ts          ← editor-side types (re-uses @agent/types)
+│       └── utils/
+│           ├── srt-parser.ts          ← SRT ↔ JSON ↔ Subtitle[]
+│           ├── time-utils.ts
+│           └── constants.ts
 │
 ├── public/                     ← Remotion staticFile() assets
 │   ├── logo.png

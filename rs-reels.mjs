@@ -189,18 +189,44 @@ function fixCaptions(captionsPath) {
   return captionsPath;
 }
 
-// Spawn a tiny HTTP server to serve the input video over localhost — Remotion's
-// OffthreadVideo cannot load file:// URLs during headless render.
-function startVideoServer(videoPath, fixedPort = 0) {
-  const stat = statSync(videoPath);
+// Spawn a tiny HTTP server to serve files over localhost — Remotion's
+// OffthreadVideo cannot load file:// URLs during headless render, and the
+// browser-based subtitle editor needs CORS-friendly URLs to fetch the video
+// + captions.
+//
+// `routes` maps URL paths → absolute file paths, e.g.
+//   { '/video.mp4': 'D:/.../scaled.mp4', '/captions.json': 'D:/.../caps.json' }
+//
+// For backwards compatibility a string `videoPath` is treated as
+// { '/video.mp4': videoPath }.
+function startFileServer(routes, fixedPort = 0) {
+  if (typeof routes === 'string') {
+    routes = { '/video.mp4': routes };
+  }
+
+  // Pre-stat all files so 404s are caught at startup
+  const fileMeta = {};
+  for (const [route, filePath] of Object.entries(routes)) {
+    fileMeta[route] = { path: filePath, stat: statSync(filePath) };
+  }
+
   const server = http.createServer((req, res) => {
-    // CORS so Studio (port 3000) can fetch
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Range');
     res.setHeader('Access-Control-Expose-Headers', 'Content-Range, Content-Length, Accept-Ranges');
+
+    const meta = fileMeta[req.url];
+    if (!meta) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end(`Not found: ${req.url}\nAvailable: ${Object.keys(fileMeta).join(', ')}`);
+      return;
+    }
+
+    const total = meta.stat.size;
+    const contentType = guessMime(meta.path);
+
     const range = req.headers.range;
-    const total = stat.size;
-    if (range) {
+    if (range && contentType.startsWith('video/')) {
       const parts = range.replace(/bytes=/, '').split('-');
       const start = parseInt(parts[0], 10);
       const end = parts[1] ? parseInt(parts[1], 10) : total - 1;
@@ -209,25 +235,50 @@ function startVideoServer(videoPath, fixedPort = 0) {
         'Content-Range': `bytes ${start}-${end}/${total}`,
         'Accept-Ranges': 'bytes',
         'Content-Length': chunkSize,
-        'Content-Type': 'video/mp4',
+        'Content-Type': contentType,
       });
-      createReadStream(videoPath, { start, end }).pipe(res);
+      createReadStream(meta.path, { start, end }).pipe(res);
     } else {
       res.writeHead(200, {
         'Content-Length': total,
-        'Content-Type': 'video/mp4',
+        'Content-Type': contentType,
         'Accept-Ranges': 'bytes',
       });
-      createReadStream(videoPath).pipe(res);
+      createReadStream(meta.path).pipe(res);
     }
   });
+
   return new Promise((resolve) => {
     server.listen(fixedPort, '127.0.0.1', () => {
       const port = server.address().port;
-      console.log(`✓ video server on http://127.0.0.1:${port}`);
-      resolve({ server, url: `http://127.0.0.1:${port}/video.mp4` });
+      console.log(`✓ file server on http://127.0.0.1:${port}`);
+      for (const route of Object.keys(fileMeta)) {
+        console.log(`    ${route}  →  ${path.basename(fileMeta[route].path)}`);
+      }
+      resolve({
+        server,
+        port,
+        url: `http://127.0.0.1:${port}/video.mp4`, // legacy field used by render
+      });
     });
   });
+}
+
+// Backwards-compatible alias for legacy call sites
+const startVideoServer = startFileServer;
+
+function guessMime(filePath) {
+  const ext = path.extname(filePath).toLowerCase();
+  switch (ext) {
+    case '.mp4': return 'video/mp4';
+    case '.webm': return 'video/webm';
+    case '.mov': return 'video/quicktime';
+    case '.mkv': return 'video/x-matroska';
+    case '.json': return 'application/json; charset=utf-8';
+    case '.srt': return 'text/plain; charset=utf-8';
+    case '.wav': return 'audio/wav';
+    default: return 'application/octet-stream';
+  }
 }
 
 // Look for a zoom_plan.json next to the source video. Falls back to null.
@@ -368,6 +419,76 @@ async function runStudio(videoPath, { lecturer, workshop, skipAudio, skipTranscr
   server.close();
 }
 
+// ─── edit: launch the subtitle editor with auto-loaded video + captions ──
+async function runEdit(videoPath, { previewSeconds }) {
+  console.log('\n=== Subtitle Editor ===\n');
+
+  // Need pre-scaled video so the editor's waveform matches what the agent renders
+  const scaledVideoPath = prepareVideo(videoPath);
+
+  // Find the captions file. Prefer JSON (preserves word timings) over SRT.
+  const jsonPath = videoPath + '.captions.json';
+  const srtPath = videoPath + '.captions.srt';
+  let captionsPath = null;
+  let captionsRoute = null;
+  if (fileExists(jsonPath)) {
+    captionsPath = jsonPath;
+    captionsRoute = '/captions.json';
+  } else if (fileExists(srtPath)) {
+    captionsPath = srtPath;
+    captionsRoute = '/captions.srt';
+  } else {
+    console.warn(`⚠ no captions file found (${jsonPath} or ${srtPath})`);
+    console.warn('  Run `node rs-reels.mjs phase1 <video>` and then transcribe first.');
+  }
+
+  // Start the file server with both video + captions (if we have them)
+  const routes = { '/video.mp4': scaledVideoPath };
+  if (captionsPath) routes[captionsRoute] = captionsPath;
+
+  const FILE_PORT = 7777;
+  const { server } = await startFileServer(routes, FILE_PORT);
+
+  // Build the editor URL with query params for auto-load
+  const baseName = path.basename(videoPath, path.extname(videoPath));
+  const editorParams = new URLSearchParams({
+    video: `http://127.0.0.1:${FILE_PORT}/video.mp4`,
+    name: baseName,
+  });
+  if (captionsPath) {
+    editorParams.set('captions', `http://127.0.0.1:${FILE_PORT}${captionsRoute}`);
+  }
+  const editorUrl = `http://localhost:5173/?${editorParams.toString()}`;
+
+  console.log(`\n📝 Editor URL (open in browser):`);
+  console.log(`   ${editorUrl}`);
+  console.log(`\n🎬 Spawning Vite dev server in subtitle-editor/...\n`);
+
+  // Spawn the editor's Vite dev server. The user opens the URL above manually
+  // (Vite prints its own "Local: http://..." line, but with the right query
+  // params).
+  const editorDir = path.join(__dirname, 'subtitle-editor');
+  if (!existsSync(path.join(editorDir, 'package.json'))) {
+    console.error(`Subtitle editor not found at ${editorDir}`);
+    console.error('Run `cd subtitle-editor && npm install` first.');
+    server.close();
+    process.exit(1);
+  }
+
+  const cleanup = () => {
+    try { server.close(); } catch {}
+    process.exit(0);
+  };
+  process.on('SIGINT', cleanup);
+  process.on('SIGTERM', cleanup);
+
+  // npm on Windows is a .cmd file — Node's spawn needs shell:true to resolve it.
+  // Args here are hardcoded ('run', 'dev'), so shell:true is safe.
+  await runAsync('npm', ['run', 'dev'], { cwd: editorDir, shell: true });
+
+  server.close();
+}
+
 // ─── phase 1: preprocessing (audio + metadata + face_map + energy) ────────
 function runPhase1(videoPath) {
   console.log('\n=== Phase 1: Pre-processing ===\n');
@@ -400,15 +521,17 @@ async function main() {
   const args = parseArgs(process.argv);
   const [cmd, videoArg] = args._;
 
-  const VALID_CMDS = ['make', 'studio', 'phase1'];
+  const VALID_CMDS = ['make', 'studio', 'phase1', 'edit'];
 
   if (!cmd || !videoArg || !VALID_CMDS.includes(cmd)) {
     console.log('Usage:');
     console.log('  rs-reels make   <video> --lecturer "Name" --workshop "Title" [--output reel.mp4] [--preview seconds]');
     console.log('  rs-reels studio <video> --lecturer "Name" --workshop "Title" [--preview seconds]');
     console.log('  rs-reels phase1 <video>');
+    console.log('  rs-reels edit   <video>                              # opens the subtitle editor');
     console.log('\nCommon flags: --skip-audio --skip-transcribe --dry');
     console.log('\nphase1 = audio + 1080x1920 scale + metadata + face_map + audio_energy');
+    console.log('edit   = serves the video + captions on :7777, runs the Vite editor on :5173');
     process.exit(1);
   }
 
@@ -432,6 +555,11 @@ async function main() {
 
   if (cmd === 'phase1') {
     runPhase1(videoPath);
+    return;
+  }
+
+  if (cmd === 'edit') {
+    await runEdit(videoPath, { previewSeconds: args.flags.preview });
     return;
   }
 

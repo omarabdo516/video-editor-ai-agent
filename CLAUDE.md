@@ -34,7 +34,7 @@
 
 ---
 
-## ✅ الحالة الحالية (Phase A + B خلصوا)
+## ✅ الحالة الحالية (Phase A + B + C خلصوا)
 
 ### Phase 0 ✅ (كامل)
 - [x] Remotion v4.0.448 + TypeScript + React 18
@@ -59,11 +59,22 @@
 - [x] **Egyptian Arabic fix** ([`fix-captions.js`](fix-captions.js)) — ض↔د، ث↔س، إلخ
 - [x] **SRT edit workflow:** [`caps.js`](caps.js) export JSON → SRT → user edits → import SRT
 
-### Phase 3 ❌ (مؤجل)
-- [ ] Subtitle Editor UI (Vite + React + Zustand + wavesurfer) — مؤجل لحد ما caps.js يبقى مش كفاية
+### Phase 3 ✅ (Phase C — كامل)
+- [x] **Subtitle Editor UI** في [`subtitle-editor/`](subtitle-editor/) — Vite 8 + React 19 + TypeScript + Tailwind v4 + Zustand + wavesurfer.js v7
+- [x] [`subtitle-editor/src/components/VideoPlayer.tsx`](subtitle-editor/src/components/VideoPlayer.tsx) — HTML5 video + caption overlay + bidirectional sync مع الـ store
+- [x] [`subtitle-editor/src/components/WaveformTimeline.tsx`](subtitle-editor/src/components/WaveformTimeline.tsx) — wavesurfer.js مع Regions + Timeline plugins، drag-to-resize، zoom slider
+- [x] [`subtitle-editor/src/components/SubtitleList.tsx`](subtitle-editor/src/components/SubtitleList.tsx) — scrollable list + search + word count badges (5-7 = أخضر، غيره = أصفر)
+- [x] [`subtitle-editor/src/components/SubtitleEditPanel.tsx`](subtitle-editor/src/components/SubtitleEditPanel.tsx) — start/end inputs + textarea + Split/Merge/Delete + Move first/last word
+- [x] [`subtitle-editor/src/components/Toolbar.tsx`](subtitle-editor/src/components/Toolbar.tsx) — Import (.srt/.json) + Export SRT + Approve & Save JSON + Undo/Redo
+- [x] [`subtitle-editor/src/components/KeyboardHandler.tsx`](subtitle-editor/src/components/KeyboardHandler.tsx) — Space/Arrows/Ctrl+Z/Ctrl+Shift+Z/Delete/S/M/Ctrl+Shift+←/→
+- [x] [`subtitle-editor/src/components/Dropzone.tsx`](subtitle-editor/src/components/Dropzone.tsx) — drag-drop video + .srt/.json
+- [x] [`subtitle-editor/src/store/useSubtitleStore.ts`](subtitle-editor/src/store/useSubtitleStore.ts) — Zustand store مع 50-step undo/redo + كل الـ edit actions
+- [x] **TypeScript path alias** `@agent/* → ../src/*` — الـ editor بيستورد `CaptionsData` و `WordTiming` types مباشرة من الـ agent (single source of truth)
+- [x] **Auto-load via URL params** — `?video=URL&captions=URL&name=...` لما الـ rs-reels CLI يفتح الـ editor
 
-### Phase 4 ✅ (via caps.js)
-- [x] User بيعدّل الـ `.srt` يدوياً في VS Code أو Subtitle Edit، caps.js بيعيد import
+### Phase 4 ✅ (via subtitle-editor + caps.js)
+- [x] الـ subtitle editor الجديد بيقبل `.captions.json` + `.srt` ويحفظ approved JSON
+- [x] الـ caps.js workflow القديم لسه شغّال للـ users اللي بيفضّلوا VS Code/Subtitle Edit
 
 ### Phase 5 ❌
 - [ ] Content analysis (sections, key moments, keywords, emphasis)
@@ -90,12 +101,13 @@
 - [ ] `@remotion/captions` integration
 
 ### Phase 8 ✅ (كامل)
-- [x] [`rs-reels.mjs`](rs-reels.mjs) — hybrid CLI (`make` + `studio` + `phase1`)
-- [x] HTTP video server (port 7777 للـ studio، random للـ render) — يحل مشكلة OffthreadVideo + file://
+- [x] [`rs-reels.mjs`](rs-reels.mjs) — hybrid CLI (`make` + `studio` + `phase1` + `edit`)
+- [x] **HTTP file server** (port 7777) — refactored من video-only لـ multi-route، بيخدم video + captions + أي ملف
 - [x] Async render (`spawn` بدل `spawnSync`) — الـ HTTP server يـ serve أثناء الريندر
 - [x] [`remotion.config.ts`](remotion.config.ts) — concurrency=14، ANGLE renderer، 12GB cache، `hardware-acceleration=if-possible`
 - [x] **Verified:** اتريندر فيديو حقيقي "محمد ريان - ورشة الشامل" (293MB، 203 segments)
 - [x] zoom_plan.json auto-loading (لو موجود next to source video)
+- [x] `edit` subcommand — يشغّل الـ subtitle editor مع auto-load للـ video + captions
 
 ### Phase 9 ❌
 - [ ] Feedback loop (log.json updates + style_evolution + best_components archiving)
@@ -110,16 +122,15 @@
 ### 1. CLI: Hybrid (monolithic + phase-based)
 
 ```bash
-# الاستخدام السريع (happy path — كل حاجة بترفض في command واحد):
-node rs-reels.mjs make <video> --lecturer "..." --workshop "..."
-node rs-reels.mjs studio <video> --lecturer "..." --workshop "..."
+# الاستخدام السريع (happy path — كل حاجة في command واحد):
+node rs-reels.mjs make   <video> --lecturer "..." --workshop "..."   # full pipeline
+node rs-reels.mjs studio <video> --lecturer "..." --workshop "..."   # Remotion Studio preview
 
-# الاستخدام الذكي (Claude بيقف بين الخطوات):
+# الاستخدام التفصيلي (phase-by-phase):
 node rs-reels.mjs phase1 <video>     # ✅ audio + scale + metadata + face_map + energy
+node rs-reels.mjs edit   <video>     # ✅ subtitle editor (Vite + wavesurfer)
 # Phase 2: node rs-reels.mjs phase2 (planned)
-# Phase 5/6: Claude بيعمل التحليل في الـ context
-node rs-reels.mjs studio <video>     # preview + يحمّل zoom_plan.json تلقائياً
-node rs-reels.mjs make <video>       # render نهائي
+# Phase 5/6: Claude بيعمل التحليل في الـ context مش في command
 ```
 
 ### 2. Tokens vs Design System
