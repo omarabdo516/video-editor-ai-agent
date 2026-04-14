@@ -86,9 +86,9 @@
   - العرض: `170px` (على comp 1080×1920)
   - Opacity: `0.9`
   - Drop-shadow خفيف: `drop-shadow(0 4px 18px rgba(0,0,0,0.4))`
-- **Logo يختفي أثناء:**
-  - Full-Screen Scenes (يغطي الـ scene)
-  - Outro (لأن الـ outro نفسه فيه لوجو كبير)
+- **Logo بيفضل ظاهر طول الفيديو** — على طول fades الـ Full-Screen Scenes والـ Smart Zooms. Brand presence أهم من نظافة الـ scene composition.
+  - الاستثناء الوحيد: الـ Outro (لأن الـ outro نفسه فيه لوجو كبير في الوسط)
+  - عشان كده الـ scene titles لازم تسيب مسافة أعلى الشاشة (paddingTop ~280px) عشان ما تتعارضش مع اللوجو
 - **اللوجو في الـ Outro:**
   - وسط الشاشة، عرض `420px`
   - تحته مباشرة الـ tagline بـ accent color

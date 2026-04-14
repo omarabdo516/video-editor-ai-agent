@@ -2,32 +2,31 @@
 
 ## 📍 Next Up — اللي بنبدأ فيه دلوقتي
 
-> **آخر تحديث:** 2026-04-14 — Phase 5 خلصت في الـ session ده على فيديو "محمد ريان - ورشة الشامل". الـ Next = Phase 6.
+> **آخر تحديث:** 2026-04-14 — Phase 5 + 6 + 7 (base) + 9 (infrastructure) خلصوا في الـ session ده. الـ full reel اتريندر بنجاح مع كل الـ 3 tiers شغّالة.
 
-**الحالة:** Phase 0 + 1 + 2 + 3 + 4 + 5 + 8 خلصوا. Phase 7 جزئي (basic components + SmartZoom). Phase 6 + 9 + B لسه ما بدوش.
+**الحالة:** Phase 0 + 1 + 2 + 3 + 4 + 5 + 6 + 8 + 9 (infra) خلصوا. Phase 7 — الـ base كامل (4 scene types + 2 overlay types + 3 micro types + VideoBreathing + Logo always-on). باقي **polish + caption styles + scene types إضافية**. Phase B لسه ما بدأش (مؤجّل).
 
-**الخطوة الجاية:** **Phase 6 — Animation Planning**
+**الخطوة الجاية:** **Phase 7 polish iterations** — تحسينات على أساس feedback من الريندر الكامل.
 
-اقرأ بالترتيب:
+اقرأ بالترتيب في الـ session الجاي:
 1. الملف ده بالكامل (CLAUDE.md)
-2. [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — قواعد البراند الإجبارية
-3. [`docs/design-system.md`](docs/design-system.md) — design rationale
-4. [`feedback/style_evolution.md`](feedback/style_evolution.md) — تفضيلات المستخدم
-5. [`docs/scene-validation-rules.md`](docs/scene-validation-rules.md) — قواعد density (إجباري لـ Phase 6)
-6. [`docs/phase-6-animation-planning.md`](docs/phase-6-animation-planning.md) — تفاصيل Phase 6
-7. [`src/data/<video_basename>/content_analysis.json`](src/data/) — output Phase 5
+2. [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — قواعد البراند
+3. [`feedback/style_evolution.md`](feedback/style_evolution.md) — **أعلى أولوية** — تفضيلات المتراكمة (الـ session الماضي حط فيها ~8 entry)
+4. [`docs/design-system.md`](docs/design-system.md) — design rationale
+5. [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) — الـ architecture الحالي (3-tier system)
+6. [`src/data/محمد ريان - ورشة الشامل/animation_plan.json`](src/data/محمد ريان - ورشة الشامل/animation_plan.json) — الـ plan الفعلي
 
-**اللي Phase 6 محتاجاه:**
-- `src/data/<video_basename>/content_analysis.json` — Phase 5 output
-- `<video>.1080x1920.mp4.face_map.json` — Phase 1 output (للـ Smart Zoom centering)
-- `<video>.16k.wav.energy.json` — Phase 1 output (للـ Smart Zoom triggers)
+**اللي محتاج iteration:**
+- Scene animations — المستخدم قال "هنبدأ نحسن في الفترة الجاية أكتر" على الـ 4 scenes
+- Caption styles — 5 styles لسه (Karaoke, Pop, Box, Typewriter, Classic) — Hormozi هو الوحيد اللي موجود
+- Scene types جدد — definition, equation, chart, diagram, counter
+- Chapter dividers component
+- Accent flash generator tuning (حالياً بيطلّع 0 events)
 
-**اللي Phase 6 هتطلعه:**
-- `src/data/<video_basename>/animation_plan.json` — full plan: scenes + smart_zooms + overlays + timing
+**Test fixture:** نفس الفيديو `محمد ريان - ورشة الشامل`. الـ full render موجود في:
+`D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل - phase7-full.mp4`
 
-**Test fixture:** نفس الفيديو `محمد ريان - ورشة الشامل` — content_analysis.json موجود فعلاً تحت [`src/data/محمد ريان - ورشة الشامل/`](src/data/محمد ريان - ورشة الشامل/).
-
-**قبل ما تبدأ Phase 6:** استنى موافقة على الاختيارات الكبيرة (عدد الـ scenes النهائي، أي conflict في الـ density rules).
+**قبل أي تعديل كبير:** استنى موافقة (خصوصاً على scenes و caption styles).
 
 ---
 
@@ -114,26 +113,52 @@
 - [x] الفيديو الأول اللي اتحلل: `محمد ريان - ورشة الشامل` (203 segments → 6 sections, 13 key_moments, 17 keywords, 39 emphasis)
 - [x] [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) اتحدّث ليطابق الواقع
 
-### Phase 6 ❌
-- [ ] Animation planning (full plan generation, مش بس zoom)
+### Phase 6 ✅ (كامل)
+- [x] **Animation planning** — full plan: scenes + smart_zooms + overlays + micro_events + timing
+- [x] الـ output في `src/data/<video_basename>/animation_plan.json`
+- [x] **Validation**: scenes ≥45s spacing, zooms ≥30s + face conf ≥0.5, overlays ≥20s
+- [x] Phase 6.5 (micro-events): `scripts/generate_micro_events.mjs` — auto-generator يقرا emphasis_moments ويولّد Tier 2 beats لـ retention rhythm كل ~4 ثواني
+- [x] **Done by Claude Code in-context** — مفيش API calls
+- [x] الفيديو الأول اللي اتخطط: `محمد ريان - ورشة الشامل` (4 scenes, 4 big zooms, 5 overlays, 30 micro events = 43 total, cadence 4.86s)
 
-### Phase 7 ⚠️ (في تقدم)
-- [x] [`src/Reel.tsx`](src/Reel.tsx) — main composition (يدعم optional zoomPlan)
-- [x] [`src/Root.tsx`](src/Root.tsx) — registration + preview-props
+### Phase 7 ⚠️ (base كامل — iteration مستمر)
+
+**موجود وشغّال:**
+- [x] [`src/Reel.tsx`](src/Reel.tsx) — main composition: 3-tier event system (major / micro / continuous)
+- [x] [`src/Root.tsx`](src/Root.tsx) — registration + preview-props + animationPlan support
 - [x] [`src/components/VideoTrack.tsx`](src/components/VideoTrack.tsx)
-- [x] [`src/components/WordCaption.tsx`](src/components/WordCaption.tsx) — Hormozi-like word highlighting
-- [x] [`src/components/LogoBug.tsx`](src/components/LogoBug.tsx) — top-center
+- [x] [`src/components/VideoBreathing.tsx`](src/components/VideoBreathing.tsx) — **NEW** Tier 3 continuous 1.5% scale oscillation
+- [x] [`src/components/WordCaption.tsx`](src/components/WordCaption.tsx) — Hormozi-like word highlighting **+ emphasis boost** (scale 1.28 + accent glow when emphasis time active)
+- [x] [`src/components/LogoBug.tsx`](src/components/LogoBug.tsx) — **بيفضل ظاهر طول الوقت** (يغطي scenes كمان — feedback من Omar)
 - [x] [`src/components/LowerThird.tsx`](src/components/LowerThird.tsx)
 - [x] [`src/components/Outro.tsx`](src/components/Outro.tsx)
-- [x] [`src/components/SmartZoom.tsx`](src/components/SmartZoom.tsx) — **NEW (Phase B)** — spring ramp + face-centered transform + edge clamping
-- [x] [`src/tokens.ts`](src/tokens.ts) — design tokens runtime source
+- [x] [`src/components/SmartZoom.tsx`](src/components/SmartZoom.tsx) — spring ramp + face-centered transform + edge clamping (+ mini zooms من Tier 2)
+- [x] **Scene components (4/8)**:
+  - [x] [`scenes/FullScreenScene.tsx`](src/components/scenes/FullScreenScene.tsx) — wrapper + dispatcher
+  - [x] [`scenes/ProcessStepperScene.tsx`](src/components/scenes/ProcessStepperScene.tsx) — 3 cards stagger (scene 1)
+  - [x] [`scenes/ProcessTimelineScene.tsx`](src/components/scenes/ProcessTimelineScene.tsx) — horizontal nodes (scene 2)
+  - [x] [`scenes/ComparisonTwoPathsScene.tsx`](src/components/scenes/ComparisonTwoPathsScene.tsx) — ✗ vs ✓ (scene 3)
+  - [x] [`scenes/BigMetaphorScene.tsx`](src/components/scenes/BigMetaphorScene.tsx) — headline + subline (scene 4)
+- [x] **Overlay components (2)**:
+  - [x] [`overlays/Overlay.tsx`](src/components/overlays/Overlay.tsx) — dispatcher
+  - [x] [`overlays/KeywordHighlightOverlay.tsx`](src/components/overlays/KeywordHighlightOverlay.tsx) — pill + badge
+  - [x] [`overlays/StampOverlay.tsx`](src/components/overlays/StampOverlay.tsx) — bordered rotated stamp
+- [x] **Micro-event components (Tier 2)**:
+  - [x] [`micro/MicroEventHost.tsx`](src/components/micro/MicroEventHost.tsx) — dispatcher
+  - [x] [`micro/CaptionUnderline.tsx`](src/components/micro/CaptionUnderline.tsx) — animated underline under captions
+  - [x] [`micro/AccentFlash.tsx`](src/components/micro/AccentFlash.tsx) — edge bar flash
+  - [x] `word_pop` = in-caption boost (not a separate component — handled via WordCaption emphasisTimes prop)
+  - [x] `mini_zoom` = merged into smart_zoom_plan (not a separate component)
+- [x] [`src/tokens.ts`](src/tokens.ts) — design tokens + scenes + overlays + springs presets
 - [x] [`src/utils/chunk.ts`](src/utils/chunk.ts) — caption rechunking
 - [x] [`src/utils/fonts.ts`](src/utils/fonts.ts) — @remotion/google-fonts (Cairo + Tajawal)
-- [ ] Explainer Scene components (definition, equation, comparison, process, etc.)
-- [ ] Overlay components (keyword_highlight, counter, stamp, underline)
+
+**ناقص (iteration مستقبلي):**
+- [ ] Caption styles (5 باقي): Karaoke, Pop, Box, Typewriter, Classic
+- [ ] Scene types جدد: definition, equation, chart, diagram, counter
 - [ ] Chapter Divider component
-- [ ] Multiple caption styles (الخطة 6 ستايلات — Hormozi, Karaoke, Pop, Box, Typewriter, Classic)
 - [ ] `@remotion/captions` integration
+- [ ] Scene polish من feedback الـ user بعد ما شاف الـ full render
 
 ### Phase 8 ✅ (كامل)
 - [x] [`rs-reels.mjs`](rs-reels.mjs) — hybrid CLI (`make` + `studio` + `phase1` + `edit`)
@@ -144,8 +169,12 @@
 - [x] zoom_plan.json auto-loading (لو موجود next to source video)
 - [x] `edit` subcommand — يشغّل الـ subtitle editor مع auto-load للـ video + captions
 
-### Phase 9 ❌
-- [ ] Feedback loop (log.json updates + style_evolution + best_components archiving)
+### Phase 9 ✅ (infrastructure + first entry)
+- [x] [`feedback/log.json`](feedback/log.json) — first project entry (محمد ريان - ورشة الشامل) مع 8 feedback items
+- [x] [`feedback/style_evolution.md`](feedback/style_evolution.md) — 8 entries من الـ session الأول
+- [x] Memory system — 7 memory files في `~/.claude/projects/.../memory/` (user-level)
+- [x] [`docs/phase-9-feedback.md`](docs/phase-9-feedback.md) — اتحدّث ليطابق الـ in-context implementation
+- [ ] Automation: أسئلة rating UI/script (اختياري — دلوقتي Claude بيسألهم في الـ context)
 
 ### Phase B (Batch) ❌
 - [ ] Multi-video batch processing
@@ -226,11 +255,12 @@ brands/
 | 3 | [`docs/phase-3-subtitle-editor.md`](docs/phase-3-subtitle-editor.md) | ❌ | subtitle editor UI |
 | 4 | [`docs/phase-4-captions-review.md`](docs/phase-4-captions-review.md) | ✅ (caps.js) | srt → approved JSON |
 | 5 | [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) | ✅ | captions+energy+metadata → content_analysis.json |
-| 6 | [`docs/phase-6-animation-planning.md`](docs/phase-6-animation-planning.md) | ❌ | analysis → animation plan |
-| 7 | [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) | ⚠️ | plan → components (Smart Zoom done) |
+| 6 | [`docs/phase-6-animation-planning.md`](docs/phase-6-animation-planning.md) | ✅ | analysis → animation plan |
+| 6.5 | [`docs/phase-6.5-micro-events.md`](docs/phase-6.5-micro-events.md) | ✅ | emphasis → micro_events (Tier 2 retention) |
+| 7 | [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) | ⚠️ | base done (4 scenes, 2 overlays, 3 micro, breathing) — polish + more styles |
 | 8 | [`docs/phase-8-render.md`](docs/phase-8-render.md) | ✅ | components → final.mp4 |
-| 9 | [`docs/phase-9-feedback.md`](docs/phase-9-feedback.md) | ❌ | rating → evolution |
-| B | [`docs/phase-B-batch.md`](docs/phase-B-batch.md) | ❌ | multi-video batch |
+| 9 | [`docs/phase-9-feedback.md`](docs/phase-9-feedback.md) | ✅ | rating → log.json + style_evolution.md |
+| B | [`docs/phase-B-batch.md`](docs/phase-B-batch.md) | ❌ (مؤجّل) | multi-video batch |
 
 **⚠️ لما المستخدم يقول "ابدأ Phase X" → اقرأ `docs/phase-X-...md` واشتغل.**
 

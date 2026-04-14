@@ -1,3 +1,105 @@
 {
-  "projects": []
+  "projects": [
+    {
+      "project": "محمد ريان - ورشة الشامل",
+      "date": "2026-04-14",
+      "template_used": null,
+      "brand": "rs",
+      "video_duration_sec": 209.173,
+      "total_duration_sec": 211.673,
+      "pipeline": {
+        "phase_1": "done",
+        "phase_2": "done (faster-whisper, Egyptian fix)",
+        "phase_3": "approved in subtitle editor",
+        "phase_5": "auto (Claude Code in-context)",
+        "phase_6": "auto (Claude Code in-context)",
+        "phase_6_5_micro_events": "auto (scripts/generate_micro_events.mjs)",
+        "phase_7": "base built + iterated twice in-session",
+        "phase_8": "full render succeeded"
+      },
+      "counts": {
+        "scenes": 4,
+        "smart_zooms": 4,
+        "big_overlays": 5,
+        "micro_events": 30,
+        "word_pop": 20,
+        "caption_underline": 7,
+        "mini_zoom": 3,
+        "accent_flash": 0,
+        "total_events": 43,
+        "cadence_sec": 4.86
+      },
+      "output_files": [
+        "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل - phase7-full.mp4"
+      ],
+      "overall_rating": 4,
+      "overall_note": "المستخدم قال 'تمام كويس هنبدأ نحسن في الفترة الجاية أكتر' على الـ full render. اعتبرها baseline جيد + فيه room لتحسين الـ scenes في الـ iteration الجاي.",
+      "feedback": [
+        {
+          "element_type": "word_pop",
+          "element_name": "Floating pill WordPop component",
+          "timestamp": "various",
+          "rating": 1,
+          "note": "'Word pop بيحصلها زي Overlap وبتغطي علي الكابشن' — الـ floating pill الأصلية كانت بتتعارض مع الـ lower-third والكابشنز. Omar طلب 'نشيله خالص أفضل ونستبدله بحاجه أذكي'.",
+          "action_taken": "حذفنا WordPop.tsx نهائياً. استبدلناه بـ in-caption word boost — الـ WordCaption بتقبل emphasisTimes prop وبتكبّر الكلمة الـ active 1.28x + glow أقوى لما في emphasis beat. zero collision. Omar approved: 'تمام احسن'."
+        },
+        {
+          "element_type": "in_caption_word_boost",
+          "element_name": "WordCaption emphasisTimes boost",
+          "timestamp": "various",
+          "rating": 5,
+          "note": "الـ replacement للـ WordPop. الكلمة اللي المحاضر بيقولها في اللحظة بتتعمل pop inside the caption itself.",
+          "action_taken": "الـ pattern ده أصبح الـ default لأي retention rhythm. saved as feedback_inline_emphasis_pattern.md memory."
+        },
+        {
+          "element_type": "scene_stepper_v1",
+          "element_name": "ProcessStepperScene (first version, top-anchored)",
+          "timestamp": "00:27.30",
+          "rating": 2,
+          "note": "'محتاج انيميشنز احسن وخلي ال Anchor point بتاعتك في نص الشاشة بالظبط' — كان top-anchored بـ title عند y=300 والـ cards تحتها، اللي ساب النص السفلي فاضي.",
+          "action_taken": "أعدنا بناء كل scenes الـ 4 بـ vertical centering (flexbox justifyContent: center + paddingTop 280 لـ logo clearance). أضفنا animations أغنى: spring bounce بدل fade + scale 0.85→1.0 + rotation subtle + continuous pulse glow على الـ current/accent elements + background shimmer. saved as feedback_scene_layout.md."
+        },
+        {
+          "element_type": "logo_bug_hiding",
+          "element_name": "LogoBug hidden during scenes (first version)",
+          "timestamp": "all scenes",
+          "rating": 1,
+          "note": "'اه لازم اللوجو يظهر' — Omar رفض سلوك الـ brand spec الأصلي اللي بيخفي اللوجو أثناء الـ scenes.",
+          "action_taken": "حذفنا SceneAwareLogoBug. اللوجو بقى في z-index 1000 فوق كل الـ scenes و بيفضل ظاهر طول الوقت. الـ scenes كلها بتسيب paddingTop 280 عشان الـ title ما يتعارضش مع اللوجو. updated brands/rs/BRAND.md. saved as feedback_logo_visible_in_scenes.md."
+        },
+        {
+          "element_type": "overlay_position_v1",
+          "element_name": "Overlays at y=280 (top of screen)",
+          "timestamp": "00:14.87 etc.",
+          "rating": 2,
+          "note": "'خليها تحت أو فوق مكان الكابشنز أفضل' — Omar رفض وضع الـ overlays في top-center (كانوا بيتنافسوا مع الوش للانتباه).",
+          "action_taken": "نقلنا tokens.overlays.defaultY من 280 لـ 1140 (بس المستوى/stamp at 1180). حدّثنا y_px في animation_plan.json لكل الـ 5 overlays. saved as feedback_overlay_position.md."
+        },
+        {
+          "element_type": "safe_zone_collision",
+          "element_name": "WordPop at y=1180 colliding with lower-third",
+          "timestamp": "00:00-00:05",
+          "rating": 1,
+          "note": "Omar أرسل screenshot يوضح إن الـ WordPop كان بيتعارض مع الـ 'محمد ريان' lower-third bar (y=1100-1280). الـ WordPop كان في y=1180 = middle of lower-third.",
+          "action_taken": "قبل ما نحذف الـ WordPop، كنا هننقله لـ y=900 (body zone). بس Omar طلب replacement أذكى، فحذفناه خالص. learned: 9:16 safe zones table — body zone y=700-1090 هو الوحيد الآمن لـ small overlays. saved as feedback_safe_zones.md."
+        },
+        {
+          "element_type": "retention_rhythm",
+          "element_name": "Tier 2 micro-events system",
+          "timestamp": "throughout",
+          "rating": 5,
+          "note": "Omar ملاحظة مهمة: 'طبيعة الريلز ان مهم يكون في حاجة بتحصل كل 4 ثواني مثلا عشان المشاهد ميملش فازاي نظبط حاجة زي كدا؟' — الـ cadence الأصلي كان 15s/event (من Phase 6 لوحده)، بعيد جداً عن الـ reels rule.",
+          "action_taken": "بنينا Phase 6.5: micro-events generator + 3-tier event system. من 14 event (Phase 6) لـ 43 event (Phase 6 + 6.5) = cadence من 15s لـ 4.86s. أقرب للـ target 4s. أضفنا 3 micro components (CaptionUnderline + AccentFlash + in-caption word boost) + VideoBreathing (Tier 3 continuous motion)."
+        },
+        {
+          "element_type": "full_render",
+          "element_name": "phase7-full.mp4 (entire 3:29 video)",
+          "timestamp": "00:00-03:31",
+          "rating": 4,
+          "note": "'تمام كويس هنبدأ نحسن في الفترة الجاية أكتر' — Omar approved as baseline. فيه room للتحسين على الـ scenes individually.",
+          "action_taken": "Baseline محفوظ. الـ Next Up في CLAUDE.md بيشير لـ iteration polish على الـ scenes والـ caption styles الجديدة في الـ session الجاية."
+        }
+      ]
+    }
+  ]
 }

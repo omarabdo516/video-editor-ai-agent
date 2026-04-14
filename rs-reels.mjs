@@ -305,6 +305,44 @@ function loadZoomPlan(sourceVideoPath, previewSeconds) {
   return null;
 }
 
+// Look for a Phase 6 animation_plan.json under src/data/<basename>/. This
+// supersedes loadZoomPlan when present — the smart_zoom_plan inside it is
+// used as the new zoom data, and Reel.tsx also reads scenes + overlays.
+function loadAnimationPlan(sourceVideoPath, previewSeconds) {
+  const baseName = path.basename(sourceVideoPath, path.extname(sourceVideoPath));
+  const planPath = path.join(__dirname, 'src', 'data', baseName, 'animation_plan.json');
+
+  if (!fileExists(planPath)) return null;
+
+  try {
+    const plan = JSON.parse(readFileSync(planPath, 'utf8'));
+    if (previewSeconds) {
+      const cutoff = Number(previewSeconds);
+      if (plan.smart_zoom_plan?.moments) {
+        plan.smart_zoom_plan.moments = plan.smart_zoom_plan.moments.filter(
+          (m) => m.startSec < cutoff,
+        );
+      }
+      if (plan.scenes) {
+        plan.scenes = plan.scenes.filter((s) => s.start_sec < cutoff);
+      }
+      if (plan.overlays) {
+        plan.overlays = plan.overlays.filter((o) => o.start_sec < cutoff);
+      }
+    }
+    const scenes = plan.scenes?.length || 0;
+    const overlays = plan.overlays?.length || 0;
+    const zooms = plan.smart_zoom_plan?.moments?.length || 0;
+    console.log(
+      `✓ animation plan loaded: ${planPath}  (${scenes} scenes, ${overlays} overlays, ${zooms} zooms)`,
+    );
+    return plan;
+  } catch (e) {
+    console.warn(`⚠ failed to parse animation plan ${planPath}: ${e.message}`);
+    return null;
+  }
+}
+
 async function renderRemotion({ videoPath, captionsPath, lecturer, workshop, output, previewSeconds, sourceVideoPath }) {
   // Build props file
   const propsDir = path.join(__dirname, '.props');
@@ -326,7 +364,11 @@ async function renderRemotion({ videoPath, captionsPath, lecturer, workshop, out
     };
   }
 
-  const zoomPlan = loadZoomPlan(sourceVideoPath || videoPath, previewSeconds);
+  // Phase 6 animation plan supersedes the legacy zoom_plan when present
+  const animationPlan = loadAnimationPlan(sourceVideoPath || videoPath, previewSeconds);
+  const zoomPlan = animationPlan?.smart_zoom_plan
+    ? null // smart_zoom_plan is read from animationPlan inside Reel.tsx
+    : loadZoomPlan(sourceVideoPath || videoPath, previewSeconds);
 
   // Spin up local video server
   const { server, url: videoUrl } = await startVideoServer(videoPath);
@@ -337,6 +379,7 @@ async function renderRemotion({ videoPath, captionsPath, lecturer, workshop, out
     lecturer,
     workshop,
     zoomPlan,
+    animationPlan,
   };
   writeFileSync(propsFile, JSON.stringify(props), 'utf8');
   console.log(`✓ props written: ${propsFile}`);
@@ -393,11 +436,21 @@ async function runStudio(videoPath, { lecturer, workshop, skipAudio, skipTranscr
     };
   }
 
-  const zoomPlan = loadZoomPlan(videoPath, previewSeconds);
+  const animationPlan = loadAnimationPlan(videoPath, previewSeconds);
+  const zoomPlan = animationPlan?.smart_zoom_plan
+    ? null
+    : loadZoomPlan(videoPath, previewSeconds);
 
   // Write preview-props.json → Root.tsx imports it as defaultProps
   const previewPropsPath = path.join(__dirname, 'src', 'preview-props.json');
-  const props = { videoSrc: videoUrl, captions: usedCaptions, lecturer, workshop, zoomPlan };
+  const props = {
+    videoSrc: videoUrl,
+    captions: usedCaptions,
+    lecturer,
+    workshop,
+    zoomPlan,
+    animationPlan,
+  };
   writeFileSync(previewPropsPath, JSON.stringify(props, null, 2), 'utf8');
   console.log(`✓ preview props written: ${previewPropsPath}`);
 

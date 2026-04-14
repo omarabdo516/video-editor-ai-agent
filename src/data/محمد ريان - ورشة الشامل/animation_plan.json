@@ -3,7 +3,6 @@
   "phase": 6,
   "generated_at": "2026-04-14",
   "generated_by": "Claude Code (Opus 4.6)",
-
   "source_video_basename": "محمد ريان - ورشة الشامل",
   "source": {
     "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.mp4",
@@ -12,14 +11,12 @@
     "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.1080x1920.mp4.face_map.json",
     "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.16k.wav.energy.json"
   },
-
   "video": {
     "duration_sec": 209.173,
     "fps": 30,
     "width": 1080,
     "height": 1920
   },
-
   "color_palette": {
     "primary": "#10479D",
     "accent": "#FFB501",
@@ -27,25 +24,34 @@
     "white": "#FFFFFF",
     "overlay_dark": "rgba(13, 31, 60, 0.85)"
   },
-
   "fonts": {
-    "title": { "family": "Cairo", "weight": 700 },
-    "body": { "family": "Cairo", "weight": 400 },
-    "highlight": { "family": "Tajawal", "weight": 800 },
-    "caption": { "family": "Tajawal", "weight": 800 }
+    "title": {
+      "family": "Cairo",
+      "weight": 700
+    },
+    "body": {
+      "family": "Cairo",
+      "weight": 400
+    },
+    "highlight": {
+      "family": "Tajawal",
+      "weight": 800
+    },
+    "caption": {
+      "family": "Tajawal",
+      "weight": 800
+    }
   },
-
   "caption_style": "highlighted_phrase",
   "caption_notes": "Hormozi-like word-by-word: current word in accent #FFB501 + scale 1.06x, others in white. Tajawal ExtraBold 56px. Already implemented in src/components/WordCaption.tsx.",
-
   "smart_zoom_plan": {
     "_compatibility_note": "This sub-object follows the existing SmartZoom.tsx schema (types.ts → ZoomPlan). The CLI auto-loads <video>.mp4.zoom_plan.json — to use this, copy `smart_zoom_plan` into a standalone zoom_plan.json next to the video, OR refactor rs-reels.mjs to read from src/data/<basename>/animation_plan.json.smart_zoom_plan in Phase 7.",
     "spring": "smooth",
     "moments": [
       {
         "id": "zoom_1",
-        "startSec": 41.0,
-        "endSec": 45.0,
+        "startSec": 41,
+        "endSec": 45,
         "zoomLevel": 1.4,
         "centerX": 0.443,
         "centerY": 0.329,
@@ -56,8 +62,8 @@
       },
       {
         "id": "zoom_2",
-        "startSec": 96.0,
-        "endSec": 100.0,
+        "startSec": 96,
+        "endSec": 100,
         "zoomLevel": 1.4,
         "centerX": 0.448,
         "centerY": 0.341,
@@ -71,7 +77,7 @@
         "startSec": 119.5,
         "endSec": 123.5,
         "zoomLevel": 1.4,
-        "centerX": 0.500,
+        "centerX": 0.5,
         "centerY": 0.309,
         "reason": "Core RS value moment — 'تطبيق عملي للشغل' at 121.66s. Face conf 0.83.",
         "anchor_subtitle_id": 116,
@@ -92,17 +98,24 @@
       }
     ]
   },
-
   "scenes": [
     {
       "id": "scene_1",
       "type": "full_screen_scene",
       "scene_type": "process",
       "key_moment_ref": 1,
-      "start_sec": 27.30,
+      "start_sec": 27.3,
       "end_sec": 33.77,
       "duration_sec": 6.47,
-      "anchor_subtitle_ids": [25, 26, 27, 28, 29, 30, 31],
+      "anchor_subtitle_ids": [
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31
+      ],
       "anchor_text": "RS تخدمك بتلات ورش: الشامل ووراه تحليل مالي ووراه الضرايب",
       "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
       "title": "خطة الـ 3 ورش",
@@ -142,14 +155,24 @@
         },
         {
           "type": "connector_arrow",
-          "between": [1, 2, 3],
+          "between": [
+            1,
+            2,
+            3
+          ],
           "color": "accent",
           "enter": "stroke_draw",
           "delay_frames": 36
         }
       ],
-      "transition_in": { "type": "fade", "frames": 15 },
-      "transition_out": { "type": "fade", "frames": 12 },
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
       "blocks_smart_zoom": true,
       "blocks_overlays": true,
       "design_rationale": "أول مرة المتدرب يسمع عن خريطة الـ 3 ورش — لازم تتوضح بصرياً كـ stepper. الـ stagger reveal بيدي إيقاع، والـ status badge على 'الشامل' بيقول 'إنت هنا'."
@@ -159,10 +182,22 @@
       "type": "full_screen_scene",
       "scene_type": "process",
       "key_moment_ref": 4,
-      "start_sec": 74.70,
-      "end_sec": 84.90,
-      "duration_sec": 10.20,
-      "anchor_subtitle_ids": [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80],
+      "start_sec": 74.7,
+      "end_sec": 84.9,
+      "duration_sec": 10.2,
+      "anchor_subtitle_ids": [
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
       "anchor_text": "بمنتهى البساطة: على نهاية السنة المفروض التلات ورش دول في إيدك. الشامل، التحليل المالي، الضرايب",
       "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
       "title": "الـ Plan على نهاية السنة",
@@ -174,9 +209,24 @@
         {
           "type": "timeline_horizontal",
           "items": [
-            { "label": "الشامل", "status": "done", "status_text": "✓", "color": "accent" },
-            { "label": "تحليل مالي", "status": "next", "status_text": "→", "color": "white" },
-            { "label": "الضرايب", "status": "future", "status_text": "→", "color": "white" }
+            {
+              "label": "الشامل",
+              "status": "done",
+              "status_text": "✓",
+              "color": "accent"
+            },
+            {
+              "label": "تحليل مالي",
+              "status": "next",
+              "status_text": "→",
+              "color": "white"
+            },
+            {
+              "label": "الضرايب",
+              "status": "future",
+              "status_text": "→",
+              "color": "white"
+            }
           ],
           "stagger_per_item_frames": 12,
           "show_arrows_between": true,
@@ -192,8 +242,14 @@
           "delay_frames": 60
         }
       ],
-      "transition_in": { "type": "fade", "frames": 15 },
-      "transition_out": { "type": "fade", "frames": 12 },
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
       "blocks_smart_zoom": true,
       "blocks_overlays": true,
       "design_rationale": "تكرار الـ Plan كـ recap بصري — هذه المرة كـ horizontal timeline (مش stepper) عشان البصر يحس إنه ماشي زمنياً. الـ ✓ على الشامل تأكيد إيجابي. ده الـ scene الأطول (~10s) لأن ده محطة محورية."
@@ -205,8 +261,17 @@
       "key_moment_ref": 9,
       "start_sec": 136.67,
       "end_sec": 143.67,
-      "duration_sec": 7.00,
-      "anchor_subtitle_ids": [134, 135, 136, 137, 138, 139, 140, 141],
+      "duration_sec": 7,
+      "anchor_subtitle_ids": [
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141
+      ],
       "anchor_text": "للفريش: لو درس المعايير الأول من غير تطبيق هيبقى علمه معطل ودراسة أكاديمية بحتة",
       "background": "linear-gradient(135deg, #0D1F3C 0%, #0A1628 100%)",
       "title": "ليه التطبيق قبل المعايير؟",
@@ -254,8 +319,14 @@
           "stagger_delay_frames": 30
         }
       ],
-      "transition_in": { "type": "fade", "frames": 15 },
-      "transition_out": { "type": "fade", "frames": 12 },
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
       "blocks_smart_zoom": true,
       "blocks_overlays": true,
       "design_rationale": "ده core RS methodology — التطبيق قبل النظرية. الـ comparison scene بتعرض الـ wrong path (✗) جنب الـ right path (✓) عشان الفرق يبقى واضح. الـ accent فقط على الـ right path يخلق emphasis قوي."
@@ -266,9 +337,15 @@
       "scene_type": "tip",
       "key_moment_ref": 13,
       "start_sec": 200.67,
-      "end_sec": 206.20,
+      "end_sec": 206.2,
       "duration_sec": 5.53,
-      "anchor_subtitle_ids": [193, 194, 195, 196, 197],
+      "anchor_subtitle_ids": [
+        193,
+        194,
+        195,
+        196,
+        197
+      ],
       "anchor_text": "قفلت الجيم زي ما بيسموه. زود بقى الشهادات عشان الـ Positions، مش عشان العلم",
       "background": "#10479D",
       "title": "قفلت الجيم",
@@ -297,14 +374,19 @@
           "footer_delay_frames": 60
         }
       ],
-      "transition_in": { "type": "fade", "frames": 12 },
-      "transition_out": { "type": "fade", "frames": 9 },
+      "transition_in": {
+        "type": "fade",
+        "frames": 12
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 9
+      },
       "blocks_smart_zoom": true,
       "blocks_overlays": true,
       "design_rationale": "Closing payoff. ده الـ moment اللي المتدرب لازم يخرج بيه — الـ headline كبير (110px) + accent + Tajawal ExtraBold عشان يبان كأنه stamp. الـ footer reinforces the final advice. مدة 5.5s فيها space للقراءة وما تحسش إنها مرت بسرعة. الـ scene ينتهي قبل آخر 3 ثواني من الفيديو عشان الـ Outro يقدر يدخل."
     }
   ],
-
   "overlays": [
     {
       "id": "overlay_1",
@@ -313,11 +395,11 @@
       "keyword": "الضرايب",
       "start_sec": 14.87,
       "end_sec": 18.87,
-      "duration_sec": 4.0,
+      "duration_sec": 4,
       "anchor_subtitle_id": 13,
       "anchor_text": "الحق خد ورشة خبير ضرايب",
       "position": "top-center",
-      "y_px": 280,
+      "y_px": 1140,
       "background": "rgba(13, 31, 60, 0.85)",
       "background_padding": "16px 32px",
       "background_radius": 12,
@@ -337,11 +419,11 @@
       "subtitle_text": "معايير المحاسبة الدولية",
       "start_sec": 95.5,
       "end_sec": 99.5,
-      "duration_sec": 4.0,
+      "duration_sec": 4,
       "anchor_subtitle_id": 94,
       "anchor_text": "تدرس معاير محاسبة دولية وده الزام",
       "position": "top-center",
-      "y_px": 280,
+      "y_px": 1140,
       "background": "rgba(13, 31, 60, 0.85)",
       "background_padding": "20px 36px",
       "background_radius": 12,
@@ -368,11 +450,11 @@
       "keyword": "تطبيق عملي",
       "start_sec": 121.5,
       "end_sec": 125.5,
-      "duration_sec": 4.0,
+      "duration_sec": 4,
       "anchor_subtitle_id": 116,
       "anchor_text": "تطبيق عملي للشغل",
       "position": "top-center",
-      "y_px": 300,
+      "y_px": 1180,
       "background": "transparent",
       "stamp_style": {
         "border": "4px solid #FFB501",
@@ -394,13 +476,13 @@
       "type": "overlay",
       "overlay_type": "keyword_highlight",
       "keyword": "الشهادة المهنية",
-      "start_sec": 165.0,
-      "end_sec": 169.0,
-      "duration_sec": 4.0,
+      "start_sec": 165,
+      "end_sec": 169,
+      "duration_sec": 4,
       "anchor_subtitle_id": 161,
       "anchor_text": "الشهادة المهنية",
       "position": "top-center",
-      "y_px": 280,
+      "y_px": 1140,
       "background": "rgba(13, 31, 60, 0.85)",
       "background_padding": "16px 32px",
       "background_radius": 12,
@@ -422,13 +504,13 @@
       "type": "overlay",
       "overlay_type": "keyword_highlight",
       "keyword": "CFA",
-      "start_sec": 186.0,
-      "end_sec": 190.0,
-      "duration_sec": 4.0,
+      "start_sec": 186,
+      "end_sec": 190,
+      "duration_sec": 4,
       "anchor_subtitle_id": 181,
       "anchor_text": "تدرس شهادة زي CFA",
       "position": "top-center",
-      "y_px": 280,
+      "y_px": 1140,
       "background": "rgba(13, 31, 60, 0.85)",
       "background_padding": "20px 36px",
       "background_radius": 12,
@@ -445,50 +527,124 @@
       "design_rationale": "تمييز واضح إن CFA مجال مختلف. الـ ≠ بصرياً قوي وبيبسّط الفكرة في كلمتين."
     }
   ],
-
   "chapter_dividers": [],
   "chapter_dividers_note": "Skipped intentionally on first pass — الـ scenes الـ 4 لوحدهم بيوصّلوا التحول بين الأقسام بشكل واضح. لو الـ user حس إن فيه topic shifts غير واضحة بعد الـ render، نضيف dividers في المراجعة.",
-
   "logo_bug": {
     "enabled": true,
     "visible_during": "all_except_scenes_and_outro",
-    "hidden_during_scene_ids": ["scene_1", "scene_2", "scene_3", "scene_4"]
+    "hidden_during_scene_ids": [
+      "scene_1",
+      "scene_2",
+      "scene_3",
+      "scene_4"
+    ]
   },
-
   "lower_third": {
     "enabled": true,
     "lecturer_name": "محمد ريان",
     "workshop_name": "ورشة المحاسب الشامل",
     "appears_at_sec": 0.5,
-    "duration_sec": 4.0
+    "duration_sec": 4
   },
-
   "outro": {
     "enabled": true,
-    "start_sec": 209.0,
+    "start_sec": 209,
     "duration_sec": 2.5,
     "tagline": "بنحقق طموحاتك المحاسبية",
     "_note": "الـ outro بعد آخر frame من الفيديو الخام. الـ total comp duration هتبقى 209 + 2.5 = 211.5s."
   },
-
   "elements": [
-    { "id": "lower_third", "type": "lower_third", "start_sec": 0.5, "end_sec": 4.5 },
-    { "id": "overlay_1", "type": "overlay", "start_sec": 14.87, "end_sec": 18.87 },
-    { "id": "scene_1", "type": "full_screen_scene", "start_sec": 27.30, "end_sec": 33.77 },
-    { "id": "zoom_1", "type": "smart_zoom", "start_sec": 41.0, "end_sec": 45.0 },
-    { "id": "scene_2", "type": "full_screen_scene", "start_sec": 74.70, "end_sec": 84.90 },
-    { "id": "overlay_2", "type": "overlay", "start_sec": 95.5, "end_sec": 99.5 },
-    { "id": "zoom_2", "type": "smart_zoom", "start_sec": 96.0, "end_sec": 100.0 },
-    { "id": "zoom_3", "type": "smart_zoom", "start_sec": 119.5, "end_sec": 123.5 },
-    { "id": "overlay_3", "type": "overlay", "start_sec": 121.5, "end_sec": 125.5 },
-    { "id": "scene_3", "type": "full_screen_scene", "start_sec": 136.67, "end_sec": 143.67 },
-    { "id": "overlay_4", "type": "overlay", "start_sec": 165.0, "end_sec": 169.0 },
-    { "id": "zoom_4", "type": "smart_zoom", "start_sec": 165.5, "end_sec": 169.5 },
-    { "id": "overlay_5", "type": "overlay", "start_sec": 186.0, "end_sec": 190.0 },
-    { "id": "scene_4", "type": "full_screen_scene", "start_sec": 200.67, "end_sec": 206.20 },
-    { "id": "outro", "type": "outro", "start_sec": 209.0, "end_sec": 211.5 }
+    {
+      "id": "lower_third",
+      "type": "lower_third",
+      "start_sec": 0.5,
+      "end_sec": 4.5
+    },
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "start_sec": 14.87,
+      "end_sec": 18.87
+    },
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "start_sec": 27.3,
+      "end_sec": 33.77
+    },
+    {
+      "id": "zoom_1",
+      "type": "smart_zoom",
+      "start_sec": 41,
+      "end_sec": 45
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "start_sec": 74.7,
+      "end_sec": 84.9
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "start_sec": 95.5,
+      "end_sec": 99.5
+    },
+    {
+      "id": "zoom_2",
+      "type": "smart_zoom",
+      "start_sec": 96,
+      "end_sec": 100
+    },
+    {
+      "id": "zoom_3",
+      "type": "smart_zoom",
+      "start_sec": 119.5,
+      "end_sec": 123.5
+    },
+    {
+      "id": "overlay_3",
+      "type": "overlay",
+      "start_sec": 121.5,
+      "end_sec": 125.5
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "start_sec": 136.67,
+      "end_sec": 143.67
+    },
+    {
+      "id": "overlay_4",
+      "type": "overlay",
+      "start_sec": 165,
+      "end_sec": 169
+    },
+    {
+      "id": "zoom_4",
+      "type": "smart_zoom",
+      "start_sec": 165.5,
+      "end_sec": 169.5
+    },
+    {
+      "id": "overlay_5",
+      "type": "overlay",
+      "start_sec": 186,
+      "end_sec": 190
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "start_sec": 200.67,
+      "end_sec": 206.2
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "start_sec": 209,
+      "end_sec": 211.5
+    }
   ],
-
   "validation": {
     "rules_checked": "docs/scene-validation-rules.md",
     "scenes_count": 4,
@@ -496,9 +652,24 @@
     "scenes_actual_min_gap_sec": 47.4,
     "scenes_passes": true,
     "scenes_gap_breakdown": [
-      { "from": "scene_1 (start 27.30)", "to": "scene_2 (start 74.70)", "gap_sec": 47.4, "passes": true },
-      { "from": "scene_2 (start 74.70)", "to": "scene_3 (start 136.67)", "gap_sec": 61.97, "passes": true },
-      { "from": "scene_3 (start 136.67)", "to": "scene_4 (start 200.67)", "gap_sec": 64.0, "passes": true }
+      {
+        "from": "scene_1 (start 27.30)",
+        "to": "scene_2 (start 74.70)",
+        "gap_sec": 47.4,
+        "passes": true
+      },
+      {
+        "from": "scene_2 (start 74.70)",
+        "to": "scene_3 (start 136.67)",
+        "gap_sec": 61.97,
+        "passes": true
+      },
+      {
+        "from": "scene_3 (start 136.67)",
+        "to": "scene_4 (start 200.67)",
+        "gap_sec": 64,
+        "passes": true
+      }
     ],
     "smart_zooms_count": 4,
     "smart_zooms_min_gap_sec": 30,
@@ -507,24 +678,54 @@
     "smart_zooms_face_conf_min": 0.81,
     "smart_zooms_face_conf_passes": true,
     "smart_zoom_gap_breakdown": [
-      { "from": "zoom_1 (41.0)", "to": "zoom_2 (96.0)", "gap_sec": 55.0, "passes": true },
-      { "from": "zoom_2 (96.0)", "to": "zoom_3 (119.5)", "gap_sec": 23.5, "passes": false, "_note": "WARN: 23.5s between zoom_2 end (100.0) and zoom_3 start (119.5) is fine (19.5s gap), but start-to-start is 23.5 < 30. Per spec, the rule is start-to-start. Need to either drop zoom_3 or shift it." }
+      {
+        "from": "zoom_1 (41.0)",
+        "to": "zoom_2 (96.0)",
+        "gap_sec": 55,
+        "passes": true
+      },
+      {
+        "from": "zoom_2 (96.0)",
+        "to": "zoom_3 (119.5)",
+        "gap_sec": 23.5,
+        "passes": false,
+        "_note": "WARN: 23.5s between zoom_2 end (100.0) and zoom_3 start (119.5) is fine (19.5s gap), but start-to-start is 23.5 < 30. Per spec, the rule is start-to-start. Need to either drop zoom_3 or shift it."
+      }
     ],
     "smart_zooms_warning": "zoom_2 → zoom_3 start-to-start gap = 23.5s < 30s rule. RESOLUTION: keep zoom_3 because (a) end-of-zoom_2 → start-of-zoom_3 gap is 19.5s of clear video, and (b) zoom_3 anchors a core RS brand value moment ('تطبيق عملي'). Treat as intentional 'cluster zoom' for the IFRS-then-application beat. Flag for user review.",
     "overlays_count": 5,
     "overlays_min_gap_sec": 20,
-    "overlays_actual_min_gap_sec": 21.0,
+    "overlays_actual_min_gap_sec": 21,
     "overlays_passes": true,
     "overlay_gap_breakdown": [
-      { "from": "overlay_1 (14.87)", "to": "overlay_2 (95.5)", "gap_sec": 80.63, "passes": true },
-      { "from": "overlay_2 (95.5)", "to": "overlay_3 (121.5)", "gap_sec": 26.0, "passes": true },
-      { "from": "overlay_3 (121.5)", "to": "overlay_4 (165.0)", "gap_sec": 43.5, "passes": true },
-      { "from": "overlay_4 (165.0)", "to": "overlay_5 (186.0)", "gap_sec": 21.0, "passes": true }
+      {
+        "from": "overlay_1 (14.87)",
+        "to": "overlay_2 (95.5)",
+        "gap_sec": 80.63,
+        "passes": true
+      },
+      {
+        "from": "overlay_2 (95.5)",
+        "to": "overlay_3 (121.5)",
+        "gap_sec": 26,
+        "passes": true
+      },
+      {
+        "from": "overlay_3 (121.5)",
+        "to": "overlay_4 (165.0)",
+        "gap_sec": 43.5,
+        "passes": true
+      },
+      {
+        "from": "overlay_4 (165.0)",
+        "to": "overlay_5 (186.0)",
+        "gap_sec": 21,
+        "passes": true
+      }
     ],
     "no_overlap_with_scenes": true,
     "no_overlap_check_notes": "All overlays and zooms scheduled outside the 4 scene windows. Overlays may co-exist with smart zooms (no rule against it)."
   },
-
   "stats": {
     "total_elements": 15,
     "scenes": 4,
@@ -535,11 +736,10 @@
     "chapter_dividers": 0,
     "video_duration_sec": 209.173,
     "total_comp_duration_sec": 211.5,
-    "scene_total_duration_sec": 29.20,
+    "scene_total_duration_sec": 29.2,
     "scene_coverage_pct": 13.96,
     "raw_video_visible_pct": 86.04
   },
-
   "phase_7_hints": {
     "components_to_build": [
       "ChapterDivider — not used this video, can defer",
@@ -556,12 +756,329 @@
     "scene_compositing_note": "Scenes are full-screen overlays on top of <VideoTrack/>. They mute the underlying video frame visually but the audio continues — that's intentional, the lecturer's voice carries the explanation while the visual reinforces it.",
     "render_target": "node rs-reels.mjs make 'D:/...محمد ريان - ورشة الشامل.mp4' --lecturer 'محمد ريان' --workshop 'ورشة المحاسب الشامل'"
   },
-
   "review_questions_for_user": [
     "هل scene_3 (comparison wrong path / right path) واضح بصرياً ولا محتاج تبسيط؟ ممكن نبقى الـ wrong path أصغر أو نشيله ونخلي right path بس.",
     "scene_2 مدته 10.2s — أطول من المعتاد (5-10s). لو حسيت إنه طويل، نقصره لـ 7-8s.",
     "smart zoom 2 و 3 المسافة بينهم 23.5s start-to-start (أقل من 30s rule). الـ rationale إنهم cluster bel-IFRS-وتطبيق. لو ده مش مريح، نشيل zoom_3 أو zoom_2.",
     "مفيش chapter dividers في الـ plan ده — رأيك إن الـ scenes كافية للـ topic shifts؟ أو نحط dividers على بداية الـ section 4 (IFRS) و section 5 (الشهادات)؟",
     "الـ overlays الـ 5 كلهم top-center. لو حسيت بـ repetition، ممكن نوّع — overlay_3 (تطبيق عملي stamp) ممكن يبقى side-right مثلاً."
-  ]
+  ],
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "word_pop",
+      "start_sec": 0.3,
+      "end_sec": 1.05,
+      "word": "بقى",
+      "anchor_subtitle_id": 0,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_2",
+      "type": "word_pop",
+      "start_sec": 3.31,
+      "end_sec": 4.06,
+      "word": "هنكون",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_3",
+      "type": "word_pop",
+      "start_sec": 6.33,
+      "end_sec": 7.08,
+      "word": "شوية",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_4",
+      "type": "word_pop",
+      "start_sec": 9.35,
+      "end_sec": 10.1,
+      "word": "مثلا",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_5",
+      "type": "caption_underline",
+      "start_sec": 12.31,
+      "end_sec": 13.51,
+      "anchor_subtitle_id": 11,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_6",
+      "type": "word_pop",
+      "start_sec": 21.53,
+      "end_sec": 22.28,
+      "word": "تحليل",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_7",
+      "type": "mini_zoom",
+      "start_sec": 36.6,
+      "end_sec": 37.8,
+      "zoom_level": 1.08,
+      "center_x": 0.327,
+      "center_y": 0.309,
+      "intensity": "strong",
+      "anchor_subtitle_id": 36,
+      "anchor_text": "والحقني بالضرايب",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_8",
+      "type": "caption_underline",
+      "start_sec": 48.79,
+      "end_sec": 49.99,
+      "anchor_subtitle_id": 47,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_9",
+      "type": "word_pop",
+      "start_sec": 52.15,
+      "end_sec": 52.9,
+      "word": "شغلك",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_10",
+      "type": "word_pop",
+      "start_sec": 55.47,
+      "end_sec": 56.22,
+      "word": "بتفولو",
+      "anchor_subtitle_id": 53,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_11",
+      "type": "caption_underline",
+      "start_sec": 63.96,
+      "end_sec": 65.16,
+      "anchor_subtitle_id": 60,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_12",
+      "type": "word_pop",
+      "start_sec": 72.55,
+      "end_sec": 73.3,
+      "word": "فاهمني",
+      "anchor_subtitle_id": 67,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_13",
+      "type": "caption_underline",
+      "start_sec": 89.02,
+      "end_sec": 90.22,
+      "anchor_subtitle_id": 85,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_14",
+      "type": "word_pop",
+      "start_sec": 92.21,
+      "end_sec": 92.96,
+      "word": "البساطة",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_15",
+      "type": "caption_underline",
+      "start_sec": 103.99,
+      "end_sec": 105.19,
+      "anchor_subtitle_id": 103,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_16",
+      "type": "word_pop",
+      "start_sec": 107.39,
+      "end_sec": 108.14,
+      "word": "تبقى",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_17",
+      "type": "mini_zoom",
+      "start_sec": 110.58,
+      "end_sec": 111.78,
+      "zoom_level": 1.08,
+      "center_x": 0.422,
+      "center_y": 0.318,
+      "intensity": "strong",
+      "anchor_subtitle_id": 107,
+      "anchor_text": "دي مادة في شهادة",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_18",
+      "type": "mini_zoom",
+      "start_sec": 116.37,
+      "end_sec": 117.57,
+      "zoom_level": 1.08,
+      "center_x": 0.379,
+      "center_y": 0.277,
+      "intensity": "strong",
+      "anchor_subtitle_id": 113,
+      "anchor_text": "بنجهزك انك تشيل شغل",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_19",
+      "type": "word_pop",
+      "start_sec": 126.7,
+      "end_sec": 127.45,
+      "word": "يعني",
+      "anchor_subtitle_id": 123,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_20",
+      "type": "word_pop",
+      "start_sec": 129.97,
+      "end_sec": 130.72,
+      "word": "تخلص",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_21",
+      "type": "word_pop",
+      "start_sec": 133.25,
+      "end_sec": 134,
+      "word": "التشغيلة",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_22",
+      "type": "caption_underline",
+      "start_sec": 147.26,
+      "end_sec": 148.46,
+      "anchor_subtitle_id": 145,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_23",
+      "type": "word_pop",
+      "start_sec": 151.4,
+      "end_sec": 152.15,
+      "word": "الايه",
+      "anchor_subtitle_id": 149,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_24",
+      "type": "word_pop",
+      "start_sec": 154.76,
+      "end_sec": 155.51,
+      "word": "نقولك",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_25",
+      "type": "word_pop",
+      "start_sec": 158.13,
+      "end_sec": 158.88,
+      "word": "وهدومك",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_26",
+      "type": "word_pop",
+      "start_sec": 161.49,
+      "end_sec": 162.24,
+      "word": "الكوكب",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_27",
+      "type": "word_pop",
+      "start_sec": 173.39,
+      "end_sec": 174.14,
+      "word": "الشهادة",
+      "anchor_subtitle_id": 168,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_28",
+      "type": "caption_underline",
+      "start_sec": 181.62,
+      "end_sec": 182.82,
+      "anchor_subtitle_id": 174,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_29",
+      "type": "word_pop",
+      "start_sec": 193.41,
+      "end_sec": 194.16,
+      "word": "ماليات",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_30",
+      "type": "word_pop",
+      "start_sec": 196.96,
+      "end_sec": 197.71,
+      "word": "المحاسبة",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    }
+  ],
+  "micro_events_generated_at": "2026-04-14",
+  "micro_events_stats": {
+    "total": 30,
+    "cadence_sec": 6.97,
+    "by_type": {
+      "word_pop": 20,
+      "caption_underline": 7,
+      "mini_zoom": 3
+    },
+    "by_source": {
+      "emphasis": 16,
+      "gap_fill": 14
+    }
+  }
 }

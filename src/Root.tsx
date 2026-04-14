@@ -25,6 +25,7 @@ const DEFAULT_PROPS: ReelProps = {
   lecturer: (previewProps as ReelProps).lecturer || 'محمد ريان',
   workshop: (previewProps as ReelProps).workshop || 'ورشة الشامل',
   zoomPlan: (previewProps as ReelProps).zoomPlan ?? null,
+  animationPlan: (previewProps as ReelProps).animationPlan ?? null,
 };
 
 export const RemotionRoot: React.FC = () => {

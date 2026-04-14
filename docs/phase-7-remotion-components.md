@@ -1,239 +1,205 @@
-# Phase 7: كتابة Remotion Components
+# Phase 7: Remotion Components
+
+> **آخر تحديث:** 2026-04-14 — اتعدل بعد أول full render. الملف ده بيعكس الـ architecture الفعلي، مش الخطة القديمة.
 
 ## Input
-- `src/data/animation_plan.json` — الخطة المعتمدة
-- `src/data/subtitles_approved.json` — الكابشنز
-- `src/data/face_map.json` — إحداثيات الوش
-- `docs/design-system.md` — قيم التصميم
-- `brand/RS_BRAND.md` — هوية RS
-- `feedback/style_evolution.md` — تفضيلات سابقة (لو موجود)
-- `feedback/best_components/` — أفضل components محفوظة (لو موجود)
+
+- [`src/data/<basename>/animation_plan.json`](../src/data/) — الخطة المعتمدة (Phase 6 + 6.5)
+- `<video>.mp4.captions.json` — الكابشنز المعتمدة (Phase 2 → 4)
+- `<video>.1080x1920.mp4.face_map.json` — إحداثيات الوش (للـ SmartZoom)
+- [`docs/design-system.md`](design-system.md) — قيم التصميم
+- [`brands/rs/BRAND.md`](../brands/rs/BRAND.md) — هوية RS
+- [`feedback/style_evolution.md`](../feedback/style_evolution.md) — تفضيلات المتراكمة **إلزامي**
+- [`feedback/best_components/`](../feedback/best_components/) — أفضل components محفوظة
 
 ## Output
-- كل الـ Remotion components مكتوبة وشغالة
-- `src/MainVideo.tsx` — الـ Composition الرئيسي
-- Remotion Studio بيعرض الفيديو بدون أخطاء
 
-## Success Criteria
-- [ ] `npx remotion studio` بيفتح بدون أخطاء
-- [ ] الفيديو الأصلي ظاهر
-- [ ] الكابشنز ظاهرة بالستايل المختار
-- [ ] الـ Explainer Scenes ظاهرة في أوقاتها
-- [ ] الـ Overlays ظاهرة في أوقاتها
-- [ ] Smart Zoom شغال في الأوقات المحددة
-- [ ] Chapter Dividers ظاهرة
-- [ ] اللوجو ظاهر (bottom-right)
-- [ ] الألوان من الـ brand
-- [ ] RTL والخط Cairo شغالين
+- كل الـ Remotion components شغّالة وبيرسموا الـ plan
+- [`src/Reel.tsx`](../src/Reel.tsx) — الـ Composition الرئيسي
+- `node rs-reels.mjs make <video>` بيريندر بدون errors
 
 ---
 
-## الخطوات
+## 🏛️ الـ Architecture (3-tier event system)
 
-### Step 7.0: اقرأ الأساسيات
+Phase 7 مبني على تقسيم الأحداث لـ **3 مستويات** حسب الحجم والـ retention goal:
 
-**إجباري قبل كتابة أي كود:**
-1. اقرأ `docs/design-system.md` — القيم (spacing, fonts, shadows, animations)
-2. اقرأ `brand/RS_BRAND.md` — الألوان واللوجو
-3. اقرأ `feedback/style_evolution.md` (لو موجود) — تفضيلات المستخدم
-4. شوف `feedback/best_components/` (لو موجود) — استخدمهم كـ base
-5. **استخدم الـ Remotion Agent Skills** — هي اللي هتوجهك للـ API الصح
+```
+Tier 1 — Major events        ← impact (Phase 6 output)
+  • Full-screen scenes       (1 كل 45s min)
+  • Smart zooms (1.4x)       (1 كل 30s min + face conf ≥ 0.5)
+  • Big overlays             (1 كل 20s min)
 
-### Step 7.1: Caption System (باستخدام @remotion/captions)
+Tier 2 — Micro events        ← retention rhythm (Phase 6.5 output)
+  • word_pop (in-caption boost — handled by WordCaption)
+  • caption_underline
+  • mini_zoom (1.08x, merged into SmartZoom plan)
+  • accent_flash
 
-**لا تبني logic التوقيت والتقسيم من الصفر — استخدم `@remotion/captions`.**
-
-#### 7.1.1: حوّل WhisperX output لـ Remotion Caption format
-
-```typescript
-// utils/convert-captions.ts
-import type { Caption } from '@remotion/captions';
-
-// حوّل subtitles_approved.json لـ Remotion Caption[]
-function convertToRemotionCaptions(subtitles): Caption[] {
-  const captions: Caption[] = [];
-  for (const sub of subtitles) {
-    if (sub.words) {
-      // لو فيه word-level timestamps (من WhisperX)
-      for (const word of sub.words) {
-        captions.push({
-          text: ' ' + word.word,  // مهم: مسافة قبل كل كلمة
-          startMs: word.start * 1000,
-          endMs: word.end * 1000,
-          timestampMs: ((word.start + word.end) / 2) * 1000,
-          confidence: 1,
-        });
-      }
-    } else {
-      // لو مفيش word-level → سطر كامل
-      captions.push({
-        text: sub.text,
-        startMs: sub.startTime * 1000,
-        endMs: sub.endTime * 1000,
-        timestampMs: ((sub.startTime + sub.endTime) / 2) * 1000,
-        confidence: 1,
-      });
-    }
-  }
-  return captions;
-}
+Tier 3 — Continuous motion   ← "alive" base layer
+  • VideoBreathing (1.5% scale oscillation, 5s period)
+  • Word-by-word caption highlighting (Hormozi)
+  • Logo bug (always visible)
 ```
 
-#### 7.1.2: استخدم createTikTokStyleCaptions() للتقسيم
+**القاعدة الذهبية:** كل 4 ثواني لازم يحصل حاجة على الأقل — ده الـ reels retention rule. الـ Tier 2 هو اللي بيحقق ده.
 
-```typescript
-import { createTikTokStyleCaptions } from '@remotion/captions';
+---
 
-const { pages } = createTikTokStyleCaptions({
-  captions,
-  combineTokensWithinMilliseconds: 800,
-  // عالي (1200+) = كلمات كتير في الصفحة (Classic/Karaoke)
-  // واطي (400-) = كلمة كلمة (Hormozi/Pop)
-});
-```
+## 🧱 الـ Components اللي موجودة
 
-#### 7.1.3: كل ستايل = ملف React واحد
+### Core layout
+| File | Dep | الوصف |
+|------|-----|-------|
+| [`Reel.tsx`](../src/Reel.tsx) | — | الـ Composition. بيقرا `animationPlan` + بيوزع كل element على Sequence. |
+| [`Root.tsx`](../src/Root.tsx) | — | Remotion registration + preview-props from `src/preview-props.json`. |
+| [`types.ts`](../src/types.ts) | — | TypeScript types لـ كل الـ plan shape. |
+| [`tokens.ts`](../src/tokens.ts) | — | Design tokens (colors + fonts + comp + scenes + overlays + springs). |
 
-**البنية:**
-```
-src/components/captions/
-├── CaptionRenderer.tsx         ← بياخد pages + style name → يعرض الصح
-└── styles/
-    ├── HormoziStyle.tsx        ← كلمة كلمة + bounce + highlight أصفر
-    ├── ClassicStyle.tsx        ← سطر كامل + خلفية شفافة
-    ├── KaraokeStyle.tsx        ← كل الكلمات ظاهرة + اللون بيمشي
-    ├── PopStyle.tsx            ← كلمة واحدة كبيرة + scale
-    ├── BoxStyle.tsx            ← مربع بيقفز بين الكلمات
-    └── TypewriterStyle.tsx     ← كلمات بتظهر واحدة واحدة
-```
+### Lecture layer (Tier 3 base)
+| File | الوصف |
+|------|-------|
+| [`VideoTrack.tsx`](../src/components/VideoTrack.tsx) | الـ video via OffthreadVideo |
+| [`VideoBreathing.tsx`](../src/components/VideoBreathing.tsx) | **NEW** — wrapper بيطبق slow scale oscillation (1.0 ↔ 1.015) على الفيديو |
+| [`SmartZoom.tsx`](../src/components/SmartZoom.tsx) | Wrapper بيقرا `smart_zoom_plan.moments` (big + mini مدموجين) + بيطبق transform على الوش |
+| [`WordCaption.tsx`](../src/components/WordCaption.tsx) | Hormozi-style word-by-word + **`emphasisTimes` prop** بيكبّر الكلمة الحالية 1.28x + glow لو في emphasis beat active |
+| [`LogoBug.tsx`](../src/components/LogoBug.tsx) | Top-center، **بيفضل ظاهر طول الوقت** (z-index فوق الـ scenes) |
+| [`LowerThird.tsx`](../src/components/LowerThird.tsx) | Name + workshop bar (0.5s → 4.5s) |
+| [`Outro.tsx`](../src/components/Outro.tsx) | Closing logo + tagline (2.5s) |
 
-**كل ستايل بيقبل نفس الـ props:**
-```typescript
-interface CaptionStyleProps {
-  page: TikTokPage;          // الصفحة الحالية (كلمات + توقيتات)
-  currentTimeMs: number;      // الوقت الحالي بالمللي ثانية
-  frame: number;              // الفريم الحالي
-  fps: number;                // فريمات في الثانية
-}
-```
+### Scene components (Tier 1)
+| File | scene_type | الاستخدام |
+|------|-----------|-----------|
+| [`scenes/FullScreenScene.tsx`](../src/components/scenes/FullScreenScene.tsx) | wrapper | fade in/out + dispatcher حسب `scene_type` والـ elements |
+| [`scenes/ProcessStepperScene.tsx`](../src/components/scenes/ProcessStepperScene.tsx) | process (stepper) | 3 cards مرتبة عمودياً + stagger + current-card pulse glow |
+| [`scenes/ProcessTimelineScene.tsx`](../src/components/scenes/ProcessTimelineScene.tsx) | process (timeline) | nodes أفقياً + line draw + done-node pulse |
+| [`scenes/ComparisonTwoPathsScene.tsx`](../src/components/scenes/ComparisonTwoPathsScene.tsx) | comparison | ✗ vs ✓ columns بـ stagger + accent column pulse |
+| [`scenes/BigMetaphorScene.tsx`](../src/components/scenes/BigMetaphorScene.tsx) | tip (metaphor) | big headline + subline + impact burst |
 
-**كل ستايل بيحدد:**
-- لون الكلمة الحالية
-- لون باقي الكلمات
-- الأنيميشن (bounce / fade / scale / slide)
-- المكان (نص / تحت / فوق)
-- الخلفية (مفيش / شفافة / مربع ملون)
-- حجم الخط
-- `combineTokensWithinMilliseconds` المناسب ليه
+### Overlay components (Tier 1)
+| File | overlay_type | الاستخدام |
+|------|-------------|-----------|
+| [`overlays/Overlay.tsx`](../src/components/overlays/Overlay.tsx) | wrapper | dispatcher حسب `overlay_type` |
+| [`overlays/KeywordHighlightOverlay.tsx`](../src/components/overlays/KeywordHighlightOverlay.tsx) | keyword_highlight | pill بـ accent border + badge (اختياري) + fade-slide |
+| [`overlays/StampOverlay.tsx`](../src/components/overlays/StampOverlay.tsx) | stamp | bordered accent text برـ slight rotation + pop entrance |
 
-**مهم لكل الستايلات:**
-- الخط Cairo
-- RTL (`direction: 'rtl'`)
-- الألوان من الـ brand
-- `white-space: pre` (عشان المسافات تتحفظ)
+### Micro-event components (Tier 2)
+| File | micro type | الاستخدام |
+|------|-----------|-----------|
+| [`micro/MicroEventHost.tsx`](../src/components/micro/MicroEventHost.tsx) | wrapper | dispatcher — word_pop و mini_zoom بيرجعوا null لأنهم handled upstream |
+| [`micro/CaptionUnderline.tsx`](../src/components/micro/CaptionUnderline.tsx) | caption_underline | خط accent تحت الكابشن بـ draw-in RTL + glow pulse |
+| [`micro/AccentFlash.tsx`](../src/components/micro/AccentFlash.tsx) | accent_flash | vertical bar من edge الشاشة، 0.6s |
 
-### Step 7.2: SmartZoom Component
+**ملاحظات مهمة:**
+- `word_pop` **مش له component** — الـ boost بيحصل جوّا [`WordCaption.tsx`](../src/components/WordCaption.tsx) عن طريق الـ `emphasisTimes` prop. ده اللي اتعلمناه بعد أول تجربة: الـ floating pill كان بيتعارض مع الـ lower-third والكابشنز.
+- `mini_zoom` **مش له component** — الـ generator بيدمج الـ 3 mini zooms في `smart_zoom_plan.moments` قبل الـ render، فـ SmartZoom بيرسمهم مع الـ big zooms بنفس الآلية. الفرق بس في `zoomLevel` (1.08 بدل 1.4).
+
+---
+
+## 📏 الـ Safe Zones (مهم جداً)
+
+قبل ما تختار `y` لأي overlay أو micro-event جديد، اقرا الجدول ده:
+
+| y range       | اللي فيه                           | Safe for small overlay? |
+|---------------|------------------------------------|-------------------------|
+| 0 – 220       | Top safe + Logo bug (y=143, w=170) | ❌                     |
+| 220 – 700     | Face zone (lecturer)               | ❌                     |
+| 700 – 1090    | **Body zone (empty)**              | ✅ **← use this**      |
+| 1100 – 1280   | Lower-third bar (0.5-4.5s)         | ❌                     |
+| 1280 – 1460   | Captions                           | ❌                     |
+| 1460 – 1500   | Thin gap                           | ⚠️ (40px tight)       |
+| 1500 – 1920   | Bottom safe area                   | ❌                     |
+
+**تفصيل الـ memory:** `feedback_safe_zones.md` في user memory store.
+
+---
+
+## 🎬 Scene Composition Rules
+
+1. **Vertical centering دايماً.** استخدم `<AbsoluteFill>` بـ `display: flex; justifyContent: center; alignItems: center; flexDirection: column`. الأنكر نقطة نص الشاشة (y=960).
+2. **Logo clearance.** كل scene لازم يسيب `paddingTop: 280px` عشان اللوجو يفضل ظاهر من غير ما يتعارض مع الـ title.
+3. **Animations layered** — مش فقط fade. كل element لازم يكون عليه على الأقل motions اتنين (scale + slide, rotate + pop, opacity + glow).
+4. **Pulse glow مستمر** على الـ "current/accent" element — بـ sine wave على الـ box-shadow.
+5. **Background atmosphere** — radial gradient أو subtle shimmer عشان الـ frame يبقى حي.
+
+---
+
+## 🎭 الـ 3-tier Event Flow في [`Reel.tsx`](../src/Reel.tsx)
 
 ```tsx
-// يقرأ face_map.json ويعمل zoom على الوش
-// التفاصيل في Phase 1 (face_map format)
+<AbsoluteFill>
+  <Sequence from={0} durationInFrames={lectureFrames}>
+    {/* Tier 3: Video + breathing + smart zoom */}
+    <SmartZoom plan={effectiveZoomPlan}>
+      <VideoBreathing>
+        <VideoTrack />
+      </VideoBreathing>
+    </SmartZoom>
 
-// المفتاح: transformOrigin بيتحدد من face_center_x/y
-// مع smoothing (moving average 15 نقطة)
-// ومع spring() من Remotion
-```
+    {/* Tier 3: Lower third */}
+    <LowerThird />
 
-**القواعد:**
-- لو confidence < 0.5 → fallback لوسط الشاشة
-- لو حركة > 20% → إلغاء zoom
-- spring damping: ابدأ بـ 18 (أو من style_evolution لو موجود)
-- zoom level: من animation_plan.json (default 1.4)
+    {/* Tier 3 + 2: Captions with emphasis boost */}
+    {visibleCaptions.map(seg => (
+      <WordCaption segment={seg} emphasisTimes={segEmphasis} />
+    ))}
 
-### Step 7.3: Explainer Scene Components
+    {/* Tier 2: Micro events (underlines, flashes) */}
+    {microEvents.map(ev => <MicroEventHost event={ev} />)}
 
-لكل scene_type في animation_plan، اكتب component:
+    {/* Tier 1: Big overlays */}
+    {overlays.map(ov => <Overlay overlay={ov} />)}
 
-| scene_type | المكونات | الأنيميشن |
-|-----------|---------|----------|
-| definition | عنوان + تعريف + أيقونة + عناصر | stagger reveal |
-| equation | معادلة + أرقام + أسهم | left-to-right build + count-up |
-| comparison | عمودين + عناصر في كل عمود | side-by-side reveal |
-| process | خطوات + أسهم بينهم | step-by-step reveal |
-| chart | bar/pie chart + labels | grow animation |
-| diagram | boxes + arrows + labels | build piece by piece |
-| timeline | خط + نقاط + labels | left-to-right reveal |
+    {/* Tier 1: Full-screen scenes */}
+    {scenes.map(s => <FullScreenScene scene={s} />)}
 
-**كل scene لازم:**
-- باكجراوند من color_palette (gradient)
-- عنوان بالخط الكبير (من design-system)
-- fade-in عند البداية (15 frames)
-- fade-out عند النهاية (12 frames)
-- الخط Cairo + RTL
-- الصوت مستمر (الـ scene بتظهر فوق الفيديو بـ opacity)
-
-### Step 7.4: Overlay Components
-
-| overlay_type | الوصف |
-|-------------|-------|
-| keyword_highlight | كلمة كبيرة أعلى الشاشة مع glow |
-| counter | رقم بيعد من 0 لقيمة |
-| stamp | ختم (مهم! / انتبه!) مع bounce |
-| underline | خط بيترسم تحت كلمة |
-
-### Step 7.5: Chapter Divider + Logo
-
-- Chapter: fade to dark + عنوان القسم + fade back
-- Logo: `<Img>` ثابت bottom-right, opacity 0.8, عرض 120px
-- Logo يختفي أثناء Full-Screen Scenes
-
-### Step 7.6: MainVideo.tsx — تجميع كل حاجة
-
-```tsx
-// الترتيب (من تحت لفوق):
-// Layer 1: الفيديو الأصلي (مع SmartZoom في الأوقات المحددة)
-// Layer 2: Full-Screen Scenes (بتغطي الفيديو مع fade)
-// Layer 3: Overlays
-// Layer 4: الكابشنز
-// Layer 5: Chapter Dividers
-// Layer 6: اللوجو
-```
-
-**اقرأ animation_plan.json وحوّل كل element لـ `<Sequence>`:**
-
-```tsx
-{plan.elements.map(el => (
-  <Sequence
-    key={el.id}
-    from={timeToFrames(el.timestamp_start, fps)}
-    durationInFrames={timeToFrames(el.timestamp_end, fps) - timeToFrames(el.timestamp_start, fps)}
-  >
-    {/* render the right component based on type */}
+    {/* Tier 3: Logo (last, so it sits ABOVE scenes) */}
+    <LogoBug />
   </Sequence>
-))}
+
+  <Sequence from={lectureFrames}>
+    <Outro />
+  </Sequence>
+</AbsoluteFill>
 ```
 
-### Step 7.7: اختبار في Remotion Studio
-
-```bash
-npx remotion studio
-```
-
-افتح في المتصفح وتأكد:
-- كل العناصر ظاهرة في أوقاتها
-- الأنيميشنز شغالة
-- الألوان صح
-- النص عربي وواضح
-
-### Step 7.8: Git Commit
-
-```bash
-git add .
-git commit -m "v7: remotion components done - [X] scenes, [Y] overlays, [Z] zooms"
-```
+**الترتيب مهم**: الـ scenes لازم تكون قبل الـ LogoBug عشان اللوجو يفضل ظاهر فوقها. الـ captions بتتفلتر مسبقاً علشان تختفي أثناء الـ scenes.
 
 ---
 
-## بعد ما تخلص
-```
-نبدأ Phase 8 (Preview + Render)؟
-```
+## 🚧 اللي لسه محتاج يتبني
+
+- [ ] **Caption styles (5 باقي)**: Karaoke, Pop, Box, Typewriter, Classic — كل واحد ليه فايل في `src/components/captions/styles/`
+- [ ] **Scene types جدد**: definition, equation, chart, diagram, counter — plus helper primitives
+- [ ] **ChapterDivider** component — fade-to-dark + section title
+- [ ] **@remotion/captions** integration — لما نبني الـ 6 caption styles
+- [ ] **Accent flash generator tuning** — حالياً الـ generator بيطلّع 0 accent_flash events لأنه بيدي الأولوية للـ strong → mini_zoom، medium → word_pop/underline. محتاج manual rule يضيف accent_flash في الـ gaps اللي لسه موجودة.
+- [ ] **Scene polish** — الـ iteration اللي المستخدم قال "هنبدأ نحسنها أكتر" عليها. جاي في الـ session الجاي.
+
+---
+
+## 📝 قواعد لما تضيف component جديد
+
+1. اقرأ [`brands/rs/BRAND.md`](../brands/rs/BRAND.md) و [`feedback/style_evolution.md`](../feedback/style_evolution.md) **قبل** ما تكتب أي كود
+2. استخدم القيم من [`src/tokens.ts`](../src/tokens.ts) — مفيش hardcoded values
+3. الخط Cairo للعناوين، Tajawal للجسم (الكابشنز + الكلمات الكبيرة). كلهم RTL.
+4. Spring animations من `tokens.springs` (enter / exit / bounce / smooth)
+5. Scene بتكون vertically centered. Overlay بتكون في safe zone.
+6. اللوجو ظاهر دايماً — خلّي paddingTop ≥ 280 في الـ scenes.
+7. أي element جديد لازم يتفلتر لو بيـ overlap مع scene (زي ما captions/micro events بيعملوا).
+8. Test check بـ `npx tsc --noEmit` قبل الريندر.
+
+---
+
+## 🎯 Success Criteria (للـ session الحالية)
+
+- [x] `node rs-reels.mjs make <video>` بيريندر بدون errors
+- [x] الـ full 3:29 video اتريندر (265 MB) مع الـ 4 scenes + 4 zooms + 5 overlays + 30 micro events
+- [x] اللوجو ظاهر طول الوقت
+- [x] الـ captions بتختفي أثناء الـ scenes
+- [x] الـ micro events بتختفي أثناء الـ scenes
+- [x] Cadence ~4.86s/event (target 4s) ✓ قريب
+- [x] RTL + Cairo + Tajawal شغّالين
+- [x] Omar confirmed: "تمام كويس"
+
+بعد ما يخلص الـ feedback loop: نبدأ polish iteration على الـ scenes والـ caption styles الجديدة.
