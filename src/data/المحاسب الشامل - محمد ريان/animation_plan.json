@@ -1,0 +1,516 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-14",
+  "generated_by": "Claude Code (Opus 4.6)",
+  "source_video_basename": "المحاسب الشامل - محمد ريان",
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.mp4.captions.json",
+    "content_analysis": "src/data/المحاسب الشامل - محمد ريان/content_analysis.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.16k.wav.energy.json"
+  },
+  "video": {
+    "duration_sec": 70.08,
+    "fps": 30,
+    "width": 1080,
+    "height": 1920
+  },
+  "caption_style": "hormozi",
+  "caption_notes": "Hormozi word-by-word highlighting. User selected Hormozi after seeing it work in the previous render.",
+  "smart_zoom_plan": {
+    "spring": "smooth",
+    "moments": [
+      {
+        "id": "zoom_1",
+        "startSec": 2,
+        "endSec": 5.5,
+        "zoomLevel": 1.4,
+        "centerX": 0.53,
+        "centerY": 0.316,
+        "reason": "Opening IFRS claim + high_energy 0.253 at 2.34s. Face conf 0.95. Sets up the reel hook.",
+        "anchor_subtitle_id": 1,
+        "anchor_text": "بس انت لو هتمتحن IFRS",
+        "key_moment_ref": 1
+      },
+      {
+        "id": "zoom_2",
+        "startSec": 36,
+        "endSec": 40,
+        "zoomLevel": 1.4,
+        "centerX": 0.621,
+        "centerY": 0.32,
+        "reason": "RS core value — 'حتة التشغيل' at 36.99s (high_energy 0.221). Face conf 0.92. Right before equation scene.",
+        "anchor_subtitle_id": 31,
+        "anchor_text": "على حتة التشغيل",
+        "key_moment_ref": 4
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "comparison_two_paths",
+      "key_moment_ref": 2,
+      "start_sec": 11,
+      "end_sec": 18,
+      "duration_sec": 7,
+      "anchor_subtitle_ids": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "anchor_text": "لو الراجل اللي كويس في الانجليزي هياخد ساعة — انت خد 4 ساعات — النتيجة هتبقى مختلفة",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "لو دوحرت... تبقى أحسن",
+      "title_size": 64,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "comparison_two_paths",
+          "left": {
+            "label": "العادي",
+            "icon": "x",
+            "icon_color": "white",
+            "icon_opacity": 0.4,
+            "steps": [
+              "كويس في الإنجليزي",
+              "↓",
+              "ساعة ذاكرة",
+              "↓",
+              "نتيجة عادية"
+            ],
+            "step_color": "white",
+            "highlight": "نتيجة عادية",
+            "highlight_color": "white",
+            "highlight_opacity": 0.5
+          },
+          "right": {
+            "label": "انت لو دوحرت",
+            "icon": "check",
+            "icon_color": "accent",
+            "steps": [
+              "مش كويس",
+              "↓",
+              "4 ساعات ذاكرة",
+              "↓",
+              "نتيجة أحسن"
+            ],
+            "step_color": "white",
+            "highlight": "نتيجة أحسن",
+            "highlight_color": "accent"
+          },
+          "stagger_delay_frames": 28
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
+      "design_rationale": "الـ hook بصرياً: الفرق مش في المعلومات، الفرق في المجهود. الـ accent فقط على الـ right path عشان الاتجاه الصح يبان واضح. الـ stagger بين الجانبين بيحكي القصة زمنياً."
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "scene_type": "definition",
+      "key_moment_ref": 3,
+      "start_sec": 26,
+      "end_sec": 33,
+      "duration_sec": 7,
+      "anchor_subtitle_ids": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "anchor_text": "فالدبلومة مهمة — هي مش شهادة مهنية، هي مادة في شهادة — بس بتفرق في كاريرك",
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "title": "الدبلومة",
+      "title_size": 64,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "definition",
+          "term": "الدبلومة",
+          "term_sub": "مش شهادة مهنية",
+          "definition": "هي مادة في شهادة",
+          "example": "بس بتفرق في كاريرك كويس",
+          "icon": "📘"
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
+      "design_rationale": "تصحيح فهم خاطئ شائع — المتدرب فاكر إن الدبلومة شهادة مهنية، المحاضر بيصحح. الـ definition scene بيعرض الـ term ضخم في الـ accent، تحته 'مش شهادة مهنية' كـ term_sub، والتعريف الصح كبير، والـ example = الـ impact على الكاريير."
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "scene_type": "equation",
+      "key_moment_ref": 5,
+      "start_sec": 44,
+      "end_sec": 51,
+      "duration_sec": 7,
+      "anchor_subtitle_ids": [
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "anchor_text": "بقى معاك الماكنة بتاعة الشغل ومعاك المعلومة اللي تحطها جواه — تبقى ملك",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "المعادلة",
+      "title_size": 56,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "equation",
+          "terms": [
+            {
+              "text": "الماكنة",
+              "label": "التشغيل"
+            },
+            {
+              "text": "+"
+            },
+            {
+              "text": "المعلومة",
+              "label": "العلم"
+            },
+            {
+              "text": "="
+            },
+            {
+              "text": "ملك",
+              "label": "النتيجة",
+              "is_result": true
+            }
+          ],
+          "footer": "تبقى ملك"
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
+      "design_rationale": "الاستعارة المحورية في الريل كله — لازم تتحوّل لصورة دماغية ثابتة. الـ equation scene بيكسر الكلام لـ tokens بصرية: الماكنة (التشغيل) + المعلومة (العلم) = ملك (النتيجة). الـ result highlighted في accent + pulse glow. التكرار في الفوتر 'تبقى ملك' بيعكس تكرار المحاضر."
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "scene_type": "big_metaphor",
+      "key_moment_ref": 7,
+      "start_sec": 62,
+      "end_sec": 68,
+      "duration_sec": 6,
+      "anchor_subtitle_ids": [
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "anchor_text": "خد بقى المعلومة وروح اعمل بها شغل — وكل بها — مش كل عيش، كل عيش كل بقلاوة، خد فلووووس",
+      "background": "#10479D",
+      "title": "خد فلوس",
+      "title_size": 120,
+      "title_font": "Tajawal",
+      "title_weight": 800,
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "خد فلوس",
+          "headline_size": 140,
+          "headline_color": "accent",
+          "headline_font": "Tajawal",
+          "headline_weight": 800,
+          "subline": "كُل عيش — كُل بقلاوة",
+          "subline_size": 44,
+          "subline_color": "white",
+          "subline_font": "Cairo",
+          "subline_weight": 700,
+          "subline_delay_frames": 28,
+          "footer_label": "لو معاك المعلومة + عرفت تطبّقها",
+          "footer_size": 32,
+          "footer_color": "white",
+          "footer_opacity": 0.85,
+          "footer_delay_frames": 60
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 12
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 9
+      },
+      "design_rationale": "Closing payoff — أعلى energy في الفيديو (0.347 at 66.5s). الـ headline 140px بـ Tajawal ExtraBold + accent = stamp كبير. الـ subline 'كل عيش كل بقلاوة' بيعكس التكرار الإيقاعي للمحاضر. الـ footer بيربط الـ payoff بالرسالة: مش فلوس مجاناً، فلوس بسبب إنك عرفت تطبّق."
+    }
+  ],
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "stamp",
+      "keyword": "حتة التشغيل",
+      "start_sec": 37,
+      "end_sec": 41,
+      "duration_sec": 4,
+      "anchor_subtitle_id": 31,
+      "anchor_text": "على حتة التشغيل",
+      "position": "top-center",
+      "y_px": 1180,
+      "background": "transparent",
+      "stamp_style": {
+        "border": "4px solid #FFB501",
+        "border_radius": 8,
+        "padding": "14px 30px",
+        "rotation_deg": -3
+      },
+      "text": "حتة التشغيل",
+      "text_color": "accent",
+      "font": "Tajawal",
+      "weight": 800,
+      "size": 64,
+      "design_rationale": "Core RS brand value — التطبيق العملي. يظهر أثناء الـ zoom_2 (co-occurs) عشان تفاعل اللحظة يبقى أقوى. يسبق scene_3 بـ ~3 ثواني فـ الفكرة تتثبت قبل ما الـ equation scene يبدأ."
+    }
+  ],
+  "chapter_dividers": [],
+  "chapter_dividers_note": "Skipped — الـ 4 scenes كفاية لـ 70s reel. فيه section transitions ضمنياً في الـ scenes نفسها.",
+  "logo_bug": {
+    "enabled": true,
+    "visible_during": "all_including_scenes",
+    "notes": "Per brand update + memory — logo stays above scenes (z-index 1000)."
+  },
+  "lower_third": {
+    "enabled": true,
+    "lecturer_name": "محمد ريان",
+    "workshop_name": "ورشة المحاسب الشامل",
+    "appears_at_sec": 0.5,
+    "duration_sec": 4
+  },
+  "outro": {
+    "enabled": true,
+    "start_sec": 70.08,
+    "duration_sec": 2.5,
+    "tagline": "بنحقق طموحك المحاسبي",
+    "_note": "Outro starts at end of lecture. Total comp = 72.58s."
+  },
+  "elements": [
+    {
+      "id": "lower_third",
+      "type": "lower_third",
+      "start_sec": 0.5,
+      "end_sec": 4.5
+    },
+    {
+      "id": "zoom_1",
+      "type": "smart_zoom",
+      "start_sec": 2,
+      "end_sec": 5.5
+    },
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "start_sec": 11,
+      "end_sec": 18
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "start_sec": 26,
+      "end_sec": 33
+    },
+    {
+      "id": "zoom_2",
+      "type": "smart_zoom",
+      "start_sec": 36,
+      "end_sec": 40
+    },
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "start_sec": 37,
+      "end_sec": 41
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "start_sec": 44,
+      "end_sec": 51
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "start_sec": 62,
+      "end_sec": 68
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "start_sec": 70.08,
+      "end_sec": 72.58
+    }
+  ],
+  "validation": {
+    "rules_checked": "docs/scene-validation-rules.md",
+    "scenes_count": 4,
+    "scenes_min_gap_sec": 15,
+    "scenes_gap_breakdown": [
+      {
+        "from": "scene_1 (start 11.0)",
+        "to": "scene_2 (start 26.0)",
+        "gap_sec": 15,
+        "passes": true
+      },
+      {
+        "from": "scene_2 (start 26.0)",
+        "to": "scene_3 (start 44.0)",
+        "gap_sec": 18,
+        "passes": true
+      },
+      {
+        "from": "scene_3 (start 44.0)",
+        "to": "scene_4 (start 62.0)",
+        "gap_sec": 18,
+        "passes": true
+      }
+    ],
+    "scenes_passes": true,
+    "smart_zooms_count": 2,
+    "smart_zooms_min_gap_sec": 30,
+    "smart_zoom_gap_breakdown": [
+      {
+        "from": "zoom_1 (2.0)",
+        "to": "zoom_2 (36.0)",
+        "gap_sec": 34,
+        "passes": true
+      }
+    ],
+    "smart_zooms_passes": true,
+    "smart_zooms_face_conf_min": 0.92,
+    "smart_zooms_face_conf_passes": true,
+    "overlays_count": 1,
+    "overlays_min_gap_sec": 20,
+    "overlay_gap_breakdown": [],
+    "overlays_passes": true,
+    "no_overlap_with_scenes": true,
+    "no_overlap_check_notes": "All overlays and zooms fall in gaps between scenes. Overlay_1 (37-41s) co-occurs with zoom_2 (36-40s) which is intentional (overlays may co-exist with smart zooms per design doc)."
+  },
+  "stats": {
+    "total_elements": 9,
+    "scenes": 4,
+    "smart_zooms": 2,
+    "overlays": 1,
+    "lower_thirds": 1,
+    "outros": 1,
+    "chapter_dividers": 0,
+    "video_duration_sec": 70.08,
+    "total_comp_duration_sec": 72.58,
+    "scene_total_duration_sec": 27,
+    "scene_coverage_pct": 38.53,
+    "raw_video_visible_pct": 61.47
+  },
+  "phase_7_hints": {
+    "scene_type_coverage": [
+      "comparison_two_paths — scene_1 (دوحر hours comparison)",
+      "definition — scene_2 (الدبلومة reframe)",
+      "equation — scene_3 (ماكنة + معلومة = ملك)",
+      "big_metaphor — scene_4 (خد فلوس payoff)"
+    ],
+    "new_scene_types_tested_this_video": [
+      "definition (first use)",
+      "equation (first use)"
+    ],
+    "render_notes": "Run `node scripts/generate_micro_events.mjs \"المحاسب الشامل - محمد ريان\"` before rendering. Then render with `node rs-reels.mjs make \"<path>\" --skip-audio --skip-transcribe`."
+  },
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "word_pop",
+      "start_sec": -0.12,
+      "end_sec": 0.63,
+      "word": "المعايير",
+      "anchor_subtitle_id": 0,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_2",
+      "type": "caption_underline",
+      "start_sec": 7.99,
+      "end_sec": 9.19,
+      "anchor_subtitle_id": 6,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_3",
+      "type": "mini_zoom",
+      "start_sec": 19.96,
+      "end_sec": 21.16,
+      "zoom_level": 1.08,
+      "center_x": 0.6,
+      "center_y": 0.289,
+      "intensity": "strong",
+      "anchor_subtitle_id": 16,
+      "anchor_text": "لانك دوحرت اكتر",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_4",
+      "type": "word_pop",
+      "start_sec": 56.07,
+      "end_sec": 56.82,
+      "word": "وينزل",
+      "anchor_subtitle_id": 51,
+      "intensity": "medium",
+      "source": "emphasis"
+    }
+  ],
+  "micro_events_generated_at": "2026-04-14",
+  "micro_events_stats": {
+    "total": 4,
+    "cadence_sec": 17.52,
+    "by_type": {
+      "word_pop": 2,
+      "caption_underline": 1,
+      "mini_zoom": 1
+    },
+    "by_source": {
+      "emphasis": 4
+    }
+  }
+}

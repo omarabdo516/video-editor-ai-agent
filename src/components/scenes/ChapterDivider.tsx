@@ -1,7 +1,11 @@
 import React from 'react';
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
+import { evolvePath } from '@remotion/paths';
 import { tokens } from '../../tokens';
 import type { ChapterDivider as ChapterDividerData } from '../../types';
+
+// Horizontal underline path (0 → 300 wide, centered around 0,0 via viewBox)
+const UNDERLINE_PATH = 'M 0 0 L 300 0';
 
 type Props = { divider: ChapterDividerData };
 
@@ -51,11 +55,12 @@ export const ChapterDivider: React.FC<Props> = ({ divider }) => {
     config: tokens.springs.enter,
   });
 
-  // Underline sweeps in
+  // Underline sweeps in — draws as an SVG stroke with evolvePath
   const underlineProgress = interpolate(frame, [10, 26], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
+  const underlineEvolve = evolvePath(underlineProgress, UNDERLINE_PATH);
 
   const background =
     divider.background ??
@@ -131,17 +136,28 @@ export const ChapterDivider: React.FC<Props> = ({ divider }) => {
         {divider.title}
       </div>
 
-      {/* Accent underline */}
-      <div
+      {/* Accent underline — drawn with @remotion/paths evolvePath so the
+          stroke draws in left-to-right instead of scaling from zero width */}
+      <svg
+        width={320}
+        height={14}
+        viewBox="-10 -7 320 14"
         style={{
-          width: 200 * underlineProgress,
-          height: 5,
-          background: `linear-gradient(90deg, transparent, ${tokens.colors.accent}, transparent)`,
-          borderRadius: 3,
-          boxShadow: `0 0 20px rgba(255,181,1,0.6)`,
           marginTop: 12,
+          overflow: 'visible',
+          filter: 'drop-shadow(0 0 14px rgba(255,181,1,0.7))',
         }}
-      />
+      >
+        <path
+          d={UNDERLINE_PATH}
+          stroke={tokens.colors.accent}
+          strokeWidth={6}
+          strokeLinecap="round"
+          fill="none"
+          strokeDasharray={underlineEvolve.strokeDasharray}
+          strokeDashoffset={underlineEvolve.strokeDashoffset}
+        />
+      </svg>
 
       {/* Subtitle */}
       {divider.subtitle && (

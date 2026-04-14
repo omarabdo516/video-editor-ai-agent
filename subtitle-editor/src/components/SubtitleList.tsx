@@ -6,6 +6,7 @@ export function SubtitleList() {
   const subtitles = useSubtitleStore((s) => s.subtitles);
   const selectedId = useSubtitleStore((s) => s.selectedId);
   const currentTime = useSubtitleStore((s) => s.currentTime);
+  const isPlaying = useSubtitleStore((s) => s.isPlaying);
   const selectSubtitle = useSubtitleStore((s) => s.selectSubtitle);
   const setCurrentTime = useSubtitleStore((s) => s.setCurrentTime);
 
@@ -13,18 +14,20 @@ export function SubtitleList() {
   const listRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Map<string, HTMLDivElement>>(new Map());
 
-  // Scroll the active item into view as the playhead moves
+  // Scroll the active item into view as the playhead moves — but ONLY during
+  // playback. When paused, the user is typically browsing the list manually
+  // and auto-scrolling back to the active item fights their intent.
   const activeId = subtitles.find(
     (s) => currentTime >= s.startTime && currentTime <= s.endTime,
   )?.id;
 
   useEffect(() => {
-    if (!activeId) return;
+    if (!activeId || !isPlaying) return;
     const el = itemRefs.current.get(activeId);
     if (el) {
       el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
-  }, [activeId]);
+  }, [activeId, isPlaying]);
 
   const filtered = search.trim()
     ? subtitles.filter((s) => s.text.toLowerCase().includes(search.trim().toLowerCase()))

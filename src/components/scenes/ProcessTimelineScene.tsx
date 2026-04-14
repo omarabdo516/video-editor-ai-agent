@@ -29,9 +29,13 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
   const items = timeline.items;
   const stagger = timeline.stagger_per_item_frames ?? 14;
   const nodeSize = tokens.scenes.timelineNodeSize;
-  const gap = 90;
+  // Gap must be wide enough for Arabic labels ("ميزان مراجعة" ~ 280px at 48px/800)
+  // so adjacent labels don't overlap. At 3 nodes with nodeSize=120 + gap=230:
+  // totalWidth = 3*120 + 2*230 = 820px, fits inside 1080 with room to spare.
+  const gap = 230;
+  const labelSlotWidth = nodeSize + gap - 20;
   const totalWidth = items.length * nodeSize + (items.length - 1) * gap;
-  const startX = (width - totalWidth) / 2;
+  void width;
 
   return (
     <div
@@ -146,21 +150,16 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
           const pulseT = Math.max(0, localFrame - 12);
           const pulse = isDone ? (Math.sin(pulseT * 0.12) + 1) / 2 : 0;
 
+          const nodeCenterX = idx * (nodeSize + gap) + nodeSize / 2;
+
           return (
-            <div
-              key={idx}
-              style={{
-                position: 'absolute',
-                left: idx * (nodeSize + gap),
-                top: 0,
-                width: nodeSize,
-                opacity: progress,
-                transform: `translateY(${(1 - progress) * 24}px) scale(${0.3 + progress * 0.7})`,
-              }}
-            >
-              {/* Node circle */}
+            <React.Fragment key={idx}>
+              {/* Node circle — positioned at its slot */}
               <div
                 style={{
+                  position: 'absolute',
+                  left: idx * (nodeSize + gap),
+                  top: 0,
                   width: nodeSize,
                   height: nodeSize,
                   borderRadius: '50%',
@@ -181,6 +180,8 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
                   fontWeight: 800,
                   fontSize: 60,
                   color: isDone ? tokens.colors.dark : tokens.colors.white,
+                  opacity: progress,
+                  transform: `translateY(${(1 - progress) * 24}px) scale(${0.3 + progress * 0.7})`,
                   boxShadow: isDone
                     ? `0 14px 36px rgba(255,181,1,${0.45 + pulse * 0.3}), 0 0 0 ${10 + pulse * 14}px rgba(255,181,1,${0.08 + pulse * 0.12})`
                     : isNext
@@ -191,25 +192,32 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
                 {item.status_text || (idx + 1)}
               </div>
 
-              {/* Label below node */}
+              {/* Label — independent absolute container, wider than the node
+                  so long Arabic labels don't collide with neighbors */}
               <div
                 style={{
-                  marginTop: 24,
+                  position: 'absolute',
+                  left: nodeCenterX - labelSlotWidth / 2,
+                  top: nodeSize + 28,
+                  width: labelSlotWidth,
                   fontFamily: tokens.fonts.body,
                   fontWeight: 800,
                   fontSize: tokens.scenes.timelineLabelSize + 4,
                   color:
                     isDone || isNext ? tokens.colors.white : 'rgba(255,255,255,0.48)',
                   textAlign: 'center',
-                  lineHeight: 1.1,
-                  whiteSpace: 'nowrap',
+                  lineHeight: 1.15,
                   letterSpacing: '-0.3px',
-                  textShadow: isDone ? '0 2px 8px rgba(255,181,1,0.3)' : 'none',
+                  opacity: progress,
+                  transform: `translateY(${(1 - progress) * 20}px)`,
+                  textShadow: isDone
+                    ? '0 2px 10px rgba(255,181,1,0.4), 0 2px 8px rgba(0,0,0,0.5)'
+                    : '0 2px 8px rgba(0,0,0,0.5)',
                 }}
               >
                 {item.label}
               </div>
-            </div>
+            </React.Fragment>
           );
         })}
       </div>

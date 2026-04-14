@@ -1,0 +1,289 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-14",
+  "generated_by": "Claude Code (Opus 4.6)",
+
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 3/المحاسب الشامل محمد ريان - من فعاليات المحاضرة.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 3/المحاسب الشامل محمد ريان - من فعاليات المحاضرة.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 3/المحاسب الشامل محمد ريان - من فعاليات المحاضرة.mp4.captions.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 3/المحاسب الشامل محمد ريان - من فعاليات المحاضرة.16k.wav.energy.json",
+    "metadata": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 3/المحاسب الشامل محمد ريان - من فعاليات المحاضرة.1080x1920.mp4.metadata.json"
+  },
+
+  "video": {
+    "duration_sec": 85.11,
+    "duration_str": "01:25",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 66
+  },
+
+  "lecturer": {
+    "name": "محمد ريان",
+    "title": "خبير محاسبة",
+    "workshop": "ورشة المحاسب الشامل"
+  },
+
+  "summary": "محمد ريان بيكسر فهم شائع جداً عند المحاسبين: التمييز بين 'طويل الأجل' و 'قصير الأجل' في التمويل. بيبدأ بإن حقوق الملكية تمويل طويل الأجل فعلاً لأن المساهمين بيفضلوا في الشركة طول ما الشركة عايشة. بعدين بيطرح فخ ذكي: قرض بنكي مدته 50 سنة — هو ده طويل الأجل؟ الإجابة المفاجئة: لأ، لأن أول قسط بيستحق الشهر الجاي، فده تمويل قصير الأجل فعلياً. بعدها بيصحح: في المحاسبة مفيش حاجة اسمها 'قرض طويل الأجل' أو 'قرض قصير الأجل' — ده مصطلح بنكي. المحاسبة بتقول 'متداول' و 'غير متداول'. بيشرح تصنيف البنوك للقروض (1-5 سنين قصير، 5-10 متوسط، >10 طويل)، وبيختم بـ 'أخطر قاعدة تمويلية في العالم': ما تمولش نشاط قصير الأجل من تمويل طويل الأجل أو العكس. الفيديو بيعلم المحاسب يفكر في التمويل على أساس الـ cash flow الفعلي، مش على أساس اسم المنتج البنكي.",
+
+  "topics": [
+    "حقوق الملكية كتمويل طويل الأجل",
+    "الفخ في تسمية القروض طويلة الأجل",
+    "تصنيف المحاسبة: متداول vs غير متداول",
+    "تصنيف البنوك للقروض (قصير/متوسط/طويل)",
+    "القاعدة الذهبية: مطابقة duration التمويل مع duration النشاط",
+    "الفرق بين مصطلحات البنوك ومصطلحات المحاسبة",
+    "cash flow كأساس لتصنيف التمويل"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "الـ Hook: حقوق الملكية والقروض",
+      "start_sec": 0.0,
+      "end_sec": 2.20,
+      "start_str": "00:00",
+      "end_str": "00:02",
+      "subtitle_range": [0, 1],
+      "summary": "افتتاحية سريعة — 'تعالى بقى نحكي في حقوق الملكية وفي القروض'. طرح الموضوع."
+    },
+    {
+      "id": 2,
+      "title": "الإجابة: حقوق الملكية = طويل الأجل",
+      "start_sec": 2.20,
+      "end_sec": 18.62,
+      "start_str": "00:02",
+      "end_str": "00:18",
+      "subtitle_range": [2, 12],
+      "summary": "السؤال: تمويل حقوق الملكية طويل ولا قصير؟ الإجابة الفورية: طويل الأجل. التبرير: ناس بتدفع رأس مال، بتضحي بأرباحها، ممكن تضخ الزيادة — وآخر مرة هياخدوا فلوسهم. 'ده عايش معانا طول ما الشركة عايشة'."
+    },
+    {
+      "id": 3,
+      "title": "ربط: التمويل جنب حقوق الملكية = طويل",
+      "start_sec": 18.62,
+      "end_sec": 24.45,
+      "start_str": "00:18",
+      "end_str": "00:24",
+      "subtitle_range": [13, 17],
+      "summary": "تصحيح سريع: مش 'التمويل جنب حقوق الملكية' — 'خليها تمويل طويل الاجل'. تأكيد على المصطلح الصحيح قبل الانتقال للقروض."
+    },
+    {
+      "id": 4,
+      "title": "فخ القروض: قرض 50 سنة",
+      "start_sec": 24.45,
+      "end_sec": 40.40,
+      "start_str": "00:24",
+      "end_str": "00:40",
+      "subtitle_range": [18, 31],
+      "summary": "السؤال التالي: القروض. 'على حسب' — في إن القرض اللي واخده مدته 50 سنة. البنوك بتسميه 'قرض طويل الأجل'. هسألك سؤال: أول قسط هيستحق امتى؟ — بناء الـ trap قبل الـ reveal."
+    },
+    {
+      "id": 5,
+      "title": "الكشف: ده فعلياً قصير الأجل",
+      "start_sec": 40.40,
+      "end_sec": 50.52,
+      "start_str": "00:40",
+      "end_str": "00:50",
+      "subtitle_range": [32, 40],
+      "summary": "الـ reveal: الشهر الجاي، بعد 30 يوم. اداك 100 مليون وبعد شهر بيقولك عايز الأربعة مليون بتوعي. صح ولا لأ؟ يبقى ده تمويل ايه؟ **قصير الاجل**. 'هو بس بيبيعه لك' — البنك بيسوّق المنتج بس، الحقيقة مختلفة."
+    },
+    {
+      "id": 6,
+      "title": "التصحيح المحاسبي: متداول vs غير متداول",
+      "start_sec": 50.52,
+      "end_sec": 60.26,
+      "start_str": "00:50",
+      "end_str": "01:00",
+      "subtitle_range": [41, 49],
+      "summary": "التوضيح الأساسي: في المحاسبة، مفيش 'قروض طويلة الاجل' و 'قروض قصيرة الاجل' — في 'متداول' و 'غير متداول'. كلمة 'قروض طويلة/قصيرة الاجل' دي **منتجات بنكية**، مش مصطلحات محاسبية.",
+      "rs_methodology": true
+    },
+    {
+      "id": 7,
+      "title": "تصنيف البنوك: قصير/متوسط/طويل",
+      "start_sec": 60.26,
+      "end_sec": 71.28,
+      "start_str": "01:00",
+      "end_str": "01:11",
+      "subtitle_range": [50, 58],
+      "summary": "يعني القرض قصير الأجل = مدته من سنة لخمس سنين. من 5 لـ 10 متوسط. أكتر من 10 سنين طويل. فدي مصطلحات بنكية خلاص — مش محاسبية."
+    },
+    {
+      "id": 8,
+      "title": "القاعدة الذهبية: أخطر قاعدة تمويلية",
+      "start_sec": 71.28,
+      "end_sec": 83.88,
+      "start_str": "01:11",
+      "end_str": "01:24",
+      "subtitle_range": [59, 65],
+      "summary": "الـ closing punch: 'طيب خد اخطر قاعدة تمويلية في العالم' — اوعى تمول نشاط قصير الاجل من تمويل طويل الاجل، أو تمول نشاط طويل الاجل من تمويل قصير الاجل. دي القاعدة الذهبية اللي بتحدد إذا الشركة هتنجو ولا لأ.",
+      "rs_methodology": true
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "timestamp_start_sec": 2.20,
+      "timestamp_end_sec": 18.62,
+      "timestamp_start": "00:02",
+      "timestamp_end": "00:18",
+      "content": "حقوق الملكية = تمويل طويل الأجل (لأنها عايشة مع الشركة طول ما الشركة عايشة)",
+      "importance": "high",
+      "concept_type": "definition",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Definition scene بـ term 'حقوق الملكية' كبير + definition body 'تمويل طويل الأجل' + example/subtext 'عايش مع الشركة طول حياتها'. الـ background dark gradient مع accent glow."
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+      "timestamp_start_sec": 24.45,
+      "timestamp_end_sec": 40.40,
+      "timestamp_start": "00:24",
+      "timestamp_end": "00:40",
+      "content": "الفخ: قرض مدته 50 سنة — البنك بيسميه طويل الأجل، بس أول قسط هيستحق الشهر الجاي",
+      "importance": "high",
+      "concept_type": "metaphor",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "BigMetaphor scene بـ headline 'قرض 50 سنة = طويل الأجل؟' + subline 'طيب أول قسط هيستحق امتى؟' + footer 'الشهر الجاي' (accent). الـ scene بتبني الـ mystery قبل الـ reveal."
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [32, 33, 34, 35, 36, 37, 38, 39, 40],
+      "timestamp_start_sec": 40.40,
+      "timestamp_end_sec": 50.52,
+      "timestamp_start": "00:40",
+      "timestamp_end": "00:50",
+      "content": "الكشف: ده فعلياً تمويل قصير الأجل — البنك بس بيبيعه لك",
+      "importance": "high",
+      "concept_type": "tip",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "Keyword overlay 'تمويل قصير الأجل' قريب من الكابشن (y≈1140) في لحظة الـ reveal. + smart_zoom على المحاضر لأن الـ reveal كلمة من الفم مباشرة."
+    },
+    {
+      "id": 4,
+      "subtitle_ids": [41, 42, 43, 44, 45, 46, 47, 48, 49],
+      "timestamp_start_sec": 50.52,
+      "timestamp_end_sec": 60.26,
+      "timestamp_start": "00:50",
+      "timestamp_end": "01:00",
+      "content": "التصحيح المحاسبي: في المحاسبة مفيش قروض طويلة/قصيرة — في متداول وغير متداول",
+      "importance": "high",
+      "concept_type": "comparison",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "ComparisonTwoPaths scene: يسار ✗ 'قروض طويلة/قصيرة' (مصطلح بنكي) — يمين ✓ 'متداول / غير متداول' (مصطلح محاسبي). بيكسر misconception شائع بصرياً.",
+      "rs_methodology": true
+    },
+    {
+      "id": 5,
+      "subtitle_ids": [50, 51, 52, 53, 54, 55, 56, 57, 58],
+      "timestamp_start_sec": 60.26,
+      "timestamp_end_sec": 71.28,
+      "timestamp_start": "01:00",
+      "timestamp_end": "01:11",
+      "content": "تصنيف البنوك للقروض: 1-5 سنين قصير، 5-10 متوسط، أكتر من 10 طويل",
+      "importance": "medium",
+      "concept_type": "process",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "Keyword overlay 'منتجات بنكية' مع small zoom. (مش scene لأن الـ spacing مع KM4 والـ KM6 ضيق جداً — والمحتوى معلوماتي بسيط أصلاً يتوضح من الكابشن.)"
+    },
+    {
+      "id": 6,
+      "subtitle_ids": [59, 60, 61, 62, 63, 64, 65],
+      "timestamp_start_sec": 71.28,
+      "timestamp_end_sec": 83.88,
+      "timestamp_start": "01:11",
+      "timestamp_end": "01:24",
+      "content": "أخطر قاعدة تمويلية في العالم: ما تمولش نشاط قصير من تمويل طويل، ولا العكس",
+      "importance": "high",
+      "concept_type": "tip",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "BigMetaphor scene closing. Headline 'اخطر قاعدة تمويلية' + subline 'ما تمولش قصير من طويل' + footer 'ولا العكس'. الـ payoff النهائي — الـ scene ختام قوي بـ accent glow عالي.",
+      "rs_methodology": true
+    }
+  ],
+
+  "keywords": [
+    { "term": "حقوق الملكية", "first_seen_subtitle": 1, "first_seen_sec": 0.64, "category": "concept", "weight": 5 },
+    { "term": "القروض", "first_seen_subtitle": 1, "first_seen_sec": 0.64, "category": "concept", "weight": 5 },
+    { "term": "تمويل طويل الأجل", "first_seen_subtitle": 3, "first_seen_sec": 4.84, "category": "concept", "weight": 5 },
+    { "term": "تمويل قصير الأجل", "first_seen_subtitle": 4, "first_seen_sec": 6.46, "category": "concept", "weight": 5 },
+    { "term": "رأس مال", "first_seen_subtitle": 6, "first_seen_sec": 9.38, "category": "concept", "weight": 3 },
+    { "term": "قرض 50 سنة", "first_seen_subtitle": 21, "first_seen_sec": 28.36, "category": "example", "weight": 5 },
+    { "term": "أول قسط", "first_seen_subtitle": 29, "first_seen_sec": 37.34, "category": "concept", "weight": 4 },
+    { "term": "الشهر الجاي", "first_seen_subtitle": 31, "first_seen_sec": 40.14, "category": "concept", "weight": 4 },
+    { "term": "متداول", "first_seen_subtitle": 45, "first_seen_sec": 54.62, "category": "concept", "weight": 5 },
+    { "term": "غير متداول", "first_seen_subtitle": 46, "first_seen_sec": 55.46, "category": "concept", "weight": 5 },
+    { "term": "منتجات بنكية", "first_seen_subtitle": 49, "first_seen_sec": 59.02, "category": "concept", "weight": 4 },
+    { "term": "أخطر قاعدة تمويلية", "first_seen_subtitle": 59, "first_seen_sec": 71.28, "category": "metaphor", "weight": 5 }
+  ],
+
+  "emphasis_moments": [
+    { "energy_time_sec": 1.344, "energy": 0.1899, "energy_type": "high_energy", "subtitle_id": 1, "text": "حقوق الملكية وفي القروض", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "rationale": "افتتاحية — voice energy على اسم الموضوع" },
+    { "energy_time_sec": 7.136, "energy": 0.1902, "energy_type": "dramatic_pause", "subtitle_id": 4, "text": "قصير الأجل حقوق الملكية", "intensity": "medium", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 1, "rationale": "لحظة الإجابة: 'طويل الأجل' بعد السؤال" },
+    { "energy_time_sec": 12.864, "energy": 0.2057, "energy_type": "high_energy", "subtitle_id": 8, "text": "الزيادة في رأس المال", "intensity": "strong", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 1, "rationale": "بناء الـ justification" },
+    { "energy_time_sec": 16.288, "energy": 0.2165, "energy_type": "high_energy", "subtitle_id": 11, "text": "طول ما الشركة عايشة", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 1, "rationale": "الـ core phrase — 'عايش مع الشركة'" },
+    { "energy_time_sec": 19.008, "energy": 0.2077, "energy_type": "high_energy", "subtitle_id": 13, "text": "الملكية جنب حقوق الملكية", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 21.568, "energy": 0.2067, "energy_type": "high_energy", "subtitle_id": 15, "text": "مش التمويل جنب حقوق", "intensity": "medium", "suggested_treatment": "keyword_highlight", "rationale": "تصحيح المصطلح — انتقالة سريعة" },
+    { "energy_time_sec": 24.512, "energy": 0.1935, "energy_type": "high_energy", "subtitle_id": 18, "text": "القروض ها ؟ طيب", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "rationale": "انتقالة للـ topic التاني — القروض" },
+    { "energy_time_sec": 27.232, "energy": 0.2036, "energy_type": "high_energy", "subtitle_id": 20, "text": "يا سيدي في إن القرض", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 2, "rationale": "بداية الـ setup للـ trap" },
+    { "energy_time_sec": 30.272, "energy": 0.256, "energy_type": "high_energy", "subtitle_id": 22, "text": "خمسين سنة", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 2, "rationale": "أعلى energy — الرقم المحوري '50 سنة'" },
+    { "energy_time_sec": 32.384, "energy": 0.1891, "energy_type": "dramatic_pause", "subtitle_id": 23, "text": "طيب هسألك سؤال", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 2, "rationale": "الـ setup للسؤال" },
+    { "energy_time_sec": 35.872, "energy": 0.1939, "energy_type": "high_energy", "subtitle_id": 27, "text": "ويقولك قرض طويل", "intensity": "medium", "suggested_treatment": "keyword_highlight", "key_moment_ref": 2 },
+    { "energy_time_sec": 42.592, "energy": 0.1939, "energy_type": "high_energy", "subtitle_id": 33, "text": "اداك 100 مليون", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 3, "rationale": "الرقم المحوري — 100 مليون" },
+    { "energy_time_sec": 46.752, "energy": 0.1985, "energy_type": "dramatic_pause", "subtitle_id": 37, "text": "صح ولا لأ؟", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 3, "rationale": "الـ pause قبل الـ reveal" },
+    { "energy_time_sec": 49.952, "energy": 0.2052, "energy_type": "high_energy", "subtitle_id": 40, "text": "هو بس بيبيعه لك", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 3, "rationale": "الـ punch النهائي — 'البنك بيبيعه لك'" },
+    { "energy_time_sec": 52.256, "energy": 0.1963, "energy_type": "dramatic_pause", "subtitle_id": 42, "text": "في المحاسبة", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 4, "rationale": "بداية التصحيح المحاسبي" },
+    { "energy_time_sec": 55.232, "energy": 0.1924, "energy_type": "high_energy", "subtitle_id": 45, "text": "في متداول", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 4, "rationale": "المصطلح الصحيح — متداول" },
+    { "energy_time_sec": 58.016, "energy": 0.1944, "energy_type": "high_energy", "subtitle_id": 47, "text": "كلمة قروض طويلة الاجل", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 4 },
+    { "energy_time_sec": 62.112, "energy": 0.2096, "energy_type": "dramatic_pause", "subtitle_id": 50, "text": "يعني القرض قصير الاجل", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 5 },
+    { "energy_time_sec": 64.96, "energy": 0.1887, "energy_type": "high_energy", "subtitle_id": 53, "text": "سنين ده قصير الاجل", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 5 },
+    { "energy_time_sec": 74.816, "energy": 0.2082, "energy_type": "dramatic_pause", "subtitle_id": 60, "text": "تمولية في العالم اوعى", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 6, "rationale": "الـ setup للقاعدة الأخطر" },
+    { "energy_time_sec": 78.112, "energy": 0.1913, "energy_type": "high_energy", "subtitle_id": 61, "text": "تمول نشاط قصير الاجل", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 6, "rationale": "الـ core rule — النصف الأول" },
+    { "energy_time_sec": 82.24, "energy": 0.2083, "energy_type": "high_energy", "subtitle_id": 63, "text": "او تمول نشاط طويل", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 6, "rationale": "الـ core rule — النصف الثاني (العكس)" }
+  ],
+
+  "stats": {
+    "section_count": 8,
+    "key_moment_count": 6,
+    "high_importance_key_moments": 5,
+    "medium_importance_key_moments": 1,
+    "keyword_count": 12,
+    "emphasis_moment_count": 22,
+    "strong_emphasis": 13,
+    "medium_emphasis": 9,
+    "low_emphasis": 0,
+    "concept_type_breakdown": {
+      "definition": 1,
+      "metaphor": 1,
+      "tip": 2,
+      "comparison": 1,
+      "process": 1
+    },
+    "suggested_animation_breakdown": {
+      "full_screen_scene": 4,
+      "keyword_highlight": 2
+    },
+    "estimated_full_screen_scenes_density": "4 scene anchors over 85.1s with ~22s avg spacing — respects 15s min spacing rule"
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": "4 full-screen scenes (reel 85.1s). Scenes at KM1 (~6s), KM2 (~28s), KM4 (~52s), KM6 (~76s) — all ≥22s spacing which easily passes 15s rule. KM3 (reveal) and KM5 (banking tiers) skip to overlay/keyword to avoid crowding.",
+    "top_priority_scenes": [
+      { "key_moment_id": 6, "reason": "الـ closing payoff — 'اخطر قاعدة تمويلية'. ده الـ core value bomb للفيديو كله. BigMetaphor scene." },
+      { "key_moment_id": 4, "reason": "التصحيح المحاسبي الأساسي — متداول vs غير متداول. ComparisonTwoPaths scene بيكسر misconception بصرياً." },
+      { "key_moment_id": 2, "reason": "الفخ — قرض 50 سنة. BigMetaphor بـ question format يبني suspense قبل الـ reveal في KM3." },
+      { "key_moment_id": 1, "reason": "التأسيس — حقوق الملكية = طويل الأجل. Definition scene يحدد baseline understanding." }
+    ],
+    "smart_zoom_density": "1 كل 30s max → 2 zooms max على 85.1s. Candidates: 16.3s ('طول ما الشركة عايشة' — strong emphasis) و 46.8s ('صح ولا لأ؟' — dramatic pause قبل الـ reveal). Spacing = 30.5s ✓",
+    "overlays_density": "1 كل 20s max → max ~3 overlays على 85.1s. الأولوية: ~21s 'تمويل طويل الأجل' (post-KM1, pre-KM2) + ~47s 'قصير الأجل' (الكشف في KM3 — in-caption or small floating) + ~66s 'منتجات بنكية' (KM5 — بين scene 3 و 4)",
+    "caption_style_hint": "Single caption style (hormozi) طول الريل. Omar مطلبش variety في الـ captions — القاعدة في memory `feedback_single_caption_style`: الـ caption constant طول الريل، والـ variety بتيجي من scenes/overlays/animations.",
+    "chapter_dividers_suggestion": "مش محتاج chapter dividers لفيديو 85s — الـ 4 scenes كفايلة section breaks. الـ reel صغير والمشاهد مش هيحس بحاجة لـ hard section breaks."
+  }
+}

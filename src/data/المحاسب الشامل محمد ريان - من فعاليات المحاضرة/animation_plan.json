@@ -1,0 +1,618 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-14",
+  "generated_by": "Claude Code (Opus 4.6)",
+  "source_video_basename": "المحاسب الشامل محمد ريان - من فعاليات المحاضرة",
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 3/المحاسب الشامل محمد ريان - من فعاليات المحاضرة.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 3/المحاسب الشامل محمد ريان - من فعاليات المحاضرة.1080x1920.mp4",
+    "content_analysis": "src/data/المحاسب الشامل محمد ريان - من فعاليات المحاضرة/content_analysis.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 3/المحاسب الشامل محمد ريان - من فعاليات المحاضرة.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 3/المحاسب الشامل محمد ريان - من فعاليات المحاضرة.16k.wav.energy.json"
+  },
+  "video": {
+    "duration_sec": 85.11,
+    "fps": 30,
+    "width": 1080,
+    "height": 1920
+  },
+  "color_palette": {
+    "primary": "#10479D",
+    "accent": "#FFB501",
+    "dark": "#0D1F3C",
+    "white": "#FFFFFF",
+    "overlay_dark": "rgba(13, 31, 60, 0.85)"
+  },
+  "fonts": {
+    "title": {
+      "family": "Cairo",
+      "weight": 700
+    },
+    "body": {
+      "family": "Cairo",
+      "weight": 400
+    },
+    "highlight": {
+      "family": "Tajawal",
+      "weight": 800
+    },
+    "caption": {
+      "family": "Tajawal",
+      "weight": 800
+    }
+  },
+  "caption_style": "hormozi",
+  "caption_style_notes": "Single style طول الريل. Omar مطلبش variety — القاعدة memory `feedback_single_caption_style`.",
+  "smart_zoom_plan": {
+    "_compatibility_note": "Same shape as the zoom_plan the CLI auto-loads. Reel.tsx reads animationPlan.smart_zoom_plan directly.",
+    "spring": "smooth",
+    "moments": [
+      {
+        "id": "zoom_1",
+        "startSec": 36.5,
+        "endSec": 40,
+        "zoomLevel": 1.4,
+        "centerX": 0.706,
+        "centerY": 0.375,
+        "reason": "KM #2/3 trap reveal — 'أول قسط هيستحق امتى؟ الشهر الجاي'. Face conf avg 0.76 in window 36.5-40. High emphasis @ 35.87s, dramatic pause @ 38.56s equivalent. Comes right after Scene 2 fades out (34s), so the face takes over the reveal moment.",
+        "anchor_subtitle_id": 30,
+        "anchor_text": "هيستحق امتى؟ الشهر الجاي",
+        "key_moment_ref": 3
+      }
+    ]
+  },
+  "smart_zoom_notes": "Only 1 big zoom this reel — زoom 1 (earlier at 14.5s for 'طول ما الشركة عايشة') was dropped because the 30s min zoom spacing to zoom 2 (36.5s) can't be satisfied without pushing zoom 2 into lower-conf face windows. Mini zooms from Phase 6.5 will fill the retention gap.",
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "definition",
+      "key_moment_ref": 1,
+      "start_sec": 7.5,
+      "end_sec": 14,
+      "duration_sec": 6.5,
+      "anchor_subtitle_ids": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "anchor_text": "ناس بتدفع رأس مال ناس بتضحي بأرباحها... يعني ده عايش معانا طول ما الشركة عايشة",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "التمويل الأول",
+      "title_size": 56,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "definition",
+          "term": "حقوق الملكية",
+          "term_sub": "Equity Financing",
+          "definition": "تمويل طويل الأجل",
+          "example": "عايش مع الشركة طول حياتها",
+          "icon": "⏳"
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "تأسيس الـ baseline. Definition scene بتوضح إن حقوق الملكية = طويل الأجل قبل ما الـ twist يحصل في Scene 2. الـ term كبير + accent، والـ definition البسيطة تحته، والـ example بيأكد الـ 'عايش مع الشركة' كـ mental anchor."
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "scene_type": "big_metaphor",
+      "key_moment_ref": 2,
+      "start_sec": 28,
+      "end_sec": 34,
+      "duration_sec": 6,
+      "anchor_subtitle_ids": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "anchor_text": "قرض مدته خمسين سنة... البنوك بيضحكوا عليك ويقولك قرض طويل الأجل... هسألك سؤال",
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "قرض 50 سنة",
+          "headline_size": 120,
+          "headline_color": "accent",
+          "headline_font": "Tajawal",
+          "headline_weight": 800,
+          "subline": "ده فعلاً طويل الأجل؟",
+          "subline_size": 48,
+          "subline_color": "white",
+          "subline_font": "Cairo",
+          "subline_weight": 500,
+          "subline_delay_frames": 24,
+          "footer_label": "خلي بالك من الفخ",
+          "footer_size": 32,
+          "footer_color": "white",
+          "footer_opacity": 0.85,
+          "footer_delay_frames": 52
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "الـ setup للـ trap. BigMetaphor بـ headline '50 سنة' ضخم + question subline — بيبني suspense قبل الـ reveal اللي هيحصل على وش المحاضر في segs 32-40. الـ scene بتخلّص قبل الـ reveal عشان الـ face يعمل الـ punch."
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "scene_type": "comparison_two_paths",
+      "key_moment_ref": 4,
+      "start_sec": 52,
+      "end_sec": 58.5,
+      "duration_sec": 6.5,
+      "anchor_subtitle_ids": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47
+      ],
+      "anchor_text": "في المحاسبة مفيش كلمة قروض طويلة الاجل وقروض قصيرة الاجل — في متداول وغير متداول",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "اللغة الصحيحة",
+      "title_size": 56,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "comparison_two_paths",
+          "left": {
+            "label": "مصطلح بنكي",
+            "icon": "x",
+            "icon_color": "#FF4A4A",
+            "icon_opacity": 0.9,
+            "steps": [
+              "قروض طويلة الأجل",
+              "قروض قصيرة الأجل"
+            ],
+            "step_color": "white",
+            "highlight": "منتج بنكي",
+            "highlight_color": "#FF4A4A",
+            "highlight_opacity": 0.8
+          },
+          "right": {
+            "label": "مصطلح محاسبي",
+            "icon": "check",
+            "icon_color": "#FFB501",
+            "icon_opacity": 1,
+            "steps": [
+              "متداول",
+              "غير متداول"
+            ],
+            "step_color": "white",
+            "highlight": "في الميزانية",
+            "highlight_color": "#FFB501",
+            "highlight_opacity": 1
+          },
+          "stagger_delay_frames": 12
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "التصحيح المحاسبي الأساسي — misconception شائع بيتكسر بصرياً. Two-paths: يسار المصطلح البنكي الخطأ، يمين المصطلح المحاسبي الصحيح. Omar memory `feedback_scene_layout`: layered motion + centered anchor."
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "scene_type": "big_metaphor",
+      "key_moment_ref": 6,
+      "start_sec": 75,
+      "end_sec": 82,
+      "duration_sec": 7,
+      "anchor_subtitle_ids": [
+        60,
+        61,
+        62,
+        63,
+        64,
+        65
+      ],
+      "anchor_text": "اوعى تمول نشاط قصير الاجل من تمويل طويل الاجل او تمول نشاط طويل الاجل من تمويل قصير الأجل",
+      "background": "#10479D",
+      "title_size": 0,
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "أخطر قاعدة تمويلية",
+          "headline_size": 88,
+          "headline_color": "accent",
+          "headline_font": "Tajawal",
+          "headline_weight": 800,
+          "subline": "ما تمولش قصير من طويل",
+          "subline_size": 56,
+          "subline_color": "white",
+          "subline_font": "Tajawal",
+          "subline_weight": 800,
+          "subline_delay_frames": 30,
+          "footer_label": "ولا العكس",
+          "footer_size": 42,
+          "footer_color": "accent",
+          "footer_opacity": 1,
+          "footer_delay_frames": 70
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 12
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 9
+      },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "Closing payoff. الـ core rule للفيديو كله. Headline + subline بالـ key phrase + footer accent ('ولا العكس') بيكمل الـ rule بـ dramatic reveal في آخر 2s. ده الـ moment اللي المشاهد بيافتكر الفيديو بسببه."
+    }
+  ],
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "keyword": "تمويل طويل الأجل",
+      "start_sec": 19,
+      "end_sec": 22.5,
+      "duration_sec": 3.5,
+      "anchor_subtitle_id": 14,
+      "anchor_text": "بقى معلش لا لا",
+      "position": "top-center",
+      "y_px": 1140,
+      "background": "rgba(13, 31, 60, 0.85)",
+      "background_padding": "16px 32px",
+      "background_radius": 12,
+      "primary_text": "حقوق الملكية",
+      "primary_color": "accent",
+      "primary_size": 54,
+      "primary_weight": 800,
+      "secondary_text": "= تمويل طويل الأجل",
+      "secondary_color": "white",
+      "secondary_size": 30,
+      "secondary_weight": 500,
+      "enter": "fade_slide_down",
+      "exit": "fade_slide_up",
+      "design_rationale": "Reinforcement بعد Scene 1 و Zoom 1 — بيثبّت الـ KM1 conclusion في رأس المشاهد قبل الانتقال للـ trap في Scene 2. قريب من zone الكابشنز (y=1140) حسب memory `feedback_overlay_position`."
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "overlay_type": "stamp",
+      "keyword": "الشهر الجاي",
+      "start_sec": 42,
+      "end_sec": 45.5,
+      "duration_sec": 3.5,
+      "anchor_subtitle_id": 31,
+      "anchor_text": "الشهر الجاي",
+      "position": "top-center",
+      "y_px": 860,
+      "background": "transparent",
+      "stamp_style": {
+        "border": "5px solid #FFB501",
+        "border_radius": 10,
+        "padding": "14px 32px",
+        "rotation_deg": -4
+      },
+      "text": "أول قسط: شهر!",
+      "text_color": "accent",
+      "font": "Tajawal",
+      "weight": 800,
+      "size": 58,
+      "enter": "stamp_pop",
+      "exit": "fade",
+      "design_rationale": "Stamp في body zone (y=860) على لحظة الـ reveal الفعلي. بيسبق الـ zoom 2 (46-49.5) بـ 3.5s فـ بيبني الـ suspense. بيكسر الـ trap بصرياً: '50 سنة = شهر واحد في الحقيقة'. Body zone آمن (memory `feedback_safe_zones`)."
+    },
+    {
+      "id": "overlay_3",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "keyword": "منتجات بنكية",
+      "start_sec": 64,
+      "end_sec": 67.5,
+      "duration_sec": 3.5,
+      "anchor_subtitle_id": 52,
+      "anchor_text": "مدته من سنة لخمس",
+      "position": "top-center",
+      "y_px": 1140,
+      "background": "rgba(13, 31, 60, 0.85)",
+      "background_padding": "16px 32px",
+      "background_radius": 12,
+      "primary_text": "منتجات بنكية",
+      "primary_color": "accent",
+      "primary_size": 54,
+      "primary_weight": 800,
+      "secondary_text": "مش مصطلحات محاسبية",
+      "secondary_color": "white",
+      "secondary_size": 30,
+      "secondary_weight": 500,
+      "enter": "fade_slide_down",
+      "exit": "fade_slide_up",
+      "design_rationale": "Reinforcement للتصحيح بعد Scene 3 — بيذكّر المشاهد إن التصنيف اللي بيسمعه (1-5, 5-10, >10) ده بنكي، مش محاسبي. Positioned near caption zone (y=1140)."
+    }
+  ],
+  "chapter_dividers": [],
+  "chapter_dividers_note": "Reel 85s قصير — الـ 4 scenes كفايلة section breaks. ما فيش حاجة للـ chapter dividers.",
+  "logo_bug": {
+    "enabled": true,
+    "visible_during": "all_except_outro",
+    "_note": "Logo stays visible during scenes (memory `feedback_logo_visible_in_scenes`). Scenes use paddingTop ≥ 280."
+  },
+  "lower_third": {
+    "enabled": true,
+    "lecturer_name": "محمد ريان",
+    "workshop_name": "ورشة المحاسب الشامل",
+    "appears_at_sec": 0.5,
+    "duration_sec": 4
+  },
+  "outro": {
+    "enabled": true,
+    "start_sec": 85.11,
+    "duration_sec": 2.5,
+    "tagline": "بنحقق طموحك المحاسبي",
+    "_note": "Total comp = 85.11 + 2.5 = 87.61s."
+  },
+  "elements": [
+    {
+      "id": "lower_third",
+      "type": "lower_third",
+      "start_sec": 0.5,
+      "end_sec": 4.5
+    },
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "start_sec": 7.5,
+      "end_sec": 14
+    },
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "start_sec": 19,
+      "end_sec": 22.5
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "start_sec": 28,
+      "end_sec": 34
+    },
+    {
+      "id": "zoom_1",
+      "type": "smart_zoom",
+      "start_sec": 36.5,
+      "end_sec": 40
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "start_sec": 42,
+      "end_sec": 45.5
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "start_sec": 52,
+      "end_sec": 58.5
+    },
+    {
+      "id": "overlay_3",
+      "type": "overlay",
+      "start_sec": 64,
+      "end_sec": 67.5
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "start_sec": 75,
+      "end_sec": 82
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "start_sec": 85.11,
+      "end_sec": 87.61
+    }
+  ],
+  "validation": {
+    "rules_checked": "docs/scene-validation-rules.md",
+    "scene_spacing": {
+      "min_required_sec": 15,
+      "actual_gaps_sec": [
+        20.5,
+        24,
+        23
+      ],
+      "passed": true,
+      "note": "Scene starts: 7.5, 28, 52, 75 → gaps 20.5s, 24s, 23s all ≥ 15s"
+    },
+    "scene_coverage": {
+      "total_scene_time_sec": 26,
+      "video_duration_sec": 85.11,
+      "coverage_pct": 30.5,
+      "max_allowed_pct": 60,
+      "passed": true
+    },
+    "zoom_spacing": {
+      "min_required_sec": 30,
+      "actual_gaps_sec": [],
+      "passed": true,
+      "note": "Only 1 big zoom — no spacing check needed."
+    },
+    "overlay_spacing": {
+      "min_required_sec": 20,
+      "actual_gaps_sec": [
+        23,
+        22
+      ],
+      "passed": true,
+      "note": "Overlay starts: 19, 42, 64 → gaps 23s, 22s all ≥ 20s"
+    },
+    "zoom_scene_overlap": {
+      "passed": true,
+      "note": "zoom_1 (36.5-40) between scene_2 (ends 34) and scene_3 (starts 52). 2.5s buffer after scene_2."
+    },
+    "overlay_scene_overlap": {
+      "passed": true,
+      "note": "overlay_1 (19-22.5) after scene_1 (ends 14). overlay_2 (42-45.5) after zoom_1 (ends 40), before scene_3 (starts 52). overlay_3 (64-67.5) between scene_3 (ends 58.5) and scene_4 (starts 75)."
+    },
+    "face_confidence": {
+      "zoom_1_conf_avg": 0.76,
+      "min_required": 0.5,
+      "passed": true
+    },
+    "caption_style_variety": {
+      "styles_used": [
+        "hormozi"
+      ],
+      "unique_count": 1,
+      "note": "Intentional — Omar feedback (memory `feedback_single_caption_style`): single style per reel unless explicitly asked."
+    }
+  },
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "word_pop",
+      "start_sec": 1.19,
+      "end_sec": 1.94,
+      "word": "الملكية",
+      "anchor_subtitle_id": 1,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_2",
+      "type": "word_pop",
+      "start_sec": 4.27,
+      "end_sec": 5.02,
+      "word": "يعتبر",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_3",
+      "type": "mini_zoom",
+      "start_sec": 15.99,
+      "end_sec": 17.19,
+      "zoom_level": 1.08,
+      "center_x": 0.44,
+      "center_y": 0.49,
+      "intensity": "strong",
+      "anchor_subtitle_id": 11,
+      "anchor_text": "طول ما الشركة عايشة",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_4",
+      "type": "caption_underline",
+      "start_sec": 24.31,
+      "end_sec": 25.51,
+      "anchor_subtitle_id": 18,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_5",
+      "type": "mini_zoom",
+      "start_sec": 46.45,
+      "end_sec": 47.65,
+      "zoom_level": 1.08,
+      "center_x": 0.352,
+      "center_y": 0.435,
+      "intensity": "strong",
+      "anchor_subtitle_id": 37,
+      "anchor_text": "صح ولا لأ؟",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_6",
+      "type": "mini_zoom",
+      "start_sec": 49.65,
+      "end_sec": 50.85,
+      "zoom_level": 1.08,
+      "center_x": 0.171,
+      "center_y": 0.378,
+      "intensity": "strong",
+      "anchor_subtitle_id": 40,
+      "anchor_text": "هو بس بيبيعه لك",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_7",
+      "type": "mini_zoom",
+      "start_sec": 61.81,
+      "end_sec": 63.01,
+      "zoom_level": 1.08,
+      "center_x": 0.219,
+      "center_y": 0.398,
+      "intensity": "strong",
+      "anchor_subtitle_id": 50,
+      "anchor_text": "يعني القرض قصير الاجل",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_8",
+      "type": "word_pop",
+      "start_sec": 71.1,
+      "end_sec": 71.85,
+      "word": "خلاص",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    }
+  ],
+  "micro_events_generated_at": "2026-04-14",
+  "micro_events_stats": {
+    "total": 8,
+    "cadence_sec": 10.64,
+    "by_type": {
+      "word_pop": 3,
+      "mini_zoom": 4,
+      "caption_underline": 1
+    },
+    "by_source": {
+      "emphasis": 6,
+      "gap_fill": 2
+    }
+  }
+}

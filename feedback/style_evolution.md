@@ -47,6 +47,50 @@
 - **السبب:** Omar ملاحظة: "طبيعة الريلز ان مهم يكون في حاجة بتحصل كل 4 ثواني مثلا عشان المشاهد ميملش فازاي نظبط حاجة زي كدا؟" — الحل: 3-tier event system (major / micro / continuous).
 - **المصدر:** "محمد ريان - ورشة الشامل" (Apr 2026)
 
+### Single caption style per reel (unless explicitly asked)
+- **القاعدة:** استخدم `caption_style` واحد طول الريل. ما تحطّش `caption_style_ranges` إلا لما Omar يطلب صراحةً "غيّر الـ style جوه الفيديو".
+- **السبب:** Omar جرّب mixed styles (typewriter/box/karaoke/pop/classic/hormozi على نفس الريل) وقال "لا خلتها مزعجة خلينا بستايل واحد أفضل". الـ mixing بيعمل noise للمشاهد — كل ما الـ renderer يتغير، دماغه لازم تعيد الـ parse للـ visual، وده بيبعد الانتباه عن المحتوى.
+- **نقطة مهمة:** لما Omar قال "استخدم أكتر من استايل بذكاء" أول المشروع، كان يقصد الـ scenes والـ overlays والـ animations — مش الـ caption renderer نفسه. الكابشن هو الـ constant اللي المشاهد بيركز عليه، فأي تغيير فيه بيبقى mini-disruption.
+- **الاستثناء الوحيد:** لو Omar طلب صراحةً mixing (مش variety عامة).
+- **Default:** `hormozi` (الـ proven baseline).
+- **المصدر:** "المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة" (Apr 2026)
+
+### Leading black frames must be trimmed in Phase 1
+- **القاعدة:** الـ `prepareVideo` في `rs-reels.mjs` لازم يكشف الـ leading black في أول 3 ثواني من الـ source ويقصّه باستخدام `-ss <black_end>` قبل `-i` في الـ ffmpeg command. الـ audio extraction لازم يحصل من الـ scaled video بعد الـ trim مش من الـ source، عشان الـ captions والـ energy والـ face_map يفضلوا متزامنين مع الـ trimmed visual.
+- **السبب:** Omar لاحظ إن الفيديو بيفتح على frame أسود (common في camera recordings — sensor warm-up). blackdetect بيأكد إن الـ source MP4 بيبدأ بـ 1-2 frame أسود. لو ما اتقصّش، الريل بيبدأ بلحظة سوداء قبل الـ content.
+- **الأثر:** الفيديوهات اللي اتبنى لها `.1080x1920.mp4` قبل April 14 مش هتتأثر (cache). الفيديوهات الجديدة بس.
+- **المصدر:** "المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة" (Apr 2026)
+
+### Scene components must avoid layout-breaking wrappers
+- **القاعدة:** ما تغلّفش flex children بـ `<Trail>` من `@remotion/motion-blur` — الـ Trail بتكسر الـ flex sizing فالـ child بياخد zero height ويطلع على top الـ container بدل ما يتوسّط. نفس المبدأ ينطبق على أي wrapper بيعمل `position: absolute` internally (motion-blur ghosts, ribbons, إلخ). لو محتاج motion effect زي ده، اعمل absolute positioning for the whole scene body بدل flex + wrapper.
+- **السبب:** BigMetaphorScene v1 كان بيغلّف الـ headline في `<Trail>` داخل flex column centered. النتيجة: الـ headline طلع على top الـ frame ومقتطع بدل ما يتوسّط. الـ fix: استبدلنا الـ flex layout بـ absolute positioning بإحداثيات واضحة (y=900 للـ headline، y=1120 للـ subline، y=1560 للـ footer).
+- **Pattern عام:** أي scene component لو المحتوى كبير ومحدد الأماكن (headline + subline + footer)، الـ absolute positioning أكتر predictable من flex + wrappers.
+- **المصدر:** "المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة" (Apr 2026)
+
+### Timeline labels need their own wider container (not nodeSize)
+- **القاعدة:** في `ProcessTimelineScene`، الـ label container لازم يبقى أوسع من الـ node (width ≥ `nodeSize + gap - 20`) ومركّز على الـ node. ما تستخدمش `whiteSpace: nowrap` مع `width: nodeSize` — Arabic labels عادةً 3-4x أعرض من الـ node.
+- **السبب:** v1 كان بـ gap=90, label width=nodeSize=120, whiteSpace:nowrap. النتيجة: "ميزان مراجعة" ~350px عرض، overflow الـ container، وبتتعارض مع الـ labels المجاورة.
+- **v2:** gap=230, labelSlotWidth=nodeSize+gap-20=330, labels absolute positioned وسط كل node بشكل مستقل عن الـ node itself.
+- **المصدر:** "المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة" (Apr 2026)
+
+### Outro = CTA card, not just a logo flash (5s duration)
+- **القاعدة:** الـ outro مش مجرد logo + tagline — ده آخر لحظة قبل ما المشاهد يسكيب، ولازم يحمل CTA واضح + social presence + website. الـ layout الرسمي دلوقتي: logo (y=340) → tagline (y=640) → CTA primary "احجز ورشتك الجاية" (y=820) → CTA subtext "راسلنا على رسائل الصفحة أو زور موقعنا" (y=930) → website rspaac.com بـ accent كبير (y=1110) → social icons row (y=1320): Instagram · Facebook · TikTok · LinkedIn · YouTube. الـ duration = 5s مع staggered cascade.
+- **السبب:** Omar طلب صراحةً "محتاج اضيف في الفوتر ايكونز [الخمسة] وفوقيها لينك الويبسايت بتاعنا rspaac.com وكمان نضيف CTA ان المتدرب يقدر يحجز من خلال تواصل عبر رسائل الصفحة مباشرةً او من خلال موقعنا الالكتروني". الـ 2.5s outro القديم كان بيحرق آخر ثواني من الريل من غير conversion path.
+- **الـ social icons:** inline SVG paths من simple-icons (CC0). موجودين في `src/components/SocialIcons.tsx` مع platform map. ما فيش PNG assets — الـ SVG بيرسم بـ fill color من الـ tokens.
+- **المصدر:** "المحاسب الشامل محمد ريان - من فعاليات المحاضرة" (Apr 2026)
+
+### Subtitle editor: Approve writes directly to disk via POST (no Downloads roundtrip)
+- **القاعدة:** الـ Approve button في الـ editor بيعمل POST للـ JSON + SRT مباشرة على الـ rs-reels HTTP server (routes: `POST /save/captions.json` + `POST /save/captions.srt`)، والـ server بيكتب الملفات جنب الفيديو مباشرة. الـ editor بيقرا `?saveBase=...` من الـ URL params ويستخدمه — لو مش موجود (لو Omar فتح الـ editor standalone)، بيرجع للـ download fallback.
+- **السبب:** Omar: "هل نقدر لما ادوس Approve ينزلو في مكان تقرأهم Automatic بسرعة عشان نسرع العملية؟" — الـ download → Downloads → manual-copy round trip كان بيبطّأ كل run.
+- **الملفات:** `rs-reels.mjs startFileServer` يقبل `savePaths` object الآن (optional). `runEdit` يبني `savePaths = { '/save/captions.json': jsonDestPath, '/save/captions.srt': srtDestPath }` ويبعت `saveBase` في الـ URL. `Toolbar.handleApprove` يعمل Promise.all على الـ fetch POSTs.
+- **المصدر:** "المحاسب الشامل محمد ريان - من فعاليات المحاضرة" (Apr 2026)
+
+### Single big zoom على الريلز القصيرة < 90s لما الـ face confidence غير مستقر
+- **القاعدة:** لما الريل أقصر من 90s والـ face_map فيه no-face gaps (زي drift / blur / head turns)، الأفضل نختار **big zoom واحد** بس على الـ highest-impact moment بدل ما نحاول نلاقي اتنين بـ 30s spacing. Phase 6.5 mini zooms بيملوا الـ retention gap بالـ 1.08x subtle zooms.
+- **السبب:** في فيديو "من فعاليات المحاضرة" (85s)، حاولت أحط zoom_1 at 14.5s ("طول ما الشركة عايشة") و zoom_2 at 46s (reveal moment). لكن face conf في نافذة 46-49.5 كانت 0.41 (أقل من 0.5 min). النقل لـ 36.5-40 (conf 0.76) كسر الـ 30s spacing مع zoom_1. الحل: drop zoom_1، keep single zoom على الـ reveal. mini zooms ملوا الفجوات.
+- **Phase 6 hint:** قبل ما تخطط zooms، اعمل sweep للـ face conf على الـ candidate windows. لو أكتر من نافذة واحدة بتكسر الـ 0.5 min أو الـ 30s spacing، اقبل zoom واحد + اعتمد على mini zooms.
+- **المصدر:** "المحاسب الشامل محمد ريان - من فعاليات المحاضرة" (Apr 2026)
+
 ### Scene count is content-driven + 15s min spacing (not 45s)
 - **القاعدة:** عدد الـ full-screen scenes = كل الـ high/medium key_moments اللي تحترم الـ **15s** min spacing. مفيش cap ثابت زي "4-5 max".
 - **الـ spacing اتغير:** من 45s → **15s** لأن معظم الريلز 60-90s، والـ 45s كان بيسيب scene واحد بس في الدقيقة اللي بيخلي المشاهد يمل.

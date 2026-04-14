@@ -10,9 +10,10 @@ export function VideoPlayer() {
   const setCurrentTime = useSubtitleStore((s) => s.setCurrentTime);
   const setIsPlaying = useSubtitleStore((s) => s.setIsPlaying);
   const setDuration = useSubtitleStore((s) => s.setDuration);
-  const subtitles = useSubtitleStore((s) => s.subtitles);
 
   // Push video time → store, but only if it actually changed materially.
+  // Deps include `videoUrl` so the effect re-runs once the <video> element is
+  // actually rendered (the component returns null before videoUrl is set).
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -20,7 +21,6 @@ export function VideoPlayer() {
     let raf = 0;
     const tick = () => {
       const t = v.currentTime;
-      // Avoid feedback loops with the seek effect below
       if (Math.abs(t - useSubtitleStore.getState().currentTime) > 0.02) {
         setCurrentTime(t);
       }
@@ -49,7 +49,7 @@ export function VideoPlayer() {
       v.removeEventListener('loadedmetadata', onLoadedMetadata);
       cancelAnimationFrame(raf);
     };
-  }, [setCurrentTime, setIsPlaying, setDuration]);
+  }, [videoUrl, setCurrentTime, setIsPlaying, setDuration]);
 
   // Sync store time → video (when user clicks a region or subtitle, etc.)
   useEffect(() => {
@@ -71,40 +71,25 @@ export function VideoPlayer() {
     }
   }, [isPlaying]);
 
-  // Find the currently displayed caption (matches the playhead)
-  const currentSub = subtitles.find(
-    (s) => currentTime >= s.startTime && currentTime <= s.endTime,
-  );
+  if (!videoUrl) return null;
 
-  if (!videoUrl) {
-    return (
-      <div className="flex h-full items-center justify-center text-[var(--color-text-muted)]">
-        <span className="font-cairo text-sm">لا يوجد فيديو محمّل</span>
-      </div>
-    );
-  }
-
+  // Audio-only mode: the <video> element is kept so HTMLMediaElement drives
+  // playback (time + play/pause sync with the store), but it's rendered
+  // off-screen. The editor uses the waveform for visual scrubbing instead.
   return (
-    <div className="relative h-full w-full bg-black">
-      <video
-        ref={videoRef}
-        src={videoUrl}
-        className="h-full w-full object-contain"
-        controls
-        playsInline
-      />
-      {currentSub && (
-        <div
-          className="pointer-events-none absolute bottom-20 left-1/2 max-w-[80%] -translate-x-1/2 rounded-lg bg-black/75 px-6 py-3 text-center font-tajawal text-2xl font-extrabold text-white shadow-lg"
-          dir="rtl"
-          style={{
-            textShadow:
-              '0 0 12px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.7)',
-          }}
-        >
-          {currentSub.text}
-        </div>
-      )}
-    </div>
+    <video
+      ref={videoRef}
+      src={videoUrl}
+      playsInline
+      preload="auto"
+      style={{
+        position: 'absolute',
+        width: 1,
+        height: 1,
+        opacity: 0,
+        pointerEvents: 'none',
+        left: -9999,
+      }}
+    />
   );
 }

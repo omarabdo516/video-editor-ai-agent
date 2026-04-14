@@ -2,9 +2,9 @@
 
 ## 📍 Next Up — اللي بنبدأ فيه دلوقتي
 
-> **آخر تحديث:** 2026-04-14 — Phase 7 iteration 2 خلصت: 3 scene types جديدة (definition/equation/counter) + ChapterDivider + PopStyle caption. الـ agent جاهز للفيديو الجديد.
+> **آخر تحديث:** 2026-04-14 — ثالث فيديو كامل خلص ("من فعاليات المحاضرة", 85.1s, 3/5, مقبول كـ baseline). اتضافت 3 features جديدة في الـ session دي: (1) **Outro redesign** — CTA card كامل (logo + tagline + CTA + website rspaac.com + 5 social icons) بدل الـ 2.5s logo flash القديم. المدة 5s. (2) **Subtitle editor POST /save** — Approve بيكتب JSON + SRT مباشرة على الـ disk جنب الفيديو (مش Downloads). (3) اتعلمنا pattern جديد: لما face conf مش مستقر على الريلز القصيرة، استخدم big zoom واحد + mini zooms بدل ما تجبر اتنين big zooms. **Omar flagged animation polish + variety كأولوية للـ session الجاي** (المرة التانية).
 
-**الحالة:** Phase 0-9 كلهم كاملين. Phase 7 فيه دلوقتي 7 scene types + 2 caption styles + chapter dividers + 2 overlay types + 3 micro types + VideoBreathing. الـ gaps الفعلية الوحيدة: caption styles إضافية (Karaoke/Box/Typewriter/Classic) + scene types (chart/diagram) — مش blocking. Phase B (batch) مؤجّل.
+**الحالة:** Phase 0-9 كلهم كاملين. Phase 7 فيه دلوقتي 7 scene types + 6 caption styles (كلهم موجودين على القرص لكن Omar بيفضّل hormozi لوحده) + chapter dividers + 2 overlay types + 3 micro types + VideoBreathing. الـ gaps الفعلية: scene types (chart/diagram) + more subtitle editor polish — مش blocking. Phase B (batch) مؤجّل.
 
 **الخطوة الجاية:** **فيديو RS جديد** (end-to-end run)
 
@@ -20,7 +20,7 @@
 - ملف الفيديو (.mp4 / .mov)
 - اسم المحاضر
 - اسم الورشة
-- قرار caption style: Hormozi (default) أو Pop
+- caption style: hormozi (default) — **ما تخلطش caption styles في نفس الريل** إلا لو Omar طلب صراحةً
 
 **الـ Pipeline للفيديو الجديد:**
 ```

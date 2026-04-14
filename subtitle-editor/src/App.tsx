@@ -16,6 +16,10 @@ function App() {
   const setVideo = useSubtitleStore((s) => s.setVideo);
   const importAgentJSON = useSubtitleStore((s) => s.importAgentJSON);
   const importSRT = useSubtitleStore((s) => s.importSRT);
+  const followPlayback = useSubtitleStore((s) => s.followPlayback);
+  const isPlaying = useSubtitleStore((s) => s.isPlaying);
+  const currentTime = useSubtitleStore((s) => s.currentTime);
+  const selectSubtitle = useSubtitleStore((s) => s.selectSubtitle);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -40,26 +44,39 @@ function App() {
     }
   }, [setVideo, importAgentJSON, importSRT]);
 
+  // Follow-playback: when enabled + playing, the edit panel's selection tracks
+  // the playhead. We read subtitles + selectedId from the store via getState()
+  // to avoid re-subscribing (they change often and would cause loops).
+  useEffect(() => {
+    if (!followPlayback || !isPlaying) return;
+    const state = useSubtitleStore.getState();
+    const active = state.subtitles.find(
+      (s) => currentTime >= s.startTime && currentTime <= s.endTime,
+    );
+    if (active && active.id !== state.selectedId) {
+      selectSubtitle(active.id);
+    }
+  }, [followPlayback, isPlaying, currentTime, selectSubtitle]);
+
   return (
     <div className="relative flex h-screen flex-col bg-[var(--color-bg-base)] text-[var(--color-text-primary)]">
       <KeyboardHandler />
 
       <Toolbar />
 
+      {/* Audio-only mode: <video> is hidden off-screen but still drives playback.
+          The editor uses the waveform (not a video preview) for visual scrubbing,
+          which leaves more room for the subtitle list. */}
+      <VideoPlayer />
+
       {/* Main content grid:
-          Row 1 (1fr): video preview + subtitle list (side by side)
-          Row 2 (200px): waveform full width
-          Row 3 (340px): edit panel — wide enough for timing inputs + text +
-                        word-movement buttons + Split/Merge/Delete + Play */}
+          Row 1 (1fr): subtitle list full-width
+          Row 2 (200px): waveform full-width
+          Row 3 (340px): edit panel */}
       <div className="grid flex-1 grid-rows-[minmax(0,1fr)_200px_340px] overflow-hidden">
-        {/* Top row: video + list */}
-        <div className="grid grid-cols-[1fr_360px] overflow-hidden border-b border-[var(--color-border-subtle)]">
-          <div className="bg-black">
-            <VideoPlayer />
-          </div>
-          <div className="border-l border-[var(--color-border-subtle)]">
-            <SubtitleList />
-          </div>
+        {/* Top: subtitle list */}
+        <div className="overflow-hidden border-b border-[var(--color-border-subtle)]">
+          <SubtitleList />
         </div>
 
         {/* Middle: waveform */}

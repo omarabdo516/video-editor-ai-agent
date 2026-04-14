@@ -8,6 +8,10 @@ import { VideoTrack } from './components/VideoTrack';
 import { VideoBreathing } from './components/VideoBreathing';
 import { WordCaption } from './components/WordCaption';
 import { WordCaptionPop } from './components/WordCaptionPop';
+import { WordCaptionKaraoke } from './components/WordCaptionKaraoke';
+import { WordCaptionBox } from './components/WordCaptionBox';
+import { WordCaptionTypewriter } from './components/WordCaptionTypewriter';
+import { WordCaptionClassic } from './components/WordCaptionClassic';
 import { LogoBug } from './components/LogoBug';
 import { LowerThird } from './components/LowerThird';
 import { Outro } from './components/Outro';
@@ -27,7 +31,37 @@ import type {
   MiniZoomMicroEvent,
   ChapterDivider as ChapterDividerData,
   CaptionStyle,
+  CaptionStyleRange,
 } from './types';
+
+/** Maps a style name → the component that renders it. */
+const CAPTION_COMPONENTS = {
+  hormozi: WordCaption,
+  pop: WordCaptionPop,
+  karaoke: WordCaptionKaraoke,
+  box: WordCaptionBox,
+  typewriter: WordCaptionTypewriter,
+  classic: WordCaptionClassic,
+} as const satisfies Record<CaptionStyle, React.FC<{
+  segment: import('./types').CaptionSegment;
+  timeOffset?: number;
+  emphasisTimes?: number[];
+}>>;
+
+/** Picks the right caption style for a caption segment given the plan. */
+function resolveCaptionStyle(
+  segStart: number,
+  segEnd: number,
+  defaultStyle: CaptionStyle,
+  ranges: CaptionStyleRange[] | undefined,
+): CaptionStyle {
+  if (!ranges || ranges.length === 0) return defaultStyle;
+  const mid = (segStart + segEnd) / 2;
+  for (const r of ranges) {
+    if (mid >= r.start_sec && mid < r.end_sec) return r.style;
+  }
+  return defaultStyle;
+}
 
 /** Returns true if `t` (seconds) falls inside any scene window. */
 function isInAnyScene(t: number, scenes: Scene[]): boolean {
@@ -100,6 +134,7 @@ export const Reel: React.FC<ReelProps> = ({
   const microEvents: MicroEvent[] = animationPlan?.micro_events ?? [];
   const chapterDividers: ChapterDividerData[] = animationPlan?.chapter_dividers ?? [];
   const captionStyle: CaptionStyle = animationPlan?.caption_style ?? 'hormozi';
+  const captionStyleRanges = animationPlan?.caption_style_ranges;
 
   // Merge mini-zoom micro-events into the smart-zoom plan so they render
   // through the existing SmartZoom transform path.
@@ -143,9 +178,6 @@ export const Reel: React.FC<ReelProps> = ({
     });
   }, [chunked, scenes, chapterDividers]);
 
-  // Choose caption component based on plan's caption_style
-  const CaptionComponent = captionStyle === 'pop' ? WordCaptionPop : WordCaption;
-
   const lectureFrames = Math.round(captions.totalDuration * fps);
   const outroFrames = Math.round(tokens.outro.durationSec * fps);
 
@@ -172,12 +204,21 @@ export const Reel: React.FC<ReelProps> = ({
           const segEmphasis = emphasisTimes.filter(
             (t) => t >= seg.start - 0.3 && t <= seg.end + 0.3,
           );
+          // Pick the caption style for THIS segment — a range-based override
+          // wins over the plan-wide default when it covers this segment's mid.
+          const segStyle = resolveCaptionStyle(
+            seg.start,
+            seg.end,
+            captionStyle,
+            captionStyleRanges,
+          );
+          const CaptionComponent = CAPTION_COMPONENTS[segStyle];
           return (
             <Sequence
               key={`cap_${idx}`}
               from={fromFrame}
               durationInFrames={segDurFrames}
-              name={`cap_${idx}`}
+              name={`cap_${idx}_${segStyle}`}
             >
               <CaptionComponent
                 segment={seg}

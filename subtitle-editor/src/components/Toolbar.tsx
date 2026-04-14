@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { useSubtitleStore } from '../store/useSubtitleStore';
 
+const RECHUNK_SIZES = [3, 4, 5, 6, 7] as const;
+
 export function Toolbar() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const subtitleCount = useSubtitleStore((s) => s.subtitles.length);
@@ -13,6 +15,9 @@ export function Toolbar() {
   const importAgentJSON = useSubtitleStore((s) => s.importAgentJSON);
   const exportSRT = useSubtitleStore((s) => s.exportSRT);
   const exportAgentJSON = useSubtitleStore((s) => s.exportAgentJSON);
+  const rechunkToNWords = useSubtitleStore((s) => s.rechunkToNWords);
+  const followPlayback = useSubtitleStore((s) => s.followPlayback);
+  const setFollowPlayback = useSubtitleStore((s) => s.setFollowPlayback);
 
   const canUndo = historyIndex > 0;
   const canRedo = historyIndex < historyLength - 1;
@@ -52,13 +57,43 @@ export function Toolbar() {
     downloadFile(exportSRT(), `${baseName}.srt`, 'text/plain;charset=utf-8');
   };
 
-  const handleApprove = () => {
+  const handleApprove = async () => {
     const baseName = videoFileName?.replace(/\.[^.]+$/, '') ?? 'subtitles';
-    downloadFile(
-      exportAgentJSON(),
-      `${baseName}.captions.json`,
-      'application/json;charset=utf-8',
-    );
+    const jsonBody = exportAgentJSON();
+    const srtBody = exportSRT();
+
+    // If rs-reels.mjs edit launched us, ?saveBase=... points at the local
+    // file server. POST both files so they land next to the source video
+    // immediately — no Downloads → manual-copy round trip.
+    const saveBase = new URLSearchParams(window.location.search).get('saveBase');
+    if (saveBase) {
+      try {
+        const [r1, r2] = await Promise.all([
+          fetch(`${saveBase}/save/captions.json`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json;charset=utf-8' },
+            body: jsonBody,
+          }),
+          fetch(`${saveBase}/save/captions.srt`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: srtBody,
+          }),
+        ]);
+        if (r1.ok && r2.ok) {
+          alert(`✅ Saved ${baseName}.captions.json + ${baseName}.srt to disk`);
+        } else {
+          alert(`Save failed: json ${r1.status}, srt ${r2.status}`);
+        }
+      } catch (err) {
+        alert(`Save failed: ${(err as Error).message}`);
+      }
+      return;
+    }
+
+    // Fallback: direct browser use — download both files
+    downloadFile(jsonBody, `${baseName}.captions.json`, 'application/json;charset=utf-8');
+    downloadFile(srtBody, `${baseName}.srt`, 'text/plain;charset=utf-8');
   };
 
   return (
@@ -105,6 +140,54 @@ export function Toolbar() {
         <ToolbarBtn onClick={redo} disabled={!canRedo} title="Redo (Ctrl+Shift+Z)">
           ↷ Redo
         </ToolbarBtn>
+
+        <div className="mx-1 h-6 w-px bg-[var(--color-border-subtle)]" />
+
+        {/* Bulk rechunk: flatten all words, regroup into N-word segments */}
+        <div className="flex items-center gap-1">
+          <span className="font-cairo text-[10px] text-[var(--color-text-muted)]">
+            Rechunk
+          </span>
+          {RECHUNK_SIZES.map((n) => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => {
+                if (subtitleCount === 0) return;
+                if (
+                  window.confirm(
+                    `Rechunk كل الكابشنز لمجموعات من ${n} كلمات؟ (تقدر تعمل Undo)`,
+                  )
+                ) {
+                  rechunkToNWords(n);
+                }
+              }}
+              disabled={subtitleCount === 0}
+              title={`قسّم كل الكابشنز لـ ${n} كلمات لكل مجموعة`}
+              className="rounded border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] px-2 py-1 font-mono text-[11px] text-[var(--color-text-primary)] hover:border-[var(--color-brand-accent)] disabled:opacity-40"
+            >
+              {n}
+            </button>
+          ))}
+        </div>
+
+        <div className="mx-1 h-6 w-px bg-[var(--color-border-subtle)]" />
+
+        {/* Follow playback toggle — when on, the selected segment tracks the
+            playhead so the edit panel always shows the currently-playing row. */}
+        <button
+          type="button"
+          onClick={() => setFollowPlayback(!followPlayback)}
+          title="لما مفعّل: الـ edit panel بيتابع الـ playhead تلقائياً"
+          className={[
+            'rounded-md border px-3 py-1.5 font-cairo text-xs transition-colors',
+            followPlayback
+              ? 'border-[var(--color-brand-accent)] bg-[var(--color-brand-accent)]/20 text-[var(--color-brand-accent)]'
+              : 'border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] text-[var(--color-text-secondary)] hover:border-[var(--color-brand-accent)]',
+          ].join(' ')}
+        >
+          {followPlayback ? '🔁 Following' : '🔁 Follow'}
+        </button>
 
         <div className="mx-1 h-6 w-px bg-[var(--color-border-subtle)]" />
 

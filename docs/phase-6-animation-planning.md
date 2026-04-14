@@ -132,3 +132,79 @@ git commit -m "v6: animation plan approved - [X] elements"
 ```
 نبدأ Phase 7 (كتابة الـ Remotion components)؟
 ```
+
+---
+
+## 🎨 Caption Style Variation (auto-assigned by Phase 6)
+
+> اتضاف في April 2026 بناءً على feedback من Omar: "عايز أكثر من ستايل كابشنز في نفس الفيديو لكسر الملل."
+
+### الـ styles المتاحة
+
+| Style | الوصف | الاستخدام المثالي |
+|-------|-------|-------------------|
+| `hormozi` (default) | word-by-word، الكلمة النشطة بـ accent + scale 1.06 | الـ baseline لمعظم الريل |
+| `pop` | كلمة واحدة ضخمة في الوقت الواحد، body zone، bouncy | لحظات الـ payoff / punchline |
+| `karaoke` | كل الكلمات ظاهرة + underline accent بيملأ الكلمة الحالية RTL | لحظات إيقاعية / music-video |
+| `box` | كل كلمة في box خاص بها + الكلمة النشطة accent-bg dark-text | listicle / enumerated / checklist |
+| `typewriter` | الكلمات تظهر واحدة وراء الثانية مع cursor accent | setup / contemplative / slow-burn |
+| `classic` | سطر أبيض نظيف، مفيش highlighting | لحظات لازم الفيديو يتنفس فيها |
+
+### قاعدة الـ auto-assignment
+
+**الهدف:** كل ريل فيه **3 ستايلات على الأقل** عشان المشاهد ما يملش.
+
+**الخوارزمية اللي Claude Code بيستخدمها في Phase 6:**
+
+1. **Default style = `hormozi`** — الـ baseline. أي segment ما عليهاش range override بتستخدم الـ default.
+
+2. **Switch points = scene boundaries + emphasis peaks.** ما بين كل scene والـ scene اللي بعدها، الستايل يقدر يتغير.
+
+3. **Mapping by segment intent (per `key_moment` concept_type + energy):**
+   - High-energy key moment (energy ≥ 0.25) → `pop` (stand-alone word hammer)
+   - `definition` / `comparison` key moments → `box` (enumerated feel)
+   - `tip` / methodology moments (القسم اللي فيه RS value) → `typewriter` (slow reveal)
+   - `metaphor` / payoff moments → `karaoke` (rhythm fill)
+   - Low-energy narration / filler → `classic` (let video breathe)
+   - Everything else → `hormozi` (default)
+
+4. **Variety constraint:** ما تستخدمش نفس الـ style أكتر من مرتين متتاليتين في segments مجاورة — لو حصل، استبدل الثانية بـ `hormozi` عشان ما يبقاش monotonic.
+
+5. **Minimum variety:** على الريل الـ 70-90s لازم يبقى فيه **3 styles مختلفة على الأقل** ظاهرة. لو الـ auto-assignment طلع 1-2 بس، اختار 1-2 range إضافي على high/medium emphasis moments وحطّ style مختلف عليهم.
+
+### صيغة الـ plan
+
+```jsonc
+{
+  "caption_style": "hormozi",  // default (fallback)
+  "caption_style_ranges": [
+    { "start_sec": 0,   "end_sec": 11,  "style": "typewriter", "reason": "setup / hook — slow reveal" },
+    { "start_sec": 20,  "end_sec": 26,  "style": "box",        "reason": "definition moment — enumerated feel" },
+    { "start_sec": 50,  "end_sec": 58,  "style": "karaoke",    "reason": "rhythm-heavy contrast" },
+    { "start_sec": 62,  "end_sec": 68,  "style": "pop",        "reason": "payoff — massive single word" }
+  ]
+}
+```
+
+**ملاحظات:**
+- الـ `ranges` بتعمل override على الـ default فقط داخل النافذة بتاعتها. أي segment بره كل النوافذ بتستخدم `caption_style` الافتراضي.
+- الـ range بيتحدد للـ segment على أساس الـ **midpoint** (مش الـ start). فـ لو segment start=10s end=12s وفيه range 11-15s، الـ midpoint=11s فيدخل الـ range.
+- الـ ranges ما يلزمش تكون مرتبة أو متجاورة — الـ Reel بيلف عليهم لكل caption segment.
+- الـ ranges تقدر تتداخل مع scene windows — الكابشنز جوا الـ scenes مخفية أصلاً، فالـ range هيـ apply بس على الكابشنز الظاهرة.
+
+### مثال تشغيل كامل
+
+ريل 70s عن المحاسبة:
+- 0-11s: intro + hook → `typewriter` (slow setup feel)
+- 11-18s: scene (captions hidden) — no effect
+- 18-26s: reframe moment → `box`
+- 26-33s: scene (hidden) — no effect
+- 33-44s: RS methodology → `hormozi` (default, trustworthy baseline)
+- 44-51s: scene (hidden) — no effect
+- 51-58s: contrast / warning → `karaoke` (rhythm)
+- 58-62s: transition → `hormozi`
+- 62-68s: scene (hidden) — no effect
+- 68-70s: final caption → `classic` (let the closing breathe)
+
+الـ styles اللي ظهرت فعلياً: typewriter, box, hormozi, karaoke, classic = 5 styles في ريل واحد. كسر الملل ✓.
+

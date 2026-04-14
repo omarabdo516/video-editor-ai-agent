@@ -1,7 +1,11 @@
 import React from 'react';
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
+import { makeCircle } from '@remotion/shapes';
+import { fitText } from '@remotion/layout-utils';
 import { tokens } from '../../tokens';
 import type { Scene, BigMetaphorElement } from '../../types';
+
+const CIRCLE_BACKDROP = makeCircle({ radius: 320 });
 
 type Props = { scene: Scene };
 
@@ -56,43 +60,74 @@ export const BigMetaphorScene: React.FC<Props> = ({ scene }) => {
     extrapolateLeft: 'clamp',
   });
 
+  // Auto-fit the headline to its available width — prevents overflow when
+  // Phase 6 picks a longer punchline than the hardcoded font size assumed.
+  const HEADLINE_MAX_WIDTH = 920;
+  const requestedSize = el.headline_size || 110;
+  const fitted = fitText({
+    text: el.headline,
+    withinWidth: HEADLINE_MAX_WIDTH,
+    fontFamily: el.headline_font || tokens.fonts.body,
+    fontWeight: el.headline_weight || 800,
+  });
+  // Cap at the requested size (so short words don't blow up huge)
+  const headlineSize = Math.min(requestedSize, Math.floor(fitted.fontSize));
+
+  // Absolute positioning so decorative shapes + Trail experiments can't
+  // push the text out of place. Anchor the headline around the vertical
+  // center, subline right below, footer near the bottom safe area.
+  const HEADLINE_CENTER_Y = 900;
+  const SUBLINE_CENTER_Y = 1120;
+  const FOOTER_CENTER_Y = 1560;
+
   return (
-    <div
-      style={{
-        position: 'absolute',
-        inset: 0,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingTop: 280, // logo clearance
-        paddingBottom: 100,
-        gap: 44,
-      }}
-    >
+    <div style={{ position: 'absolute', inset: 0 }}>
       {/* Background: slow rotating radial glow */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          background: `radial-gradient(ellipse at 50% 50%, rgba(255,181,1,${0.08 + bgPulse * 0.08}) 0%, transparent 60%)`,
+          background: `radial-gradient(ellipse at 50% 47%, rgba(255,181,1,${0.08 + bgPulse * 0.08}) 0%, transparent 60%)`,
           transform: `rotate(${bgAngle}deg)`,
           pointerEvents: 'none',
         }}
       />
 
-      {/* Impact burst — a flash of accent glow around the headline as it lands */}
+      {/* Subtle dashed circle for depth — centered on the headline zone */}
+      <svg
+        width={CIRCLE_BACKDROP.width}
+        height={CIRCLE_BACKDROP.height}
+        viewBox={`0 0 ${CIRCLE_BACKDROP.width} ${CIRCLE_BACKDROP.height}`}
+        style={{
+          position: 'absolute',
+          top: HEADLINE_CENTER_Y,
+          left: '50%',
+          transform: `translate(-50%, -50%) scale(${0.9 + headlinePulse * 0.05}) rotate(${frame * 0.2}deg)`,
+          pointerEvents: 'none',
+          opacity: 0.14 + headlinePulse * 0.08,
+        }}
+      >
+        <path
+          d={CIRCLE_BACKDROP.path}
+          fill="none"
+          stroke={tokens.colors.accent}
+          strokeWidth={3}
+          strokeDasharray="14 20"
+        />
+      </svg>
+
+      {/* Impact burst — flash around the headline as it lands */}
       <div
         style={{
           position: 'absolute',
-          top: '46%',
+          top: HEADLINE_CENTER_Y,
           left: '50%',
           width: 1200,
-          height: 400,
+          height: 420,
           transform: 'translate(-50%, -50%)',
           background:
             'radial-gradient(ellipse, rgba(255,181,1,0.5) 0%, transparent 65%)',
-          opacity: burstOpacity * 0.6,
+          opacity: burstOpacity * 0.55,
           pointerEvents: 'none',
         }}
       />
@@ -100,18 +135,20 @@ export const BigMetaphorScene: React.FC<Props> = ({ scene }) => {
       {/* Headline — the giant phrase */}
       <div
         style={{
+          position: 'absolute',
+          top: HEADLINE_CENTER_Y,
+          left: '50%',
+          transform: `translate(-50%, -50%) scale(${0.62 + headlineProgress * 0.38}) rotate(${(1 - headlineProgress) * -3}deg)`,
+          width: HEADLINE_MAX_WIDTH,
           fontFamily: el.headline_font || tokens.fonts.body,
           fontWeight: el.headline_weight || 800,
-          fontSize: el.headline_size || 110,
+          fontSize: headlineSize,
           color: headlineColor,
           textAlign: 'center',
-          lineHeight: 1.05,
-          letterSpacing: '-2.5px',
+          lineHeight: 1.1,
+          letterSpacing: '-2px',
           opacity: headlineProgress,
-          transform: `scale(${0.6 + headlineProgress * 0.4}) rotate(${(1 - headlineProgress) * -3}deg)`,
-          textShadow: `0 8px 36px rgba(0,0,0,0.45), 0 4px 14px rgba(0,0,0,0.6), 0 0 ${40 + headlinePulse * 30}px rgba(255,181,1,${0.25 + headlinePulse * 0.2})`,
-          margin: 0,
-          padding: '0 60px',
+          textShadow: `0 8px 36px rgba(0,0,0,0.55), 0 4px 14px rgba(0,0,0,0.65), 0 0 ${40 + headlinePulse * 30}px rgba(255,181,1,${0.3 + headlinePulse * 0.2})`,
         }}
       >
         {el.headline}
@@ -121,17 +158,19 @@ export const BigMetaphorScene: React.FC<Props> = ({ scene }) => {
       {el.subline && (
         <div
           style={{
+            position: 'absolute',
+            top: SUBLINE_CENTER_Y,
+            left: '50%',
+            width: 900,
+            transform: `translate(-50%, -50%) translateY(${(1 - sublineProgress) * 28}px)`,
             fontFamily: el.subline_font || tokens.fonts.heading,
             fontWeight: el.subline_weight || 500,
             fontSize: el.subline_size || 40,
             color: sublineColor,
             textAlign: 'center',
-            lineHeight: 1.3,
-            maxWidth: 860,
-            opacity: sublineProgress * 0.95,
-            transform: `translateY(${(1 - sublineProgress) * 28}px)`,
-            textShadow: '0 2px 10px rgba(0,0,0,0.5)',
-            padding: '0 40px',
+            lineHeight: 1.35,
+            opacity: sublineProgress,
+            textShadow: '0 2px 10px rgba(0,0,0,0.55), 0 0 18px rgba(0,0,0,0.4)',
           }}
         >
           {el.subline}
@@ -143,19 +182,18 @@ export const BigMetaphorScene: React.FC<Props> = ({ scene }) => {
         <div
           style={{
             position: 'absolute',
-            bottom: 240,
-            left: 0,
-            right: 0,
+            top: FOOTER_CENTER_Y,
+            left: '50%',
+            width: 880,
+            transform: `translate(-50%, -50%) translateY(${(1 - footerProgress) * 14}px)`,
             textAlign: 'center',
             fontFamily: tokens.fonts.heading,
             fontWeight: 600,
             fontSize: el.footer_size || 34,
             color: footerColor,
             opacity: footerProgress * (el.footer_opacity ?? 0.9),
-            transform: `translateY(${(1 - footerProgress) * 14}px)`,
-            padding: '0 80px',
             letterSpacing: '0.3px',
-            textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+            textShadow: '0 2px 8px rgba(0,0,0,0.55)',
           }}
         >
           {el.footer_label}

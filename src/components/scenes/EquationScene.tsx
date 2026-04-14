@@ -1,7 +1,12 @@
 import React from 'react';
-import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
+import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
+import { evolvePath } from '@remotion/paths';
 import { tokens } from '../../tokens';
 import type { Scene, EquationElement, EquationTerm } from '../../types';
+
+// Horizontal connector line under the equation row, drawn with evolvePath.
+// 860 wide, centered in its svg (viewBox shifts to keep stroke + glow in frame).
+const CONNECTOR_PATH = 'M 0 0 L 860 0';
 
 type Props = { scene: Scene };
 
@@ -29,6 +34,19 @@ export const EquationScene: React.FC<Props> = ({ scene }) => {
   const TERM_STAGGER = 12;
   // Title takes 15 frames before terms start
   const TERM_BASE_DELAY = 15;
+
+  // Connector line draws in starting with the first term, finishing around
+  // when the last term lands — visually "stitches" the equation together.
+  const connectorStartFrame = TERM_BASE_DELAY + 4;
+  const connectorEndFrame =
+    TERM_BASE_DELAY + Math.max(1, el.terms.length) * TERM_STAGGER + 8;
+  const connectorProgress = interpolate(
+    frame,
+    [connectorStartFrame, connectorEndFrame],
+    [0, 1],
+    { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' },
+  );
+  const connectorEvolve = evolvePath(connectorProgress, CONNECTOR_PATH);
 
   return (
     <div
@@ -76,9 +94,12 @@ export const EquationScene: React.FC<Props> = ({ scene }) => {
         </div>
       )}
 
-      {/* Equation row — LTR layout for math even though UI is RTL */}
+      {/* Equation row — LTR layout for math even though UI is RTL.
+          Wrapped in a relative container so the animated connector line (SVG
+          drawn with evolvePath) can sit behind the terms as a "number-line". */}
       <div
         style={{
+          position: 'relative',
           direction: 'ltr',
           display: 'flex',
           alignItems: 'center',
@@ -89,6 +110,33 @@ export const EquationScene: React.FC<Props> = ({ scene }) => {
           padding: '0 40px',
         }}
       >
+        {/* Accent connector — draws left-to-right as terms land. Sits behind
+            the text (zIndex 0) with a glow filter for brand feel. */}
+        <svg
+          width={860}
+          height={20}
+          viewBox="-10 -10 880 20"
+          style={{
+            position: 'absolute',
+            left: '50%',
+            bottom: -28,
+            transform: 'translateX(-50%)',
+            overflow: 'visible',
+            pointerEvents: 'none',
+            filter: 'drop-shadow(0 0 14px rgba(255,181,1,0.55))',
+            zIndex: 0,
+          }}
+        >
+          <path
+            d={CONNECTOR_PATH}
+            stroke={tokens.colors.accent}
+            strokeWidth={5}
+            strokeLinecap="round"
+            fill="none"
+            strokeDasharray={connectorEvolve.strokeDasharray}
+            strokeDashoffset={connectorEvolve.strokeDashoffset}
+          />
+        </svg>
         {el.terms.map((term, idx) => (
           <EquationTermView
             key={idx}

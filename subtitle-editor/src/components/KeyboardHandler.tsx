@@ -9,7 +9,7 @@ import { useSubtitleStore } from '../store/useSubtitleStore';
  *   ←  / →           → seek -1s / +1s
  *   Shift+← / Shift+→ → seek -0.1s / +0.1s
  *   Ctrl+← / Ctrl+→  → previous / next subtitle
- *   Enter            → next subtitle
+ *   Enter            → split selected caption at playhead (or midpoint)
  *   Ctrl+Z           → undo
  *   Ctrl+Shift+Z     → redo
  *   Delete           → delete selected
@@ -18,7 +18,8 @@ import { useSubtitleStore } from '../store/useSubtitleStore';
  *   Ctrl+Shift+→     → move last word to next caption
  *   Ctrl+Shift+←     → move first word to previous caption
  *
- * Disabled while typing in <input> or <textarea>.
+ * Disabled while typing in <input> or <textarea>, except for Enter which is
+ * also intercepted inside the edit panel's textarea.
  */
 export function KeyboardHandler() {
   const undo = useSubtitleStore((s) => s.undo);
@@ -106,11 +107,7 @@ export function KeyboardHandler() {
       }
       if (e.code === 'Enter') {
         e.preventDefault();
-        const target = subs[Math.min(subs.length - 1, selectedIdx + 1)];
-        if (target) {
-          selectSubtitle(target.id);
-          setCurrentTime(target.startTime);
-        }
+        if (state.selectedId) splitSubtitle(state.selectedId, state.currentTime);
         return;
       }
 

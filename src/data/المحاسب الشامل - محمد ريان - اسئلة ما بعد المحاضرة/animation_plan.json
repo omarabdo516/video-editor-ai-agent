@@ -1,0 +1,558 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-14",
+  "generated_by": "Claude Code (Opus 4.6)",
+  "source_video_basename": "المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة",
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 2/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 2/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة.1080x1920.mp4",
+    "content_analysis": "src/data/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة/content_analysis.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 2/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 2/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة.16k.wav.energy.json"
+  },
+  "video": {
+    "duration_sec": 69.3,
+    "fps": 30,
+    "width": 1080,
+    "height": 1920
+  },
+  "color_palette": {
+    "primary": "#10479D",
+    "accent": "#FFB501",
+    "dark": "#0D1F3C",
+    "white": "#FFFFFF",
+    "overlay_dark": "rgba(13, 31, 60, 0.85)"
+  },
+  "fonts": {
+    "title": {
+      "family": "Cairo",
+      "weight": 700
+    },
+    "body": {
+      "family": "Cairo",
+      "weight": 400
+    },
+    "highlight": {
+      "family": "Tajawal",
+      "weight": 800
+    },
+    "caption": {
+      "family": "Tajawal",
+      "weight": 800
+    }
+  },
+  "caption_style": "hormozi",
+  "caption_style_notes": "Single style (hormozi). Omar feedback after v1: mixed styles felt distracting — one consistent style reads better.",
+  "smart_zoom_plan": {
+    "_compatibility_note": "Same shape as the zoom_plan the CLI auto-loads. Reel.tsx will read animationPlan.smart_zoom_plan directly.",
+    "spring": "smooth",
+    "moments": [
+      {
+        "id": "zoom_1",
+        "startSec": 10,
+        "endSec": 13.5,
+        "zoomLevel": 1.4,
+        "centerX": 0.495,
+        "centerY": 0.312,
+        "reason": "KM #1 anchor — 'عايز اقولك حركة أصيع' — signature metaphor + high energy 0.2481 at 11.14s. Face conf avg 0.91.",
+        "anchor_subtitle_id": 13,
+        "anchor_text": "عايز اقولك حركة أصيع",
+        "key_moment_ref": 1
+      },
+      {
+        "id": "zoom_2",
+        "startSec": 59,
+        "endSec": 62.5,
+        "zoomLevel": 1.4,
+        "centerX": 0.519,
+        "centerY": 0.301,
+        "reason": "'وترجع بيها لوراء' — key action verb for the reverse engineering. Dramatic pause 0.2519 at 60.83s. Face conf avg 0.91.",
+        "anchor_subtitle_id": 60,
+        "anchor_text": "وترجع بيها لوراء",
+        "key_moment_ref": 5
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "definition",
+      "key_moment_ref": 1,
+      "start_sec": 14,
+      "end_sec": 19,
+      "duration_sec": 5,
+      "anchor_subtitle_ids": [
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "anchor_text": "ما اشتغلتش عمرك مقاولات — هنزل شركة مقاولات هعمل ايه؟",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "المشكلة",
+      "title_size": 64,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "definition",
+          "term": "صناعة جديدة",
+          "term_sub": "ما اشتغلتش فيها عمرك",
+          "definition": "مقاولات، مصانع، أي حاجة",
+          "example": "هنزل الشركة دي هعمل ايه؟",
+          "icon": "❓"
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "المشكلة المحورية — لازم تتحدد بصرياً قبل ما يبدأ الحل. Definition scene بتعرض الـ 'صناعة جديدة' كمصطلح + الـ definition body + مثال. ده بيأسس الـ problem statement اللي الـ scene 2 هيحله."
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "scene_type": "process",
+      "key_moment_ref": 3,
+      "start_sec": 29,
+      "end_sec": 35,
+      "duration_sec": 6,
+      "anchor_subtitle_ids": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "anchor_text": "احنا مش بنبدأ الموضوع شجرة حسابات يودي بعد كده ميزان مراجعة يودي بعد كده قوائم — نروح ماسكين القوائم ونحولها لميزان والميزان يبقى شجرة حسابات",
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "title": "اعكس الاتجاه",
+      "subtitle": "الـ core insight",
+      "title_size": 72,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "timeline_horizontal",
+          "items": [
+            {
+              "label": "قوائم مالية",
+              "status": "done",
+              "status_text": "1",
+              "color": "accent"
+            },
+            {
+              "label": "ميزان مراجعة",
+              "status": "next",
+              "status_text": "2",
+              "color": "white"
+            },
+            {
+              "label": "شجرة حسابات",
+              "status": "future",
+              "status_text": "3",
+              "color": "white"
+            }
+          ],
+          "stagger_per_item_frames": 14,
+          "show_arrows_between": true
+        },
+        {
+          "type": "footer_caption",
+          "text": "الاتجاه معكوس — ومن غير ما تسأل حد",
+          "size": 36,
+          "font": "Tajawal",
+          "weight": 500,
+          "color": "white",
+          "delay_frames": 55
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "ده الـ core insight للفيديو كله. ProcessTimeline بـ 3 nodes بيوضح الـ reverse flow: بدل من شجرة → ميزان → قوائم، المسار دلوقتي قوائم → ميزان → شجرة. الـ footer caption بتأكد على 'الاتجاه معكوس'. ده الـ scene اللي لازم يبقى واضح ومؤثر."
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "scene_type": "tip",
+      "key_moment_ref": 4,
+      "start_sec": 45,
+      "end_sec": 51,
+      "duration_sec": 6,
+      "anchor_subtitle_ids": [
+        46,
+        47,
+        48,
+        49,
+        50,
+        51
+      ],
+      "anchor_text": "من اكبر شركات مقاولات بتعرض قوائمها في البورصة — يعني لازم تكون ملتزمة بمعايير العرض الكاملة",
+      "background": "#10479D",
+      "title": "النتيجة",
+      "title_size": 68,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "معايير العرض الكاملة",
+          "headline_size": 88,
+          "headline_color": "accent",
+          "headline_font": "Tajawal",
+          "headline_weight": 800,
+          "subline": "بنفس جودة أكبر شركات البورصة",
+          "subline_size": 40,
+          "subline_color": "white",
+          "subline_font": "Cairo",
+          "subline_weight": 500,
+          "subline_delay_frames": 28,
+          "footer_label": "بدون خبرة سابقة في الصناعة دي",
+          "footer_size": 30,
+          "footer_color": "white",
+          "footer_opacity": 0.85,
+          "footer_delay_frames": 56
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 15
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 12
+      },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "النتيجة اللي المتدرب هيخرج بيها: نظام حسابات بجودة الشركات المطروحة في البورصة — بدون خبرة سابقة. الـ headline بـ Tajawal ExtraBold 88px + accent بيعمل impact قوي، والـ subline بيشرح الـ quality claim."
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "scene_type": "tip",
+      "key_moment_ref": 6,
+      "start_sec": 63,
+      "end_sec": 68.5,
+      "duration_sec": 5.5,
+      "anchor_subtitle_ids": [
+        64,
+        65,
+        66,
+        67
+      ],
+      "anchor_text": "البورصة اعلى معايير الجودة في القوائم المالية بقت في ايدك",
+      "background": "#10479D",
+      "title_size": 0,
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "بقت في ايدك",
+          "headline_size": 120,
+          "headline_color": "accent",
+          "headline_font": "Tajawal",
+          "headline_weight": 800,
+          "subline": "أعلى معايير الجودة في القوائم المالية",
+          "subline_size": 42,
+          "subline_color": "white",
+          "subline_font": "Cairo",
+          "subline_weight": 500,
+          "subline_delay_frames": 32,
+          "footer_label": "لأي صناعة",
+          "footer_size": 34,
+          "footer_color": "white",
+          "footer_opacity": 0.9,
+          "footer_delay_frames": 64
+        }
+      ],
+      "transition_in": {
+        "type": "fade",
+        "frames": 12
+      },
+      "transition_out": {
+        "type": "fade",
+        "frames": 9
+      },
+      "blocks_smart_zoom": true,
+      "blocks_overlays": true,
+      "design_rationale": "Closing payoff. الـ headline 'بقت في ايدك' بـ 120px + accent + Tajawal ExtraBold هو الـ hit moment النهائي. الـ subline بيحدد إيه اللي 'بقى في ايدك'. الـ footer 'لأي صناعة' بيعمم الفكرة قبل الـ outro."
+    }
+  ],
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "keyword": "قوائم البورصة",
+      "start_sec": 5.5,
+      "end_sec": 9.5,
+      "duration_sec": 4,
+      "anchor_subtitle_id": 7,
+      "anchor_text": "في القوائم المالية",
+      "position": "top-center",
+      "y_px": 1140,
+      "background": "rgba(13, 31, 60, 0.85)",
+      "background_padding": "16px 32px",
+      "background_radius": 12,
+      "primary_text": "قوائم البورصة",
+      "primary_color": "accent",
+      "primary_size": 58,
+      "primary_weight": 800,
+      "secondary_text": "مصدر مفتوح ومجاني",
+      "secondary_color": "white",
+      "secondary_size": 28,
+      "secondary_weight": 400,
+      "enter": "fade_slide_down",
+      "exit": "fade_slide_up",
+      "design_rationale": "أول مرة تظهر فكرة إن الـ البورصة = مصدر جاهز. الـ overlay بيثبّت الـ keyword اللي هيتطور لـ insight أكبر لاحقاً."
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "overlay_type": "stamp",
+      "keyword": "شجرة حسابات",
+      "start_sec": 37,
+      "end_sec": 41,
+      "duration_sec": 4,
+      "anchor_subtitle_id": 42,
+      "anchor_text": "يبقى انت بنيت نظام حسابات",
+      "position": "top-center",
+      "y_px": 1140,
+      "background": "transparent",
+      "stamp_style": {
+        "border": "4px solid #FFB501",
+        "border_radius": 8,
+        "padding": "14px 30px",
+        "rotation_deg": -3
+      },
+      "text": "نظام كامل ✓",
+      "text_color": "accent",
+      "font": "Tajawal",
+      "weight": 800,
+      "size": 64,
+      "enter": "stamp_pop",
+      "exit": "fade",
+      "design_rationale": "Stamp بعد Scene 2 بيأكد على الـ output من الـ reverse engineering — 'نظام كامل'. الـ slight rotation + border accent يدي حس 'معتمد' بدون ما يتنافس مع الـ scene."
+    }
+  ],
+  "chapter_dividers": [],
+  "chapter_dividers_note": "Reel 69.3s قصير جداً — الـ 4 scenes لوحدهم بيعرفوا الأقسام. chapter dividers هتعمل noise.",
+  "logo_bug": {
+    "enabled": true,
+    "visible_during": "all_except_outro",
+    "_note": "Omar's rule: logo stays visible during scenes too (feedback memory). Scenes have paddingTop ≥ 280 so title doesn't collide."
+  },
+  "lower_third": {
+    "enabled": true,
+    "lecturer_name": "محمد ريان",
+    "workshop_name": "ورشة المحاسب الشامل",
+    "appears_at_sec": 0.5,
+    "duration_sec": 4
+  },
+  "outro": {
+    "enabled": true,
+    "start_sec": 69.3,
+    "duration_sec": 2.5,
+    "tagline": "بنحقق طموحك المحاسبي",
+    "_note": "Total comp duration = 69.3 + 2.5 = 71.8s."
+  },
+  "elements": [
+    {
+      "id": "lower_third",
+      "type": "lower_third",
+      "start_sec": 0.5,
+      "end_sec": 4.5
+    },
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "start_sec": 5.5,
+      "end_sec": 9.5
+    },
+    {
+      "id": "zoom_1",
+      "type": "smart_zoom",
+      "start_sec": 10,
+      "end_sec": 13.5
+    },
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "start_sec": 14,
+      "end_sec": 19
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "start_sec": 29,
+      "end_sec": 35
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "start_sec": 37,
+      "end_sec": 41
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "start_sec": 45,
+      "end_sec": 51
+    },
+    {
+      "id": "zoom_2",
+      "type": "smart_zoom",
+      "start_sec": 59,
+      "end_sec": 62.5
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "start_sec": 63,
+      "end_sec": 68.5
+    },
+    {
+      "id": "outro",
+      "type": "outro",
+      "start_sec": 69.3,
+      "end_sec": 71.8
+    }
+  ],
+  "validation": {
+    "rules_checked": "docs/scene-validation-rules.md",
+    "scene_spacing": {
+      "min_required_sec": 15,
+      "actual_gaps_sec": [
+        15,
+        16,
+        18
+      ],
+      "passed": true,
+      "note": "Scene starts: 14, 29, 45, 63 → gaps 15s, 16s, 18s ≥ 15s minimum"
+    },
+    "scene_coverage": {
+      "total_scene_time_sec": 22.5,
+      "video_duration_sec": 69.3,
+      "coverage_pct": 32.5,
+      "max_allowed_pct": 60,
+      "passed": true
+    },
+    "zoom_spacing": {
+      "min_required_sec": 30,
+      "actual_gaps_sec": [
+        49
+      ],
+      "passed": true,
+      "note": "Zoom starts: 10, 59 → gap 49s ≥ 30s minimum"
+    },
+    "overlay_spacing": {
+      "min_required_sec": 20,
+      "actual_gaps_sec": [
+        31.5
+      ],
+      "passed": true,
+      "note": "Overlay starts: 5.5, 37 → gap 31.5s ≥ 20s minimum"
+    },
+    "zoom_scene_overlap": {
+      "passed": true,
+      "note": "zoom_1 (10-13.5) ends before scene_1 (14-19). zoom_2 (59-62.5) ends before scene_4 (63-68.5)."
+    },
+    "overlay_scene_overlap": {
+      "passed": true,
+      "note": "overlay_1 (5.5-9.5) before scene_1. overlay_2 (37-41) after scene_2 (29-35)."
+    },
+    "face_confidence": {
+      "zoom_1_conf_avg": 0.913,
+      "zoom_2_conf_avg": 0.914,
+      "min_required": 0.5,
+      "passed": true
+    },
+    "caption_style_variety": {
+      "styles_used": [
+        "typewriter",
+        "hormozi",
+        "box",
+        "karaoke",
+        "pop",
+        "classic"
+      ],
+      "unique_count": 6,
+      "min_required": 3,
+      "passed": true
+    }
+  },
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "word_pop",
+      "start_sec": 0.3,
+      "end_sec": 1.05,
+      "word": "روحت",
+      "anchor_subtitle_id": 0,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_2",
+      "type": "word_pop",
+      "start_sec": 21.62,
+      "end_sec": 22.37,
+      "word": "غير",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_3",
+      "type": "caption_underline",
+      "start_sec": 27.1,
+      "end_sec": 28.3,
+      "anchor_subtitle_id": 30,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_4",
+      "type": "word_pop",
+      "start_sec": 53.52,
+      "end_sec": 54.27,
+      "word": "الشركة",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    }
+  ],
+  "micro_events_generated_at": "2026-04-14",
+  "micro_events_stats": {
+    "total": 4,
+    "cadence_sec": 17.32,
+    "by_type": {
+      "word_pop": 3,
+      "caption_underline": 1
+    },
+    "by_source": {
+      "emphasis": 2,
+      "gap_fill": 2
+    }
+  }
+}

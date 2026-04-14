@@ -13,7 +13,7 @@
 
 **RS Financial Services (Rising Star)** — مؤسسة تدريبية متخصصة في المحاسبة والمالية، مقرها القاهرة، تأسست **2014**. بتدرّب **أكتر من 50,000 محاسب** من يومها.
 
-- **Tagline:** `We Achieve Your Accounting Ambitions` — "بنحقق طموحاتك المحاسبية"
+- **Tagline:** `We Achieve Your Accounting Ambition` — "بنحقق طموحك المحاسبي"
 - **Value Prop:** في RS، مش بنشرح دورة محاسبية — **هتشتغل فعلاً** على مستندات وملفات من شركات حقيقية.
 - **Social Proof:** أكتر من 50,000 محاسب اتدربوا معانا من 2014
 
@@ -136,10 +136,20 @@
 - فيه اسم المحاضر (Cairo Bold 72px أبيض) + اسم الورشة (Tajawal 44px accent).
 - الباكجراوند Primary (`#10479D`).
 
-### الـ Outro
-- المدة: `2.5` ثانية (ما تطولش — الـ reels الناس بتسكيب الأطراف).
-- اللوجو الكبير في الوسط.
-- الـ Tagline: **"بنحقق طموحاتك المحاسبية"** (بالعربي دايماً في الفيديوهات العربية).
+### الـ Outro (CTA card)
+- المدة: `5` ثوان (اتّزوّدت من 2.5 في Apr 2026 عشان تسع الـ CTA الكامل).
+- Layout كامل من فوق لتحت:
+  - **Logo** top-center، 300px، y=340
+  - **Tagline** "بنحقق طموحك المحاسبي" — accent color Cairo Bold 46px، y=640
+  - **CTA Primary** "احجز ورشتك الجاية" — أبيض Tajawal ExtraBold 68px، y=820
+  - **CTA Subtext** "راسلنا على رسائل الصفحة أو زور موقعنا" — أبيض 34px مع opacity 0.9، y=930
+  - **Website** `rspaac.com` — accent Tajawal ExtraBold 60px، LTR direction، y=1110
+  - **Social icons row** (y=1320، 96px each، gap 36px):
+    - Instagram · Facebook · TikTok · LinkedIn · YouTube
+    - SVG paths من simple-icons (CC0) في `src/components/SocialIcons.tsx`
+    - كل icon في rounded-square container أبيض 8% opacity
+- Cascade animation: logo (spring) → tagline → CTA primary → CTA subtext → website → icons (4-frame stagger لكل icon)
+- الـ Tagline والـ CTA بالعربي دايماً. الـ website LTR.
 
 ---
 

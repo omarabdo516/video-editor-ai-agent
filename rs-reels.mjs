@@ -99,14 +99,20 @@ function runPython(scriptName, args) {
   });
 }
 
-function preprocessAudio(videoPath) {
-  const wavPath = videoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
-  if (fileExists(wavPath)) {
-    console.log(`✓ audio already preprocessed: ${wavPath}`);
-    return wavPath;
+function preprocessAudio(inputVideoPath, { wavPath } = {}) {
+  const outWav =
+    wavPath || inputVideoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
+  if (fileExists(outWav)) {
+    console.log(`✓ audio already preprocessed: ${outWav}`);
+    return outWav;
   }
-  run('node', [path.join(__dirname, 'preprocess-audio.js'), videoPath]);
-  return wavPath;
+  run('node', [
+    path.join(__dirname, 'preprocess-audio.js'),
+    inputVideoPath,
+    '--output',
+    outWav,
+  ]);
+  return outWav;
 }
 
 function extractMetadata(videoPath) {
@@ -139,17 +145,58 @@ function analyzeAudioEnergy(wavPath) {
   return out;
 }
 
+/**
+ * Detect a black segment at the very start of the video.
+ *
+ * Some source recordings open with 1-2 black frames before the first real
+ * frame (camera warm-up, sensor init, editor cut). We scan the first few
+ * seconds with ffmpeg's blackdetect filter and return the end of the leading
+ * black segment in seconds, or 0 if the video opens clean.
+ *
+ * ffmpeg writes filter diagnostics to stderr, so we capture stderr and look
+ * for a `black_start:0 black_end:X` line.
+ */
+function detectLeadingBlack(videoPath, maxScanSec = 3) {
+  const result = spawnSync(
+    'C:/ffmpeg/bin/ffmpeg.exe',
+    [
+      '-hide_banner',
+      '-loglevel', 'info',
+      '-t', String(maxScanSec),
+      '-i', videoPath,
+      '-vf', 'blackdetect=d=0.01:pic_th=0.96:pix_th=0.05',
+      '-an',
+      '-f', 'null',
+      '-',
+    ],
+    { stdio: ['ignore', 'ignore', 'pipe'], encoding: 'utf8', shell: false },
+  );
+  const stderr = result.stderr || '';
+  const m = stderr.match(/black_start:0(?:\.0+)?\s+black_end:(\d+(?:\.\d+)?)/);
+  return m ? parseFloat(m[1]) : 0;
+}
+
 function prepareVideo(videoPath) {
   const scaledPath = videoPath.replace(/\.[^.]+$/, '') + '.1080x1920.mp4';
   if (fileExists(scaledPath)) {
     console.log(`✓ pre-scaled video already exists: ${scaledPath}`);
     return scaledPath;
   }
+  // Trim leading black frames so the reel opens on the first real frame.
+  // `-ss` before `-i` shifts both video and audio together, keeping them in
+  // sync. All downstream steps (audio extraction, face detection, energy
+  // analysis, transcription) operate on this scaled file, so every timestamp
+  // is consistent with the trimmed origin.
+  const blackEnd = detectLeadingBlack(videoPath);
+  if (blackEnd > 0) {
+    console.log(`  leading black detected: ${blackEnd.toFixed(3)}s — trimming`);
+  }
   console.log(`\n> ffmpeg: cropping → 1080x1920 (center, cover)`);
   const ffArgs = [
     '-hide_banner',
     '-loglevel', 'warning',
     '-y',
+    ...(blackEnd > 0 ? ['-ss', blackEnd.toFixed(3)] : []),
     '-i', videoPath,
     '-vf',
     // scale so the short side matches 1080, then center-crop to 1080x1920
@@ -199,7 +246,12 @@ function fixCaptions(captionsPath) {
 //
 // For backwards compatibility a string `videoPath` is treated as
 // { '/video.mp4': videoPath }.
-function startFileServer(routes, fixedPort = 0) {
+//
+// `savePaths` maps writable URL paths → absolute destination file paths.
+// A POST to one of those paths writes the request body directly to disk.
+// Used by the subtitle editor's Approve button so it can persist to the
+// video directory without a Downloads → manual-copy round trip.
+function startFileServer(routes, fixedPort = 0, savePaths = {}) {
   if (typeof routes === 'string') {
     routes = { '/video.mp4': routes };
   }
@@ -212,8 +264,44 @@ function startFileServer(routes, fixedPort = 0) {
 
   const server = http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Range');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Range, Content-Type');
     res.setHeader('Access-Control-Expose-Headers', 'Content-Range, Content-Length, Accept-Ranges');
+
+    if (req.method === 'OPTIONS') {
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+
+    if (req.method === 'POST') {
+      const destPath = savePaths[req.url];
+      if (!destPath) {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end(`No writable route: ${req.url}\nAvailable: ${Object.keys(savePaths).join(', ')}`);
+        return;
+      }
+      const chunks = [];
+      req.on('data', (c) => chunks.push(c));
+      req.on('end', () => {
+        try {
+          const body = Buffer.concat(chunks);
+          writeFileSync(destPath, body);
+          // Refresh fileMeta so subsequent GETs see the new content length
+          for (const [r, m] of Object.entries(fileMeta)) {
+            if (m.path === destPath) fileMeta[r].stat = statSync(destPath);
+          }
+          console.log(`✓ saved ${body.length} bytes → ${path.basename(destPath)}`);
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ ok: true, path: destPath, bytes: body.length }));
+        } catch (err) {
+          console.error(`✗ save failed: ${err.message}`);
+          res.writeHead(500, { 'Content-Type': 'text/plain' });
+          res.end(`Write error: ${err.message}`);
+        }
+      });
+      return;
+    }
 
     const meta = fileMeta[req.url];
     if (!meta) {
@@ -438,18 +526,23 @@ async function renderRemotion({
 
 // ─── studio mode ───────────────────────────────────────────────────────────
 async function runStudio(videoPath, { lecturer, workshop, skipAudio, skipTranscribe, previewSeconds }) {
+  // Prep scaled (+ trimmed) video first so audio is cut from it
+  const scaledVideoPath = prepareVideo(videoPath);
+
   // Prep audio + captions (reuses the same pipeline as `make`)
+  const sourceBasedWav = videoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
   let wavPath;
-  if (!skipAudio) wavPath = preprocessAudio(videoPath);
-  else wavPath = videoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
+  if (!skipAudio) {
+    wavPath = preprocessAudio(scaledVideoPath, { wavPath: sourceBasedWav });
+  } else {
+    wavPath = sourceBasedWav;
+  }
 
   const captionsOut = videoPath + '.captions.json';
   if (!skipTranscribe) {
     transcribe(wavPath, captionsOut);
     fixCaptions(captionsOut);
   }
-
-  const scaledVideoPath = prepareVideo(videoPath);
 
   // Fixed port so Studio previews don't break on hot-reload
   const VIDEO_PORT = 7777;
@@ -532,14 +625,25 @@ async function runEdit(videoPath, { previewSeconds }) {
   const routes = { '/video.mp4': scaledVideoPath };
   if (captionsPath) routes[captionsRoute] = captionsPath;
 
+  // Writable routes — the editor POSTs here on Approve to persist directly
+  // to disk next to the source video (no Downloads folder round trip).
+  const baseName = path.basename(videoPath, path.extname(videoPath));
+  const videoDir = path.dirname(videoPath);
+  const jsonDestPath = videoPath + '.captions.json';
+  const srtDestPath = path.join(videoDir, `${baseName}.srt`);
+  const savePaths = {
+    '/save/captions.json': jsonDestPath,
+    '/save/captions.srt': srtDestPath,
+  };
+
   const FILE_PORT = 7777;
-  const { server } = await startFileServer(routes, FILE_PORT);
+  const { server } = await startFileServer(routes, FILE_PORT, savePaths);
 
   // Build the editor URL with query params for auto-load
-  const baseName = path.basename(videoPath, path.extname(videoPath));
   const editorParams = new URLSearchParams({
     video: `http://127.0.0.1:${FILE_PORT}/video.mp4`,
     name: baseName,
+    saveBase: `http://127.0.0.1:${FILE_PORT}`,
   });
   if (captionsPath) {
     editorParams.set('captions', `http://127.0.0.1:${FILE_PORT}${captionsRoute}`);
@@ -726,11 +830,16 @@ async function runDoctor() {
 function runPhase1(videoPath) {
   console.log('\n=== Phase 1: Pre-processing ===\n');
 
-  // Step 1.0: pre-scale to 1080×1920 — face detection + render both want this
+  // Step 1.0: pre-scale (+ trim leading black) to 1080×1920 — face detection
+  // and render both want this, and every downstream step needs to share its
+  // trimmed timeline
   const scaledVideoPath = prepareVideo(videoPath);
 
-  // Step 1.1: audio
-  const wavPath = preprocessAudio(videoPath);
+  // Step 1.1: audio — extracted from the scaled video so the trim carries
+  // through to captions and energy. Output path stays next to the source for
+  // backwards compatibility with existing naming conventions.
+  const sourceBasedWav = videoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
+  const wavPath = preprocessAudio(scaledVideoPath, { wavPath: sourceBasedWav });
 
   // Step 1.2: metadata
   const metadataPath = extractMetadata(scaledVideoPath);
@@ -820,15 +929,23 @@ async function main() {
     return;
   }
 
-  // Step 1: audio
+  // Step 1: pre-scale (+ trim leading black) to 1080×1920 — must come before
+  // audio extraction so the .wav is cut from the trimmed file and every
+  // timestamp downstream is consistent.
+  const scaledVideoPath = prepareVideo(videoPath);
+
+  // Step 2: audio — pulled from the scaled video (keeps captions aligned
+  // with the trimmed visual). Wav file lives next to the source for
+  // backwards compatibility.
+  const sourceBasedWav = videoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
   let wavPath;
   if (!args.flags['skip-audio']) {
-    wavPath = preprocessAudio(videoPath);
+    wavPath = preprocessAudio(scaledVideoPath, { wavPath: sourceBasedWav });
   } else {
-    wavPath = videoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
+    wavPath = sourceBasedWav;
   }
 
-  // Step 2: transcribe
+  // Step 3: transcribe
   if (!args.flags['skip-transcribe']) {
     transcribe(wavPath, captionsOut);
     fixCaptions(captionsOut);
@@ -838,9 +955,6 @@ async function main() {
     console.log('\n--dry set: stopping before render.');
     return;
   }
-
-  // Step 3: pre-scale video to 1080x1920 so OffthreadVideo doesn't re-crop every frame
-  const scaledVideoPath = prepareVideo(videoPath);
 
   // Step 4: render
   await renderRemotion({

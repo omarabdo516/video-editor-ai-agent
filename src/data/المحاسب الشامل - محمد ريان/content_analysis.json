@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-14",
+  "generated_by": "Claude Code (Opus 4.6)",
+
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.mp4.captions.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.16k.wav.energy.json",
+    "metadata": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.1080x1920.mp4.metadata.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/المحاسب الشامل - محمد ريان.1080x1920.mp4.face_map.json"
+  },
+
+  "video": {
+    "duration_sec": 70.08,
+    "duration_str": "01:10",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 63
+  },
+
+  "lecturer": {
+    "name": "محمد ريان",
+    "title": "خبير محاسبة",
+    "workshop": "ورشة المحاسب الشامل"
+  },
+
+  "summary": "محمد ريان بيوصّل رسالة retention قوية في ريل 70 ثانية: المعلومة لوحدها مش بتعمل فرق — اللي بيعمل الفرق هو إنك تعرف تطبّقها. بيبدأ بالصدمة: المعايير المصرية = المعايير الدولية، فـ ذاكرهم بالانجليزي ودوحر الجهد عشان نتيجة أحسن. بعدين بيعيد تأطير الدبلومة: مش شهادة مهنية، دي مادة في شهادة — بس بتفرق في كاريرك. ويختم بالـ core RS value: في الورشة بنشتغل على 'حتة التشغيل' — تاخد المعلومة وتحولها شغل، فبقى معاك 'الماكنة + المعلومة = ملك'. وبيحذّر من اللي بيذاكر بس بدون تطبيق: معاه المعلومة وما يعرفش ينفّذها فبيبقى ضعيف. الـ payoff الختامي: 'خد المعلومة روح اعمل بيها شغل — كل عيش، كل بقلاوة، خد فلووووس'.",
+
+  "topics": [
+    "المعايير المصرية = المعايير الدولية (IFRS)",
+    "الدراسة باللغة الإنجليزية والمضاعفة في الجهد",
+    "الفرق بين الشهادة المهنية والـ دبلومة (مادة في شهادة)",
+    "منهجية RS: حتة التشغيل — التطبيق العملي قبل النظرية",
+    "استعارة 'الماكنة + المعلومة = ملك'",
+    "الفرق بين اللي بيذاكر المعايير وبين اللي بيطبقها",
+    "الختام: الـ payoff = خد المعلومة اعمل بيها شغل (فلوس)"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "الصدمة: المعايير المصرية = الدولية",
+      "start_sec": 0.0,
+      "end_sec": 7.0,
+      "start_str": "00:00",
+      "end_str": "00:07",
+      "subtitle_range": [0, 5],
+      "summary": "فتح الريل بـ claim صادم: المعايير المصرية هي نفسها المعايير الدولية. فلو هتمتحن IFRS أو دبلومة، ذاكرهم بالإنجليزي. والرسالة المبطنة: ما تبقاش كسلان."
+    },
+    {
+      "id": 2,
+      "title": "الدوحرة: ساعة مقابل 4 ساعات",
+      "start_sec": 7.0,
+      "end_sec": 19.0,
+      "start_str": "00:07",
+      "end_str": "00:19",
+      "subtitle_range": [6, 16],
+      "summary": "فكرة المضاعفة (دوحر): هي هتعلمك الإنجليزي والمحاسبة سوا. لو الراجل اللي كويس في الإنجليزي هياخد ساعة، انت اللي مش كويس هتاخد 4 ساعات — بس النتيجة النهائية هتبقى أفضل لأنك بذلت مجهود مضاعف."
+    },
+    {
+      "id": 3,
+      "title": "الدبلومة مش شهادة — هي مادة في شهادة",
+      "start_sec": 19.0,
+      "end_sec": 27.0,
+      "start_str": "00:19",
+      "end_str": "00:27",
+      "subtitle_range": [17, 22],
+      "summary": "تصحيح فهم خاطئ شائع: الدبلومة مش شهادة مهنية — هي مادة في شهادة. بس بتفرق جداً في الكاريير، لأن معاك المعايير تبقى مختلف."
+    },
+    {
+      "id": 4,
+      "title": "منهجية RS: حتة التشغيل",
+      "start_sec": 27.0,
+      "end_sec": 43.0,
+      "start_str": "00:27",
+      "end_str": "00:43",
+      "subtitle_range": [23, 36],
+      "summary": "ما تحسبش المعايير جزء من رحلة الشهادات — اعتبرها جزء من الـ operation (التشغيل). في RS بنشتغل على الـ 'حتة التشغيل' — انك تاخد المعلومة وتحولها بكرة لشغل فعلي ولـ reports.",
+      "rs_methodology": true
+    },
+    {
+      "id": 5,
+      "title": "الماكنة + المعلومة = ملك",
+      "start_sec": 43.0,
+      "end_sec": 49.5,
+      "start_str": "00:43",
+      "end_str": "00:49",
+      "subtitle_range": [37, 43],
+      "summary": "الاستعارة المحورية: بعد ما تطبّق المعايير الدولية في شغلك، بقى معاك 'الماكنة' بتاعة الشغل + 'المعلومة' اللي تحطها جواها = تبقى ملك. التكرار 'تبقى ملك، تبقى ملك' بيأكد اللحظة."
+    },
+    {
+      "id": 6,
+      "title": "التحذير: اللي بيذاكر بس",
+      "start_sec": 49.5,
+      "end_sec": 59.0,
+      "start_str": "00:49",
+      "end_str": "00:59",
+      "subtitle_range": [44, 53],
+      "summary": "التحذير: ناس بتخلص المعايير أو بتذاكرهم بس ما شفتهاش بعينها بتشتغل إزاي. فيبقى معاه المعلومة وما يعرفش يطبقها — ينزل الشركة يبقى ضعيف رغم المعلومة."
+    },
+    {
+      "id": 7,
+      "title": "الـ Payoff: خد فلوس",
+      "start_sec": 59.0,
+      "end_sec": 68.08,
+      "start_str": "00:59",
+      "end_str": "01:08",
+      "subtitle_range": [54, 62],
+      "summary": "الختام: إنت دلوقتي بفضل الله معاك تشتغلها إزاي. خد المعلومة، روح اعمل بيها شغل، وكُل بيها — مش 'كل عيش' بس، دي 'كل بقلاوة، خد فلووووس'. الـ payoff الفعلي."
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [0, 1, 2, 3],
+      "timestamp_start_sec": 0.0,
+      "timestamp_end_sec": 5.46,
+      "timestamp_start": "00:00",
+      "timestamp_end": "00:05",
+      "content": "المعايير المصرية هي المعايير الدولية — لو هتمتحن IFRS أو الدبلومة، ذاكرها بالإنجليزي",
+      "importance": "medium",
+      "concept_type": "definition",
+      "suggested_animation": "smart_zoom",
+      "animation_description": "Smart zoom 1.4x على المحاضر في أول 3-5 ثواني. الـ claim قوي ومحتاج تركيز على الوش. لا نحتاج scene هنا لأن اللحظة بتعتمد على الـ delivery مش على visual concept."
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [9, 10, 11, 12, 13, 14, 15, 16, 17],
+      "timestamp_start_sec": 11.66,
+      "timestamp_end_sec": 19.54,
+      "timestamp_start": "00:11",
+      "timestamp_end": "00:19",
+      "content": "دوحر — الراجل اللي كويس في الإنجليزي هياخد ساعة، انت خد 4 ساعات — النتيجة هتبقى مختلفة تماماً",
+      "importance": "high",
+      "concept_type": "comparison",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Scene: comparison_two_paths. اليسار 'العادي' = ساعة واحدة، اليمين 'انت لو دوحرت' = 4 ساعات، والنتيجة: اليمين بـ accent + glow. الفكرة: الجهد المضاعف بيخلق فرق."
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [17, 18, 19, 20, 21, 22],
+      "timestamp_start_sec": 19.54,
+      "timestamp_end_sec": 25.88,
+      "timestamp_start": "00:19",
+      "timestamp_end": "00:25",
+      "content": "الدبلومة مش شهادة مهنية — هي مادة في شهادة، بس بتفرق في كاريرك",
+      "importance": "high",
+      "concept_type": "definition",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Scene: definition. Term = 'الدبلومة'، definition = 'مادة في شهادة (مش شهادة مهنية)'، example = 'بس بتفرق في كاريرك كويس'. تصحيح فهم خاطئ شائع = perfect fit للـ definition scene."
+    },
+    {
+      "id": 4,
+      "subtitle_ids": [30, 31, 32, 33, 34, 35],
+      "timestamp_start_sec": 35.68,
+      "timestamp_end_sec": 40.88,
+      "timestamp_start": "00:35",
+      "timestamp_end": "00:40",
+      "content": "في الورشة دايما بنشتغل على حتة التشغيل — تاخد المعلومة تحولها بكرة لشغل وريبورتات",
+      "importance": "high",
+      "concept_type": "tip",
+      "suggested_animation": "overlay",
+      "animation_description": "Stamp overlay: 'حتة التشغيل' بـ accent border + slight rotation. Core RS brand value — تظهر في الـ gap بين scene 2 و scene 3."
+    },
+    {
+      "id": 5,
+      "subtitle_ids": [37, 38, 39, 40, 41, 42, 43],
+      "timestamp_start_sec": 43.44,
+      "timestamp_end_sec": 48.68,
+      "timestamp_start": "00:43",
+      "timestamp_end": "00:48",
+      "content": "بقى معاك الماكنة بتاعة الشغل ومعاك المعلومة اللي تحطها جواه — تبقى ملك",
+      "importance": "high",
+      "concept_type": "metaphor",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Scene: equation. Tokens = 'الماكنة' + 'المعلومة' = 'ملك'. مع labels: التشغيل | العلم | النتيجة. الـ result highlighted في accent."
+    },
+    {
+      "id": 6,
+      "subtitle_ids": [44, 45, 46, 47, 48, 49, 50, 51, 52, 53],
+      "timestamp_start_sec": 49.385,
+      "timestamp_end_sec": 58.92,
+      "timestamp_start": "00:49",
+      "timestamp_end": "00:58",
+      "content": "ناس بتذاكر المعايير بس وما شفتهاش بتشتغل ازاي — فيبقى معاه المعلومة وما يعرفش يطبقها — ينزل الشركة يبقى ضعيف",
+      "importance": "medium",
+      "concept_type": "tip",
+      "suggested_animation": "smart_zoom",
+      "animation_description": "Smart zoom على المحاضر أثناء التحذير. التحذير بيوصل أحسن من وش المحاضر مباشرة من scene تاني. لكن يعتمد على الـ spacing — لو الـ 30s rule بيسمح."
+    },
+    {
+      "id": 7,
+      "subtitle_ids": [57, 58, 59, 60, 61, 62],
+      "timestamp_start_sec": 61.88,
+      "timestamp_end_sec": 68.08,
+      "timestamp_start": "01:01",
+      "timestamp_end": "01:08",
+      "content": "خد بقى المعلومة وروح اعمل بيها شغل — وكل بها — مش كل عيش، كل عيش كل بقلاوة، خد فلووووس",
+      "importance": "high",
+      "concept_type": "metaphor",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Scene: big_metaphor. Headline = 'خد فلوس' كبير بـ accent، subline = 'كل عيش، كل بقلاوة'، footer = 'المعلومة + التطبيق = payoff'. Closing moment — أعلى energy في الفيديو كله (0.347 at 66.5s)."
+    }
+  ],
+
+  "keywords": [
+    { "term": "IFRS", "first_seen_subtitle": 1, "first_seen_sec": 1.64, "category": "concept", "weight": 5 },
+    { "term": "المعايير الدولية", "first_seen_subtitle": 0, "first_seen_sec": 0.0, "category": "concept", "weight": 5 },
+    { "term": "الدبلومة", "first_seen_subtitle": 2, "first_seen_sec": 3.24, "category": "concept", "weight": 5 },
+    { "term": "دوحر", "first_seen_subtitle": 9, "first_seen_sec": 11.66, "category": "action", "weight": 4 },
+    { "term": "شهادة مهنية", "first_seen_subtitle": 18, "first_seen_sec": 20.66, "category": "concept", "weight": 4 },
+    { "term": "كاريرك", "first_seen_subtitle": 21, "first_seen_sec": 23.72, "category": "concept", "weight": 3 },
+    { "term": "رئيس حسابات", "first_seen_subtitle": 28, "first_seen_sec": 32.88, "category": "role", "weight": 3 },
+    { "term": "حتة التشغيل", "first_seen_subtitle": 31, "first_seen_sec": 36.86, "category": "rs_value", "weight": 5 },
+    { "term": "الورشة", "first_seen_subtitle": 30, "first_seen_sec": 35.68, "category": "workshop_name", "weight": 4 },
+    { "term": "الماكنة", "first_seen_subtitle": 38, "first_seen_sec": 44.52, "category": "metaphor", "weight": 5 },
+    { "term": "المعلومة", "first_seen_subtitle": 32, "first_seen_sec": 38.04, "category": "concept", "weight": 4 },
+    { "term": "ملك", "first_seen_subtitle": 41, "first_seen_sec": 47.06, "category": "metaphor", "weight": 5 },
+    { "term": "فلوس", "first_seen_subtitle": 62, "first_seen_sec": 66.76, "category": "payoff", "weight": 5 }
+  ],
+
+  "emphasis_moments": [
+    { "energy_time_sec": 0.032, "energy": 0.1857, "energy_type": "dramatic_pause", "subtitle_id": 0, "text": "المعايير المصرية هي المعايير الدولية", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "rationale": "افتتاحية + dramatic pause — الـ claim الصادم الأول" },
+    { "energy_time_sec": 2.336, "energy": 0.2525, "energy_type": "high_energy", "subtitle_id": 1, "text": "بس انت لو هتمتحن IFRS", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 1, "rationale": "أول ذكر لـ IFRS + high energy 0.25" },
+    { "energy_time_sec": 8.192, "energy": 0.2388, "energy_type": "high_energy", "subtitle_id": 6, "text": "اتعلم", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 13.472, "energy": 0.2697, "energy_type": "high_energy", "subtitle_id": 11, "text": "في الانجليزي هياخد ساعة", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 2, "rationale": "peak energy للـ comparison scene — الـ 'ساعة' keyword" },
+    { "energy_time_sec": 16.0, "energy": 0.2274, "energy_type": "dramatic_pause", "subtitle_id": 13, "text": "بس في النهاية النتيجة", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 2 },
+    { "energy_time_sec": 20.256, "energy": 0.2303, "energy_type": "high_energy", "subtitle_id": 16, "text": "لانك دوحرت اكتر", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 2, "rationale": "الـ payoff كلمة 'دوحرت'" },
+    { "energy_time_sec": 22.4, "energy": 0.2084, "energy_type": "high_energy", "subtitle_id": 19, "text": "هي دبلومة", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 3, "rationale": "بداية definition scene — الـ reframe" },
+    { "energy_time_sec": 25.504, "energy": 0.1846, "energy_type": "dramatic_pause", "subtitle_id": 21, "text": "بس بتفرق في كاريرك كويس", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 3 },
+    { "energy_time_sec": 32.896, "energy": 0.1942, "energy_type": "dramatic_pause", "subtitle_id": 28, "text": "واد مالي مركزك كرئيس حسابات", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 36.992, "energy": 0.2211, "energy_type": "high_energy", "subtitle_id": 31, "text": "على حتة التشغيل", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 4, "rationale": "RS core value keyword — 'حتة التشغيل'" },
+    { "energy_time_sec": 40.288, "energy": 0.189, "energy_type": "high_energy", "subtitle_id": 33, "text": "تحولها بكرة لشغل", "intensity": "medium", "suggested_treatment": "keyword_highlight", "key_moment_ref": 4 },
+    { "energy_time_sec": 42.912, "energy": 0.1849, "energy_type": "high_energy", "subtitle_id": 36, "text": "المعايير الدولية عليها", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 45.12, "energy": 0.2298, "energy_type": "dramatic_pause", "subtitle_id": 38, "text": "الماكنة بتاعة الشغل", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 5, "rationale": "بداية equation scene — 'الماكنة'" },
+    { "energy_time_sec": 47.264, "energy": 0.2089, "energy_type": "dramatic_pause", "subtitle_id": 41, "text": "تبقى ملك", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 5, "rationale": "الـ result word 'ملك'" },
+    { "energy_time_sec": 50.112, "energy": 0.2313, "energy_type": "high_energy", "subtitle_id": 45, "text": "المعايير او بتذاكر المعايير", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 6 },
+    { "energy_time_sec": 56.224, "energy": 0.1827, "energy_type": "dramatic_pause", "subtitle_id": 51, "text": "وينزل الشركة", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 6 },
+    { "energy_time_sec": 59.008, "energy": 0.1829, "energy_type": "dramatic_pause", "subtitle_id": 54, "text": "لكن انت دلوقتي", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "rationale": "تحوّل للـ empowerment — الـ pivot word 'لكن'" },
+    { "energy_time_sec": 61.056, "energy": 0.1816, "energy_type": "dramatic_pause", "subtitle_id": 56, "text": "معاك تشتغلها ازاي", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 64.352, "energy": 0.1932, "energy_type": "high_energy", "subtitle_id": 59, "text": "وكل بها", "intensity": "medium", "suggested_treatment": "keyword_highlight", "key_moment_ref": 7 },
+    { "energy_time_sec": 66.496, "energy": 0.3467, "energy_type": "high_energy", "subtitle_id": 61, "text": "كل عيش كل بقلاوة", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 7, "rationale": "HIGHEST energy في الفيديو كله — الـ payoff moment" }
+  ],
+
+  "stats": {
+    "section_count": 7,
+    "key_moment_count": 7,
+    "high_importance_key_moments": 5,
+    "medium_importance_key_moments": 2,
+    "keyword_count": 13,
+    "emphasis_moment_count": 20,
+    "strong_emphasis": 7,
+    "medium_emphasis": 13,
+    "low_emphasis": 0,
+    "concept_type_breakdown": {
+      "definition": 2,
+      "comparison": 1,
+      "tip": 2,
+      "metaphor": 2
+    },
+    "suggested_animation_breakdown": {
+      "full_screen_scene": 4,
+      "overlay": 1,
+      "smart_zoom": 2
+    }
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": "4 full-screen scenes (respecting 15s min spacing على ريل 70s)",
+    "top_priority_scenes": [
+      { "key_moment_id": 2, "reason": "دوحر comparison — الـ hook للـ effort principle" },
+      { "key_moment_id": 3, "reason": "الدبلومة definition — reframe فهم خاطئ" },
+      { "key_moment_id": 5, "reason": "ماكنة + معلومة = ملك — الـ equation المحوري" },
+      { "key_moment_id": 7, "reason": "خد فلوس — الـ payoff الختامي + أعلى energy في الفيديو" }
+    ],
+    "smart_zoom_density": "1 كل 30 ثانية — فيديو 70s يسمح بـ 2-3 zooms max",
+    "overlays_density": "1 كل 20 ثانية — فيديو 70s يسمح بـ 1-2 overlays max",
+    "timing_notes": "الـ scenes 4 بتغطي ~27 ثانية = 38% من الفيديو — النسبة ماشية. الـ lower-third 0.5-4.5s. Outro 2.5s بعد آخر frame."
+  }
+}

@@ -318,13 +318,35 @@ export type ChapterDivider = {
   background?: string;
 };
 
-export type CaptionStyle = 'hormozi' | 'pop';
+export type CaptionStyle =
+  | 'hormozi'
+  | 'pop'
+  | 'karaoke'
+  | 'box'
+  | 'typewriter'
+  | 'classic';
+
+/**
+ * Per-time-window caption style override. If any ranges are defined, a
+ * caption segment falling inside one uses that range's style; otherwise it
+ * falls back to the plan's top-level `caption_style` (default 'hormozi').
+ * Used by Phase 6 to vary styles across a single reel for retention.
+ */
+export type CaptionStyleRange = {
+  start_sec: number;
+  end_sec: number;
+  style: CaptionStyle;
+  /** Optional reason — appears in the Phase 6 plan for human review. */
+  reason?: string;
+};
 
 export type AnimationPlan = {
   schema_version?: number;
   source_video_basename?: string;
   /** Which caption renderer to use — default 'hormozi' */
   caption_style?: CaptionStyle;
+  /** Optional per-time-window style overrides (Phase 6 auto-assigns these) */
+  caption_style_ranges?: CaptionStyleRange[];
   smart_zoom_plan?: ZoomPlan;
   scenes?: Scene[];
   overlays?: OverlayItem[];

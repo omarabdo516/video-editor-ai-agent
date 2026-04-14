@@ -146,6 +146,16 @@ export function SubtitleEditPanel() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             onBlur={flushText}
+            onKeyDown={(e) => {
+              // Enter inside the textarea splits the segment instead of
+              // inserting a newline — subtitles are single-line anyway.
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                // Flush current text first so the split sees the edited text.
+                if (text !== sub.text) updateText(sub.id, text);
+                splitSubtitle(sub.id, currentTime);
+              }
+            }}
             dir="rtl"
             rows={3}
             className="mt-1 w-full resize-y rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] px-3 py-2 font-cairo text-base leading-relaxed focus:border-[var(--color-brand-accent)]"
@@ -177,13 +187,9 @@ export function SubtitleEditPanel() {
           <button
             type="button"
             onClick={() => splitSubtitle(sub.id, currentTime)}
-            disabled={
-              currentTime <= sub.startTime ||
-              currentTime >= sub.endTime ||
-              wordCount(text) < 2
-            }
+            disabled={wordCount(text) < 2}
             className="rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-bg-elevated)] px-2 py-2 font-cairo text-xs hover:border-[var(--color-brand-accent)] disabled:hover:border-[var(--color-border-subtle)]"
-            title="قسّم عند موضع الـ playhead الحالي"
+            title="قسّم عند الـ playhead (أو في النص لو الـ playhead برّة الـ segment)"
           >
             ✂️ Split
           </button>

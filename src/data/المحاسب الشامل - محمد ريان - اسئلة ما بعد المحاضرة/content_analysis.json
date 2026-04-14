@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-14",
+  "generated_by": "Claude Code (Opus 4.6)",
+
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 2/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 2/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 2/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة.mp4.captions.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 2/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة.16k.wav.energy.json",
+    "metadata": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p4/Video 2/المحاسب الشامل - محمد ريان - اسئلة ما بعد المحاضرة.1080x1920.mp4.metadata.json"
+  },
+
+  "video": {
+    "duration_sec": 69.3,
+    "duration_str": "01:09",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 68
+  },
+
+  "lecturer": {
+    "name": "محمد ريان",
+    "title": "خبير محاسبة",
+    "workshop": "ورشة المحاسب الشامل"
+  },
+
+  "summary": "محمد ريان بيشرح حركة ذكية للمحاسب عشان يبني شجرة حسابات لأي صناعة ما اشتغلش عليها قبل كده. بدل ما يبدأ من شجرة حسابات → ميزان مراجعة → قوائم مالية (الاتجاه الطبيعي)، يعكس المسار: ينزل القوائم المالية لأكبر شركات الصناعة دي من البورصة المصرية، ويحوّلها عكسياً لميزان مراجعة → شجرة حسابات. النتيجة: نظام محاسبي بأعلى معايير الجودة لأي صناعة — مقاولات، مصانع، أي حاجة — من غير ما تسأل حد شغال فيها. اللعبة اللي ريّان بيسميها 'حركة أصيع' بتحوّل المحاسب من مبتدئ للصناعة دي لمحترف في أيام.",
+
+  "topics": [
+    "بناء شجرة حسابات من قوائم مالية (reverse engineering)",
+    "استخدام البورصة المصرية كمصدر للمعايير المحاسبية",
+    "الانتقال لأي صناعة بدون خبرة سابقة",
+    "الطريقة التقليدية: شجرة → ميزان → قوائم",
+    "الطريقة العكسية: قوائم → ميزان → شجرة",
+    "معايير العرض الكاملة في القوائم المالية",
+    "التعميم على أي صناعة (مقاولات/مصانع/إلخ)"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "الـ Hook: القوائم من البورصة",
+      "start_sec": 0.0,
+      "end_sec": 10.02,
+      "start_str": "00:00",
+      "end_str": "00:10",
+      "subtitle_range": [0, 11],
+      "summary": "افتتاحية قوية: 'لو نزلت قوائم من البورصة، هتبقى مستمتع وانت بتقرأها'. بيأسس إن القوائم المالية للشركات المطروحة في البورصة دي resource جاهز للمحاسب."
+    },
+    {
+      "id": 2,
+      "title": "المشكلة: صناعة ما اشتغلتش فيها",
+      "start_sec": 10.02,
+      "end_sec": 18.3,
+      "start_str": "00:10",
+      "end_str": "00:18",
+      "subtitle_range": [12, 20],
+      "summary": "طرح السؤال المحوري: 'ما اشتغلتش عمرك مقاولات، هنزل شركة مقاولات هعمل ايه؟' — المشكلة الكلاسيكية اللي بتواجه أي محاسب بيدخل صناعة جديدة."
+    },
+    {
+      "id": 3,
+      "title": "الحل: روح لأكبر شركات البورصة",
+      "start_sec": 18.3,
+      "end_sec": 28.26,
+      "start_str": "00:18",
+      "end_str": "00:28",
+      "subtitle_range": [21, 31],
+      "summary": "الحل: بدل ما تسأل حد شغال في مقاولات، روح على موقع البورصة ونزّل ميزانيات أكبر شركات مقاولات. المصدر موجود وجاهز."
+    },
+    {
+      "id": 4,
+      "title": "الـ Reverse Engineering: اعكس الاتجاه",
+      "start_sec": 28.26,
+      "end_sec": 37.28,
+      "start_str": "00:28",
+      "end_str": "00:37",
+      "subtitle_range": [32, 40],
+      "summary": "**الـ core insight**: احنا بنبدأ عادةً بـ شجرة حسابات → ميزان مراجعة → قوائم مالية. الحركة الذكية: امسك القوائم وحوّلها عكسياً → ميزان → شجرة حسابات. الاتجاه معكوس والنتيجة نظام كامل."
+    },
+    {
+      "id": 5,
+      "title": "النتيجة: نظام بأعلى المعايير",
+      "start_sec": 37.28,
+      "end_sec": 51.86,
+      "start_str": "00:37",
+      "end_str": "00:51",
+      "subtitle_range": [41, 52],
+      "summary": "بنيت نظام حسابات لشركة مقاولات بكل التفاصيل الفنية اللي في أكبر شركات البورصة. لأن الشركات المطروحة في البورصة ملتزمة بمعايير العرض الكاملة، شغلك هيبقى بنفس الجودة دي.",
+      "rs_methodology": true
+    },
+    {
+      "id": 6,
+      "title": "التعميم: أي صناعة",
+      "start_sec": 51.86,
+      "end_sec": 62.02,
+      "start_str": "00:51",
+      "end_str": "01:02",
+      "subtitle_range": [53, 61],
+      "summary": "الطريقة دي مش محصورة على مقاولات — اشتغل نفس الـ workflow على أي صناعة. مصنع؟ نزّل قوائم شركة مصنع وارجع بيها لوراء. اللعبة بقت في ايدك."
+    },
+    {
+      "id": 7,
+      "title": "الـ Payoff: في ايدك",
+      "start_sec": 62.02,
+      "end_sec": 69.3,
+      "start_str": "01:02",
+      "end_str": "01:09",
+      "subtitle_range": [62, 67],
+      "summary": "الختام: هتنزل قوائم → ترجع بيها لوراء → هتطلعلي النظام المحاسبي. أعلى معايير الجودة في القوائم المالية بقت في ايدك."
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [12, 13, 14, 15, 16, 17, 18, 19, 20],
+      "timestamp_start_sec": 10.88,
+      "timestamp_end_sec": 18.3,
+      "timestamp_start": "00:10",
+      "timestamp_end": "00:18",
+      "content": "السؤال المحوري: ما اشتغلتش عمرك مقاولات — هتعمل ايه؟",
+      "importance": "high",
+      "concept_type": "definition",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Definition scene بيعرض 'المشكلة' بـ term كبير (مثلاً 'صناعة جديدة') + definition body ('ما اشتغلتش فيها عمرك') + example line ('مقاولات، مصانع، أي حاجة'). الـ background dark gradient."
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31],
+      "timestamp_start_sec": 18.3,
+      "timestamp_end_sec": 28.26,
+      "timestamp_start": "00:18",
+      "timestamp_end": "00:28",
+      "content": "الحل: روح على البورصة ونزل قوائم أكبر شركات في الصناعة دي",
+      "importance": "medium",
+      "concept_type": "tip",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "Keyword overlay 'البورصة' + 'أكبر شركات'. مع smart_zoom على المحاضر."
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [32, 33, 34, 35, 36, 37, 38, 39, 40],
+      "timestamp_start_sec": 28.26,
+      "timestamp_end_sec": 37.28,
+      "timestamp_start": "00:28",
+      "timestamp_end": "00:37",
+      "content": "**الـ core insight**: اعكس المسار — بدل شجرة→ميزان→قوائم، اعمل قوائم→ميزان→شجرة",
+      "importance": "high",
+      "concept_type": "process",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "ProcessTimeline horizontal بـ 3 nodes: قوائم مالية → ميزان مراجعة → شجرة حسابات. الترتيب عكسي (RTL). كل node فيه label + number + state (done/next/future). الـ scene بتأكد على إن 'الاتجاه معكوس' عن الطريقة العادية. ده الـ key insight في الفيديو كله."
+    },
+    {
+      "id": 4,
+      "subtitle_ids": [41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52],
+      "timestamp_start_sec": 37.28,
+      "timestamp_end_sec": 51.86,
+      "timestamp_start": "00:37",
+      "timestamp_end": "00:51",
+      "content": "النتيجة: بنيت نظام حسابات بأعلى معايير العرض الكاملة",
+      "importance": "high",
+      "concept_type": "tip",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "BigMetaphor scene: headline 'معايير العرض الكاملة' + subline 'نفس الجودة اللي في أكبر شركات البورصة' + footer 'بدون خبرة سابقة'. الـ scene تأكيد على إن النتيجة مش عادية."
+    },
+    {
+      "id": 5,
+      "subtitle_ids": [53, 54, 55, 56, 57, 58],
+      "timestamp_start_sec": 51.86,
+      "timestamp_end_sec": 58.1,
+      "timestamp_start": "00:51",
+      "timestamp_end": "00:58",
+      "content": "التعميم: نفس الطريقة تشتغل على مصنع أو أي صناعة",
+      "importance": "medium",
+      "concept_type": "example",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "Keyword overlay 'مصنع' + 'أي صناعة'. بيأكد على الـ transferability للـ method."
+    },
+    {
+      "id": 6,
+      "subtitle_ids": [62, 63, 64, 65, 66, 67],
+      "timestamp_start_sec": 62.9,
+      "timestamp_end_sec": 69.3,
+      "timestamp_start": "01:02",
+      "timestamp_end": "01:09",
+      "content": "الـ closing payoff: اعلى معايير الجودة في القوائم المالية بقت في ايدك",
+      "importance": "high",
+      "concept_type": "tip",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "BigMetaphor scene: headline 'بقت في ايدك' + subline 'أعلى معايير الجودة' + footer 'لأي صناعة'. الـ scene ختام قوي — الـ payoff اللحظة."
+    }
+  ],
+
+  "keywords": [
+    { "term": "قوائم مالية", "first_seen_subtitle": 7, "first_seen_sec": 5.52, "category": "concept", "weight": 5 },
+    { "term": "البورصة", "first_seen_subtitle": 3, "first_seen_sec": 2.1, "category": "concept", "weight": 5 },
+    { "term": "حركة أصيع", "first_seen_subtitle": 13, "first_seen_sec": 10.88, "category": "metaphor", "weight": 5 },
+    { "term": "شركات مقاولات", "first_seen_subtitle": 16, "first_seen_sec": 13.56, "category": "example", "weight": 4 },
+    { "term": "الحسابات الفرعية", "first_seen_subtitle": 22, "first_seen_sec": 19.18, "category": "concept", "weight": 4 },
+    { "term": "ميزان مراجعة", "first_seen_subtitle": 34, "first_seen_sec": 31.02, "category": "concept", "weight": 5 },
+    { "term": "شجرة حسابات", "first_seen_subtitle": 32, "first_seen_sec": 29.16, "category": "concept", "weight": 5 },
+    { "term": "معايير العرض", "first_seen_subtitle": 49, "first_seen_sec": 48.32, "category": "concept", "weight": 5 },
+    { "term": "نظام حسابات", "first_seen_subtitle": 42, "first_seen_sec": 38.08, "category": "concept", "weight": 4 },
+    { "term": "مصنع", "first_seen_subtitle": 55, "first_seen_sec": 54.38, "category": "example", "weight": 3 },
+    { "term": "في ايدك", "first_seen_subtitle": 59, "first_seen_sec": 59.62, "category": "metaphor", "weight": 5 },
+    { "term": "أعلى معايير الجودة", "first_seen_subtitle": 64, "first_seen_sec": 65.92, "category": "metaphor", "weight": 5 }
+  ],
+
+  "emphasis_moments": [
+    { "energy_time_sec": 0.448, "energy": 0.274, "energy_type": "high_energy", "subtitle_id": 0, "text": "يعني انت لو", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "rationale": "افتتاحية + high energy — establishes the hook voice" },
+    { "energy_time_sec": 6.432, "energy": 0.2083, "energy_type": "dramatic_pause", "subtitle_id": 7, "text": "في القوائم المالية", "intensity": "medium", "suggested_treatment": "keyword_highlight", "rationale": "أول ذكر للـ keyword المحوري 'قوائم مالية'" },
+    { "energy_time_sec": 11.136, "energy": 0.2481, "energy_type": "high_energy", "subtitle_id": 13, "text": "عايز اقولك حركة أصيع", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "rationale": "الـ signature metaphor 'حركة أصيع' + high energy — moment of transition للـ insight" },
+    { "energy_time_sec": 14.016, "energy": 0.2427, "energy_type": "dramatic_pause", "subtitle_id": 16, "text": "مقاولات صح؟ هنزل", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 1, "rationale": "طرح السؤال المحوري — المشكلة اللي هتحل" },
+    { "energy_time_sec": 27.296, "energy": 0.2175, "energy_type": "dramatic_pause", "subtitle_id": 30, "text": "عارضه ميزانيتها", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 29.728, "energy": 0.2543, "energy_type": "high_energy", "subtitle_id": 32, "text": "الموضوع شجرة", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 3, "rationale": "بداية الـ core insight — الـ reverse engineering" },
+    { "energy_time_sec": 31.968, "energy": 0.2665, "energy_type": "dramatic_pause", "subtitle_id": 35, "text": "كده ميزان مراجعة", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 3 },
+    { "energy_time_sec": 34.208, "energy": 0.2723, "energy_type": "high_energy", "subtitle_id": 37, "text": "نروح ماسكين القوائم", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 3, "rationale": "action verb 'اعكس' — high energy" },
+    { "energy_time_sec": 36.352, "energy": 0.2841, "energy_type": "high_energy", "subtitle_id": 39, "text": "يبقى شجرة حسابات", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 3, "rationale": "نهاية الـ reverse — النتيجة شجرة حسابات" },
+    { "energy_time_sec": 38.56, "energy": 0.2281, "energy_type": "dramatic_pause", "subtitle_id": 41, "text": "يبقى انت بنيت", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 4, "rationale": "بداية declaration — النتيجة" },
+    { "energy_time_sec": 42.144, "energy": 0.25, "energy_type": "high_energy", "subtitle_id": 46, "text": "مقاولات من اكبر", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 4 },
+    { "energy_time_sec": 44.608, "energy": 0.2251, "energy_type": "dramatic_pause", "subtitle_id": 48, "text": "شركات مقاولات بتعرض", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 46.656, "energy": 0.2621, "energy_type": "dramatic_pause", "subtitle_id": 49, "text": "قوائمها في البورصة", "intensity": "medium", "suggested_treatment": "keyword_highlight" },
+    { "energy_time_sec": 50.08, "energy": 0.2337, "energy_type": "high_energy", "subtitle_id": 51, "text": "ملتزمة بمعايير العرض", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 4, "rationale": "core phrase — معايير العرض الكاملة" },
+    { "energy_time_sec": 60.832, "energy": 0.2519, "energy_type": "dramatic_pause", "subtitle_id": 60, "text": "وترجع بيها لوراء", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "rationale": "key verb — 'اعكس الاتجاه' مرة تانية" },
+    { "energy_time_sec": 63.072, "energy": 0.2236, "energy_type": "dramatic_pause", "subtitle_id": 61, "text": "هنزل المصنع اخد", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 5 },
+    { "energy_time_sec": 65.376, "energy": 0.2839, "energy_type": "high_energy", "subtitle_id": 64, "text": "البورصة اعلى معايير", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 6, "rationale": "أعلى energy في الـ closing — الـ payoff لحظة" }
+  ],
+
+  "stats": {
+    "section_count": 7,
+    "key_moment_count": 6,
+    "high_importance_key_moments": 4,
+    "medium_importance_key_moments": 2,
+    "keyword_count": 12,
+    "emphasis_moment_count": 17,
+    "strong_emphasis": 9,
+    "medium_emphasis": 8,
+    "low_emphasis": 0,
+    "concept_type_breakdown": {
+      "process": 1,
+      "tip": 3,
+      "definition": 1,
+      "example": 1
+    },
+    "suggested_animation_breakdown": {
+      "full_screen_scene": 4,
+      "keyword_highlight": 2
+    },
+    "estimated_full_screen_scenes_density": "4 scene anchors over 69.3s = 17.3s avg — respects 15s min spacing rule"
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": "4 full-screen scenes max (reel 69.3s, 15s min spacing = 4 scenes fit cleanly)",
+    "top_priority_scenes": [
+      { "key_moment_id": 3, "reason": "الـ core insight للفيديو كله — الـ reverse engineering flow — لازم يبقى scene. ProcessTimeline بـ 3 nodes" },
+      { "key_moment_id": 4, "reason": "النتيجة + brand value 'معايير العرض الكاملة' — BigMetaphor" },
+      { "key_moment_id": 6, "reason": "الـ closing payoff 'بقت في ايدك' — BigMetaphor عالي الإيقاع" },
+      { "key_moment_id": 1, "reason": "المشكلة اللي بتفتح الـ narrative — Definition scene ('ما اشتغلتش عمرك مقاولات')" }
+    ],
+    "smart_zoom_density": "1 كل 30s max → يفضل 2 zooms max على 69.3s: واحد حوالين 'حركة أصيع' (11s) وواحد حوالين 'وترجع بيها لوراء' (60s)",
+    "overlays_density": "1 كل 20s max → max 3 overlays على 69.3s. الأولوية: 'قوائم مالية' (first keyword mention) + 'معايير العرض' + 'في ايدك'",
+    "caption_style_hint": "Omar طلب 'استخدم أكتر من استايل بذكاء' — الـ auto-assignment في Phase 6 لازم يولّد caption_style_ranges متنوعة: typewriter للـ hook, box للـ problem definition, hormozi للـ body, pop للـ payoff moments, karaoke للـ rhythm breaks"
+  }
+}

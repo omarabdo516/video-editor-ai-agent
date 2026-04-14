@@ -15,6 +15,9 @@ interface SubtitleState {
   duration: number;
   isPlaying: boolean;
 
+  /* ─── UI preferences ─── */
+  followPlayback: boolean;
+
   /* ─── History ─── */
   history: Subtitle[][];
   historyIndex: number;
@@ -26,6 +29,7 @@ interface SubtitleState {
   setCurrentTime: (time: number) => void;
   setDuration: (duration: number) => void;
   setIsPlaying: (playing: boolean) => void;
+  setFollowPlayback: (on: boolean) => void;
 
   /* ─── Edit actions (each pushes history) ─── */
   updateText: (id: string, text: string) => void;
@@ -35,6 +39,8 @@ interface SubtitleState {
   deleteSubtitle: (id: string) => void;
   moveLastWordToNext: (id: string) => void;
   moveFirstWordToPrev: (id: string) => void;
+  /** Flatten all words and regroup into chunks of exactly N words each. */
+  rechunkToNWords: (n: number) => void;
 
   /* ─── History ─── */
   undo: () => void;
@@ -59,10 +65,12 @@ export const useSubtitleStore = create<SubtitleState>((set, get) => ({
   currentTime: 0,
   duration: 0,
   isPlaying: false,
+  followPlayback: false,
   history: [],
   historyIndex: -1,
 
   setVideo: (url, name) => set({ videoUrl: url, videoFileName: name }),
+  setFollowPlayback: (on) => set({ followPlayback: on }),
 
   setSubtitles: (subs) => {
     const reindexed = reindex(subs);
@@ -97,13 +105,20 @@ export const useSubtitleStore = create<SubtitleState>((set, get) => ({
     const idx = subs.findIndex((s) => s.id === id);
     if (idx === -1) return;
     const sub = subs[idx];
-    if (splitAtTime <= sub.startTime || splitAtTime >= sub.endTime) return;
 
     // Split text by word position proportional to time
     const words = sub.text.split(/\s+/).filter(Boolean);
     if (words.length < 2) return;
 
-    const ratio = (splitAtTime - sub.startTime) / (sub.endTime - sub.startTime);
+    // If the playhead is outside the segment (e.g. right on the start edge
+    // after clicking a row in the list), fall back to the midpoint so the
+    // split still happens instead of silently no-op-ing.
+    const inRange = splitAtTime > sub.startTime && splitAtTime < sub.endTime;
+    const effectiveSplit = inRange
+      ? splitAtTime
+      : (sub.startTime + sub.endTime) / 2;
+
+    const ratio = (effectiveSplit - sub.startTime) / (sub.endTime - sub.startTime);
     const splitWordIdx = Math.max(1, Math.min(words.length - 1, Math.round(words.length * ratio)));
 
     const firstText = words.slice(0, splitWordIdx).join(' ');
@@ -116,14 +131,14 @@ export const useSubtitleStore = create<SubtitleState>((set, get) => ({
     const first: Subtitle = {
       ...sub,
       text: firstText,
-      endTime: splitAtTime,
+      endTime: effectiveSplit,
       words: firstWords,
     };
 
     const second: Subtitle = {
       id: makeId(),
       index: sub.index + 1,
-      startTime: splitAtTime,
+      startTime: effectiveSplit,
       endTime: sub.endTime,
       text: secondText,
       words: secondWords,
@@ -261,6 +276,57 @@ export const useSubtitleStore = create<SubtitleState>((set, get) => ({
       ...subs.slice(idx + 1),
     ];
     pushAndCommit(set, get, next);
+  },
+
+  rechunkToNWords: (n) => {
+    if (n < 1) return;
+    const subs = get().subtitles;
+    if (subs.length === 0) return;
+
+    // Flatten all words from every segment into a single stream, preserving
+    // each word's absolute timing. Segments that lack word-level timings get
+    // a proportional estimate so the rechunk still works on imported SRTs.
+    type Flat = { word: string; start: number; end: number };
+    const flat: Flat[] = [];
+
+    for (const sub of subs) {
+      if (sub.words && sub.words.length > 0) {
+        for (const w of sub.words) {
+          flat.push({ word: w.word, start: w.start, end: w.end });
+        }
+      } else {
+        // Estimate word timings proportionally across the segment.
+        const tokens = sub.text.split(/\s+/).filter(Boolean);
+        if (tokens.length === 0) continue;
+        const dur = sub.endTime - sub.startTime;
+        const perWord = dur / tokens.length;
+        for (let i = 0; i < tokens.length; i++) {
+          flat.push({
+            word: tokens[i],
+            start: sub.startTime + i * perWord,
+            end: sub.startTime + (i + 1) * perWord,
+          });
+        }
+      }
+    }
+
+    if (flat.length === 0) return;
+
+    // Group into chunks of exactly N words. The last chunk may be shorter.
+    const rebuilt: Subtitle[] = [];
+    for (let i = 0; i < flat.length; i += n) {
+      const group = flat.slice(i, i + n);
+      rebuilt.push({
+        id: makeId(),
+        index: 0, // reindex() fills this in
+        startTime: group[0].start,
+        endTime: group[group.length - 1].end,
+        text: group.map((w) => w.word).join(' '),
+        words: group.map((w) => ({ word: w.word, start: w.start, end: w.end })),
+      });
+    }
+
+    pushAndCommit(set, get, rebuilt, rebuilt[0]?.id ?? null);
   },
 
   undo: () => {
