@@ -128,13 +128,67 @@ export type BigMetaphorElement = {
   footer_delay_frames?: number;
 };
 
+// ─── New scene types (Phase 7 iteration 2) ────────────────────────────────
+
+export type DefinitionElement = {
+  type: 'definition';
+  /** The term being defined (big accent text) */
+  term: string;
+  /** Optional Arabic translation / pronunciation under the term */
+  term_sub?: string;
+  /** The definition body (3-8 words, white) */
+  definition: string;
+  /** Optional example under the definition */
+  example?: string;
+  /** Optional icon character (emoji or single letter) */
+  icon?: string;
+};
+
+export type EquationTerm = {
+  /** The token text (variable, number, or operator) */
+  text: string;
+  /** Optional label underneath (e.g. "الأصول" under "A") */
+  label?: string;
+  /** Is this the final result? (styled differently) */
+  is_result?: boolean;
+};
+
+export type EquationElement = {
+  type: 'equation';
+  /** Array of equation tokens, rendered left-to-right with stagger */
+  terms: EquationTerm[];
+  /** Optional title above the equation */
+  title?: string;
+  /** Optional footer label below */
+  footer?: string;
+};
+
+export type CounterElement = {
+  type: 'counter';
+  /** The final value the counter stops at */
+  value: number;
+  /** Optional suffix (e.g. "+", "٪") */
+  suffix?: string;
+  /** Optional prefix (e.g. "$") */
+  prefix?: string;
+  /** Label above the number (e.g. "عدد المتدربين") */
+  label_top?: string;
+  /** Label below the number (e.g. "محاسب اتدرّب معانا") */
+  label_bottom?: string;
+  /** Count-up duration in frames (default 45 = 1.5s) */
+  duration_frames?: number;
+};
+
 export type SceneElement =
   | StepCardElement
   | ConnectorArrowElement
   | TimelineElement
   | FooterCaptionElement
   | ComparisonTwoPathsElement
-  | BigMetaphorElement;
+  | BigMetaphorElement
+  | DefinitionElement
+  | EquationElement
+  | CounterElement;
 
 export type Scene = {
   id: string;
@@ -248,13 +302,34 @@ export type MicroEvent =
   | CaptionUnderlineMicroEvent
   | AccentFlashMicroEvent;
 
+// ─── Chapter Divider ─────────────────────────────────────────────────────
+export type ChapterDivider = {
+  id: string;
+  type: 'chapter_divider';
+  start_sec: number;
+  end_sec: number;
+  /** Section title (big) */
+  title: string;
+  /** Optional kicker text above the title (e.g. "القسم 2") */
+  kicker?: string;
+  /** Optional subtitle below the title */
+  subtitle?: string;
+  /** Background: default gradient if omitted */
+  background?: string;
+};
+
+export type CaptionStyle = 'hormozi' | 'pop';
+
 export type AnimationPlan = {
   schema_version?: number;
   source_video_basename?: string;
+  /** Which caption renderer to use — default 'hormozi' */
+  caption_style?: CaptionStyle;
   smart_zoom_plan?: ZoomPlan;
   scenes?: Scene[];
   overlays?: OverlayItem[];
   micro_events?: MicroEvent[];
+  chapter_dividers?: ChapterDivider[];
 };
 
 export type ReelProps = {

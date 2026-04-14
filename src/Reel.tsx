@@ -7,11 +7,13 @@ import {
 import { VideoTrack } from './components/VideoTrack';
 import { VideoBreathing } from './components/VideoBreathing';
 import { WordCaption } from './components/WordCaption';
+import { WordCaptionPop } from './components/WordCaptionPop';
 import { LogoBug } from './components/LogoBug';
 import { LowerThird } from './components/LowerThird';
 import { Outro } from './components/Outro';
 import { SmartZoom } from './components/SmartZoom';
 import { FullScreenScene } from './components/scenes/FullScreenScene';
+import { ChapterDivider } from './components/scenes/ChapterDivider';
 import { Overlay } from './components/overlays/Overlay';
 import { MicroEventHost } from './components/micro/MicroEventHost';
 import { rechunkCaptions } from './utils/chunk';
@@ -23,6 +25,8 @@ import type {
   ZoomMoment,
   MicroEvent,
   MiniZoomMicroEvent,
+  ChapterDivider as ChapterDividerData,
+  CaptionStyle,
 } from './types';
 
 /** Returns true if `t` (seconds) falls inside any scene window. */
@@ -94,6 +98,8 @@ export const Reel: React.FC<ReelProps> = ({
   const scenes: Scene[] = animationPlan?.scenes ?? [];
   const overlays = animationPlan?.overlays ?? [];
   const microEvents: MicroEvent[] = animationPlan?.micro_events ?? [];
+  const chapterDividers: ChapterDividerData[] = animationPlan?.chapter_dividers ?? [];
+  const captionStyle: CaptionStyle = animationPlan?.caption_style ?? 'hormozi';
 
   // Merge mini-zoom micro-events into the smart-zoom plan so they render
   // through the existing SmartZoom transform path.
@@ -122,12 +128,23 @@ export const Reel: React.FC<ReelProps> = ({
   );
 
   const visibleCaptionSegments = React.useMemo(() => {
-    if (scenes.length === 0) return chunked.segments;
+    // Captions should hide during both full-screen scenes AND chapter dividers
+    const hideWindows: Array<{ start_sec: number; end_sec: number }> = [
+      ...scenes,
+      ...chapterDividers,
+    ];
+    if (hideWindows.length === 0) return chunked.segments;
     return chunked.segments.filter((seg) => {
       const mid = (seg.start + seg.end) / 2;
-      return !isInAnyScene(mid, scenes);
+      for (const w of hideWindows) {
+        if (mid >= w.start_sec && mid < w.end_sec) return false;
+      }
+      return true;
     });
-  }, [chunked, scenes]);
+  }, [chunked, scenes, chapterDividers]);
+
+  // Choose caption component based on plan's caption_style
+  const CaptionComponent = captionStyle === 'pop' ? WordCaptionPop : WordCaption;
 
   const lectureFrames = Math.round(captions.totalDuration * fps);
   const outroFrames = Math.round(tokens.outro.durationSec * fps);
@@ -162,7 +179,7 @@ export const Reel: React.FC<ReelProps> = ({
               durationInFrames={segDurFrames}
               name={`cap_${idx}`}
             >
-              <WordCaption
+              <CaptionComponent
                 segment={seg}
                 timeOffset={seg.start}
                 emphasisTimes={segEmphasis}
@@ -229,6 +246,25 @@ export const Reel: React.FC<ReelProps> = ({
               name={`scene_${scene.id}`}
             >
               <FullScreenScene scene={scene} />
+            </Sequence>
+          );
+        })}
+
+        {/* Chapter dividers — lightweight full-screen section breaks */}
+        {chapterDividers.map((divider) => {
+          const fromFrame = Math.round(divider.start_sec * fps);
+          const durFrames = Math.max(
+            1,
+            Math.round((divider.end_sec - divider.start_sec) * fps),
+          );
+          return (
+            <Sequence
+              key={divider.id}
+              from={fromFrame}
+              durationInFrames={durFrames}
+              name={`chapter_${divider.id}`}
+            >
+              <ChapterDivider divider={divider} />
             </Sequence>
           );
         })}

@@ -2,31 +2,49 @@
 
 ## 📍 Next Up — اللي بنبدأ فيه دلوقتي
 
-> **آخر تحديث:** 2026-04-14 — Phase 5 + 6 + 7 (base) + 9 (infrastructure) خلصوا في الـ session ده. الـ full reel اتريندر بنجاح مع كل الـ 3 tiers شغّالة.
+> **آخر تحديث:** 2026-04-14 — Phase 7 iteration 2 خلصت: 3 scene types جديدة (definition/equation/counter) + ChapterDivider + PopStyle caption. الـ agent جاهز للفيديو الجديد.
 
-**الحالة:** Phase 0 + 1 + 2 + 3 + 4 + 5 + 6 + 8 + 9 (infra) خلصوا. Phase 7 — الـ base كامل (4 scene types + 2 overlay types + 3 micro types + VideoBreathing + Logo always-on). باقي **polish + caption styles + scene types إضافية**. Phase B لسه ما بدأش (مؤجّل).
+**الحالة:** Phase 0-9 كلهم كاملين. Phase 7 فيه دلوقتي 7 scene types + 2 caption styles + chapter dividers + 2 overlay types + 3 micro types + VideoBreathing. الـ gaps الفعلية الوحيدة: caption styles إضافية (Karaoke/Box/Typewriter/Classic) + scene types (chart/diagram) — مش blocking. Phase B (batch) مؤجّل.
 
-**الخطوة الجاية:** **Phase 7 polish iterations** — تحسينات على أساس feedback من الريندر الكامل.
+**الخطوة الجاية:** **فيديو RS جديد** (end-to-end run)
 
 اقرأ بالترتيب في الـ session الجاي:
 1. الملف ده بالكامل (CLAUDE.md)
 2. [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — قواعد البراند
-3. [`feedback/style_evolution.md`](feedback/style_evolution.md) — **أعلى أولوية** — تفضيلات المتراكمة (الـ session الماضي حط فيها ~8 entry)
-4. [`docs/design-system.md`](docs/design-system.md) — design rationale
-5. [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) — الـ architecture الحالي (3-tier system)
-6. [`src/data/محمد ريان - ورشة الشامل/animation_plan.json`](src/data/محمد ريان - ورشة الشامل/animation_plan.json) — الـ plan الفعلي
+3. [`feedback/style_evolution.md`](feedback/style_evolution.md) — **أعلى أولوية** — تفضيلات المتراكمة
+4. `~/.claude/projects/.../memory/` — 9 memory files (user-level, auto-loaded)
+5. [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) — 3-tier architecture
+6. [`docs/scene-validation-rules.md`](docs/scene-validation-rules.md) — **15s scene spacing** (مش 45)
 
-**اللي محتاج iteration:**
-- Scene animations — المستخدم قال "هنبدأ نحسن في الفترة الجاية أكتر" على الـ 4 scenes
-- Caption styles — 5 styles لسه (Karaoke, Pop, Box, Typewriter, Classic) — Hormozi هو الوحيد اللي موجود
-- Scene types جدد — definition, equation, chart, diagram, counter
-- Chapter dividers component
-- Accent flash generator tuning (حالياً بيطلّع 0 events)
+**الـ inputs المطلوبة من المستخدم لفيديو جديد:**
+- ملف الفيديو (.mp4 / .mov)
+- اسم المحاضر
+- اسم الورشة
+- قرار caption style: Hormozi (default) أو Pop
 
-**Test fixture:** نفس الفيديو `محمد ريان - ورشة الشامل`. الـ full render موجود في:
-`D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل - phase7-full.mp4`
+**الـ Pipeline للفيديو الجديد:**
+```
+1. node rs-reels.mjs phase1 <video>              (preprocessing, ~3-5 min)
+2. node rs-reels.mjs make <video> --dry          (transcribe + fix, ~2-3 min)
+3. node rs-reels.mjs edit <video>                (manual subtitle review)
+4. Claude Code runs Phase 5 + 6 in-context       (analysis + plan, ~10 min)
+5. node scripts/generate_micro_events.mjs <name> (auto, instant)
+6. node rs-reels.mjs make <video> --skip-audio --skip-transcribe  (render, ~5 min)
+7. Phase 9: collect feedback + update log        (2-3 min)
+```
 
-**قبل أي تعديل كبير:** استنى موافقة (خصوصاً على scenes و caption styles).
+**الـ Scene types المتاحة حالياً (7):**
+- `process_stepper` — stepper بـ 3+ cards مرتبة عمودياً + stagger + status badges
+- `process_timeline` — horizontal nodes مع connector line + done/next/future states
+- `comparison_two_paths` — ✗ vs ✓ columns
+- `big_metaphor` — massive headline + subline + footer (closing moments)
+- `definition` — term accent + definition body + optional icon/example
+- `equation` — LTR equation with tokens that appear one-by-one + labeled terms + result highlight
+- `counter` — massive count-up number + top/bottom labels (social proof, stats)
+
+**الـ plan template:** كل scene element يحدد الـ type بالـ element type (مش الـ scene_type)، والـ FullScreenScene dispatcher بيختار الـ component صح.
+
+**قبل أي تعديل كبير على scenes موجودة:** استنى feedback محدد من المستخدم.
 
 ---
 
@@ -133,12 +151,17 @@
 - [x] [`src/components/LowerThird.tsx`](src/components/LowerThird.tsx)
 - [x] [`src/components/Outro.tsx`](src/components/Outro.tsx)
 - [x] [`src/components/SmartZoom.tsx`](src/components/SmartZoom.tsx) — spring ramp + face-centered transform + edge clamping (+ mini zooms من Tier 2)
-- [x] **Scene components (4/8)**:
-  - [x] [`scenes/FullScreenScene.tsx`](src/components/scenes/FullScreenScene.tsx) — wrapper + dispatcher
-  - [x] [`scenes/ProcessStepperScene.tsx`](src/components/scenes/ProcessStepperScene.tsx) — 3 cards stagger (scene 1)
-  - [x] [`scenes/ProcessTimelineScene.tsx`](src/components/scenes/ProcessTimelineScene.tsx) — horizontal nodes (scene 2)
-  - [x] [`scenes/ComparisonTwoPathsScene.tsx`](src/components/scenes/ComparisonTwoPathsScene.tsx) — ✗ vs ✓ (scene 3)
-  - [x] [`scenes/BigMetaphorScene.tsx`](src/components/scenes/BigMetaphorScene.tsx) — headline + subline (scene 4)
+- [x] **Scene components (7)**:
+  - [x] [`scenes/FullScreenScene.tsx`](src/components/scenes/FullScreenScene.tsx) — wrapper + element-driven dispatcher
+  - [x] [`scenes/ProcessStepperScene.tsx`](src/components/scenes/ProcessStepperScene.tsx) — 3 cards stagger
+  - [x] [`scenes/ProcessTimelineScene.tsx`](src/components/scenes/ProcessTimelineScene.tsx) — horizontal nodes
+  - [x] [`scenes/ComparisonTwoPathsScene.tsx`](src/components/scenes/ComparisonTwoPathsScene.tsx) — ✗ vs ✓
+  - [x] [`scenes/BigMetaphorScene.tsx`](src/components/scenes/BigMetaphorScene.tsx) — headline + subline
+  - [x] [`scenes/DefinitionScene.tsx`](src/components/scenes/DefinitionScene.tsx) — **NEW** term + definition + optional icon/example
+  - [x] [`scenes/EquationScene.tsx`](src/components/scenes/EquationScene.tsx) — **NEW** left-to-right equation builder with labels
+  - [x] [`scenes/CounterScene.tsx`](src/components/scenes/CounterScene.tsx) — **NEW** massive count-up number with top/bottom labels
+- [x] **Chapter divider (NEW)**:
+  - [x] [`scenes/ChapterDivider.tsx`](src/components/scenes/ChapterDivider.tsx) — 2-3s section break (kicker + title + underline + subtitle)
 - [x] **Overlay components (2)**:
   - [x] [`overlays/Overlay.tsx`](src/components/overlays/Overlay.tsx) — dispatcher
   - [x] [`overlays/KeywordHighlightOverlay.tsx`](src/components/overlays/KeywordHighlightOverlay.tsx) — pill + badge
@@ -153,10 +176,13 @@
 - [x] [`src/utils/chunk.ts`](src/utils/chunk.ts) — caption rechunking
 - [x] [`src/utils/fonts.ts`](src/utils/fonts.ts) — @remotion/google-fonts (Cairo + Tajawal)
 
+- [x] **Caption styles (2)**:
+  - [x] [`WordCaption.tsx`](src/components/WordCaption.tsx) — Hormozi (default) — all words in segment + active-word highlight + emphasis boost
+  - [x] [`WordCaptionPop.tsx`](src/components/WordCaptionPop.tsx) — **NEW** Pop style — one huge word at a time, body zone, bouncy
+
 **ناقص (iteration مستقبلي):**
-- [ ] Caption styles (5 باقي): Karaoke, Pop, Box, Typewriter, Classic
-- [ ] Scene types جدد: definition, equation, chart, diagram, counter
-- [ ] Chapter Divider component
+- [ ] Caption styles (4 باقي): Karaoke, Box, Typewriter, Classic
+- [ ] Scene types جدد: chart, diagram
 - [ ] `@remotion/captions` integration
 - [ ] Scene polish من feedback الـ user بعد ما شاف الـ full render
 

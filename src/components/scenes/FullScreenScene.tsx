@@ -6,16 +6,16 @@ import { ProcessStepperScene } from './ProcessStepperScene';
 import { ProcessTimelineScene } from './ProcessTimelineScene';
 import { ComparisonTwoPathsScene } from './ComparisonTwoPathsScene';
 import { BigMetaphorScene } from './BigMetaphorScene';
+import { DefinitionScene } from './DefinitionScene';
+import { EquationScene } from './EquationScene';
+import { CounterScene } from './CounterScene';
 
 type Props = { scene: Scene };
 
 /**
  * FullScreenScene — wraps the scene in a fade-in/fade-out container and
- * delegates to the right body component based on `scene.scene_type`.
- *
- * The `frame` here is local to the parent <Sequence> (which starts at the
- * scene's start_sec). Children should also use `useCurrentFrame()` and treat
- * frame 0 as the scene start.
+ * delegates to the right body component. Dispatch is element-driven, not
+ * scene_type-driven — the scene's element list determines the layout.
  */
 export const FullScreenScene: React.FC<Props> = ({ scene }) => {
   const frame = useCurrentFrame();
@@ -51,30 +51,35 @@ export const FullScreenScene: React.FC<Props> = ({ scene }) => {
 };
 
 const SceneBody: React.FC<Props> = ({ scene }) => {
-  switch (scene.scene_type) {
-    case 'process':
-      // The plan uses scene_type 'process' for both stepper and timeline.
-      // Disambiguate by looking at the scene's elements.
-      if (scene.elements.some((e) => e.type === 'timeline_horizontal')) {
-        return <ProcessTimelineScene scene={scene} />;
-      }
-      return <ProcessStepperScene scene={scene} />;
+  // Element-driven dispatch — pick the body based on which element the scene
+  // actually contains, not the loose scene_type string. This is more flexible:
+  // a "process" scene_type could contain either a step_card list (→ stepper)
+  // or a timeline_horizontal (→ timeline).
+  const elementTypes = new Set(scene.elements.map((e) => e.type));
 
-    case 'tip':
-    case 'comparison':
-      // Same heuristic — comparison uses 'comparison_two_paths' element,
-      // big metaphor uses 'big_metaphor' element
-      if (scene.elements.some((e) => e.type === 'comparison_two_paths')) {
-        return <ComparisonTwoPathsScene scene={scene} />;
-      }
-      if (scene.elements.some((e) => e.type === 'big_metaphor')) {
-        return <BigMetaphorScene scene={scene} />;
-      }
-      return <FallbackScene scene={scene} />;
-
-    default:
-      return <FallbackScene scene={scene} />;
+  if (elementTypes.has('step_card')) {
+    return <ProcessStepperScene scene={scene} />;
   }
+  if (elementTypes.has('timeline_horizontal')) {
+    return <ProcessTimelineScene scene={scene} />;
+  }
+  if (elementTypes.has('comparison_two_paths')) {
+    return <ComparisonTwoPathsScene scene={scene} />;
+  }
+  if (elementTypes.has('big_metaphor')) {
+    return <BigMetaphorScene scene={scene} />;
+  }
+  if (elementTypes.has('definition')) {
+    return <DefinitionScene scene={scene} />;
+  }
+  if (elementTypes.has('equation')) {
+    return <EquationScene scene={scene} />;
+  }
+  if (elementTypes.has('counter')) {
+    return <CounterScene scene={scene} />;
+  }
+
+  return <FallbackScene scene={scene} />;
 };
 
 const FallbackScene: React.FC<Props> = ({ scene }) => (
