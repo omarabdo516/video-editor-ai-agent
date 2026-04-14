@@ -1,0 +1,381 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-14",
+  "generated_by": "Claude Code (Opus 4.6)",
+
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.mp4.captions.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.16k.wav.energy.json",
+    "metadata": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.1080x1920.mp4.metadata.json"
+  },
+
+  "video": {
+    "duration_sec": 209.173,
+    "duration_str": "03:29",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 203
+  },
+
+  "lecturer": {
+    "name": "محمد ريان",
+    "title": "خبير محاسبة",
+    "workshop": "ورشة المحاسب الشامل"
+  },
+
+  "summary": "في الجزء الأخير من ورشة الشامل، محمد ريان بيرسم خريطة كاملة للمحاسب بعد ما يخلص الورشة. بيشرح خطة الـ 3 ورش بتاعت RS (الشامل → التحليل المالي → الضرايب)، وبيقول إن رئيس الحسابات لازم يقفز على الضرايب على طول لأنها أخطر حاجة عليه. بعدها يشرح ليه دراسة معايير المحاسبة الدولية (IFRS) لازم تيجي بعد التطبيق العملي مش قبله، وإن المعايير مش شهادة مهنية لكن مادة في دبلومة. ويختم بنصيحة إن الشهادات المهنية (زي CFA) للـ positions مش للعلم، وإن اللي بيخلّص الـ 4 حاجات دول 'بقى قفل الجيم' وجاهز لأكبر شركة في الكوكب.",
+
+  "topics": [
+    "خريطة التعلّم بعد ورشة الشامل",
+    "ترتيب أولويات الورش (شامل/تحليل مالي/ضرايب)",
+    "الفرق بين رئيس الحسابات والمحاسب العادي في المسار",
+    "التعامل مع مكتب المراجعة",
+    "معايير المحاسبة الدولية (IFRS) — متى وكيف",
+    "منهجية RS: تطبيق عملي قبل النظرية",
+    "الشهادات المهنية ودورها في الـ Positions",
+    "شهادات المالية مقابل شهادات المحاسبة (CFA)"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "المقدمة: إنت خلصت الورشة... وبعدين؟",
+      "start_sec": 0.10,
+      "end_sec": 25.10,
+      "start_str": "00:00",
+      "end_str": "00:25",
+      "subtitle_range": [0, 23],
+      "summary": "افتتاحية بعد ما المتدرب خلص ورشة الشامل، وبيقول إن دماغك اتبنت بس فيه شوية حاجات لازم تعملها بعدها — والمسار بيختلف حسب لو إنت محاسب عادي ولا رئيس حسابات."
+    },
+    {
+      "id": 2,
+      "title": "خطة الـ 3 ورش وأولوية الضرايب",
+      "start_sec": 25.50,
+      "end_sec": 73.70,
+      "start_str": "00:25",
+      "end_str": "01:13",
+      "subtitle_range": [24, 67],
+      "summary": "RS بتقدم 3 ورش متتابعة: الشامل → التحليل المالي → الضرايب. لرئيس الحسابات اللي ماسك شركة لوحده: اركن التحليل المالي والحق الضرايب، لأن الضرايب في مصر فيها تنوع كبير وهاسل كتير. كمان نصايح للتعامل مع مكتب المراجعة."
+    },
+    {
+      "id": 3,
+      "title": "الـ Plan الكامل: حسب وضعك",
+      "start_sec": 73.77,
+      "end_sec": 92.70,
+      "start_str": "01:13",
+      "end_str": "01:32",
+      "subtitle_range": [68, 89],
+      "summary": "تلخيص الـ Plan: المحاسب العادي بياخد الـ 3 ورش بالترتيب (شامل → تحليل مالي → ضرايب)، ورئيس الحسابات بياخد الشامل + الضرايب على طول."
+    },
+    {
+      "id": 4,
+      "title": "معايير المحاسبة الدولية ومنهجية RS",
+      "start_sec": 92.77,
+      "end_sec": 153.40,
+      "start_str": "01:32",
+      "end_str": "02:33",
+      "subtitle_range": [90, 149],
+      "summary": "بعد باكج التشغيل لازم تدرس معايير المحاسبة الدولية (IFRS) — وهي إلزام. بس مهم تفهم إنها مش شهادة مهنية، دي مادة في دبلومة. منهجية RS: التطبيق الأول، النظرية تيجي بعدين، عشان لو درست المعايير قبل التطبيق هتبقى دراسة أكاديمية بحتة بدون فايدة عملية.",
+      "rs_methodology": true
+    },
+    {
+      "id": 5,
+      "title": "الشهادات المهنية والـ CFA",
+      "start_sec": 153.53,
+      "end_sec": 196.40,
+      "start_str": "02:33",
+      "end_str": "03:16",
+      "subtitle_range": [150, 189],
+      "summary": "بعد ما تخلص الـ 4 (3 ورش + معايير) → روح خد شهادة مهنية. الشهادة المهنية بتجيبلك الـ position في المالتي ناشونال، بس لوحدها بدون الخلفية مش هتضيفلك. شهادات زي CFA دي مجال مختلف خالص (تمويل مش محاسبة)."
+    },
+    {
+      "id": 6,
+      "title": "الخاتمة: قفلت الجيم",
+      "start_sec": 196.53,
+      "end_sec": 209.17,
+      "start_str": "03:16",
+      "end_str": "03:29",
+      "subtitle_range": [190, 202],
+      "summary": "ختام بنصيحة قوية: ما دام قفلت الـ 4 حاجات دول معايا 'قفلت الجيم'. زود الشهادات بقى للـ positions مش للعلم، لأن كل اللي يخص المحاسبة المالية بقى في جيبك."
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [25, 26, 27, 28, 29, 30, 31],
+      "timestamp_start_sec": 27.30,
+      "timestamp_end_sec": 33.77,
+      "timestamp_start": "00:27",
+      "timestamp_end": "00:33",
+      "content": "RS بتقدم 3 ورش متتابعة: الشامل، تحليل مالي، الضرايب",
+      "importance": "high",
+      "concept_type": "process",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Full-screen scene بـ background primary بيعرض الـ 3 ورش كـ stepper أو 3 cards بـ stagger reveal. الكلمة 'الشامل' تظهر الأول مع check mark أصفر، بعدين 'تحليل مالي'، بعدين 'الضرايب'. كل واحدة فيها icon بسيط (كتاب/رسم بياني/إيصال)."
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [33, 34, 35, 36, 37, 38, 39],
+      "timestamp_start_sec": 34.33,
+      "timestamp_end_sec": 40.00,
+      "timestamp_start": "00:34",
+      "timestamp_end": "00:40",
+      "content": "لرئيس الحسابات: اركن التحليل المالي والحق الضرايب — لأنها الأخطر عليك وانت ماسك شركة لوحدك",
+      "importance": "high",
+      "concept_type": "tip",
+      "suggested_animation": "overlay",
+      "animation_description": "Overlay بـ stamp/badge نص 'لرئيس الحسابات' بالـ accent، تحته arrow بيشاور على كلمة 'ضرايب' مع underline أصفر متحرّك. الـ overlay يظهر فوق الفيديو بـ smart_zoom على وش المحاضر."
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [42, 43, 44, 45, 46, 47],
+      "timestamp_start_sec": 42.40,
+      "timestamp_end_sec": 48.93,
+      "timestamp_start": "00:42",
+      "timestamp_end": "00:48",
+      "content": "الضرايب في مصر فيها تنوع كبير وهاسل كتير — يا تراجع مع مكتب المراجعة يا انت اللي تشتغل",
+      "importance": "medium",
+      "concept_type": "example",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "Keywords overlay بيـ highlight 'تنوع كبير' و 'هاسل كتير' كل واحدة في وقتها بـ accent + scale 1.1x + slight shake."
+    },
+    {
+      "id": 4,
+      "subtitle_ids": [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80],
+      "timestamp_start_sec": 74.70,
+      "timestamp_end_sec": 84.90,
+      "timestamp_start": "01:14",
+      "timestamp_end": "01:24",
+      "content": "بمنتهى البساطة: الشامل → تحليل مالي → الضرايب (للمحاسب العادي)",
+      "importance": "high",
+      "concept_type": "process",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Full-screen scene timeline horizontal بيعرض الـ 3 خطوات بـ arrows بينهم. كل خطوة card فيها رقم + اسم. الـ 'الشامل' بـ check mark أصفر (متعمل بالفعل). الـ scene يفضل 4-5 ثواني."
+    },
+    {
+      "id": 5,
+      "subtitle_ids": [82, 83, 84, 85, 86],
+      "timestamp_start_sec": 85.93,
+      "timestamp_end_sec": 90.60,
+      "timestamp_start": "01:25",
+      "timestamp_end": "01:30",
+      "content": "لرئيس الحسابات: الشامل + الضرايب على طول (من غير تحليل مالي حالياً) — ده الـ Plan",
+      "importance": "high",
+      "concept_type": "comparison",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Comparison scene بـ 2 columns: column يسار 'محاسب' فيه 3 خطوات، column يمين 'رئيس حسابات' فيه خطوتين بس مع علامة skip على التحليل المالي. الـ background gradient dark→primary."
+    },
+    {
+      "id": 6,
+      "subtitle_ids": [93, 94, 95],
+      "timestamp_start_sec": 94.63,
+      "timestamp_end_sec": 97.40,
+      "timestamp_start": "01:34",
+      "timestamp_end": "01:37",
+      "content": "بعد كده: تدرس معايير محاسبة دولية (IFRS) — وده إلزام",
+      "importance": "high",
+      "concept_type": "definition",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "Overlay فوق الفيديو: 'IFRS' بـ accent كبير + سطر تحته 'معايير المحاسبة الدولية' بـ Cairo Bold. علامة 'إلزام' كـ stamp أحمر... (لا — مش أحمر، استخدم accent مع weight أعلى زي ما الـ brand بيقول)."
+    },
+    {
+      "id": 7,
+      "subtitle_ids": [105, 106, 107, 108, 109, 110, 111],
+      "timestamp_start_sec": 107.00,
+      "timestamp_end_sec": 114.17,
+      "timestamp_start": "01:47",
+      "timestamp_end": "01:54",
+      "content": "المعايير الدولية مش شهادة، دي مادة في شهادة دبلومة",
+      "importance": "high",
+      "concept_type": "comparison",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Scene بيعرض ✗ على 'شهادة مهنية' و ✓ على 'مادة في دبلومة'. الفكرة: تصحيح فهم خاطئ شائع. استخدم Cairo Bold للعنوان + تباين قوي بين الـ 2 احتمالات."
+    },
+    {
+      "id": 8,
+      "subtitle_ids": [114, 115, 116],
+      "timestamp_start_sec": 118.13,
+      "timestamp_end_sec": 121.60,
+      "timestamp_start": "01:58",
+      "timestamp_end": "02:01",
+      "content": "المعايير ودراستها = تطبيق عملي للشغل",
+      "importance": "medium",
+      "concept_type": "tip",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "Overlay بـ box حول 'تطبيق عملي' — ده core message للـ brand. استخدم accent + Tajawal ExtraBold."
+    },
+    {
+      "id": 9,
+      "subtitle_ids": [134, 135, 136, 137, 138, 139, 140, 141],
+      "timestamp_start_sec": 136.67,
+      "timestamp_end_sec": 143.67,
+      "timestamp_start": "02:16",
+      "timestamp_end": "02:23",
+      "content": "للفريش: لو درست المعايير الأول من غير تطبيق هتبقى دراسة أكاديمية بحتة وعلمك معطل",
+      "importance": "high",
+      "concept_type": "tip",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Scene بيعرض الـ wrong path (✗): فريش → معايير → 'علم معطل'. والـ right path (✓): فريش → تطبيق عملي → معايير → 'علم نافع'. الـ scene تأكيد على منهجية RS."
+    },
+    {
+      "id": 10,
+      "subtitle_ids": [153, 154, 155, 156],
+      "timestamp_start_sec": 158.70,
+      "timestamp_end_sec": 162.20,
+      "timestamp_start": "02:38",
+      "timestamp_end": "02:42",
+      "content": "بقيت 'ملك في التشغيل' — جاهز تمسك أكبر شركة في الكوكب",
+      "importance": "high",
+      "concept_type": "tip",
+      "suggested_animation": "overlay",
+      "animation_description": "Overlay بـ crown icon (لطيف مش over the top) + نص 'ملك في التشغيل' بـ Tajawal ExtraBold + accent. تظهر مع smart_zoom على المحاضر."
+    },
+    {
+      "id": 11,
+      "subtitle_ids": [161, 162, 163, 164, 165, 166, 167, 168, 169],
+      "timestamp_start_sec": 165.37,
+      "timestamp_end_sec": 175.33,
+      "timestamp_start": "02:45",
+      "timestamp_end": "02:55",
+      "content": "الشهادة المهنية بتجيبلك الـ position، بس لوحدها بدون الخلفية مش هتضيفلك",
+      "importance": "medium",
+      "concept_type": "comparison",
+      "suggested_animation": "overlay",
+      "animation_description": "Overlay بسطرين: السطر الأول 'الشهادة المهنية = position' بـ check أصفر. السطر التاني 'لوحدها = ✗' بـ X رمادي."
+    },
+    {
+      "id": 12,
+      "subtitle_ids": [180, 181, 182, 183, 184, 185, 186, 187, 188],
+      "timestamp_start_sec": 186.07,
+      "timestamp_end_sec": 194.70,
+      "timestamp_start": "03:06",
+      "timestamp_end": "03:14",
+      "content": "CFA دي لعبة ماليات مش حسابات — مجال مختلف خالص",
+      "importance": "medium",
+      "concept_type": "definition",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Scene Venn-diagram بسيط بـ 2 دوائر: 'المحاسبة' و 'التمويل'، الـ overlap صغير. CFA يقع في 'التمويل'. الـ scene تفصل واضح بين المسارين."
+    },
+    {
+      "id": 13,
+      "subtitle_ids": [193, 194, 195, 196, 197],
+      "timestamp_start_sec": 200.67,
+      "timestamp_end_sec": 204.60,
+      "timestamp_start": "03:20",
+      "timestamp_end": "03:24",
+      "content": "قفلت الجيم — زود الشهادات بقى للـ Positions، مش للعلم",
+      "importance": "high",
+      "concept_type": "tip",
+      "suggested_animation": "overlay",
+      "animation_description": "Overlay كبير: 'قفلت الجيم 💪' (بدون الـ emoji للـ brand corporate) أو dumbbell icon بسيط. النص بـ Tajawal ExtraBold + accent. ده closing emphasis لازم يكون قوي بصرياً."
+    }
+  ],
+
+  "keywords": [
+    { "term": "ورشة الشامل", "first_seen_subtitle": 0, "first_seen_sec": 1.31, "category": "workshop_name", "weight": 5 },
+    { "term": "التحليل المالي", "first_seen_subtitle": 20, "first_seen_sec": 22.10, "category": "workshop_name", "weight": 5 },
+    { "term": "الضرايب", "first_seen_subtitle": 13, "first_seen_sec": 14.87, "category": "workshop_name", "weight": 5 },
+    { "term": "RS", "first_seen_subtitle": 25, "first_seen_sec": 27.30, "category": "brand", "weight": 5 },
+    { "term": "رئيس حسابات", "first_seen_subtitle": 10, "first_seen_sec": 11.27, "category": "role", "weight": 4 },
+    { "term": "خبير ضرايب", "first_seen_subtitle": 13, "first_seen_sec": 15.33, "category": "role", "weight": 3 },
+    { "term": "مكتب المراجعة", "first_seen_subtitle": 45, "first_seen_sec": 47.00, "category": "concept", "weight": 3 },
+    { "term": "معاير محاسبة دولية", "first_seen_subtitle": 94, "first_seen_sec": 95.70, "category": "concept", "weight": 5 },
+    { "term": "IFRS", "first_seen_subtitle": 94, "first_seen_sec": 95.70, "category": "concept", "weight": 5, "alias_of": "معاير محاسبة دولية" },
+    { "term": "دبلومة", "first_seen_subtitle": 108, "first_seen_sec": 111.07, "category": "concept", "weight": 3 },
+    { "term": "تطبيق عملي", "first_seen_subtitle": 116, "first_seen_sec": 121.60, "category": "rs_value", "weight": 5 },
+    { "term": "الشهادة المهنية", "first_seen_subtitle": 161, "first_seen_sec": 165.37, "category": "concept", "weight": 5 },
+    { "term": "المالتي ناشونال", "first_seen_subtitle": 159, "first_seen_sec": 163.50, "category": "concept", "weight": 3 },
+    { "term": "CFA", "first_seen_subtitle": 181, "first_seen_sec": 186.07, "category": "certification", "weight": 4 },
+    { "term": "تمويل", "first_seen_subtitle": 178, "first_seen_sec": 184.10, "category": "concept", "weight": 3 },
+    { "term": "قفلت الجيم", "first_seen_subtitle": 194, "first_seen_sec": 200.67, "category": "metaphor", "weight": 5 },
+    { "term": "الفريش", "first_seen_subtitle": 134, "first_seen_sec": 136.67, "category": "role", "weight": 3 }
+  ],
+
+  "emphasis_moments": [
+    { "energy_time_sec": 0.448, "energy": 0.2749, "energy_type": "dramatic_pause", "subtitle_id": 0, "text": "بص بقى هو على نهاية الورشة", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "rationale": "افتتاحية + dramatic pause — smart zoom سلس لجذب الانتباه" },
+    { "energy_time_sec": 12.512, "energy": 0.2498, "energy_type": "dramatic_pause", "subtitle_id": 11, "text": "بقوله من دلوقتي الحق خد ورشة", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 17.888, "energy": 0.2698, "energy_type": "high_energy", "subtitle_id": 16, "text": "فانت مش متسنتر مع الضرايب دلوقتي", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 26.464, "energy": 0.186, "energy_type": "high_energy", "subtitle_id": 25, "text": "RS تخدمك بإية؟", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 1, "rationale": "بداية key moment 1 (الـ 3 ورش) + high energy + كلمة مفتاحية (RS)" },
+    { "energy_time_sec": 28.544, "energy": 0.2299, "energy_type": "dramatic_pause", "subtitle_id": 27, "text": "تلات ورش وراء بعض", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 1, "rationale": "نص محوري للـ key moment + dramatic pause = perfect anchor للـ full-screen scene" },
+    { "energy_time_sec": 31.392, "energy": 0.2135, "energy_type": "dramatic_pause", "subtitle_id": 29, "text": "اللي هم الشامل", "intensity": "medium", "suggested_treatment": "keyword_highlight", "key_moment_ref": 1 },
+    { "energy_time_sec": 33.728, "energy": 0.1889, "energy_type": "dramatic_pause", "subtitle_id": 31, "text": "ووراه الضرايب", "intensity": "medium", "suggested_treatment": "keyword_highlight", "key_moment_ref": 1 },
+    { "energy_time_sec": 36.896, "energy": 0.2421, "energy_type": "high_energy", "subtitle_id": 36, "text": "والحقني بالضرايب", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 2 },
+    { "energy_time_sec": 39.776, "energy": 0.2494, "energy_type": "high_energy", "subtitle_id": 39, "text": "وانت ماسك شركة لوحدك", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 42.176, "energy": 0.2945, "energy_type": "high_energy", "subtitle_id": 41, "text": "فانت لازم ضرايب", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 3, "rationale": "أعلى energy في القسم ده + assertion قوية" },
+    { "energy_time_sec": 44.352, "energy": 0.1888, "energy_type": "dramatic_pause", "subtitle_id": 43, "text": "فيها تنوع كبير", "intensity": "medium", "suggested_treatment": "keyword_highlight", "key_moment_ref": 3 },
+    { "energy_time_sec": 48.992, "energy": 0.1828, "energy_type": "high_energy", "subtitle_id": 47, "text": "فبالتالي لازم ضرايب", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 55.616, "energy": 0.2375, "energy_type": "high_energy", "subtitle_id": 53, "text": "هو المكتب بيشتغل لوحده", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 64.16, "energy": 0.2131, "energy_type": "dramatic_pause", "subtitle_id": 60, "text": "لكن لا", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 72.704, "energy": 0.2834, "energy_type": "dramatic_pause", "subtitle_id": 67, "text": "بتفولو على الرجالة اللي معاك", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 77.056, "energy": 0.2634, "energy_type": "high_energy", "subtitle_id": 74, "text": "الشامل", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 4 },
+    { "energy_time_sec": 79.136, "energy": 0.3311, "energy_type": "dramatic_pause", "subtitle_id": 75, "text": "والحمد لله احنا ابتدينا فيه اهو", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 4, "rationale": "أعلى energy في الفيديو كله (0.33) — لحظة محورية" },
+    { "energy_time_sec": 82.08, "energy": 0.2786, "energy_type": "dramatic_pause", "subtitle_id": 78, "text": "لو انت محاسب نقولك شامل", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 4 },
+    { "energy_time_sec": 84.096, "energy": 0.2938, "energy_type": "high_energy", "subtitle_id": 80, "text": "والضرايب بعديه حلو", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 4 },
+    { "energy_time_sec": 89.216, "energy": 0.1991, "energy_type": "high_energy", "subtitle_id": 85, "text": "ضرايب دلوقتي", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 5 },
+    { "energy_time_sec": 91.296, "energy": 0.2188, "energy_type": "dramatic_pause", "subtitle_id": 87, "text": "خلصنا دول", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 95.552, "energy": 0.2069, "energy_type": "high_energy", "subtitle_id": 94, "text": "معاير محاسبة دولية", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 6, "rationale": "أول مرة الـ keyword IFRS يتذكر + high energy" },
+    { "energy_time_sec": 97.856, "energy": 0.2455, "energy_type": "high_energy", "subtitle_id": 95, "text": "وده الزام", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 6 },
+    { "energy_time_sec": 101.92, "energy": 0.2223, "energy_type": "high_energy", "subtitle_id": 100, "text": "عربي وانجليزي واحدة", "intensity": "low", "suggested_treatment": "overlay_only" },
+    { "energy_time_sec": 104.192, "energy": 0.2501, "energy_type": "high_energy", "subtitle_id": 103, "text": "هتذاكر المعاير", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 110.88, "energy": 0.186, "energy_type": "dramatic_pause", "subtitle_id": 107, "text": "دي مادة في شهادة", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 7 },
+    { "energy_time_sec": 116.672, "energy": 0.2157, "energy_type": "dramatic_pause", "subtitle_id": 113, "text": "بنجهزك انك تشيل شغل", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "rationale": "core RS message — التطبيق العملي" },
+    { "energy_time_sec": 121.664, "energy": 0.2006, "energy_type": "dramatic_pause", "subtitle_id": 116, "text": "تطبيق عملي للشغل", "intensity": "strong", "suggested_treatment": "keyword_highlight", "key_moment_ref": 8, "rationale": "core brand value keyword" },
+    { "energy_time_sec": 126.848, "energy": 0.2473, "energy_type": "high_energy", "subtitle_id": 123, "text": "المعيار الدولي على الارض", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 138.336, "energy": 0.1948, "energy_type": "dramatic_pause", "subtitle_id": 137, "text": "اول حاجة هيروح يدرس المعايير الدولية", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 9 },
+    { "energy_time_sec": 142.72, "energy": 0.2789, "energy_type": "dramatic_pause", "subtitle_id": 140, "text": "بقى فعلا علمه معطل بالنسبة له", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 9 },
+    { "energy_time_sec": 147.456, "energy": 0.1917, "energy_type": "high_energy", "subtitle_id": 145, "text": "طلعلي بقى تقرير ازاي للشركة", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 151.552, "energy": 0.2017, "energy_type": "high_energy", "subtitle_id": 149, "text": "المعاير خلصت باكج", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 153.632, "energy": 0.2131, "energy_type": "high_energy", "subtitle_id": 150, "text": "الاربع شهادات دول", "intensity": "medium", "suggested_treatment": "keyword_highlight" },
+    { "energy_time_sec": 167.936, "energy": 0.1923, "energy_type": "high_energy", "subtitle_id": 162, "text": "المسمى البوزيشن... صح ؟", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 11 },
+    { "energy_time_sec": 173.536, "energy": 0.2129, "energy_type": "high_energy", "subtitle_id": 168, "text": "ما يقولش لا ده الشهادة المهنية", "intensity": "medium", "suggested_treatment": "smart_zoom_only", "key_moment_ref": 11 },
+    { "energy_time_sec": 181.824, "energy": 0.1826, "energy_type": "dramatic_pause", "subtitle_id": 174, "text": "الا وانت معاك شهادة مهنية محترمة", "intensity": "medium", "suggested_treatment": "smart_zoom_only" },
+    { "energy_time_sec": 200.288, "energy": 0.202, "energy_type": "high_energy", "subtitle_id": 194, "text": "قفلت الجيم زي ما بيسموه", "intensity": "strong", "suggested_treatment": "smart_zoom_plus_overlay", "key_moment_ref": 13, "rationale": "closing metaphor + high energy — الـ payoff اللحظة" },
+    { "energy_time_sec": 202.304, "energy": 0.2038, "energy_type": "dramatic_pause", "subtitle_id": 195, "text": "زود بقى الشهادات", "intensity": "strong", "suggested_treatment": "full_screen_scene_anchor", "key_moment_ref": 13 }
+  ],
+
+  "stats": {
+    "section_count": 6,
+    "key_moment_count": 13,
+    "high_importance_key_moments": 9,
+    "medium_importance_key_moments": 4,
+    "keyword_count": 17,
+    "emphasis_moment_count": 39,
+    "strong_emphasis": 14,
+    "medium_emphasis": 22,
+    "low_emphasis": 1,
+    "concept_type_breakdown": {
+      "process": 2,
+      "tip": 5,
+      "comparison": 3,
+      "definition": 2,
+      "example": 1
+    },
+    "suggested_animation_breakdown": {
+      "full_screen_scene": 6,
+      "overlay": 4,
+      "keyword_highlight": 3
+    },
+    "estimated_full_screen_scenes_density": "13.0 sec/scene avg gap (above 45s minimum — needs filtering in Phase 6)",
+    "warning": "13 full-screen scene anchors لا يمكن استخدامهم كلهم — الحد الأدنى 45s بين scenes (من scene-validation-rules.md). Phase 6 لازم يختار أعلى 4-5 موضع فقط حسب الـ importance والـ spacing."
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": "4-5 full-screen scenes max (1 كل ~45 ثانية)",
+    "top_priority_scenes": [
+      { "key_moment_id": 1, "reason": "أول presentation للـ 3 ورش — أهم concept في الفيديو" },
+      { "key_moment_id": 4, "reason": "تلخيص الـ Plan الكامل + أعلى energy في الفيديو (0.33)" },
+      { "key_moment_id": 7, "reason": "تصحيح فهم خاطئ شائع (المعايير ≠ شهادة)" },
+      { "key_moment_id": 9, "reason": "core RS methodology — التطبيق قبل النظرية" },
+      { "key_moment_id": 13, "reason": "closing metaphor قوي — قفلت الجيم" }
+    ],
+    "smart_zoom_density": "1 كل 30 ثانية max — لكن فيه ~14 emphasis قوي → اختار أعلى 6-7",
+    "overlays_density": "1 كل 20 ثانية max — keywords highlights تنتشر كل ~25-30 ثانية"
+  }
+}

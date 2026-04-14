@@ -43,9 +43,12 @@ tsconfig.tsbuildinfo
 !samples/**
 
 # ─── Per-project working dirs (populated at runtime, never committed) ───
-data/
-input/
-output/
+/data/
+/input/
+/output/
+
+# Note: src/data/ is the AI agent learning loop store — IS committed.
+# Keep `data/` rules anchored to root (with leading /) so they don't catch src/data/.
 
 # ─── OS files ───
 .DS_Store

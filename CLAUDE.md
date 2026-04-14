@@ -2,30 +2,32 @@
 
 ## 📍 Next Up — اللي بنبدأ فيه دلوقتي
 
-> **آخر تحديث:** 2026-04-14 — انتهت Phase A + B + C في session سابق. الـ session ده جديد.
+> **آخر تحديث:** 2026-04-14 — Phase 5 خلصت في الـ session ده على فيديو "محمد ريان - ورشة الشامل". الـ Next = Phase 6.
 
-**الحالة:** Phase 0 + 1 + 2 + 3 + 4 + 8 خلصوا. Phase 7 جزئي (basic components + SmartZoom). Phase 5 + 6 + 9 + B لسه ما بدوش.
+**الحالة:** Phase 0 + 1 + 2 + 3 + 4 + 5 + 8 خلصوا. Phase 7 جزئي (basic components + SmartZoom). Phase 6 + 9 + B لسه ما بدوش.
 
-**الخطوة الجاية:** **Phase 5 — Content Analysis**
+**الخطوة الجاية:** **Phase 6 — Animation Planning**
 
 اقرأ بالترتيب:
 1. الملف ده بالكامل (CLAUDE.md)
 2. [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — قواعد البراند الإجبارية
 3. [`docs/design-system.md`](docs/design-system.md) — design rationale
 4. [`feedback/style_evolution.md`](feedback/style_evolution.md) — تفضيلات المستخدم
-5. [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) — تفاصيل Phase 5
+5. [`docs/scene-validation-rules.md`](docs/scene-validation-rules.md) — قواعد density (إجباري لـ Phase 6)
+6. [`docs/phase-6-animation-planning.md`](docs/phase-6-animation-planning.md) — تفاصيل Phase 6
+7. [`src/data/<video_basename>/content_analysis.json`](src/data/) — output Phase 5
 
-**اللي تـ Phase 5 محتاجاه (موجود فعلاً):**
-- `<video>.mp4.captions.json` — output من Phase 2 (faster-whisper) ← بعد ما المستخدم يـ approve في الـ subtitle editor
-- `<video>.16k.wav.energy.json` — output من Phase B (librosa)
-- `<video>.1080x1920.mp4.metadata.json` — output من Phase B (ffprobe)
+**اللي Phase 6 محتاجاه:**
+- `src/data/<video_basename>/content_analysis.json` — Phase 5 output
+- `<video>.1080x1920.mp4.face_map.json` — Phase 1 output (للـ Smart Zoom centering)
+- `<video>.16k.wav.energy.json` — Phase 1 output (للـ Smart Zoom triggers)
 
-**اللي Phase 5 هتطلعه:**
-- `<video>.content_analysis.json` — sections + key_moments + keywords + emphasis_moments
+**اللي Phase 6 هتطلعه:**
+- `src/data/<video_basename>/animation_plan.json` — full plan: scenes + smart_zooms + overlays + timing
 
-**Test fixture:** الفيديو اللي بنختبر بيه `D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p3/محمد ريان - ورشة الشامل.mp4` — كل الـ inputs الـ Phase 5 محتاجاها موجودة جنبه فعلاً.
+**Test fixture:** نفس الفيديو `محمد ريان - ورشة الشامل` — content_analysis.json موجود فعلاً تحت [`src/data/محمد ريان - ورشة الشامل/`](src/data/محمد ريان - ورشة الشامل/).
 
-**قبل ما تبدأ Phase 5:** اسأل المستخدم "نبدأ Phase 5 على الفيديو الـ test ده ولا فيديو تاني؟" + استنى موافقة على أي تعديل كبير.
+**قبل ما تبدأ Phase 6:** استنى موافقة على الاختيارات الكبيرة (عدد الـ scenes النهائي، أي conflict في الـ density rules).
 
 ---
 
@@ -105,8 +107,12 @@
 - [x] الـ subtitle editor الجديد بيقبل `.captions.json` + `.srt` ويحفظ approved JSON
 - [x] الـ caps.js workflow القديم لسه شغّال للـ users اللي بيفضّلوا VS Code/Subtitle Edit
 
-### Phase 5 ❌
-- [ ] Content analysis (sections, key moments, keywords, emphasis)
+### Phase 5 ✅
+- [x] **Content analysis** — sections + key_moments + keywords + emphasis_moments + phase_6_hints
+- [x] الـ output في `src/data/<video_basename>/content_analysis.json` (مش جنب الفيديو — عشان الـ learning loop)
+- [x] **Done by Claude Code in-context** — مفيش API calls
+- [x] الفيديو الأول اللي اتحلل: `محمد ريان - ورشة الشامل` (203 segments → 6 sections, 13 key_moments, 17 keywords, 39 emphasis)
+- [x] [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) اتحدّث ليطابق الواقع
 
 ### Phase 6 ❌
 - [ ] Animation planning (full plan generation, مش بس zoom)
@@ -219,7 +225,7 @@ brands/
 | 2 | [`docs/phase-2-transcription.md`](docs/phase-2-transcription.md) | ✅ | audio → captions.json + .srt |
 | 3 | [`docs/phase-3-subtitle-editor.md`](docs/phase-3-subtitle-editor.md) | ❌ | subtitle editor UI |
 | 4 | [`docs/phase-4-captions-review.md`](docs/phase-4-captions-review.md) | ✅ (caps.js) | srt → approved JSON |
-| 5 | [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) | ❌ | captions → analysis |
+| 5 | [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) | ✅ | captions+energy+metadata → content_analysis.json |
 | 6 | [`docs/phase-6-animation-planning.md`](docs/phase-6-animation-planning.md) | ❌ | analysis → animation plan |
 | 7 | [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) | ⚠️ | plan → components (Smart Zoom done) |
 | 8 | [`docs/phase-8-render.md`](docs/phase-8-render.md) | ✅ | components → final.mp4 |
