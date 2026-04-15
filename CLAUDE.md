@@ -2,20 +2,14 @@
 
 ## 📍 Next Up — اللي بنبدأ فيه دلوقتي
 
-> **آخر تحديث:** 2026-04-15 — **Phase 10 Round A Tier 1 خلصت**. Omar اعترض على Phase 10 الأصلي كخطة (17 features, 7 rounds) لأنها مش بتلمس animation polish/variety اللي طلبه مرتين. اتعمل تقييم كامل، **اتحذف 5 features** (Intro card, Emotion colors, CTA overlay, Notifications, BG music) و **اتأجّل 3** (Retention heatmap, Audio ducking, Auto-splitter) و **اتعاد هيكلة** الباقي في 3 rounds جديدة. Round A (animation variety — جديدة تماماً، مش في الخطة الأصلية) هي الأولوية.
->
-> **Tier 1 اللي خلص دلوقتي:**
-> - **A1 — Scene entrance variety**: wrapper-level 4 presets (fade / scale_bounce / blur_reveal / stagger_cascade) في [`FullScreenScene.tsx`](src/components/scenes/FullScreenScene.tsx). كل scene بياخد default حسب الـ element type (big_metaphor→scale_bounce, definition→blur_reveal, stepper→stagger_cascade). Phase 6 يقدر يـ override بـ `scene.entrance`.
-> - **A2 — Dynamic stagger helper**: [`getStaggerDelay(n)`](src/tokens.ts) exported من tokens.ts. 15/10/7 frames per element حسب count.
-> - **A3 — Element-level refinement**: ProcessStepperScene + ProcessTimelineScene + EquationScene بقوا بيقروا `getStaggerDelay` بدل القيم الثابتة.
-> - **A4 — WordCaption emphasis variants**: 3 variants (`normal` / `pop` / `glow`) — كلهم بنفس الذهبي، variation في scale + letter-spacing + shadow intensity (brand rule: single accent). الـ `EmphasisBeat` type جديد. Reel.tsx بيـ map `word_pop.intensity` → variant بـ `resolveEmphasisIntensity()` (بيقبل `low/medium/high` legacy و `normal/pop/glow` الجديد).
+> **آخر تحديث:** 2026-04-15 — **رابع ريل كامل خلص** ("محمد علاء - ورشة المحاسب المالي"، 212.4s، **3.6/5**). ده أول ريل بيرندر على الـ full Phase 10 feature set (Round A Tier 1+2 + Round B + Round C). الـ first-pass اتعمل عليه 3 fixes same-session من feedback Omar: (1) **ProgressBar** من y=210 (top) لـ `bottom: 25` (edge) — convention بتاع video players. (2) **KeywordHighlightOverlay** شال الـ background pill card بالكامل + اتنقل من y=1140 → y=900 (body zone) — الـ card كان بيغطي على الكابشنز و y=1140 كان جوا الـ "avoid 1100-1460" forbidden range. (3) **SFX layer** اتقفلت `tokens.sfx.enabled = false` بعد ما Omar قال حسها مزعجة حتى على 12-20% volumes. قاعدة جديدة اتضافت للـ cycle: **خطوة Commit لازم تحدّث الـ Context Files (CLAUDE.md, feedback/, memory/) قبل ما تـ commit** — مش بس الـ source files.
 
-**الحالة:** Phase 0-9 كاملين. **Phase 10 كامل** (Round A Tier 1+2 + Round B + Round C). الـ 11 features اللي عدّت من الـ triage بقت متطبّقة. التعليمات التفصيلية في Phase 5 + Phase 6 docs للـ (1) Hook analysis، (2) Adaptive difficulty per key_moment، (3) Scene entrance/exit override، (4) Smart zoom curve selection، (5) WordCaption intensity variants.
+**الحالة:** Phase 0-9 كاملين. **Phase 10 كامل** (Round A Tier 1+2 + Round B + Round C). الـ 11 features اللي عدّت من الـ triage متطبّقة. 4 reels راندرت end-to-end: محمد ريان × 3 (4/5, 3.5/5, 3/5) + محمد علاء × 1 (3.6/5). التعليمات التفصيلية في Phase 5 + Phase 6 docs للـ (1) Hook analysis، (2) Adaptive difficulty per key_moment، (3) Scene entrance/exit override، (4) Smart zoom curve selection، (5) WordCaption intensity variants.
 
-**الخطوة الجاية:** **فيديو RS جديد** (end-to-end run)
+**الخطوة الجاية:** فيديو RS جديد أو iteration على المحاسب المالي (scenes polish + smart zoom refinement حسب feedback Omar اللي جاي)
 
 **ما اتضافش في Phase 10:**
-- ❌ محذوف نهائياً: Emotion Colors (F13) · Intro 3.5s (F6) · Auto-CTA (F11) · Notifications (F15) · BG Music (F2)
+- ❌ محذوف نهائياً: Emotion Colors (F13) · Intro 3.5s (F6) · Auto-CTA (F11) · Notifications (F15) · BG Music (F2) · SFX (F1 — طبّقت ثم اتقفلت)
 - ⏸️ مؤجّل لـ Phase 11: Retention Heatmap (F21) · Audio Ducking (F17) · Auto-Splitter (F4)
 
 اقرأ بالترتيب في الـ session الجاي:
@@ -358,8 +352,14 @@ brands/
 3. حدّث [`feedback/style_evolution.md`](feedback/style_evolution.md)
 4. عنصر 5/5 → احفظ في [`feedback/best_components/`](feedback/best_components/)
 5. لو قيمة اتغيرت → حدّث `src/tokens.ts` + `docs/design-system.md`
-6. `git commit`
-7. كل 3 مشاريع → اقترح variation جديدة
+6. **حدّث الـ Context Files قبل الـ commit** (قاعدة جديدة — 2026-04-15):
+   - [`CLAUDE.md`](CLAUDE.md) — "Next Up" section + current state + ratings history + لو قاعدة جديدة اتضافت اكتبها هنا
+   - Memory files في `~/.claude/projects/.../memory/` — أي feedback cross-session يتحوّل لـ memory entry
+   - [`feedback/style_evolution.md`](feedback/style_evolution.md) — "📐 القيم المعدّلة" لو قيمة rebased
+   - أي doc تاني فيه ذكر القيمة/القاعدة القديمة (مثلاً `docs/design-system.md`)
+   - **المبدأ**: ما تـ commit source files من غير ما الـ context files اللي بتشرحها تكون synced. Omar طلب ده صراحة لأن الـ context files هي اللي بيقراها الـ session الجاي، ولازم تطابق الكود الفعلي.
+7. `git commit` — الـ commit message لازم يذكر اللي اتحدّث في الـ context files كمان، مش بس الـ source
+8. كل 3 مشاريع → اقترح variation جديدة
 
 ---
 
