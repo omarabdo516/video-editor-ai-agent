@@ -1,6 +1,6 @@
 import React from 'react';
 import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
-import { tokens } from '../../tokens';
+import { tokens, getStaggerDelay } from '../../tokens';
 import type { Scene, TimelineElement, FooterCaptionElement } from '../../types';
 
 type Props = { scene: Scene };
@@ -27,7 +27,9 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
   if (!timeline) return null;
 
   const items = timeline.items;
-  const stagger = timeline.stagger_per_item_frames ?? 14;
+  // Dynamic stagger (Phase 10 Round A) — fewer items get wider spacing
+  // so a 2-node timeline still feels deliberate, and 5+ nodes tighten.
+  const stagger = timeline.stagger_per_item_frames ?? getStaggerDelay(items.length);
   const nodeSize = tokens.scenes.timelineNodeSize;
   // Gap must be wide enough for Arabic labels ("ميزان مراجعة" ~ 280px at 48px/800)
   // so adjacent labels don't overlap. At 3 nodes with nodeSize=120 + gap=230:

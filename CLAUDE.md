@@ -2,11 +2,17 @@
 
 ## 📍 Next Up — اللي بنبدأ فيه دلوقتي
 
-> **آخر تحديث:** 2026-04-14 — ثالث فيديو كامل خلص ("من فعاليات المحاضرة", 85.1s, 3/5, مقبول كـ baseline). اتضافت 3 features جديدة في الـ session دي: (1) **Outro redesign** — CTA card كامل (logo + tagline + CTA + website rspaac.com + 5 social icons) بدل الـ 2.5s logo flash القديم. المدة 5s. (2) **Subtitle editor POST /save** — Approve بيكتب JSON + SRT مباشرة على الـ disk جنب الفيديو (مش Downloads). (3) اتعلمنا pattern جديد: لما face conf مش مستقر على الريلز القصيرة، استخدم big zoom واحد + mini zooms بدل ما تجبر اتنين big zooms. **Omar flagged animation polish + variety كأولوية للـ session الجاي** (المرة التانية).
+> **آخر تحديث:** 2026-04-15 — **Phase 10 Round A Tier 1 خلصت**. Omar اعترض على Phase 10 الأصلي كخطة (17 features, 7 rounds) لأنها مش بتلمس animation polish/variety اللي طلبه مرتين. اتعمل تقييم كامل، **اتحذف 5 features** (Intro card, Emotion colors, CTA overlay, Notifications, BG music) و **اتأجّل 3** (Retention heatmap, Audio ducking, Auto-splitter) و **اتعاد هيكلة** الباقي في 3 rounds جديدة. Round A (animation variety — جديدة تماماً، مش في الخطة الأصلية) هي الأولوية.
+>
+> **Tier 1 اللي خلص دلوقتي:**
+> - **A1 — Scene entrance variety**: wrapper-level 4 presets (fade / scale_bounce / blur_reveal / stagger_cascade) في [`FullScreenScene.tsx`](src/components/scenes/FullScreenScene.tsx). كل scene بياخد default حسب الـ element type (big_metaphor→scale_bounce, definition→blur_reveal, stepper→stagger_cascade). Phase 6 يقدر يـ override بـ `scene.entrance`.
+> - **A2 — Dynamic stagger helper**: [`getStaggerDelay(n)`](src/tokens.ts) exported من tokens.ts. 15/10/7 frames per element حسب count.
+> - **A3 — Element-level refinement**: ProcessStepperScene + ProcessTimelineScene + EquationScene بقوا بيقروا `getStaggerDelay` بدل القيم الثابتة.
+> - **A4 — WordCaption emphasis variants**: 3 variants (`normal` / `pop` / `glow`) — كلهم بنفس الذهبي، variation في scale + letter-spacing + shadow intensity (brand rule: single accent). الـ `EmphasisBeat` type جديد. Reel.tsx بيـ map `word_pop.intensity` → variant بـ `resolveEmphasisIntensity()` (بيقبل `low/medium/high` legacy و `normal/pop/glow` الجديد).
 
-**الحالة:** Phase 0-9 كلهم كاملين. Phase 7 فيه دلوقتي 7 scene types + 6 caption styles (كلهم موجودين على القرص لكن Omar بيفضّل hormozi لوحده) + chapter dividers + 2 overlay types + 3 micro types + VideoBreathing. الـ gaps الفعلية: scene types (chart/diagram) + more subtitle editor polish — مش blocking. Phase B (batch) مؤجّل.
+**الحالة:** Phase 0-9 كاملين. Phase 10 Round A Tier 1 كاملة. Tier 2 (A5-A7 — scene exit variety + smart zoom easing variety + 2 micro events جدد) و Round B (SFX + dynamic font + motion backgrounds + progress bar + speech rhythm + manual transitions) و Round C (performance loop + docs updates) لسه.
 
-**الخطوة الجاية:** **فيديو RS جديد** (end-to-end run)
+**الخطوة الجاية:** **Round A Tier 2** بعد ما Omar يـ preview Tier 1
 
 اقرأ بالترتيب في الـ session الجاي:
 1. الملف ده بالكامل (CLAUDE.md)
@@ -138,6 +144,13 @@
 - [x] Phase 6.5 (micro-events): `scripts/generate_micro_events.mjs` — auto-generator يقرا emphasis_moments ويولّد Tier 2 beats لـ retention rhythm كل ~4 ثواني
 - [x] **Done by Claude Code in-context** — مفيش API calls
 - [x] الفيديو الأول اللي اتخطط: `محمد ريان - ورشة الشامل` (4 scenes, 4 big zooms, 5 overlays, 30 micro events = 43 total, cadence 4.86s)
+
+### Phase 10 Round A Tier 1 ✅ (animation variety)
+- [x] **A1 — Scene entrance variety (4 presets)**: [`FullScreenScene.tsx`](src/components/scenes/FullScreenScene.tsx) wrapper بياخد `scene.entrance?: 'fade' | 'scale_bounce' | 'blur_reveal' | 'stagger_cascade'`. default بيتحدد من الـ element type.
+- [x] **A2 — Dynamic stagger helper**: [`getStaggerDelay(n)`](src/tokens.ts) exported من tokens.ts. `tokens.scenes.dynamicStagger = { few: 15, some: 10, many: 7 }`.
+- [x] **A3 — Element stagger refinement**: ProcessStepperScene + ProcessTimelineScene + EquationScene بقوا بيقروا `getStaggerDelay` بدل القيم الثابتة.
+- [x] **A4 — WordCaption emphasis variants**: 3 variants (`normal` / `pop` / `glow`) — نفس الذهبي بـ scale + letter-spacing + shadow intensity مختلفة. `EmphasisBeat` type جديد في types.ts. `emphasisBeats?: EmphasisBeat[]` على WordCaption.tsx (backward compat مع `emphasisTimes?: number[]`). Reel.tsx بيـ map `word_pop.intensity` → variant.
+- [ ] **Tier 2**: A5 scene exit variety + A6 smart zoom easing variety + A7 micro event expansion — لسه
 
 ### Phase 7 ⚠️ (base كامل — iteration مستمر)
 

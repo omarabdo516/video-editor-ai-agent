@@ -1,7 +1,7 @@
 import React from 'react';
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { evolvePath } from '@remotion/paths';
-import { tokens } from '../../tokens';
+import { tokens, getStaggerDelay } from '../../tokens';
 import type { Scene, EquationElement, EquationTerm } from '../../types';
 
 // Horizontal connector line under the equation row, drawn with evolvePath.
@@ -30,8 +30,10 @@ export const EquationScene: React.FC<Props> = ({ scene }) => {
   const titleProgress = spring({ frame, fps, config: tokens.springs.bounce });
   const bgPulse = (Math.sin(frame * 0.05) + 1) / 2;
 
-  // Each term staggers by this many frames
-  const TERM_STAGGER = 12;
+  // Dynamic term stagger — Phase 10 Round A. Equations with 3 tokens get
+  // wide spacing (feels deliberate); 5+ tokens tighten so the reveal
+  // doesn't drag past the scene budget.
+  const TERM_STAGGER = getStaggerDelay(el.terms.length);
   // Title takes 15 frames before terms start
   const TERM_BASE_DELAY = 15;
 

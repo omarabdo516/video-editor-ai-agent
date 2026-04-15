@@ -48,6 +48,19 @@ export type ZoomPlan = {
 
 export type SceneType = 'process_stepper' | 'process_timeline' | 'comparison_two_paths' | 'big_metaphor';
 
+// ─── Scene Entrance (Phase 10 Round A — animation variety) ──────────────
+/**
+ * Wrapper-level entrance animation for a full-screen scene. Applied to the
+ * whole scene container — the scene's internal element animations still
+ * run independently after the wrapper settles.
+ *
+ * - `fade`           : simple opacity fade (default, current behavior)
+ * - `scale_bounce`   : scale 0.85 → 1.0 with spring overshoot + opacity
+ * - `blur_reveal`    : blur 20px → 0px + opacity
+ * - `stagger_cascade`: very quick opacity so child stagger is the main show
+ */
+export type SceneEntrance = 'fade' | 'scale_bounce' | 'blur_reveal' | 'stagger_cascade';
+
 export type StepCardElement = {
   type: 'step_card';
   step: number;
@@ -206,6 +219,12 @@ export type Scene = {
   elements: SceneElement[];
   transition_in?: { type: string; frames: number };
   transition_out?: { type: string; frames: number };
+  /**
+   * Phase 10 Round A — wrapper-level entrance variety. Defaults to 'fade'
+   * (matches existing behavior) when absent. Phase 6 picks per scene based
+   * on scene_type.
+   */
+  entrance?: SceneEntrance;
 };
 
 export type OverlayType = 'keyword_highlight' | 'stamp';
@@ -247,6 +266,25 @@ export type OverlayItem = {
   };
 };
 
+// ─── WordCaption Emphasis (Phase 10 Round A — variants) ────────────────
+/**
+ * Emphasis variant for the currently-active caption word during an
+ * emphasis beat. Replaces the color-change approach (would have broken
+ * the single-accent rule) with intensity variation on the same gold.
+ *
+ * - `normal`: scale 1.06 + base shadow — everyday active word
+ * - `pop`   : scale 1.16 + letter-spacing kick — medium emphasis
+ * - `glow`  : scale 1.22 + big accent shadow pulse — high emphasis (top 20%)
+ */
+export type EmphasisIntensity = 'normal' | 'pop' | 'glow';
+
+export type EmphasisBeat = {
+  /** Global seconds — the peak moment of the beat */
+  time: number;
+  /** Variant to apply to the currently-active word at `time` */
+  intensity: EmphasisIntensity;
+};
+
 // ─── Micro-events (Tier 2 retention rhythm) ──────────────────────────────
 export type MicroEventType = 'mini_zoom' | 'word_pop' | 'caption_underline' | 'accent_flash';
 
@@ -271,7 +309,12 @@ export type WordPopMicroEvent = {
   end_sec: number;
   word: string;
   anchor_subtitle_id?: number;
-  intensity?: string;
+  /**
+   * Phase 10 Round A — intensity picks the WordCaption variant for the
+   * active word. Accepts the new enum or the legacy freeform strings
+   * ('low'|'medium'|'high') which get mapped at the caption layer.
+   */
+  intensity?: EmphasisIntensity | string;
   source?: string;
 };
 

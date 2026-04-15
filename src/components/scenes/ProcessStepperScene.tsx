@@ -1,6 +1,6 @@
 import React from 'react';
 import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
-import { tokens } from '../../tokens';
+import { tokens, getStaggerDelay } from '../../tokens';
 import type { Scene, StepCardElement } from '../../types';
 
 type Props = { scene: Scene };
@@ -80,7 +80,14 @@ export const ProcessStepperScene: React.FC<Props> = ({ scene }) => {
         }}
       >
         {cards.map((card, idx) => (
-          <StepCard key={idx} card={card} frame={frame} fps={fps} index={idx} />
+          <StepCard
+            key={idx}
+            card={card}
+            frame={frame}
+            fps={fps}
+            index={idx}
+            totalCards={cards.length}
+          />
         ))}
       </div>
     </div>
@@ -92,8 +99,12 @@ const StepCard: React.FC<{
   frame: number;
   fps: number;
   index: number;
-}> = ({ card, frame, fps, index }) => {
-  const delay = card.stagger_delay_frames ?? 12 + index * 14;
+  totalCards: number;
+}> = ({ card, frame, fps, index, totalCards }) => {
+  // Dynamic stagger: wider spacing for few cards, tighter for many.
+  // Phase 10 Round A — keeps total stagger time ~constant across counts.
+  const perCardStep = getStaggerDelay(totalCards);
+  const delay = card.stagger_delay_frames ?? 12 + index * perCardStep;
   const localFrame = Math.max(0, frame - delay);
 
   // Layered animation: scale + slide + slight rotation

@@ -29,6 +29,9 @@ import type {
   ZoomMoment,
   MicroEvent,
   MiniZoomMicroEvent,
+  WordPopMicroEvent,
+  EmphasisBeat,
+  EmphasisIntensity,
   ChapterDivider as ChapterDividerData,
   CaptionStyle,
   CaptionStyleRange,
@@ -46,7 +49,22 @@ const CAPTION_COMPONENTS = {
   segment: import('./types').CaptionSegment;
   timeOffset?: number;
   emphasisTimes?: number[];
+  emphasisBeats?: EmphasisBeat[];
 }>>;
+
+/**
+ * Normalizes a word_pop's loose `intensity` string into the WordCaption
+ * variant enum. Phase 6 can emit 'low'/'medium'/'high' or the enum
+ * directly — both paths resolve to the same three variants.
+ */
+function resolveEmphasisIntensity(raw: string | undefined): EmphasisIntensity {
+  if (!raw) return 'glow';
+  const s = raw.toLowerCase();
+  if (s === 'normal' || s === 'low') return 'normal';
+  if (s === 'pop' || s === 'medium') return 'pop';
+  if (s === 'glow' || s === 'high') return 'glow';
+  return 'glow';
+}
 
 /** Picks the right caption style for a caption segment given the plan. */
 function resolveCaptionStyle(
@@ -143,15 +161,18 @@ export const Reel: React.FC<ReelProps> = ({
     [baseZoomPlan, microEvents],
   );
 
-  // Extract word_pop peak times — passed to WordCaption so the currently-
-  // active word gets a bigger, glowier boost during emphasis beats. This is
-  // our "retention rhythm" for medium-intensity moments, delivered through
-  // the caption itself instead of a standalone overlay.
-  const emphasisTimes = React.useMemo(
+  // Extract word_pop beats — each beat carries its own intensity so the
+  // caption picks the right variant (normal / pop / glow). Phase 10
+  // Round A: emphasis differentiation lives on the same gold color —
+  // variation is scale + letter-spacing + shadow boost.
+  const emphasisBeats = React.useMemo<EmphasisBeat[]>(
     () =>
       microEvents
-        .filter((e) => e.type === 'word_pop')
-        .map((e) => (e.start_sec + e.end_sec) / 2),
+        .filter((e): e is WordPopMicroEvent => e.type === 'word_pop')
+        .map((e) => ({
+          time: (e.start_sec + e.end_sec) / 2,
+          intensity: resolveEmphasisIntensity(e.intensity),
+        })),
     [microEvents],
   );
 
@@ -196,13 +217,13 @@ export const Reel: React.FC<ReelProps> = ({
         <LowerThird name={lecturer} title={workshop} />
 
         {/* Captions — already filtered to skip scenes. Each segment gets the
-            emphasis times that fall inside its window so its WordCaption can
-            boost the currently-active word. */}
+            emphasis beats that fall inside its window so its WordCaption can
+            pick the right variant for the currently-active word. */}
         {visibleCaptionSegments.map((seg, idx) => {
           const fromFrame = Math.round(seg.start * fps);
           const segDurFrames = Math.max(1, Math.round((seg.end - seg.start) * fps));
-          const segEmphasis = emphasisTimes.filter(
-            (t) => t >= seg.start - 0.3 && t <= seg.end + 0.3,
+          const segBeats = emphasisBeats.filter(
+            (b) => b.time >= seg.start - 0.3 && b.time <= seg.end + 0.3,
           );
           // Pick the caption style for THIS segment — a range-based override
           // wins over the plan-wide default when it covers this segment's mid.
@@ -223,7 +244,7 @@ export const Reel: React.FC<ReelProps> = ({
               <CaptionComponent
                 segment={seg}
                 timeOffset={seg.start}
-                emphasisTimes={segEmphasis}
+                emphasisBeats={segBeats}
               />
             </Sequence>
           );

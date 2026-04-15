@@ -25,6 +25,29 @@ export const tokens = {
     wordsPerChunk: 6,
     activeColor: '#FFB501',
     inactiveColor: '#FFFFFF',
+    // ─── Phase 10 Round A — A4: emphasis variants ────────────────────
+    // Single accent gold everywhere; variation is scale + letter-spacing
+    // + shadow intensity. No second color (brand rule).
+    emphasisVariants: {
+      normal: {
+        scale: 1.06,
+        letterSpacing: '0px',
+        rotation: 0, // degrees
+        shadowBoost: 0, // 0..1 multiplier for accent shadow
+      },
+      pop: {
+        scale: 1.16,
+        letterSpacing: '2px',
+        rotation: -1,
+        shadowBoost: 0.5,
+      },
+      glow: {
+        scale: 1.22,
+        letterSpacing: '3px',
+        rotation: -2,
+        shadowBoost: 1.0,
+      },
+    },
   },
   logoBug: {
     position: { x: 540, y: 143 },
@@ -65,6 +88,37 @@ export const tokens = {
     // Default fade transitions for full-screen scenes
     fadeInFrames: 15,
     fadeOutFrames: 12,
+    // ─── Phase 10 Round A — entrance variety ─────────────────────────
+    // Per-entrance timing/physics. The wrapper reads these by name.
+    entrances: {
+      fade: {
+        durationFrames: 15, // matches fadeInFrames for backward compat
+      },
+      scale_bounce: {
+        durationFrames: 20,
+        scaleFrom: 0.85,
+        scaleTo: 1.0,
+        // Mapped onto tokens.springs.bounce at runtime
+      },
+      blur_reveal: {
+        durationFrames: 18,
+        blurFromPx: 20,
+        blurToPx: 0,
+      },
+      stagger_cascade: {
+        // Very quick wrapper opacity so the scene's own child stagger is
+        // the main show. No transform on the wrapper.
+        durationFrames: 6,
+      },
+    },
+    // ─── Phase 10 Round A — A2: dynamic stagger ──────────────────────
+    // Stagger delay (frames) per element count. Keeps total stagger time
+    // roughly constant regardless of how many elements a scene holds.
+    dynamicStagger: {
+      few: 15,   // 1-2 elements — wider spacing
+      some: 10,  // 3-4 elements — medium
+      many: 7,   // 5+ elements — tight
+    },
     // Where the scene title sits (from top of comp)
     titleY: 380,
     titleDefaultSize: 76,
@@ -100,3 +154,16 @@ export const tokens = {
     slideOffsetPx: 24,
   },
 } as const;
+
+// ─── Phase 10 Round A — A2: dynamic stagger helper ───────────────────
+/**
+ * Picks a per-element stagger delay (frames) based on element count.
+ * Fewer elements get wider spacing; more elements get tight spacing —
+ * total stagger time stays roughly constant. Scenes can override by
+ * passing a fixed `stagger_delay_frames` on the element.
+ */
+export function getStaggerDelay(elementCount: number): number {
+  if (elementCount <= 2) return tokens.scenes.dynamicStagger.few;
+  if (elementCount <= 4) return tokens.scenes.dynamicStagger.some;
+  return tokens.scenes.dynamicStagger.many;
+}
