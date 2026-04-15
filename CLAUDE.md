@@ -2,11 +2,11 @@
 
 ## 📍 Next Up — اللي بنبدأ فيه دلوقتي
 
-> **آخر تحديث:** 2026-04-15 — **رابع ريل كامل خلص** ("محمد علاء - ورشة المحاسب المالي"، 212.4s، **3.6/5**). ده أول ريل بيرندر على الـ full Phase 10 feature set (Round A Tier 1+2 + Round B + Round C). الـ first-pass اتعمل عليه 3 fixes same-session من feedback Omar: (1) **ProgressBar** من y=210 (top) لـ `bottom: 25` (edge) — convention بتاع video players. (2) **KeywordHighlightOverlay** شال الـ background pill card بالكامل + اتنقل من y=1140 → y=900 (body zone) — الـ card كان بيغطي على الكابشنز و y=1140 كان جوا الـ "avoid 1100-1460" forbidden range. (3) **SFX layer** اتقفلت `tokens.sfx.enabled = false` بعد ما Omar قال حسها مزعجة حتى على 12-20% volumes. قاعدة جديدة اتضافت للـ cycle: **خطوة Commit لازم تحدّث الـ Context Files (CLAUDE.md, feedback/, memory/) قبل ما تـ commit** — مش بس الـ source files.
+> **آخر تحديث:** 2026-04-15 — **Phase 11 Session 2 خلصت**: Dashboard API backend شغّال. Express + CORS + SSE على `http://localhost:7778` بيـ wrap كل subcommand من `rs-reels.mjs` كـ POST route، مع state file في `dashboard-api/state/videos.json` (gitignored) و job registry in-memory بيبثّ stdout/stderr live للـ UI. اتختبر end-to-end: health → add video → POST /phase1 → job spawned حقيقة → state updated → restart → state persisted. Session 1 (Whisper corrections tracker) اتعملت قبل كده، ودلوقتي Sessions 3-6 هيبنوا الـ React UI + Claude handoff + Bulk mode.
 
-**الحالة:** Phase 0-9 كاملين. **Phase 10 كامل** (Round A Tier 1+2 + Round B + Round C). الـ 11 features اللي عدّت من الـ triage متطبّقة. 4 reels راندرت end-to-end: محمد ريان × 3 (4/5, 3.5/5, 3/5) + محمد علاء × 1 (3.6/5). التعليمات التفصيلية في Phase 5 + Phase 6 docs للـ (1) Hook analysis، (2) Adaptive difficulty per key_moment، (3) Scene entrance/exit override، (4) Smart zoom curve selection، (5) WordCaption intensity variants.
+**الحالة:** Phase 0-9 كاملين. **Phase 10 كامل** (Round A Tier 1+2 + Round B + Round C). **Phase 11 Session 1 + 2 خلصوا** (Whisper corrections tracker + Dashboard API backend). 4 reels راندرت end-to-end: محمد ريان × 3 (4/5, 3.5/5, 3/5) + محمد علاء × 1 (3.6/5).
 
-**الخطوة الجاية:** فيديو RS جديد أو iteration على المحاسب المالي (scenes polish + smart zoom refinement حسب feedback Omar اللي جاي)
+**الخطوة الجاية:** **Phase 11 Session 3 — Dashboard React UI (core)**. اقرأ `docs/phase-11/README.md` + `docs/phase-11/session-3.md` وابدأ التنفيذ. الـ UI هيتكلم مع الـ API اللي اتعمل دلوقتي على `:7778`.
 
 **ما اتضافش في Phase 10:**
 - ❌ محذوف نهائياً: Emotion Colors (F13) · Intro 3.5s (F6) · Auto-CTA (F11) · Notifications (F15) · BG Music (F2) · SFX (F1 — طبّقت ثم اتقفلت)

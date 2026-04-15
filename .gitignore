@@ -55,6 +55,10 @@ tsconfig.tsbuildinfo
 # Note: src/data/ is the AI agent learning loop store — IS committed.
 # Keep `data/` rules anchored to root (with leading /) so they don't catch src/data/.
 
+# ─── Dashboard state files — per-installation, not committed ───
+dashboard-api/state/videos.json
+dashboard-api/node_modules/
+
 # ─── OS files ───
 .DS_Store
 Thumbs.db

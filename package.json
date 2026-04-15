@@ -10,7 +10,8 @@
   "scripts": {
     "studio": "remotion studio",
     "render": "remotion render",
-    "make": "node rs-reels.mjs"
+    "make": "node rs-reels.mjs",
+    "dashboard:api": "node dashboard-api/server.mjs"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.448",
