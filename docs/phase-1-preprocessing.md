@@ -1,5 +1,7 @@
 # Phase 1: Pre-Processing
 
+> **ملاحظة:** الـ default workflow من دلوقتي عبر الـ Dashboard UI — شوف [`docs/dashboard-workflow.md`](dashboard-workflow.md). الملف ده بيوصف الـ CLI اللي بيشتغل خلف الـ Phase 1 button في الـ Dashboard (ونفسه لسه متاح كـ `node rs-reels.mjs phase1 <video>` للـ debugging).
+
 ## Input
 - `input/video.mp4` — فيديو MP4 (متشال منه الفراغات)
 

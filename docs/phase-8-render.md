@@ -1,5 +1,7 @@
 # Phase 8: Preview + Full Render
 
+> **ملاحظة:** الـ default workflow من دلوقتي عبر الـ Dashboard UI — شوف [`docs/dashboard-workflow.md`](dashboard-workflow.md). الملف ده بيوصف الـ CLI render اللي بيشتغل خلف الـ Render button في الـ Dashboard.
+
 ## Input
 - كل الـ Remotion components من Phase 7
 - `src/MainVideo.tsx` — الـ Composition الرئيسي

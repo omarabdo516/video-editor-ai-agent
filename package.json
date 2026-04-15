@@ -11,7 +11,9 @@
     "studio": "remotion studio",
     "render": "remotion render",
     "make": "node rs-reels.mjs",
-    "dashboard:api": "node dashboard-api/server.mjs"
+    "dashboard:api": "node dashboard-api/server.mjs",
+    "dashboard:ui": "cd dashboard-ui && npm run dev",
+    "dashboard": "concurrently --names api,ui --prefix-colors yellow,cyan \"npm run dashboard:api\" \"npm run dashboard:ui\""
   },
   "dependencies": {
     "@remotion/cli": "^4.0.448",
@@ -30,6 +32,7 @@
     "@types/node": "^25.6.0",
     "@types/react": "^18.3.28",
     "@types/react-dom": "^18.3.7",
+    "concurrently": "^8.2.2",
     "typescript": "^5.9.3"
   }
 }

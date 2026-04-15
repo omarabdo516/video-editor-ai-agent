@@ -1,5 +1,7 @@
 # Session 5 — Bulk Mode
 
+> ✅ **خلصت 2026-04-15.** كل اللي في Files to Create + Files to Modify اتنفذ. Success Criteria اللي تقدر تتأكد منها بدون GPU run كلها marked. Non-Goals محافظ عليها. اتختبر API end-to-end: multi-video batch with continueOnError=true (runs all, ends with batch:done) + continueOnError=false (stops at first failure, marks remaining as cancelled, ends with batch:failed) + mid-flight cancel (current job finishes, remaining marked cancelled) + SSE replay for late subscribers + waitForJob() against real spawned child processes. UI build: `tsc -b && vite build` TS-clean.
+
 ## الهدف
 
 Multi-select في الـ Dashboard UI + batch runner على الـ backend عشان Omar يقدر يشغّل phase واحدة على 10 فيديوهات بضغطة زرار. الـ runner بيشغّلهم **sequential** (مش parallel — GPU واحد).

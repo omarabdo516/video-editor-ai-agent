@@ -1,5 +1,7 @@
 # Session 2 — Dashboard API Backend
 
+> ✅ **خلصت 2026-04-15.** `dashboard-api/` جاهز — Express + CORS + SSE + persistent state في `state/videos.json`. الـ routes كلها شغّالة: videos (CRUD) + phases (phase1/transcribe/edit/micro-events/render/handoff) + progress (SSE) + rating + batch. State + jobs registry + ffprobe duration كلها متـ wired. Non-goals محافظ عليها (مفيش UI / TS / DB / auth).
+
 ## الهدف
 
 Express server بـ TypeScript-free Node (just `.mjs`) بيعمل wrap للـ `rs-reels.mjs` CLI commands كـ HTTP routes. كل phase بيتحوّل لـ POST endpoint، مع SSE progress streaming، ومع state file بيحفظ حالة كل فيديو.

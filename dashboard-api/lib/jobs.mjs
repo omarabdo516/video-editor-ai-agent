@@ -72,6 +72,7 @@ export const PHASE_COMMANDS = {
  * @property {string[]} lines
  * @property {Set<import('http').ServerResponse>} subscribers
  * @property {import('child_process').ChildProcess=} child
+ * @property {Array<(r: {exitCode: number, status: string}) => void>} waiters
  */
 
 /** Create and register a job without starting it. */
@@ -87,9 +88,35 @@ export function createJob(videoId, phase, cmd, args) {
     startedAt: new Date().toISOString(),
     lines: [],
     subscribers: new Set(),
+    waiters: [],
   };
   jobs.set(job.id, job);
   return job;
+}
+
+/**
+ * Return a Promise that resolves when the given job finishes. Used by the
+ * batch runner to sequence phase jobs one after another.
+ *
+ * If the job is unknown the promise rejects. If it's already finished the
+ * promise resolves immediately with the stored exit info.
+ *
+ * @param {string} jobId
+ * @returns {Promise<{exitCode: number, status: string}>}
+ */
+export function waitForJob(jobId) {
+  return new Promise((resolve, reject) => {
+    const job = jobs.get(jobId);
+    if (!job) {
+      reject(new Error(`job not found: ${jobId}`));
+      return;
+    }
+    if (job.status !== 'running') {
+      resolve({ exitCode: job.exitCode ?? -1, status: job.status });
+      return;
+    }
+    job.waiters.push(resolve);
+  });
 }
 
 /** Start the spawned process and wire its output into the job. */
@@ -163,6 +190,16 @@ function finish(job, status, exitCode) {
     } catch {}
   }
   job.subscribers.clear();
+
+  // Resolve any awaiters (batch runner awaits each phase job sequentially).
+  const waiters = job.waiters.splice(0);
+  for (const w of waiters) {
+    try {
+      w({ exitCode, status });
+    } catch (e) {
+      console.warn(`[jobs] waiter threw: ${e.message}`);
+    }
+  }
 
   // GC after grace period so late-connecting clients can still fetch
   // the final state, then free memory.

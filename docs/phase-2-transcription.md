@@ -1,5 +1,7 @@
 # Phase 2: Transcription (كابشنز)
 
+> **ملاحظة:** الـ default workflow من دلوقتي عبر الـ Dashboard UI — شوف [`docs/dashboard-workflow.md`](dashboard-workflow.md). الملف ده بيوصف الـ CLI اللي بيشتغل خلف الـ Transcribe button في الـ Dashboard.
+
 ## Input
 - `data/audio.wav` — أوديو 16kHz mono
 

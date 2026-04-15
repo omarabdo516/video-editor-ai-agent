@@ -1,5 +1,7 @@
 # Session 3 — Dashboard React UI (Core)
 
+> ✅ **خلصت 2026-04-15.** `dashboard-ui/` مشروع Vite منفصل — React 19 + TypeScript + Tailwind v4 + Zustand. VideoList + VideoCard + AddVideoForm + PhaseButton + StatusPill + EmptyState كلهم شغّالين. الـ store بيدير videos + selectedVideoIds + logs. الـ API client بيستخدم fetch + EventSource للـ SSE. Port 5174 + proxy /api → :7778. Root package.json فيه `npm run dashboard` + `dashboard:api` + `dashboard:ui`.
+
 ## الهدف
 
 React + Vite + TypeScript + Tailwind + Zustand UI بيعرض list بالـ videos، كل فيديو فيه 5 phase buttons، كل button بيعمل call للـ Dashboard API من session 2 ويـ stream الـ progress live.

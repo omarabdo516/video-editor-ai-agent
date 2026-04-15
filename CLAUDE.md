@@ -2,23 +2,32 @@
 
 ## 📍 Next Up — اللي بنبدأ فيه دلوقتي
 
-> **آخر تحديث:** 2026-04-15 — **Phase 11 Session 2 خلصت**: Dashboard API backend شغّال. Express + CORS + SSE على `http://localhost:7778` بيـ wrap كل subcommand من `rs-reels.mjs` كـ POST route، مع state file في `dashboard-api/state/videos.json` (gitignored) و job registry in-memory بيبثّ stdout/stderr live للـ UI. اتختبر end-to-end: health → add video → POST /phase1 → job spawned حقيقة → state updated → restart → state persisted. Session 1 (Whisper corrections tracker) اتعملت قبل كده، ودلوقتي Sessions 3-6 هيبنوا الـ React UI + Claude handoff + Bulk mode.
+> **آخر تحديث:** 2026-04-15 — **Phase 11 كامل** (Sessions 1 + 2 + 3 + 4 + 5 + 6). الـ workflow الأساسي للفيديو الجديد بقى عبر **Dashboard UI** (localhost:5174) مش CLI. Claude session بتدخل بس للـ Phase 5 + 6 + 6.5 عبر الـ handoff mechanism (copy-paste، مفيش API invocation). Phase 1 / Transcribe / Edit / Micro Events / Render كلهم من الـ UI بدون Claude session ولا tokens. الـ canonical guide: [`docs/dashboard-workflow.md`](docs/dashboard-workflow.md) — فيه screenshots-in-words لكل زرار، الـ Claude handoff steps، bulk mode، troubleshooting، والـ background Whisper corrections tracker.
+>
+> **الـ 6 sessions اللي خلصت:**
+> 1. Whisper corrections tracker — [`scripts/diff_captions.mjs`](scripts/diff_captions.mjs) + [`feedback/whisper_corrections.jsonl`](feedback/whisper_corrections.jsonl) + [`docs/phase-11-whisper-finetuning.md`](docs/phase-11-whisper-finetuning.md). Fire-and-forget diff بين الـ raw Whisper output + الـ approved captions — zero Omar effort.
+> 2. Dashboard API backend — [`dashboard-api/`](dashboard-api/) (Express + SSE + persistent state + ffprobe duration). 5 phase routes + rating route + handoff route + batch routes.
+> 3. Dashboard React UI core — [`dashboard-ui/`](dashboard-ui/) (Vite 8 + React 19 + TS + Tailwind v4 + Zustand). VideoList + VideoCard + 5 phase buttons + SSE live progress.
+> 4. Polish + Claude handoff + rating UI — ProgressBar + LogViewer + ClaudeHandoffModal + RatingInput + `/handoff` endpoint + rating → feedback/log.json.
+> 5. Bulk mode — [`dashboard-api/lib/batch.mjs`](dashboard-api/lib/batch.mjs) sequential runner + `waitForJob()` helper + BatchToolbar + BatchStatus + [`useBatchStore.ts`](dashboard-ui/src/store/useBatchStore.ts). `continueOnError` default = `true`. GPU single → strictly sequential. 4 batchable phases: phase1, transcribe, microEvents, render.
+> 6. Docs + memories + context sync + workflow migration (الـ session دي).
 
-**الحالة:** Phase 0-9 كاملين. **Phase 10 كامل** (Round A Tier 1+2 + Round B + Round C). **Phase 11 Session 1 + 2 خلصوا** (Whisper corrections tracker + Dashboard API backend). 4 reels راندرت end-to-end: محمد ريان × 3 (4/5, 3.5/5, 3/5) + محمد علاء × 1 (3.6/5).
+**الحالة:** Phase 0-11 كاملين. **Phase 10** كان (Round A Tier 1+2 + Round B + Round C). 4 reels راندرت end-to-end: محمد ريان × 3 (4/5, 3.5/5, 3/5) + محمد علاء × 1 (3.6/5). الـ primary workflow من دلوقتي = Dashboard. Claude ما بتشغّلش scripts من Bash في الـ normal flow.
 
-**الخطوة الجاية:** **Phase 11 Session 3 — Dashboard React UI (core)**. اقرأ `docs/phase-11/README.md` + `docs/phase-11/session-3.md` وابدأ التنفيذ. الـ UI هيتكلم مع الـ API اللي اتعمل دلوقتي على `:7778`.
+**الخطوة الجاية:** **content farming على scale**. استخدم الـ Dashboard لكل فيديو جديد. لو عندك 5-10 فيديوهات جاهزين نفس الوقت، اختار الـ checkboxes واعمل bulk phase1 / transcribe / render. الـ `feedback/log.json` + `feedback/whisper_corrections.jsonl` بيتراكموا طبيعي ليوم الـ Whisper LoRA fine-tune (threshold: 500+ corrections أو 30+ projects).
 
 **ما اتضافش في Phase 10:**
 - ❌ محذوف نهائياً: Emotion Colors (F13) · Intro 3.5s (F6) · Auto-CTA (F11) · Notifications (F15) · BG Music (F2) · SFX (F1 — طبّقت ثم اتقفلت)
-- ⏸️ مؤجّل لـ Phase 11: Retention Heatmap (F21) · Audio Ducking (F17) · Auto-Splitter (F4)
+- ⏸️ مؤجّل: Retention Heatmap (F21) · Audio Ducking (F17) · Auto-Splitter (F4)
 
 اقرأ بالترتيب في الـ session الجاي:
 1. الملف ده بالكامل (CLAUDE.md)
-2. [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — قواعد البراند
-3. [`feedback/style_evolution.md`](feedback/style_evolution.md) — **أعلى أولوية** — تفضيلات المتراكمة
-4. `~/.claude/projects/.../memory/` — 9 memory files (user-level, auto-loaded)
-5. [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) — 3-tier architecture
-6. [`docs/scene-validation-rules.md`](docs/scene-validation-rules.md) — **15s scene spacing** (مش 45)
+2. [`docs/dashboard-workflow.md`](docs/dashboard-workflow.md) — الـ primary workflow guide
+3. [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — قواعد البراند
+4. [`feedback/style_evolution.md`](feedback/style_evolution.md) — **أعلى أولوية** — تفضيلات المتراكمة
+5. `~/.claude/projects/.../memory/` — memory files (user-level, auto-loaded) — فيها `feedback_dashboard_workflow.md` + `reference_dashboard_location.md`
+6. [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) — 3-tier architecture
+7. [`docs/scene-validation-rules.md`](docs/scene-validation-rules.md) — **15s scene spacing** (مش 45)
 
 **الـ inputs المطلوبة من المستخدم لفيديو جديد:**
 - ملف الفيديو (.mp4 / .mov)
@@ -26,18 +35,27 @@
 - اسم الورشة
 - caption style: hormozi (default) — **ما تخلطش caption styles في نفس الريل** إلا لو Omar طلب صراحةً
 
-**الـ Pipeline للفيديو الجديد:**
+**الـ Pipeline للفيديو الجديد (via Dashboard — الـ default flow):**
 ```
-1. node rs-reels.mjs phase1 <video>              (preprocessing, ~3-5 min)
-2. node rs-reels.mjs make <video> --dry          (transcribe + fix + snapshot raw, ~2-3 min)
-3. node rs-reels.mjs edit <video>                (manual subtitle review → auto-logs corrections)
-4. Claude Code runs Phase 5 + 6 in-context       (analysis + plan, ~10 min)
-5. node scripts/generate_micro_events.mjs <name> (auto, instant)
-6. node rs-reels.mjs make <video> --skip-audio --skip-transcribe  (render, ~5 min)
-7. Phase 9: collect feedback + update log        (2-3 min)
+1. npm run dashboard                             (API + UI مع بعض، instant)
+2. افتح http://localhost:5174 → "+ Add Video"   (enter path + lecturer + workshop)
+3. Click "Phase 1"                               (preprocessing, ~3-5 min — مفيش Claude)
+4. Click "Transcribe"                            (whisper + fix + raw snapshot, ~2-3 min — مفيش Claude)
+5. Terminal تانية: node rs-reels.mjs edit <path> (بيشغّل file server :7777 + editor :5173)
+   Click "Edit" في الـ Dashboard → يفتح الـ editor في tab جديدة → راجع → Approve
+   (fire-and-forget بيـ append corrections لـ feedback/whisper_corrections.jsonl)
+6. Click "🤖 Send to Claude"                      → modal → Copy to Clipboard
+   Paste في Claude session جديدة → Claude بيعمل Phase 5 + 6 + 6.5 + validation (~5-10 min)
+   Claude بيرجعك للـ Dashboard لما تخلص
+7. Click "Render"                                (remotion, ~5-8 min — مفيش Claude)
+8. Rate inline على الـ card                       (1-5 stars + note → feedback/log.json)
 ```
 
-> **Phase 11 Session 1:** Step 2 بيحفظ `<video>.captions.raw.json` مرة واحدة (gitignored). Step 3 لما تضغط Approve في الـ subtitle editor، `scripts/diff_captions.mjs` بتشتغل fire-and-forget وتـ append word-level corrections لـ [`feedback/whisper_corrections.jsonl`](feedback/whisper_corrections.jsonl) — ده dataset طبيعي للـ Whisper LoRA fine-tune المستقبلي (التفاصيل في [`docs/phase-11-whisper-finetuning.md`](docs/phase-11-whisper-finetuning.md)). مفيش effort إضافي من Omar.
+> Bulk mode: لو عندك فيديوهات multiple في نفس الوقت، اختار الـ checkboxes → BatchToolbar فوق → اختار phase → "Run on N". الـ runner sequential (GPU واحد). التفاصيل في `docs/dashboard-workflow.md` Section 8.
+
+**الـ Pipeline القديم (CLI-only, for debugging):** لسه شغّال كـ fallback. `node rs-reels.mjs make <video> ...` بتاخد نفس الـ args ونفس الـ output. استخدمها للـ range render (`--from / --to`)، `performance` subcommand، أو debugging أي script فيه bug مطلوب تشوفه مباشر في stdout. الـ `rs-reels.mjs` بيطبع banner صغير بيـ nudge ناحية الـ Dashboard في الـ startup.
+
+> **Phase 11 Session 1 (corrections tracker):** الـ transcribe phase بيحفظ `<video>.captions.raw.json` مرة واحدة (gitignored). لما الـ subtitle editor يـ POST الـ approved captions، [`scripts/diff_captions.mjs`](scripts/diff_captions.mjs) بتشتغل fire-and-forget وتـ append word-level corrections لـ [`feedback/whisper_corrections.jsonl`](feedback/whisper_corrections.jsonl) — ده dataset طبيعي للـ Whisper LoRA fine-tune المستقبلي (التفاصيل في [`docs/phase-11-whisper-finetuning.md`](docs/phase-11-whisper-finetuning.md)). مفيش effort إضافي من Omar.
 
 **الـ Scene types المتاحة حالياً (7):**
 - `process_stepper` — stepper بـ 3+ cards مرتبة عمودياً + stagger + status badges
@@ -318,7 +336,8 @@ brands/
 | 7 | [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) | ⚠️ | base done (4 scenes, 2 overlays, 3 micro, breathing) — polish + more styles |
 | 8 | [`docs/phase-8-render.md`](docs/phase-8-render.md) | ✅ | components → final.mp4 |
 | 9 | [`docs/phase-9-feedback.md`](docs/phase-9-feedback.md) | ✅ | rating → log.json + style_evolution.md |
-| B | [`docs/phase-B-batch.md`](docs/phase-B-batch.md) | ❌ (مؤجّل) | multi-video batch |
+| 11 | [`docs/phase-11/README.md`](docs/phase-11/README.md) + [`docs/dashboard-workflow.md`](docs/dashboard-workflow.md) | ✅ | Dashboard UI + API + Whisper tracker + Bulk mode |
+| B | ~~`docs/phase-B-batch.md`~~ | ✅ (superseded by Phase 11 Session 5 bulk mode) | — |
 
 **⚠️ لما المستخدم يقول "ابدأ Phase X" → اقرأ `docs/phase-X-...md` واشتغل.**
 
@@ -358,6 +377,7 @@ brands/
    - [`CLAUDE.md`](CLAUDE.md) — "Next Up" section + current state + ratings history + لو قاعدة جديدة اتضافت اكتبها هنا
    - Memory files في `~/.claude/projects/.../memory/` — أي feedback cross-session يتحوّل لـ memory entry
    - [`feedback/style_evolution.md`](feedback/style_evolution.md) — "📐 القيم المعدّلة" لو قيمة rebased
+   - [`docs/dashboard-workflow.md`](docs/dashboard-workflow.md) — لو الـ Dashboard behavior اتغيّر (ports, phases, handoff, batch)
    - أي doc تاني فيه ذكر القيمة/القاعدة القديمة (مثلاً `docs/design-system.md`)
    - **المبدأ**: ما تـ commit source files من غير ما الـ context files اللي بتشرحها تكون synced. Omar طلب ده صراحة لأن الـ context files هي اللي بيقراها الـ session الجاي، ولازم تطابق الكود الفعلي.
 7. `git commit` — الـ commit message لازم يذكر اللي اتحدّث في الـ context files كمان، مش بس الـ source

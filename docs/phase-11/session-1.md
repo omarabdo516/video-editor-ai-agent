@@ -1,5 +1,7 @@
 # Session 1 — Whisper Corrections Tracker
 
+> ✅ **خلصت 2026-04-15.** `scripts/diff_captions.mjs` + `feedback/whisper_corrections.jsonl` + `docs/phase-11-whisper-finetuning.md` شغالين. الـ transcribe بيحفظ `<video>.captions.raw.json` (gitignored) أول مرة، والـ subtitle editor save handler بيـ fire-and-forget الـ diff script. Success criteria كلها marked.
+
 ## الهدف
 
 كل مرة Omar يراجع captions في الـ subtitle editor ويضغط Approve، النظام يقارن الـ raw Whisper output بالـ edited version ويسجّل الـ corrections في `feedback/whisper_corrections.jsonl`. ده بيبني dataset طبيعي للـ fine-tuning المستقبلي **بدون أي effort إضافي** من Omar.

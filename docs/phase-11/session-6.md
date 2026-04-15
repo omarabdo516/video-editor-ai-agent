@@ -1,5 +1,7 @@
 # Session 6 — Docs + CLAUDE.md + Memories + E2E Test
 
+> ✅ **خلصت 2026-04-15.** الـ docs + context files + memories كلها synced على الـ Dashboard-first workflow. `docs/dashboard-workflow.md` كامل (13 sections). Memory files جديدة: `feedback_dashboard_workflow.md` + `reference_dashboard_location.md` + MEMORY.md index اتحدّث. CLAUDE.md Next Up + Pipeline sections rewritten. rs-reels.mjs فيه Dashboard tip banner على الـ startup. README.md فيه quick-start note للـ Dashboard. Sessions 1-6 كلها marked كـ ✅. Smoke test على الـ Dashboard: API /api/health + /api/videos ردوا، `tsc -b && vite build` على dashboard-ui TS-clean — **الـ interactive full-video e2e (الـ 14-step flow) محتاج user approval على الـ subtitle editor فمتـ deferred كـ Omar's next manual run**.
+
 ## الهدف
 
 الـ Dashboard خلص (sessions 2-5)، الـ Whisper tracker خلص (session 1). دلوقتي محتاجين:

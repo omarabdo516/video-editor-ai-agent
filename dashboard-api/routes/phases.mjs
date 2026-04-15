@@ -11,6 +11,7 @@ import {
   captionsPath,
   videoBasename,
 } from '../lib/paths.mjs';
+import { buildHandoffMessage } from '../lib/handoff.mjs';
 
 export const phasesRouter = Router();
 
@@ -96,4 +97,16 @@ phasesRouter.post('/:id/edit', (req, res) => {
       'The file server (:7777) + Vite dev server (:5173) must be running. ' +
       'Run the hintCommand in a separate terminal, then open editorUrl.',
   });
+});
+
+// ─── /handoff — Claude Phase 5/6 handoff message (no job spawned) ─────────
+//
+// Assembles a pre-formatted text block Omar can paste into a fresh Claude
+// session. The dashboard never invokes Claude directly — this is a
+// copy-paste bridge.
+phasesRouter.post('/:id/handoff', (req, res) => {
+  const video = getVideo(req.params.id);
+  if (!video) return res.status(404).json({ error: 'video not found' });
+  const message = buildHandoffMessage(video);
+  res.json({ message });
 });

@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-cairo: 'Cairo', system-ui, sans-serif;
+
+  /* RS brand — in sync with subtitle-editor + brands/rs/BRAND.md */
+  --color-brand-primary: #10479d;
+  --color-brand-accent: #ffb501;
+  --color-brand-dark: #0d1f3c;
+
+  /* Dashboard palette (dark theme) */
+  --color-bg-base: #0a0a0f;
+  --color-bg-panel: #14151c;
+  --color-bg-elevated: #1a1c25;
+  --color-border-subtle: #262834;
+  --color-border-strong: #383b4a;
+  --color-text-primary: #f5f5f7;
+  --color-text-secondary: #9ca0ac;
+  --color-text-muted: #5f6273;
+
+  /* Status colors */
+  --color-status-pending: #6b7280;
+  --color-status-running: #ffb501;
+  --color-status-done: #10b981;
+  --color-status-failed: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-cairo);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4a4d5e;
+}
+
+input,
+textarea,
+button {
+  font-family: inherit;
+  color: inherit;
+}
+
+input,
+textarea {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--color-brand-accent);
+  outline-offset: 1px;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}

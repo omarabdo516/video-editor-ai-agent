@@ -1,5 +1,7 @@
 # Phase 4: مراجعة الكابشنز عبر الـ UI
 
+> **ملاحظة:** الـ default workflow من دلوقتي عبر الـ Dashboard UI — شوف [`docs/dashboard-workflow.md`](dashboard-workflow.md). الملف ده بيوصف الـ underlying caption review flow اللي الـ Dashboard Edit button بيـ trigger-ه.
+
 ## Input
 - `data/subtitles_processed.srt` — الكابشنز المصححة
 - `input/video.mp4` — الفيديو

@@ -1,5 +1,7 @@
 # Session 4 — Dashboard Polish + Claude Handoff + Rating
 
+> ✅ **خلصت 2026-04-15.** كل اللي في Files to Create + Files to Modify اتنفذ. Success Criteria كلها marked. الـ Non-Goals محافظ عليها. اتختبر end-to-end عبر API smoke test (add → handoff → rating upsert → delete) + `npm run build` TS-clean.
+
 ## الهدف
 
 خلّي الـ Dashboard production-ready. إضافة:

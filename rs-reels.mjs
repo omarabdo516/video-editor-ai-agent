@@ -1086,6 +1086,13 @@ async function main() {
     process.exit(1);
   }
 
+  // Dashboard nudge — printed once on every real command run (not on --help).
+  // The Dashboard UI is the preferred entry point for the full pipeline;
+  // the CLI stays available as a debugging + range-render fallback.
+  console.log(
+    '\x1b[90m  Tip: run via Dashboard at http://localhost:5174 for a managed workflow (npm run dashboard).\x1b[0m',
+  );
+
   // Doctor runs without a video argument
   if (cmd === 'doctor') {
     await runDoctor();

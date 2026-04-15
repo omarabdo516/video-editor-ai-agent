@@ -59,6 +59,11 @@ tsconfig.tsbuildinfo
 dashboard-api/state/videos.json
 dashboard-api/node_modules/
 
+# ─── Dashboard UI — standalone Vite sub-project ───
+dashboard-ui/node_modules/
+dashboard-ui/dist/
+dashboard-ui/.vite/
+
 # ─── OS files ───
 .DS_Store
 Thumbs.db

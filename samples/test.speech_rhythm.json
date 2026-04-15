@@ -1,0 +1,46 @@
+{
+  "source": "test.captions.json",
+  "summary": {
+    "total_segments": 3,
+    "total_words": 26,
+    "total_duration_sec": 9.8,
+    "avg_words_per_sec": 2.65,
+    "dramatic_pauses": 0,
+    "pace_distribution": {
+      "fast": 0,
+      "normal": 2,
+      "slow_emphasis": 1,
+      "very_slow": 0
+    },
+    "speaking_style": "steady"
+  },
+  "segments": [
+    {
+      "segment_index": 0,
+      "start": 0.5,
+      "end": 3.2,
+      "pace": "normal",
+      "words_per_sec": 3.33,
+      "pauses": [],
+      "has_dramatic_pause": false
+    },
+    {
+      "segment_index": 1,
+      "start": 3.5,
+      "end": 7,
+      "pace": "slow_emphasis",
+      "words_per_sec": 2.0,
+      "pauses": [],
+      "has_dramatic_pause": false
+    },
+    {
+      "segment_index": 2,
+      "start": 7.2,
+      "end": 10.8,
+      "pace": "normal",
+      "words_per_sec": 2.78,
+      "pauses": [],
+      "has_dramatic_pause": false
+    }
+  ]
+}

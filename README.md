@@ -36,9 +36,24 @@ The current output style is for **RS Financial Services** (`brands/rs/`). The di
 
 ```bash
 npm install
+cd dashboard-api && npm install && cd ..
+cd dashboard-ui && npm install && cd ..
 ```
 
-### Run the full pipeline
+### Run the Dashboard (recommended — Phase 11+)
+
+The primary interface is the Dashboard UI — a local React app that drives every phase without burning a Claude session on progress output.
+
+```bash
+npm run dashboard              # starts API (:7778) + UI (:5174) concurrently
+# then open http://localhost:5174
+```
+
+See [`docs/dashboard-workflow.md`](docs/dashboard-workflow.md) for the full guide — adding videos, running phases, the Claude Phase 5/6 handoff mechanism, bulk mode, rating, and troubleshooting.
+
+### Run the full pipeline (CLI fallback)
+
+The CLI still works for debugging, range renders, and post-publish performance tracking. The Dashboard wraps these commands under the hood.
 
 ```bash
 # end-to-end (audio → transcribe → fix → render)
