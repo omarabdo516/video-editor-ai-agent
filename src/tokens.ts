@@ -84,6 +84,27 @@ export const tokens = {
     bounce: { damping: 12, stiffness: 150, mass: 1.0 },
     smooth: { damping: 30, stiffness: 80, mass: 1.2 },
   },
+  // ─── Phase 10 Round A Tier 2 — A6: smart zoom easing variety ───────
+  // Named curves for Smart Zoom ramps. Phase 6 picks one per moment
+  // based on audio energy (high → crash_zoom, medium → dolly_in, low →
+  // smooth_glide). Ramp frames scale with the curve's aggressiveness.
+  smartZoomCurves: {
+    smooth_glide: {
+      spring: { damping: 30, stiffness: 60, mass: 1.5 },
+      rampInFrames: 16,
+      rampOutFrames: 12,
+    },
+    dolly_in: {
+      spring: { damping: 22, stiffness: 90, mass: 1.0 },
+      rampInFrames: 12,
+      rampOutFrames: 9,
+    },
+    crash_zoom: {
+      spring: { damping: 14, stiffness: 180, mass: 0.8 },
+      rampInFrames: 6,
+      rampOutFrames: 5,
+    },
+  },
   scenes: {
     // Default fade transitions for full-screen scenes
     fadeInFrames: 15,
@@ -109,6 +130,22 @@ export const tokens = {
         // Very quick wrapper opacity so the scene's own child stagger is
         // the main show. No transform on the wrapper.
         durationFrames: 6,
+      },
+    },
+    // Tier 2 — exit variety (mirrors entrances)
+    exits: {
+      fade: {
+        durationFrames: 12,
+      },
+      scale_out: {
+        durationFrames: 14,
+        scaleFrom: 1.0,
+        scaleTo: 1.08, // punches toward viewer as it fades
+      },
+      slide_down: {
+        durationFrames: 14,
+        translateYFromPx: 0,
+        translateYToPx: 80,
       },
     },
     // ─── Phase 10 Round A — A2: dynamic stagger ──────────────────────

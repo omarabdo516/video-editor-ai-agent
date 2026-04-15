@@ -1,7 +1,7 @@
 import React from 'react';
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { tokens } from '../../tokens';
-import type { Scene, SceneEntrance } from '../../types';
+import type { Scene, SceneEntrance, SceneExit } from '../../types';
 import { ProcessStepperScene } from './ProcessStepperScene';
 import { ProcessTimelineScene } from './ProcessTimelineScene';
 import { ComparisonTwoPathsScene } from './ComparisonTwoPathsScene';
@@ -26,10 +26,30 @@ const DEFAULT_ENTRANCE_BY_ELEMENT: Record<string, SceneEntrance> = {
   counter: 'scale_bounce',              // number pops
 };
 
+/** Default exit per body type (Tier 2). Mirrors entrance mood. */
+const DEFAULT_EXIT_BY_ELEMENT: Record<string, SceneExit> = {
+  step_card: 'slide_down',         // cards drift away
+  timeline_horizontal: 'slide_down',
+  comparison_two_paths: 'scale_out',
+  big_metaphor: 'scale_out',       // punches toward viewer
+  definition: 'fade',              // calm
+  equation: 'fade',                // calm
+  counter: 'scale_out',
+};
+
 function pickEntrance(scene: Scene): SceneEntrance {
   if (scene.entrance) return scene.entrance;
   for (const el of scene.elements) {
     const match = DEFAULT_ENTRANCE_BY_ELEMENT[el.type];
+    if (match) return match;
+  }
+  return 'fade';
+}
+
+function pickExit(scene: Scene): SceneExit {
+  if (scene.exit) return scene.exit;
+  for (const el of scene.elements) {
+    const match = DEFAULT_EXIT_BY_ELEMENT[el.type];
     if (match) return match;
   }
   return 'fade';
@@ -51,25 +71,26 @@ export const FullScreenScene: React.FC<Props> = ({ scene }) => {
   const { fps } = useVideoConfig();
 
   const totalFrames = Math.max(1, Math.round((scene.end_sec - scene.start_sec) * fps));
-  const fadeOut = scene.transition_out?.frames ?? tokens.scenes.fadeOutFrames;
   const entrance = pickEntrance(scene);
-
-  // Exit opacity — same gentle fade for all entrance types
-  const exitOpacity = interpolate(
-    frame,
-    [totalFrames - fadeOut, totalFrames],
-    [1, 0],
-    { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' },
-  );
+  const exit = pickExit(scene);
 
   // Per-entrance enter transform + opacity
-  const { enterOpacity, transform, filter } = computeEnterStyles(
+  const { enterOpacity, transform: enterTransform, filter } = computeEnterStyles(
     entrance,
     frame,
     fps,
     scene.transition_in?.frames,
   );
 
+  // Per-exit transform + opacity
+  const { exitOpacity, transform: exitTransform } = computeExitStyles(
+    exit,
+    frame,
+    totalFrames,
+    scene.transition_out?.frames,
+  );
+
+  const transform = combineTransforms(enterTransform, exitTransform);
   const background = scene.background ?? tokens.scenes.defaultBackground;
 
   return (
@@ -90,6 +111,18 @@ export const FullScreenScene: React.FC<Props> = ({ scene }) => {
     </AbsoluteFill>
   );
 };
+
+/**
+ * Combines an enter transform with an exit transform. Both are single-op
+ * CSS transforms ('none' | 'scale(x)' | 'translateY(ypx)'); we multiply
+ * by space-concatenation in the natural case, and collapse 'none' to
+ * avoid an extraneous string.
+ */
+function combineTransforms(a: string, b: string): string {
+  if (a === 'none' || a === '') return b === 'none' ? 'none' : b;
+  if (b === 'none' || b === '') return a;
+  return `${a} ${b}`;
+}
 
 /**
  * Computes the per-entrance wrapper styles for a given frame.
@@ -167,6 +200,74 @@ function computeEnterStyles(
     enterOpacity: opacityValue,
     transform: 'none',
     filter: '',
+  };
+}
+
+/**
+ * Per-exit styles. Mirrors computeEnterStyles — runs only in the last
+ * N frames of the scene. Returns exitOpacity (0..1, falling) and a
+ * transform delta that gets composed with the enter transform.
+ */
+function computeExitStyles(
+  exit: SceneExit,
+  frame: number,
+  totalFrames: number,
+  overrideFrames?: number,
+): { exitOpacity: number; transform: string } {
+  const cfg = tokens.scenes.exits;
+
+  if (exit === 'scale_out') {
+    const dur = overrideFrames ?? cfg.scale_out.durationFrames;
+    const start = totalFrames - dur;
+    const t = interpolate(frame, [start, totalFrames], [0, 1], {
+      extrapolateLeft: 'clamp',
+      extrapolateRight: 'clamp',
+    });
+    const scale =
+      cfg.scale_out.scaleFrom +
+      (cfg.scale_out.scaleTo - cfg.scale_out.scaleFrom) * t;
+    const opacityValue = interpolate(frame, [start, totalFrames], [1, 0], {
+      extrapolateLeft: 'clamp',
+      extrapolateRight: 'clamp',
+    });
+    // Don't apply the scale transform until the exit window actually starts —
+    // otherwise scale(1.0) collides with the enter transform.
+    return {
+      exitOpacity: opacityValue,
+      transform: t > 0 ? `scale(${scale})` : 'none',
+    };
+  }
+
+  if (exit === 'slide_down') {
+    const dur = overrideFrames ?? cfg.slide_down.durationFrames;
+    const start = totalFrames - dur;
+    const t = interpolate(frame, [start, totalFrames], [0, 1], {
+      extrapolateLeft: 'clamp',
+      extrapolateRight: 'clamp',
+    });
+    const ty =
+      cfg.slide_down.translateYFromPx +
+      (cfg.slide_down.translateYToPx - cfg.slide_down.translateYFromPx) * t;
+    const opacityValue = interpolate(frame, [start, totalFrames], [1, 0], {
+      extrapolateLeft: 'clamp',
+      extrapolateRight: 'clamp',
+    });
+    return {
+      exitOpacity: opacityValue,
+      transform: t > 0 ? `translateY(${ty.toFixed(1)}px)` : 'none',
+    };
+  }
+
+  // fade (default)
+  const dur = overrideFrames ?? cfg.fade.durationFrames;
+  const start = totalFrames - dur;
+  const opacityValue = interpolate(frame, [start, totalFrames], [1, 0], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+  return {
+    exitOpacity: opacityValue,
+    transform: 'none',
   };
 }
 

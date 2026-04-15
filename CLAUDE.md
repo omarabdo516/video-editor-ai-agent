@@ -10,9 +10,9 @@
 > - **A3 — Element-level refinement**: ProcessStepperScene + ProcessTimelineScene + EquationScene بقوا بيقروا `getStaggerDelay` بدل القيم الثابتة.
 > - **A4 — WordCaption emphasis variants**: 3 variants (`normal` / `pop` / `glow`) — كلهم بنفس الذهبي، variation في scale + letter-spacing + shadow intensity (brand rule: single accent). الـ `EmphasisBeat` type جديد. Reel.tsx بيـ map `word_pop.intensity` → variant بـ `resolveEmphasisIntensity()` (بيقبل `low/medium/high` legacy و `normal/pop/glow` الجديد).
 
-**الحالة:** Phase 0-9 كاملين. Phase 10 Round A Tier 1 كاملة. Tier 2 (A5-A7 — scene exit variety + smart zoom easing variety + 2 micro events جدد) و Round B (SFX + dynamic font + motion backgrounds + progress bar + speech rhythm + manual transitions) و Round C (performance loop + docs updates) لسه.
+**الحالة:** Phase 0-9 كاملين. Phase 10 Round A (Tier 1 + Tier 2) كاملة. Round B (SFX + dynamic font + motion backgrounds + progress bar + speech rhythm + manual transitions) و Round C (performance loop + docs updates) لسه.
 
-**الخطوة الجاية:** **Round A Tier 2** بعد ما Omar يـ preview Tier 1
+**الخطوة الجاية:** **Round B** — polish layer (5 features)
 
 اقرأ بالترتيب في الـ session الجاي:
 1. الملف ده بالكامل (CLAUDE.md)
@@ -145,12 +145,18 @@
 - [x] **Done by Claude Code in-context** — مفيش API calls
 - [x] الفيديو الأول اللي اتخطط: `محمد ريان - ورشة الشامل` (4 scenes, 4 big zooms, 5 overlays, 30 micro events = 43 total, cadence 4.86s)
 
-### Phase 10 Round A Tier 1 ✅ (animation variety)
+### Phase 10 Round A ✅ (animation variety — Tier 1 + Tier 2)
+
+**Tier 1 (core primitives):**
 - [x] **A1 — Scene entrance variety (4 presets)**: [`FullScreenScene.tsx`](src/components/scenes/FullScreenScene.tsx) wrapper بياخد `scene.entrance?: 'fade' | 'scale_bounce' | 'blur_reveal' | 'stagger_cascade'`. default بيتحدد من الـ element type.
 - [x] **A2 — Dynamic stagger helper**: [`getStaggerDelay(n)`](src/tokens.ts) exported من tokens.ts. `tokens.scenes.dynamicStagger = { few: 15, some: 10, many: 7 }`.
 - [x] **A3 — Element stagger refinement**: ProcessStepperScene + ProcessTimelineScene + EquationScene بقوا بيقروا `getStaggerDelay` بدل القيم الثابتة.
-- [x] **A4 — WordCaption emphasis variants**: 3 variants (`normal` / `pop` / `glow`) — نفس الذهبي بـ scale + letter-spacing + shadow intensity مختلفة. `EmphasisBeat` type جديد في types.ts. `emphasisBeats?: EmphasisBeat[]` على WordCaption.tsx (backward compat مع `emphasisTimes?: number[]`). Reel.tsx بيـ map `word_pop.intensity` → variant.
-- [ ] **Tier 2**: A5 scene exit variety + A6 smart zoom easing variety + A7 micro event expansion — لسه
+- [x] **A4 — WordCaption emphasis variants**: 3 variants (`normal` / `pop` / `glow`) — نفس الذهبي بـ scale + letter-spacing + shadow intensity مختلفة. `EmphasisBeat` type جديد. `resolveEmphasisIntensity` في Reel.tsx بيقبل legacy `low/medium/high` + الـ enum الجديد.
+
+**Tier 2 (expansion):**
+- [x] **A5 — Scene exit variety (3 presets)**: `scene.exit?: 'fade' | 'scale_out' | 'slide_down'`. بيتركّب فوق الـ enter transform بـ `combineTransforms()`. defaults per element type (stepper→slide_down, big_metaphor→scale_out, definition→fade).
+- [x] **A6 — Smart zoom easing variety (3 curves)**: `tokens.smartZoomCurves = { smooth_glide, dolly_in, crash_zoom }` — كل curve فيها spring config + rampIn/rampOut frames. `ZoomMoment.easing?: SmartZoomEasing` optional. SmartZoom.tsx بيقرا per-moment. default `dolly_in` (legacy-equivalent).
+- [x] **A7 — Micro events expansion**: [`CornerSweep.tsx`](src/components/micro/CornerSweep.tsx) (diagonal 45° accent line sweep من corner) + [`BorderPulse.tsx`](src/components/micro/BorderPulse.tsx) (2px border pulse حوالين caption zone). اضافة في `MicroEventType` + MicroEventHost dispatch.
 
 ### Phase 7 ⚠️ (base كامل — iteration مستمر)
 

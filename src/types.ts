@@ -19,6 +19,13 @@ export type CaptionsData = {
   segments: CaptionSegment[];
 };
 
+/**
+ * Phase 10 Round A Tier 2 — A6: per-moment easing curve for Smart Zoom.
+ * Phase 6 picks based on audio energy: high → crash_zoom, medium →
+ * dolly_in, low → smooth_glide. Defaults to 'dolly_in' when absent.
+ */
+export type SmartZoomEasing = 'smooth_glide' | 'dolly_in' | 'crash_zoom';
+
 export type ZoomMoment = {
   /** Start time in seconds, relative to the lecture timeline */
   startSec: number;
@@ -32,6 +39,11 @@ export type ZoomMoment = {
   centerY?: number;
   /** Optional human-readable reason — appears in dev logs / Studio inspector */
   reason?: string;
+  /**
+   * Phase 10 Round A Tier 2 — optional named easing curve for this moment.
+   * Defaults to 'dolly_in' when absent (matches legacy smoothness).
+   */
+  easing?: SmartZoomEasing;
 };
 
 export type ZoomPlan = {
@@ -60,6 +72,16 @@ export type SceneType = 'process_stepper' | 'process_timeline' | 'comparison_two
  * - `stagger_cascade`: very quick opacity so child stagger is the main show
  */
 export type SceneEntrance = 'fade' | 'scale_bounce' | 'blur_reveal' | 'stagger_cascade';
+
+/**
+ * Wrapper-level exit animation (Tier 2). Mirrors entrance in intent —
+ * plan-driven variety on the way out.
+ *
+ * - `fade`      : opacity 1 → 0 (default)
+ * - `scale_out` : opacity + scale 1.0 → 1.08 (punches out)
+ * - `slide_down`: opacity + translateY 0 → 80px (drifts down)
+ */
+export type SceneExit = 'fade' | 'scale_out' | 'slide_down';
 
 export type StepCardElement = {
   type: 'step_card';
@@ -225,6 +247,8 @@ export type Scene = {
    * on scene_type.
    */
   entrance?: SceneEntrance;
+  /** Phase 10 Round A Tier 2 — wrapper-level exit variety. Defaults 'fade'. */
+  exit?: SceneExit;
 };
 
 export type OverlayType = 'keyword_highlight' | 'stamp';
@@ -286,7 +310,13 @@ export type EmphasisBeat = {
 };
 
 // ─── Micro-events (Tier 2 retention rhythm) ──────────────────────────────
-export type MicroEventType = 'mini_zoom' | 'word_pop' | 'caption_underline' | 'accent_flash';
+export type MicroEventType =
+  | 'mini_zoom'
+  | 'word_pop'
+  | 'caption_underline'
+  | 'accent_flash'
+  | 'corner_sweep'
+  | 'border_pulse';
 
 export type MiniZoomMicroEvent = {
   id: string;
@@ -339,11 +369,37 @@ export type AccentFlashMicroEvent = {
   source?: string;
 };
 
+// ─── Phase 10 Round A Tier 2 — A7: expanded micro events ──────────────
+
+export type CornerSweepMicroEvent = {
+  id: string;
+  type: 'corner_sweep';
+  start_sec: number;
+  end_sec: number;
+  /** Which corner the sweep line starts from. Default 'top_right' (RTL). */
+  corner?: 'top_right' | 'top_left' | 'bottom_right' | 'bottom_left';
+  anchor_subtitle_id?: number;
+  intensity?: string;
+  source?: string;
+};
+
+export type BorderPulseMicroEvent = {
+  id: string;
+  type: 'border_pulse';
+  start_sec: number;
+  end_sec: number;
+  anchor_subtitle_id?: number;
+  intensity?: string;
+  source?: string;
+};
+
 export type MicroEvent =
   | MiniZoomMicroEvent
   | WordPopMicroEvent
   | CaptionUnderlineMicroEvent
-  | AccentFlashMicroEvent;
+  | AccentFlashMicroEvent
+  | CornerSweepMicroEvent
+  | BorderPulseMicroEvent;
 
 // ─── Chapter Divider ─────────────────────────────────────────────────────
 export type ChapterDivider = {

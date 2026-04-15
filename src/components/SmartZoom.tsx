@@ -1,14 +1,12 @@
 import React from 'react';
 import { AbsoluteFill, spring, useCurrentFrame, useVideoConfig } from 'remotion';
-import type { ZoomPlan, ZoomMoment } from '../types';
+import { tokens } from '../tokens';
+import type { ZoomPlan, ZoomMoment, SmartZoomEasing } from '../types';
 
 type Props = {
   plan: ZoomPlan | null | undefined;
   children: React.ReactNode;
 };
-
-const RAMP_IN_FRAMES = 12;  // 0.4s @ 30fps
-const RAMP_OUT_FRAMES = 9;  // 0.3s @ 30fps
 
 // Where in the frame we want the face to land while zoomed in.
 // Upper-third horizontal-center is the standard talking-head composition rule.
@@ -22,9 +20,16 @@ function findActiveMoment(t: number, moments: ZoomMoment[]): ZoomMoment | null {
   return null;
 }
 
+function resolveEasing(moment: ZoomMoment): SmartZoomEasing {
+  return moment.easing ?? 'dolly_in';
+}
+
 /**
  * Computes the current zoom scale by easing into the target zoom at the start
  * of the moment, holding, and easing back out at the end.
+ *
+ * Phase 10 Round A Tier 2 — A6: the easing curve (spring physics + ramp
+ * durations) is per-moment. Phase 6 picks based on audio energy.
  */
 function computeScale(
   frame: number,
@@ -37,33 +42,37 @@ function computeScale(
   const totalFrames = endFrame - startFrame;
   const target = moment.zoomLevel;
 
-  if (totalFrames <= RAMP_IN_FRAMES + RAMP_OUT_FRAMES) {
+  const curve = tokens.smartZoomCurves[resolveEasing(moment)];
+  const rampIn = curve.rampInFrames;
+  const rampOut = curve.rampOutFrames;
+
+  if (totalFrames <= rampIn + rampOut) {
     // Moment too short for a full ramp — just hold at target after a quick ease.
     const progress = spring({
       frame: localFrame,
       fps,
-      config: { damping: 30, stiffness: 100, mass: 1 },
+      config: curve.spring,
     });
     return 1 + (target - 1) * progress;
   }
 
-  if (localFrame < RAMP_IN_FRAMES) {
+  if (localFrame < rampIn) {
     // Easing in
     const progress = spring({
       frame: localFrame,
       fps,
-      config: { damping: 30, stiffness: 100, mass: 1 },
+      config: curve.spring,
     });
     return 1 + (target - 1) * progress;
   }
 
-  if (localFrame > totalFrames - RAMP_OUT_FRAMES) {
+  if (localFrame > totalFrames - rampOut) {
     // Easing out
-    const exitFrame = localFrame - (totalFrames - RAMP_OUT_FRAMES);
+    const exitFrame = localFrame - (totalFrames - rampOut);
     const progress = spring({
       frame: exitFrame,
       fps,
-      config: { damping: 30, stiffness: 100, mass: 1 },
+      config: curve.spring,
     });
     return target + (1 - target) * progress;
   }
