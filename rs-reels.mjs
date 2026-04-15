@@ -236,6 +236,23 @@ function fixCaptions(captionsPath) {
   return captionsPath;
 }
 
+/**
+ * Phase 10 Round B — F20: runs scripts/speech_rhythm.py on a captions
+ * file and writes speech_rhythm.json next to it. Idempotent — regenerates
+ * each call, cheap (pure-Python, no model). Uses the whisper venv so
+ * we're guaranteed to have a working Python 3.
+ */
+function speechRhythm(captionsPath) {
+  const pythonPath =
+    'C:/Users/PUZZLE/Documents/Claude/_tools/whisper-env/.venv/Scripts/python.exe';
+  const script = path.join(__dirname, 'scripts', 'speech_rhythm.py');
+  if (!fileExists(script)) {
+    console.warn(`  (speech_rhythm.py missing: ${script})`);
+    return;
+  }
+  run(pythonPath, [script, captionsPath]);
+}
+
 // Spawn a tiny HTTP server to serve files over localhost — Remotion's
 // OffthreadVideo cannot load file:// URLs during headless render, and the
 // browser-based subtitle editor needs CORS-friendly URLs to fetch the video
@@ -949,6 +966,16 @@ async function main() {
   if (!args.flags['skip-transcribe']) {
     transcribe(wavPath, captionsOut);
     fixCaptions(captionsOut);
+  }
+
+  // Step 3.5 (Phase 10 Round B F20): speech rhythm analysis.
+  // Regenerates cheaply each run; fails soft so it never blocks renders.
+  if (fileExists(captionsOut)) {
+    try {
+      speechRhythm(captionsOut);
+    } catch (e) {
+      console.warn(`  (speech_rhythm skipped: ${e.message})`);
+    }
   }
 
   if (args.flags.dry) {

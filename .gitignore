@@ -41,6 +41,9 @@ tsconfig.tsbuildinfo
 *.captions.srt
 # But keep tiny test fixtures in samples/
 !samples/**
+# Keep SFX library (synthesized short clips committed to the repo so
+# Remotion's staticFile() can reference them at render time).
+!public/sfx/**
 
 # ─── Per-project working dirs (populated at runtime, never committed) ───
 /data/

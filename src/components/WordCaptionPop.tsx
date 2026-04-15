@@ -66,7 +66,10 @@ export const WordCaptionPop: React.FC<Props> = ({
     return false;
   }, [emphasisTimes, nowSec]);
 
-  const baseSize = 140;
+  // Phase 10 Round B — F7: dynamic font size per WORD LENGTH (chars)
+  // since Pop only ever shows one word at a time. Short punchy words
+  // get bigger; long compound words shrink to avoid overflow.
+  const baseSize = popSizeForWord(activeWord.word, 140);
   const size = isEmphasisActive ? baseSize * 1.15 : baseSize;
 
   // Position — body zone (y ≈ 900-1080), centered horizontally
@@ -118,3 +121,16 @@ export const WordCaptionPop: React.FC<Props> = ({
     </div>
   );
 };
+
+/**
+ * Phase 10 Round B — F7: char-count-driven font sizing for Pop style.
+ * Keeps short/punchy words commanding and prevents long compound words
+ * from overflowing the body zone.
+ */
+function popSizeForWord(word: string, baseSize: number): number {
+  const len = word.length;
+  if (len <= 3) return Math.round(baseSize * 1.18); // "هو"، "ده"
+  if (len <= 5) return baseSize;                    // baseline
+  if (len <= 8) return Math.round(baseSize * 0.88);
+  return Math.round(baseSize * 0.76);               // long compounds
+}

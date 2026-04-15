@@ -9,6 +9,7 @@ import { BigMetaphorScene } from './BigMetaphorScene';
 import { DefinitionScene } from './DefinitionScene';
 import { EquationScene } from './EquationScene';
 import { CounterScene } from './CounterScene';
+import { MotionBackground } from './MotionBackground';
 
 type Props = { scene: Scene };
 
@@ -100,13 +101,18 @@ export const FullScreenScene: React.FC<Props> = ({ scene }) => {
         transform,
         filter,
         transformOrigin: 'center center',
-        background,
+        // Fallback solid color — MotionBackground paints the gradient
+        // on top. This prevents a black flash on the single frame before
+        // the first paint during scale_bounce.
+        backgroundColor: tokens.colors.dark,
         direction: 'rtl',
         fontFamily: tokens.fonts.heading,
         color: tokens.colors.white,
         overflow: 'hidden',
       }}
     >
+      {/* Phase 10 Round B F5 — animated gradient behind the scene body */}
+      <MotionBackground background={background} />
       <SceneBody scene={scene} />
     </AbsoluteFill>
   );

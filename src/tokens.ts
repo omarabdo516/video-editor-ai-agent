@@ -190,6 +190,20 @@ export const tokens = {
     fadeFrames: 8,
     slideOffsetPx: 24,
   },
+  // ─── Phase 10 Round B — F1: SFX layer ─────────────────────────────
+  // The files live in public/sfx/ and are referenced by staticFile().
+  // Volumes are intentionally quiet — SFX should be felt, not heard.
+  // Toggle `enabled: false` to mute all SFX at once for comparison.
+  sfx: {
+    enabled: true,
+    globalVolume: 1.0, // multiplier on top of per-event volume
+    events: {
+      scene_enter:   { file: 'sfx/scene_enter.mp3',   volume: 0.18 },
+      keyword_pop:   { file: 'sfx/keyword_pop.mp3',   volume: 0.14 },
+      zoom_start:    { file: 'sfx/zoom_start.mp3',    volume: 0.12 },
+      outro_swoosh:  { file: 'sfx/outro_swoosh.mp3',  volume: 0.20 },
+    },
+  },
 } as const;
 
 // ─── Phase 10 Round A — A2: dynamic stagger helper ───────────────────

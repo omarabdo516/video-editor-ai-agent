@@ -6,6 +6,8 @@ import {
 } from 'remotion';
 import { VideoTrack } from './components/VideoTrack';
 import { VideoBreathing } from './components/VideoBreathing';
+import { ProgressBar } from './components/ProgressBar';
+import { SfxLayer } from './components/SfxLayer';
 import { WordCaption } from './components/WordCaption';
 import { WordCaptionPop } from './components/WordCaptionPop';
 import { WordCaptionKaraoke } from './components/WordCaptionKaraoke';
@@ -330,6 +332,21 @@ export const Reel: React.FC<ReelProps> = ({
             </Sequence>
           );
         })}
+
+        {/* Phase 10 Round B F1 — SFX layer. Drops short synthesized sounds
+            on each visual event (scene enter, keyword overlay, big zoom,
+            outro handoff). Muted when tokens.sfx.enabled = false. */}
+        <SfxLayer
+          scenes={scenes}
+          overlays={overlays}
+          zoomPlan={effectiveZoomPlan}
+          lectureFrames={lectureFrames}
+        />
+
+        {/* Phase 10 Round B F3 — progress bar. Sits above scenes (z=900)
+            but below the logo bug (z=1000). Repositioned to y=210 so it
+            lives inside the top safe area, clear of the platform UI. */}
+        <ProgressBar totalFrames={lectureFrames} />
 
         {/* Logo bug — render LAST so it sits above scenes. Per user feedback,
             the logo must remain visible throughout the entire reel including

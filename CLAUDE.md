@@ -10,9 +10,9 @@
 > - **A3 — Element-level refinement**: ProcessStepperScene + ProcessTimelineScene + EquationScene بقوا بيقروا `getStaggerDelay` بدل القيم الثابتة.
 > - **A4 — WordCaption emphasis variants**: 3 variants (`normal` / `pop` / `glow`) — كلهم بنفس الذهبي، variation في scale + letter-spacing + shadow intensity (brand rule: single accent). الـ `EmphasisBeat` type جديد. Reel.tsx بيـ map `word_pop.intensity` → variant بـ `resolveEmphasisIntensity()` (بيقبل `low/medium/high` legacy و `normal/pop/glow` الجديد).
 
-**الحالة:** Phase 0-9 كاملين. Phase 10 Round A (Tier 1 + Tier 2) كاملة. Round B (SFX + dynamic font + motion backgrounds + progress bar + speech rhythm + manual transitions) و Round C (performance loop + docs updates) لسه.
+**الحالة:** Phase 0-9 كاملين. Phase 10 Round A (Tier 1 + Tier 2) + Round B كاملين. Round C (performance loop + docs updates) لسه.
 
-**الخطوة الجاية:** **Round B** — polish layer (5 features)
+**الخطوة الجاية:** **Round C** — data foundation (1 CLI + 2 docs updates)
 
 اقرأ بالترتيب في الـ session الجاي:
 1. الملف ده بالكامل (CLAUDE.md)
@@ -157,6 +157,14 @@
 - [x] **A5 — Scene exit variety (3 presets)**: `scene.exit?: 'fade' | 'scale_out' | 'slide_down'`. بيتركّب فوق الـ enter transform بـ `combineTransforms()`. defaults per element type (stepper→slide_down, big_metaphor→scale_out, definition→fade).
 - [x] **A6 — Smart zoom easing variety (3 curves)**: `tokens.smartZoomCurves = { smooth_glide, dolly_in, crash_zoom }` — كل curve فيها spring config + rampIn/rampOut frames. `ZoomMoment.easing?: SmartZoomEasing` optional. SmartZoom.tsx بيقرا per-moment. default `dolly_in` (legacy-equivalent).
 - [x] **A7 — Micro events expansion**: [`CornerSweep.tsx`](src/components/micro/CornerSweep.tsx) (diagonal 45° accent line sweep من corner) + [`BorderPulse.tsx`](src/components/micro/BorderPulse.tsx) (2px border pulse حوالين caption zone). اضافة في `MicroEventType` + MicroEventHost dispatch.
+
+### Phase 10 Round B ✅ (polish layer)
+- [x] **F7 — Dynamic font size**: [`computeDynamicFontSize(wordCount, base)`](src/components/WordCaption.tsx) — WordCaption بيتكبّر للـ segments القصيرة (≤3 كلمات = +20%) ويصغّر للمزحومة (≥8 = -20%). WordCaptionPop بياخد [`popSizeForWord(word, base)`](src/components/WordCaptionPop.tsx) اللي بيصغّر حسب طول الكلمة (chars) عشان لا تفيض من الـ body zone.
+- [x] **F5 — Motion Backgrounds**: [`MotionBackground.tsx`](src/components/scenes/MotionBackground.tsx) — gradient angle بيتذبذب ±4° كل 6s + color-stop shift بيتحرك بـ sine خفيف كل 8s. بيتركّب داخل [`FullScreenScene`](src/components/scenes/FullScreenScene.tsx) كـ child sibling قبل SceneBody.
+- [x] **F3 — Progress bar**: [`ProgressBar.tsx`](src/components/ProgressBar.tsx) — 4px thin bar في y=210 (تحت logo bug، جوه safe area، بعيد عن Instagram UI). white track + accent fill + soft glow.
+- [x] **F1 — SFX layer**: 4 أصوات synthesized بـ ffmpeg (pink/brown noise + sine bursts) في [`public/sfx/`](public/sfx/). [`SfxLayer.tsx`](src/components/SfxLayer.tsx) بيقرا الـ scenes + overlays + zoomPlan + يدور Audio Sequence عند كل event. `tokens.sfx.enabled = false` بيقفّلهم كلهم. volumes quiet (12-20%).
+- [x] **F20 — Speech rhythm script**: [`scripts/speech_rhythm.py`](scripts/speech_rhythm.py) — بياخد captions.json ويطلع speech_rhythm.json فيها pace classification + pause detection (micro / breath / dramatic) + summary stats. متكامل في `rs-reels.mjs make` pipeline بعد transcribe (fails soft).
+- [x] **F12 — Manual transitions**: ✅ مغطّى أصلاً بـ A1 (entrance variety) + A5 (exit variety) — مفيش حاجة جديدة مطلوبة.
 
 ### Phase 7 ⚠️ (base كامل — iteration مستمر)
 

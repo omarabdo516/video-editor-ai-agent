@@ -45,6 +45,14 @@ export const WordCaption: React.FC<Props> = ({
 
   const cap = tokens.captions;
 
+  // Phase 10 Round B — F7: dynamic font size based on word count.
+  // Crowded segments (7+ words) need smaller text to breathe; short
+  // segments (2-3 words) need bigger text so they don't vanish.
+  const dynamicFontSize = computeDynamicFontSize(
+    segment.words.length,
+    cap.fontSize,
+  );
+
   // Find any emphasis beat active right now — returns its intensity, or
   // null if none. `emphasisBeats` (Phase 10 Round A) wins over the legacy
   // `emphasisTimes` list when both are provided.
@@ -81,7 +89,7 @@ export const WordCaption: React.FC<Props> = ({
         direction: 'rtl',
         fontFamily: tokens.fonts.body,
         fontWeight: tokens.fonts.bodyWeight,
-        fontSize: cap.fontSize,
+        fontSize: dynamicFontSize,
         lineHeight: cap.lineHeight,
         textAlign: 'center',
         gap: '0 18px',
@@ -127,6 +135,23 @@ export const WordCaption: React.FC<Props> = ({
     </div>
   );
 };
+
+/**
+ * Phase 10 Round B — F7: picks a caption font size based on how many
+ * words are in the segment. Short segments get bumped up so they don't
+ * vanish; crowded segments shrink so the line doesn't wrap unreadably.
+ *
+ * Exported so WordCaptionPop (and any future style) can share it.
+ */
+export function computeDynamicFontSize(
+  wordCount: number,
+  baseFontSize: number,
+): number {
+  if (wordCount <= 3) return Math.round(baseFontSize * 1.2); // +20%
+  if (wordCount <= 5) return baseFontSize;                   // baseline
+  if (wordCount <= 7) return Math.round(baseFontSize * 0.9); // -10%
+  return Math.round(baseFontSize * 0.8);                     // -20%
+}
 
 /**
  * Layered gold glow shadow on top of the base black drop shadow. Scale
