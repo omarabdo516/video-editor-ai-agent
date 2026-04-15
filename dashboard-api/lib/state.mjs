@@ -15,7 +15,7 @@ import {
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import url from 'node:url';
-import { derivedOutputs, videoBasename, captionsPath, captionsRawPath } from './paths.mjs';
+import { derivedOutputs, videoBasename, resolveExisting } from './paths.mjs';
 import { parseVideoName } from './parseName.mjs';
 
 const __filename = url.fileURLToPath(import.meta.url);
@@ -58,6 +58,24 @@ export function loadState() {
   } catch (e) {
     console.warn(`[state] failed to parse ${STATE_FILE}: ${e.message} — starting fresh`);
     cache = { videos: [] };
+  }
+  // One-shot refresh of each video's `outputs` via derivedOutputs() so
+  // stale flat-layout paths persisted before the April 2026 reorg get
+  // rewritten to the new _pipeline/ + Output/ canonical paths.
+  // Idempotent after the first run on any given videos.json.
+  let refreshed = false;
+  for (const v of cache.videos) {
+    const fresh = derivedOutputs(v.path);
+    const current = JSON.stringify(v.outputs || {});
+    const next = JSON.stringify(fresh);
+    if (current !== next) {
+      v.outputs = fresh;
+      refreshed = true;
+    }
+  }
+  if (refreshed) {
+    console.log('[state] refreshed video outputs to new _pipeline/ layout');
+    persist();
   }
   return cache;
 }
@@ -108,12 +126,14 @@ function syncEditPhaseFromDisk(video) {
   // Already final — don't downgrade.
   if (edit.status === 'done' || edit.status === 'running') return false;
 
-  const caps = captionsPath(video.path);
+  // Use resolveExisting so both the new _pipeline/ layout and the
+  // legacy flat layout return a valid path if the file exists.
+  const caps = resolveExisting(video.path, 'captions');
   const capsM = mtimeOf(caps);
   if (capsM == null) return false;
 
   // Preferred signal: captions.json newer than captions.raw.json.
-  const raw = captionsRawPath(video.path);
+  const raw = resolveExisting(video.path, 'captions_raw');
   const rawM = mtimeOf(raw);
   if (rawM != null) {
     if (capsM <= rawM + EDIT_DETECT_GRACE_MS) return false;

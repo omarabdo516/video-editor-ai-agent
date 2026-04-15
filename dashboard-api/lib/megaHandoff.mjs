@@ -10,13 +10,10 @@ import {
   captionsPath,
   faceMapPath,
   energyPath,
+  speechRhythmPath,
   animationPlanPath,
   contentAnalysisPath,
 } from './paths.mjs';
-
-function speechRhythmPath(videoPath) {
-  return captionsPath(videoPath).replace(/\.captions\.json$/, '.speech_rhythm.json');
-}
 
 function fmtDuration(sec) {
   if (sec == null || !Number.isFinite(sec)) return '—';

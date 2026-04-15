@@ -10,6 +10,7 @@ import {
   scaledVideoPath,
   captionsPath,
   videoBasename,
+  resolveExisting,
 } from '../lib/paths.mjs';
 import { buildHandoffMessage } from '../lib/handoff.mjs';
 import { startEditor } from '../lib/editorSession.mjs';
@@ -77,8 +78,11 @@ phasesRouter.post('/:id/edit', async (req, res) => {
   const video = getVideo(req.params.id);
   if (!video) return res.status(404).json({ error: 'video not found' });
 
-  const scaled = scaledVideoPath(video.path);
-  const caps = captionsPath(video.path);
+  // resolveExisting checks both the new _pipeline/ layout and the
+  // legacy flat layout, so the readiness flags work for videos that
+  // haven't been migrated yet.
+  const scaled = resolveExisting(video.path, 'scaled');
+  const caps = resolveExisting(video.path, 'captions');
   const baseName = videoBasename(video.path);
 
   const scaledReady = existsSync(scaled);

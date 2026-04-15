@@ -22,6 +22,22 @@ import { existsSync, statSync, mkdirSync, writeFileSync, readFileSync, createRea
 import http from 'node:http';
 import path from 'node:path';
 import url from 'node:url';
+import {
+  scaledVideoPath as pScaledVideoPath,
+  wavPath as pWavPath,
+  metadataPath as pMetadataPath,
+  faceMapPath as pFaceMapPath,
+  energyPath as pEnergyPath,
+  captionsPath as pCaptionsPath,
+  captionsRawPath as pCaptionsRawPath,
+  captionsSrtPath as pCaptionsSrtPath,
+  speechRhythmPath as pSpeechRhythmPath,
+  reelOutputPath as pReelOutputPath,
+  ensurePipelineDir,
+  ensureOutputDir,
+  videoBasename as pVideoBasename,
+  resolveExisting,
+} from './lib/paths.mjs';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -99,49 +115,80 @@ function runPython(scriptName, args) {
   });
 }
 
-function preprocessAudio(inputVideoPath, { wavPath } = {}) {
-  const outWav =
-    wavPath || inputVideoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
-  if (fileExists(outWav)) {
-    console.log(`✓ audio already preprocessed: ${outWav}`);
-    return outWav;
+// ─── phase helpers ────────────────────────────────────────────────────────
+//
+// Every helper takes the ORIGINAL source video path (not the derived
+// scaled/wav path) and computes its own outputs via lib/paths.mjs. This
+// keeps the call-sites readable and ensures every artifact lands in the
+// per-video _pipeline/ subfolder. The helpers create the subfolder lazily
+// via ensurePipelineDir on the first call.
+
+function preprocessAudio(sourceVideoPath, inputPathForFfmpeg) {
+  // resolveExisting checks both the new canonical location AND any
+  // legacy flat location. Skip re-running if EITHER exists — the
+  // migration script will move the legacy file later.
+  const existing = resolveExisting(sourceVideoPath, 'wav');
+  if (fileExists(existing)) {
+    console.log(`✓ audio already preprocessed: ${existing}`);
+    return existing;
   }
+  const outWav = pWavPath(sourceVideoPath);
+  ensurePipelineDir(sourceVideoPath);
   run('node', [
     path.join(__dirname, 'preprocess-audio.js'),
-    inputVideoPath,
+    inputPathForFfmpeg || sourceVideoPath,
     '--output',
     outWav,
   ]);
   return outWav;
 }
 
-function extractMetadata(videoPath) {
-  const out = videoPath + '.metadata.json';
-  if (fileExists(out)) {
-    console.log(`✓ metadata already exists: ${out}`);
-    return out;
+function extractMetadata(sourceVideoPath) {
+  const existing = resolveExisting(sourceVideoPath, 'metadata');
+  if (fileExists(existing)) {
+    console.log(`✓ metadata already exists: ${existing}`);
+    return existing;
   }
-  runPython('video_metadata.py', [videoPath]);
+  const out = pMetadataPath(sourceVideoPath);
+  ensurePipelineDir(sourceVideoPath);
+  // video_metadata.py reads the scaled video but writes to --output.
+  runPython('video_metadata.py', [
+    resolveExisting(sourceVideoPath, 'scaled'),
+    '--output',
+    out,
+  ]);
   return out;
 }
 
-function detectFaces(videoPath) {
-  const out = videoPath + '.face_map.json';
-  if (fileExists(out)) {
-    console.log(`✓ face_map already exists: ${out}`);
-    return out;
+function detectFaces(sourceVideoPath) {
+  const existing = resolveExisting(sourceVideoPath, 'face_map');
+  if (fileExists(existing)) {
+    console.log(`✓ face_map already exists: ${existing}`);
+    return existing;
   }
-  runPython('face_detect.py', [videoPath]);
+  const out = pFaceMapPath(sourceVideoPath);
+  ensurePipelineDir(sourceVideoPath);
+  runPython('face_detect.py', [
+    resolveExisting(sourceVideoPath, 'scaled'),
+    '--output',
+    out,
+  ]);
   return out;
 }
 
-function analyzeAudioEnergy(wavPath) {
-  const out = wavPath + '.energy.json';
-  if (fileExists(out)) {
-    console.log(`✓ audio energy already exists: ${out}`);
-    return out;
+function analyzeAudioEnergy(sourceVideoPath) {
+  const existing = resolveExisting(sourceVideoPath, 'energy');
+  if (fileExists(existing)) {
+    console.log(`✓ audio energy already exists: ${existing}`);
+    return existing;
   }
-  runPython('audio_energy.py', [wavPath]);
+  const out = pEnergyPath(sourceVideoPath);
+  ensurePipelineDir(sourceVideoPath);
+  runPython('audio_energy.py', [
+    resolveExisting(sourceVideoPath, 'wav'),
+    '--output',
+    out,
+  ]);
   return out;
 }
 
@@ -177,11 +224,14 @@ function detectLeadingBlack(videoPath, maxScanSec = 3) {
 }
 
 function prepareVideo(videoPath) {
-  const scaledPath = videoPath.replace(/\.[^.]+$/, '') + '.1080x1920.mp4';
-  if (fileExists(scaledPath)) {
-    console.log(`✓ pre-scaled video already exists: ${scaledPath}`);
-    return scaledPath;
+  // Accept either the new canonical location or the legacy flat one.
+  const existing = resolveExisting(videoPath, 'scaled');
+  if (fileExists(existing)) {
+    console.log(`✓ pre-scaled video already exists: ${existing}`);
+    return existing;
   }
+  const scaledPath = pScaledVideoPath(videoPath);
+  ensurePipelineDir(videoPath);
   // Trim leading black frames so the reel opens on the first real frame.
   // `-ss` before `-i` shifts both video and audio together, keeping them in
   // sync. All downstream steps (audio extraction, face detection, energy
@@ -215,9 +265,23 @@ function prepareVideo(videoPath) {
 }
 
 function transcribe(wavPath, captionsOut) {
+  // captionsOut is the canonical path the caller wants written. If
+  // EITHER that canonical path OR a legacy location already has a
+  // captions file, skip re-transcribing. The migration script will
+  // move any legacy file into the canonical slot later.
   if (fileExists(captionsOut)) {
     console.log(`✓ captions already exist: ${captionsOut}`);
     return captionsOut;
+  }
+  // Legacy flat-layout fallback: captionsOut is typically
+  // <dir>/_pipeline/<basename>/captions.json; the legacy location
+  // is <dir>/<basename>.mp4.captions.json. We can't pass the source
+  // video path from here, so we just check both names by convention.
+  const legacyGuess = wavPath
+    .replace(/[\\/]_pipeline[\\/][^\\/]+[\\/]audio\.16k\.wav$/, '.mp4.captions.json');
+  if (legacyGuess !== wavPath && fileExists(legacyGuess)) {
+    console.log(`✓ legacy captions exist: ${legacyGuess}`);
+    return legacyGuess;
   }
   run('node', [
     path.join(__dirname, 'transcribe.js'),
@@ -237,15 +301,16 @@ function fixCaptions(captionsPath) {
 }
 
 // Phase 11 Session 1 — Whisper corrections tracker.
-// Snapshot the post-fix, pre-review captions.json as .captions.raw.json the
+// Snapshot the post-fix, pre-review captions.json as captions.raw.json the
 // FIRST time a video is transcribed. Subsequent re-runs keep the original
 // baseline so we can always diff against the untouched model output later.
-function snapshotRawCaptions(captionsOut) {
+function snapshotRawCaptions(sourceVideoPath) {
+  const captionsOut = pCaptionsPath(sourceVideoPath);
   if (!fileExists(captionsOut)) return;
-  if (!captionsOut.endsWith('.captions.json')) return;
-  const rawCopy = captionsOut.replace(/\.captions\.json$/, '.captions.raw.json');
+  const rawCopy = pCaptionsRawPath(sourceVideoPath);
   if (fileExists(rawCopy)) return;
   try {
+    ensurePipelineDir(sourceVideoPath);
     copyFileSync(captionsOut, rawCopy);
     console.log(`✓ raw captions snapshot: ${path.basename(rawCopy)}`);
   } catch (e) {
@@ -257,15 +322,15 @@ function snapshotRawCaptions(captionsOut) {
 // captions and append word-level corrections to
 // feedback/whisper_corrections.jsonl. Used from the subtitle editor's
 // save handler.
-function diffCaptionsAsync(editedPath) {
-  if (!editedPath.endsWith('.captions.json')) return;
-  const rawPath = editedPath.replace(/\.captions\.json$/, '.captions.raw.json');
-  if (!fileExists(rawPath)) return;
-  const projectLabel = path
-    .basename(editedPath)
-    .replace(/\.mp4\.captions\.json$/, '')
-    .replace(/\.captions\.json$/, '')
-    .replace(/\.mp4$/, '');
+//
+// Takes the SOURCE video path (not the captions path) so the raw-snapshot
+// location resolves through the canonical helpers. The `editedPath`
+// argument is only used for the project label.
+function diffCaptionsAsync(sourceVideoPath) {
+  const editedPath = pCaptionsPath(sourceVideoPath);
+  const rawPath = pCaptionsRawPath(sourceVideoPath);
+  if (!fileExists(editedPath) || !fileExists(rawPath)) return;
+  const projectLabel = pVideoBasename(sourceVideoPath);
   try {
     const child = spawn(
       'node',
@@ -292,7 +357,9 @@ function diffCaptionsAsync(editedPath) {
  * each call, cheap (pure-Python, no model). Uses the whisper venv so
  * we're guaranteed to have a working Python 3.
  */
-function speechRhythm(captionsPath) {
+function speechRhythm(sourceVideoPath) {
+  const captionsIn = pCaptionsPath(sourceVideoPath);
+  const rhythmOut = pSpeechRhythmPath(sourceVideoPath);
   const pythonPath =
     'C:/Users/PUZZLE/Documents/Claude/_tools/whisper-env/.venv/Scripts/python.exe';
   const script = path.join(__dirname, 'scripts', 'speech_rhythm.py');
@@ -300,7 +367,12 @@ function speechRhythm(captionsPath) {
     console.warn(`  (speech_rhythm.py missing: ${script})`);
     return;
   }
-  run(pythonPath, [script, captionsPath]);
+  if (!fileExists(captionsIn)) {
+    console.warn(`  (speech_rhythm skipped: captions not found at ${captionsIn})`);
+    return;
+  }
+  ensurePipelineDir(sourceVideoPath);
+  run(pythonPath, [script, captionsIn, rhythmOut]);
 }
 
 // Spawn a tiny HTTP server to serve files over localhost — Remotion's
@@ -353,6 +425,11 @@ function startFileServer(routes, fixedPort = 0, savePaths = {}) {
       req.on('end', () => {
         try {
           const body = Buffer.concat(chunks);
+          // Ensure destination dir exists (new layout: the editor writes
+          // into _pipeline/<basename>/ which may not exist if the video
+          // was added without first going through phase1).
+          const destDir = path.dirname(destPath);
+          if (!existsSync(destDir)) mkdirSync(destDir, { recursive: true });
           writeFileSync(destPath, body);
           // Refresh fileMeta so subsequent GETs see the new content length
           for (const [r, m] of Object.entries(fileMeta)) {
@@ -364,8 +441,10 @@ function startFileServer(routes, fixedPort = 0, savePaths = {}) {
           // Phase 11 Session 1 — fire-and-forget diff against the raw
           // snapshot. Never blocks the HTTP response; silently no-ops if
           // the snapshot is missing (video predates this feature).
-          if (destPath.endsWith('.captions.json')) {
-            diffCaptionsAsync(destPath);
+          // `sourceVideoPathForDiff` is optionally attached to savePaths
+          // by runEdit() — use it to compute the canonical raw path.
+          if (destPath.endsWith('captions.json') && savePaths.__sourceVideoPath) {
+            diffCaptionsAsync(savePaths.__sourceVideoPath);
           }
         } catch (err) {
           console.error(`✗ save failed: ${err.message}`);
@@ -602,20 +681,17 @@ async function runStudio(videoPath, { lecturer, workshop, skipAudio, skipTranscr
   // Prep scaled (+ trimmed) video first so audio is cut from it
   const scaledVideoPath = prepareVideo(videoPath);
 
-  // Prep audio + captions (reuses the same pipeline as `make`)
-  const sourceBasedWav = videoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
-  let wavPath;
-  if (!skipAudio) {
-    wavPath = preprocessAudio(scaledVideoPath, { wavPath: sourceBasedWav });
-  } else {
-    wavPath = sourceBasedWav;
-  }
+  // Prep audio + captions (reuses the same pipeline as `make`). All
+  // outputs land in _pipeline/<basename>/ via the canonical helpers.
+  const wavPathResolved = skipAudio
+    ? pWavPath(videoPath)
+    : preprocessAudio(videoPath, scaledVideoPath);
 
-  const captionsOut = videoPath + '.captions.json';
+  const captionsOut = pCaptionsPath(videoPath);
   if (!skipTranscribe) {
-    transcribe(wavPath, captionsOut);
+    transcribe(wavPathResolved, captionsOut);
     fixCaptions(captionsOut);
-    snapshotRawCaptions(captionsOut);
+    snapshotRawCaptions(videoPath);
   }
 
   // Fixed port so Studio previews don't break on hot-reload
@@ -677,37 +753,41 @@ async function runEdit(videoPath, { previewSeconds }) {
   console.log('\n=== Subtitle Editor ===\n');
 
   // Need pre-scaled video so the editor's waveform matches what the agent renders
-  const scaledVideoPath = prepareVideo(videoPath);
+  const scaledPath = prepareVideo(videoPath);
 
   // Find the captions file. Prefer JSON (preserves word timings) over SRT.
-  const jsonPath = videoPath + '.captions.json';
-  const srtPath = videoPath + '.captions.srt';
-  let captionsPath = null;
+  // Use resolveExisting so we read whichever layout the files are in
+  // (new _pipeline/ layout or legacy flat layout).
+  const jsonPath = resolveExisting(videoPath, 'captions');
+  const srtPath = resolveExisting(videoPath, 'captions_srt');
+  let captionsPathResolved = null;
   let captionsRoute = null;
   if (fileExists(jsonPath)) {
-    captionsPath = jsonPath;
+    captionsPathResolved = jsonPath;
     captionsRoute = '/captions.json';
   } else if (fileExists(srtPath)) {
-    captionsPath = srtPath;
+    captionsPathResolved = srtPath;
     captionsRoute = '/captions.srt';
   } else {
-    console.warn(`⚠ no captions file found (${jsonPath} or ${srtPath})`);
+    console.warn(`⚠ no captions file found for ${videoPath}`);
     console.warn('  Run `node rs-reels.mjs phase1 <video>` and then transcribe first.');
   }
 
   // Start the file server with both video + captions (if we have them)
-  const routes = { '/video.mp4': scaledVideoPath };
-  if (captionsPath) routes[captionsRoute] = captionsPath;
+  const routes = { '/video.mp4': scaledPath };
+  if (captionsPathResolved) routes[captionsRoute] = captionsPathResolved;
 
   // Writable routes — the editor POSTs here on Approve to persist directly
-  // to disk next to the source video (no Downloads folder round trip).
-  const baseName = path.basename(videoPath, path.extname(videoPath));
-  const videoDir = path.dirname(videoPath);
-  const jsonDestPath = videoPath + '.captions.json';
-  const srtDestPath = path.join(videoDir, `${baseName}.srt`);
+  // into the canonical _pipeline/ layout. No Downloads folder round trip.
+  const baseName = pVideoBasename(videoPath);
+  const jsonDestPath = pCaptionsPath(videoPath);
+  const srtDestPath = pCaptionsSrtPath(videoPath);
   const savePaths = {
     '/save/captions.json': jsonDestPath,
     '/save/captions.srt': srtDestPath,
+    // Tag so the POST handler can compute the raw-snapshot path via
+    // lib/paths.mjs (see diffCaptionsAsync).
+    __sourceVideoPath: videoPath,
   };
 
   const FILE_PORT = 7777;
@@ -904,32 +984,34 @@ async function runDoctor() {
 function runPhase1(videoPath) {
   console.log('\n=== Phase 1: Pre-processing ===\n');
 
+  // All outputs flow into <video-dir>/_pipeline/<basename>/ via the
+  // canonical path helpers in lib/paths.mjs. Each helper lazy-creates
+  // the pipeline dir on its first write.
+
   // Step 1.0: pre-scale (+ trim leading black) to 1080×1920 — face detection
   // and render both want this, and every downstream step needs to share its
   // trimmed timeline
-  const scaledVideoPath = prepareVideo(videoPath);
+  const scaledPath = prepareVideo(videoPath);
 
   // Step 1.1: audio — extracted from the scaled video so the trim carries
-  // through to captions and energy. Output path stays next to the source for
-  // backwards compatibility with existing naming conventions.
-  const sourceBasedWav = videoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
-  const wavPath = preprocessAudio(scaledVideoPath, { wavPath: sourceBasedWav });
+  // through to captions and energy.
+  const outWav = preprocessAudio(videoPath, scaledPath);
 
   // Step 1.2: metadata
-  const metadataPath = extractMetadata(scaledVideoPath);
+  const outMetadata = extractMetadata(videoPath);
 
   // Step 1.3: face detection (on the pre-scaled video — that's what Reel renders)
-  const faceMapPath = detectFaces(scaledVideoPath);
+  const outFaceMap = detectFaces(videoPath);
 
   // Step 1.4: audio energy
-  const energyPath = analyzeAudioEnergy(wavPath);
+  const outEnergy = analyzeAudioEnergy(videoPath);
 
   console.log('\n=== Phase 1 complete ===');
-  console.log(`  metadata:  ${metadataPath}`);
-  console.log(`  face_map:  ${faceMapPath}`);
-  console.log(`  energy:    ${energyPath}`);
-  console.log(`  audio:     ${wavPath}`);
-  console.log(`  scaled:    ${scaledVideoPath}`);
+  console.log(`  metadata:  ${outMetadata}`);
+  console.log(`  face_map:  ${outFaceMap}`);
+  console.log(`  energy:    ${outEnergy}`);
+  console.log(`  audio:     ${outWav}`);
+  console.log(`  scaled:    ${scaledPath}`);
 }
 
 // ─── Phase 10 Round C F19: performance feedback loop ────────────────────
@@ -1114,10 +1196,10 @@ async function main() {
 
   const lecturer = args.flags.lecturer || 'محاضر';
   const workshop = args.flags.workshop || 'ورشة RS Hero';
-  const output =
-    args.flags.output ||
-    videoPath.replace(/\.[^.]+$/, '') + '-reel.mp4';
-  const captionsOut = videoPath + '.captions.json';
+  const output = args.flags.output || pReelOutputPath(videoPath);
+  const captionsOut = pCaptionsPath(videoPath);
+  // Ensure Output/ folder exists before the final render writes into it.
+  if (cmd === 'make') ensureOutputDir(videoPath);
 
   console.log(`📹 Video:    ${videoPath}`);
   console.log(`👤 Lecturer: ${lecturer}`);
@@ -1151,28 +1233,23 @@ async function main() {
   const scaledVideoPath = prepareVideo(videoPath);
 
   // Step 2: audio — pulled from the scaled video (keeps captions aligned
-  // with the trimmed visual). Wav file lives next to the source for
-  // backwards compatibility.
-  const sourceBasedWav = videoPath.replace(/\.[^.]+$/, '') + '.16k.wav';
-  let wavPath;
-  if (!args.flags['skip-audio']) {
-    wavPath = preprocessAudio(scaledVideoPath, { wavPath: sourceBasedWav });
-  } else {
-    wavPath = sourceBasedWav;
-  }
+  // with the trimmed visual). Lives in _pipeline/<basename>/audio.16k.wav.
+  const wavPathResolved = args.flags['skip-audio']
+    ? pWavPath(videoPath)
+    : preprocessAudio(videoPath, scaledVideoPath);
 
   // Step 3: transcribe
   if (!args.flags['skip-transcribe']) {
-    transcribe(wavPath, captionsOut);
+    transcribe(wavPathResolved, captionsOut);
     fixCaptions(captionsOut);
-    snapshotRawCaptions(captionsOut);
+    snapshotRawCaptions(videoPath);
   }
 
   // Step 3.5 (Phase 10 Round B F20): speech rhythm analysis.
   // Regenerates cheaply each run; fails soft so it never blocks renders.
   if (fileExists(captionsOut)) {
     try {
-      speechRhythm(captionsOut);
+      speechRhythm(videoPath);
     } catch (e) {
       console.warn(`  (speech_rhythm skipped: ${e.message})`);
     }

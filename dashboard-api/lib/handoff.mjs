@@ -10,15 +10,12 @@ import {
   captionsPath,
   faceMapPath,
   energyPath,
+  speechRhythmPath,
   animationPlanPath,
   contentAnalysisPath,
+  REPO_ROOT,
 } from './paths.mjs';
 import path from 'node:path';
-import { REPO_ROOT } from './paths.mjs';
-
-function speechRhythmPath(videoPath) {
-  return captionsPath(videoPath).replace(/\.captions\.json$/, '.speech_rhythm.json');
-}
 
 function relToRepo(absPath) {
   const rel = path.relative(REPO_ROOT, absPath);
