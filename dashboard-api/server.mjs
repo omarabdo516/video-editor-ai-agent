@@ -11,6 +11,7 @@ import { phasesRouter } from './routes/phases.mjs';
 import { progressRouter } from './routes/progress.mjs';
 import { ratingRouter } from './routes/rating.mjs';
 import { batchRouter } from './routes/batch.mjs';
+import { megaRouter } from './routes/mega.mjs';
 import { loadState } from './lib/state.mjs';
 import { listJobs } from './lib/jobs.mjs';
 import { shutdownEditor } from './lib/editorSession.mjs';
@@ -43,6 +44,7 @@ app.use('/api/videos', phasesRouter);
 app.use('/api/videos', ratingRouter);
 app.use('/api/progress', progressRouter);
 app.use('/api/batch', batchRouter);
+app.use('/api/mega', megaRouter);
 
 // Generic error handler — keeps JSON shape consistent.
 app.use((err, _req, res, _next) => {

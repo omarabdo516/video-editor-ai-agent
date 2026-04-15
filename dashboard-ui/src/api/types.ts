@@ -106,6 +106,33 @@ export interface BulkAddResponse {
   errors: Array<{ path: string; error: string }>;
 }
 
+// ─── Mega-batch (Mode B — all-at-once) ───────────────────────────────────
+
+export interface MegaHandoffVideo {
+  id: string;
+  name: string;
+  path: string;
+  lecturer: string | null;
+  workshop: string | null;
+  duration_sec: number | null;
+}
+
+export interface MegaHandoffResponse {
+  message: string;
+  count: number;
+  videos: MegaHandoffVideo[];
+}
+
+export interface MegaCommitResponse {
+  commitHash: string;
+  message: string;
+  stagedFiles: string[];
+  feedbackUpdates: Array<{
+    action: 'created' | 'updated';
+    entry: unknown;
+  }>;
+}
+
 export interface HandoffResponse {
   message: string;
 }

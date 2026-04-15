@@ -5,6 +5,7 @@ import type {
   Video,
   AddVideoInput,
   BulkAddResponse,
+  MegaCommitResponse,
 } from '../api/types';
 import {
   listVideos,
@@ -14,6 +15,7 @@ import {
   subscribeToProgress,
   submitRating as apiSubmitRating,
   bulkAddVideos as apiBulkAddVideos,
+  megaCommitBatch as apiMegaCommitBatch,
 } from '../api/client';
 
 // Phases that are actually job-spawning POST routes (excludes edit + analyze).
@@ -37,6 +39,10 @@ interface DashboardState {
   refresh: () => Promise<void>;
   addVideo: (input: AddVideoInput) => Promise<Video>;
   bulkAddVideos: (inputs: AddVideoInput[]) => Promise<BulkAddResponse>;
+  megaCommitBatch: (
+    videoIds: string[],
+    batchNote?: string,
+  ) => Promise<MegaCommitResponse>;
   removeVideo: (id: string) => Promise<void>;
   runPhase: (videoId: string, phase: JobPhase) => Promise<void>;
   toggleSelect: (id: string) => void;
@@ -104,6 +110,21 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       if (resp.added.length > 0) {
         set((s) => ({ videos: [...s.videos, ...resp.added] }));
       }
+      return resp;
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      set({ error: msg });
+      throw e;
+    }
+  },
+
+  megaCommitBatch: async (videoIds, batchNote) => {
+    try {
+      const resp = await apiMegaCommitBatch(videoIds, batchNote);
+      // A successful commit upserts feedback/log.json + CLAUDE.md on
+      // disk but doesn't touch our in-memory video state — refresh to
+      // keep things consistent.
+      void get().refresh();
       return resp;
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);

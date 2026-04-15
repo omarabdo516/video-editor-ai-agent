@@ -15,6 +15,8 @@ import type {
   ParseResult,
   ScanFolderResponse,
   BulkAddResponse,
+  MegaHandoffResponse,
+  MegaCommitResponse,
 } from './types';
 
 const API = '/api';
@@ -113,6 +115,36 @@ export async function bulkAddVideos(
     }),
     'bulkAddVideos',
   )) as BulkAddResponse;
+  return body;
+}
+
+// ─── Mega-batch (Mode B) ─────────────────────────────────────────────────
+export async function megaHandoffAll(
+  videoIds: string[],
+): Promise<MegaHandoffResponse> {
+  const body = (await jsonOrThrow(
+    await fetch(`${API}/mega/handoff-all`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ videoIds }),
+    }),
+    'megaHandoffAll',
+  )) as MegaHandoffResponse;
+  return body;
+}
+
+export async function megaCommitBatch(
+  videoIds: string[],
+  batchNote?: string,
+): Promise<MegaCommitResponse> {
+  const body = (await jsonOrThrow(
+    await fetch(`${API}/mega/commit-batch`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ videoIds, batchNote }),
+    }),
+    'megaCommitBatch',
+  )) as MegaCommitResponse;
   return body;
 }
 
