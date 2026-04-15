@@ -29,13 +29,15 @@
 **الـ Pipeline للفيديو الجديد:**
 ```
 1. node rs-reels.mjs phase1 <video>              (preprocessing, ~3-5 min)
-2. node rs-reels.mjs make <video> --dry          (transcribe + fix, ~2-3 min)
-3. node rs-reels.mjs edit <video>                (manual subtitle review)
+2. node rs-reels.mjs make <video> --dry          (transcribe + fix + snapshot raw, ~2-3 min)
+3. node rs-reels.mjs edit <video>                (manual subtitle review → auto-logs corrections)
 4. Claude Code runs Phase 5 + 6 in-context       (analysis + plan, ~10 min)
 5. node scripts/generate_micro_events.mjs <name> (auto, instant)
 6. node rs-reels.mjs make <video> --skip-audio --skip-transcribe  (render, ~5 min)
 7. Phase 9: collect feedback + update log        (2-3 min)
 ```
+
+> **Phase 11 Session 1:** Step 2 بيحفظ `<video>.captions.raw.json` مرة واحدة (gitignored). Step 3 لما تضغط Approve في الـ subtitle editor، `scripts/diff_captions.mjs` بتشتغل fire-and-forget وتـ append word-level corrections لـ [`feedback/whisper_corrections.jsonl`](feedback/whisper_corrections.jsonl) — ده dataset طبيعي للـ Whisper LoRA fine-tune المستقبلي (التفاصيل في [`docs/phase-11-whisper-finetuning.md`](docs/phase-11-whisper-finetuning.md)). مفيش effort إضافي من Omar.
 
 **الـ Scene types المتاحة حالياً (7):**
 - `process_stepper` — stepper بـ 3+ cards مرتبة عمودياً + stagger + status badges

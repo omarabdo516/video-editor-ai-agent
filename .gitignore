@@ -39,6 +39,8 @@ tsconfig.tsbuildinfo
 *.metadata.json
 *.captions.json
 *.captions.srt
+# Raw Whisper output (snapshot before user review) — per-video, not committed
+*.captions.raw.json
 # But keep tiny test fixtures in samples/
 !samples/**
 # Keep SFX library (synthesized short clips committed to the repo so

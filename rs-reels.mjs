@@ -18,7 +18,7 @@
  */
 
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, statSync, mkdirSync, writeFileSync, readFileSync, createReadStream } from 'node:fs';
+import { existsSync, statSync, mkdirSync, writeFileSync, readFileSync, createReadStream, copyFileSync } from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import url from 'node:url';
@@ -236,6 +236,56 @@ function fixCaptions(captionsPath) {
   return captionsPath;
 }
 
+// Phase 11 Session 1 — Whisper corrections tracker.
+// Snapshot the post-fix, pre-review captions.json as .captions.raw.json the
+// FIRST time a video is transcribed. Subsequent re-runs keep the original
+// baseline so we can always diff against the untouched model output later.
+function snapshotRawCaptions(captionsOut) {
+  if (!fileExists(captionsOut)) return;
+  if (!captionsOut.endsWith('.captions.json')) return;
+  const rawCopy = captionsOut.replace(/\.captions\.json$/, '.captions.raw.json');
+  if (fileExists(rawCopy)) return;
+  try {
+    copyFileSync(captionsOut, rawCopy);
+    console.log(`✓ raw captions snapshot: ${path.basename(rawCopy)}`);
+  } catch (e) {
+    console.warn(`  (raw snapshot skipped: ${e.message})`);
+  }
+}
+
+// Fire-and-forget: diff the raw snapshot against the freshly-saved edited
+// captions and append word-level corrections to
+// feedback/whisper_corrections.jsonl. Used from the subtitle editor's
+// save handler.
+function diffCaptionsAsync(editedPath) {
+  if (!editedPath.endsWith('.captions.json')) return;
+  const rawPath = editedPath.replace(/\.captions\.json$/, '.captions.raw.json');
+  if (!fileExists(rawPath)) return;
+  const projectLabel = path
+    .basename(editedPath)
+    .replace(/\.mp4\.captions\.json$/, '')
+    .replace(/\.captions\.json$/, '')
+    .replace(/\.mp4$/, '');
+  try {
+    const child = spawn(
+      'node',
+      [
+        path.join(__dirname, 'scripts/diff_captions.mjs'),
+        rawPath,
+        editedPath,
+        '--project',
+        projectLabel,
+      ],
+      { stdio: 'inherit', shell: false, detached: false },
+    );
+    child.on('error', (err) => {
+      console.warn(`  (diff_captions failed to launch: ${err.message})`);
+    });
+  } catch (e) {
+    console.warn(`  (diff_captions skipped: ${e.message})`);
+  }
+}
+
 /**
  * Phase 10 Round B — F20: runs scripts/speech_rhythm.py on a captions
  * file and writes speech_rhythm.json next to it. Idempotent — regenerates
@@ -311,6 +361,12 @@ function startFileServer(routes, fixedPort = 0, savePaths = {}) {
           console.log(`✓ saved ${body.length} bytes → ${path.basename(destPath)}`);
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ ok: true, path: destPath, bytes: body.length }));
+          // Phase 11 Session 1 — fire-and-forget diff against the raw
+          // snapshot. Never blocks the HTTP response; silently no-ops if
+          // the snapshot is missing (video predates this feature).
+          if (destPath.endsWith('.captions.json')) {
+            diffCaptionsAsync(destPath);
+          }
         } catch (err) {
           console.error(`✗ save failed: ${err.message}`);
           res.writeHead(500, { 'Content-Type': 'text/plain' });
@@ -559,6 +615,7 @@ async function runStudio(videoPath, { lecturer, workshop, skipAudio, skipTranscr
   if (!skipTranscribe) {
     transcribe(wavPath, captionsOut);
     fixCaptions(captionsOut);
+    snapshotRawCaptions(captionsOut);
   }
 
   // Fixed port so Studio previews don't break on hot-reload
@@ -1101,6 +1158,7 @@ async function main() {
   if (!args.flags['skip-transcribe']) {
     transcribe(wavPath, captionsOut);
     fixCaptions(captionsOut);
+    snapshotRawCaptions(captionsOut);
   }
 
   // Step 3.5 (Phase 10 Round B F20): speech rhythm analysis.
