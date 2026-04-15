@@ -15,7 +15,7 @@ import {
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import url from 'node:url';
-import { derivedOutputs, videoBasename } from './paths.mjs';
+import { derivedOutputs, videoBasename, captionsPath, captionsRawPath } from './paths.mjs';
 import { parseVideoName } from './parseName.mjs';
 
 const __filename = url.fileURLToPath(import.meta.url);
@@ -73,13 +73,89 @@ function ensureLoaded() {
   return cache;
 }
 
+// ─── filesystem sync: detect Edit phase completion ─────────────────────────
+//
+// The subtitle editor saves via rs-reels.mjs' file server on :7777, which
+// is a completely separate process from the Dashboard API. There's no
+// direct signal back to us. Instead, we probe the filesystem:
+//
+//   - At first transcribe, rs-reels copies captions.json → captions.raw.json
+//     (the Whisper corrections tracker from Phase 11 Session 1)
+//   - When Omar approves in the subtitle editor, captions.json is
+//     rewritten with his edits; captions.raw.json stays untouched
+//   - So if captions.json mtime > captions.raw.json mtime + grace,
+//     Omar edited it
+//
+// For older videos that predate the raw.json snapshot, we fall back to
+// comparing captions.json mtime against transcribe.finishedAt. Same idea.
+//
+// Runs on every read. Cheap (just statSync on 2 files per video) and
+// keeps the state file in sync with reality without needing a watcher.
+
+const EDIT_DETECT_GRACE_MS = 500;
+
+function mtimeOf(file) {
+  try {
+    return statSync(file).mtimeMs;
+  } catch {
+    return null;
+  }
+}
+
+function syncEditPhaseFromDisk(video) {
+  const edit = video.phases?.edit;
+  if (!edit) return false;
+  // Already final — don't downgrade.
+  if (edit.status === 'done' || edit.status === 'running') return false;
+
+  const caps = captionsPath(video.path);
+  const capsM = mtimeOf(caps);
+  if (capsM == null) return false;
+
+  // Preferred signal: captions.json newer than captions.raw.json.
+  const raw = captionsRawPath(video.path);
+  const rawM = mtimeOf(raw);
+  if (rawM != null) {
+    if (capsM <= rawM + EDIT_DETECT_GRACE_MS) return false;
+  } else {
+    // Fallback: compare against transcribe.finishedAt (videos from
+    // before the corrections tracker landed won't have a raw.json).
+    const tsFinished = video.phases?.transcribe?.finishedAt;
+    if (!tsFinished) return false;
+    const tsM = new Date(tsFinished).getTime();
+    if (!Number.isFinite(tsM)) return false;
+    if (capsM <= tsM + EDIT_DETECT_GRACE_MS) return false;
+  }
+
+  // Edit detected.
+  video.phases.edit = {
+    ...edit,
+    status: 'done',
+    finishedAt: new Date(capsM).toISOString(),
+    // Marker so routes/UIs can tell this came from passive detection
+    // rather than an explicit job.
+    source: 'filesystem',
+  };
+  return true;
+}
+
 // ─── reads ────────────────────────────────────────────────────────────────
 export function getVideos() {
-  return ensureLoaded().videos;
+  const cache = ensureLoaded();
+  let anyChanged = false;
+  for (const video of cache.videos) {
+    if (syncEditPhaseFromDisk(video)) anyChanged = true;
+  }
+  if (anyChanged) persist();
+  return cache.videos;
 }
 
 export function getVideo(id) {
-  return ensureLoaded().videos.find((v) => v.id === id) || null;
+  const cache = ensureLoaded();
+  const video = cache.videos.find((v) => v.id === id);
+  if (!video) return null;
+  if (syncEditPhaseFromDisk(video)) persist();
+  return video;
 }
 
 // ─── id generation ────────────────────────────────────────────────────────
