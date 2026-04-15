@@ -16,7 +16,7 @@
 // ONE editor can be alive at a time. Switching to a different video
 // tears the old subprocess down first.
 
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import net from 'node:net';
 import { REPO_ROOT } from './paths.mjs';
 
@@ -85,6 +85,31 @@ async function waitForPort(port, timeoutMs) {
 }
 
 /**
+ * Force-kill whatever process owns the given local TCP port. Used to
+ * sweep orphaned Vite/file-server processes from prior sessions before
+ * we spawn a fresh editor — both ports are fixed so any orphan would
+ * cause our new spawn to fall through to a different port, breaking
+ * the hardcoded URL handed to the frontend.
+ */
+function killProcessesOnPort(port) {
+  if (process.platform !== 'win32') return;
+  const res = spawnSync(
+    'powershell',
+    [
+      '-NoProfile',
+      '-Command',
+      `Get-NetTCPConnection -LocalPort ${port} -State Listen -ErrorAction SilentlyContinue | ` +
+        `Select-Object -ExpandProperty OwningProcess -Unique | ` +
+        `ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }`,
+    ],
+    { stdio: 'ignore', shell: false },
+  );
+  if (res.status !== 0 && res.error) {
+    console.warn(`[editor] port-${port} sweep failed: ${res.error.message}`);
+  }
+}
+
+/**
  * Kill the current editor subprocess and wait for it to actually exit.
  * Safe to call when nothing is running.
  */
@@ -147,6 +172,15 @@ export async function startEditor({ videoId, videoPath, editorUrl }) {
   // Different video (or dead process) — stop the old one first.
   await stopEditor();
 
+  // Sweep orphan listeners on our fixed ports. rs-reels.mjs binds 5173
+  // and 7777 with no fallback in its hardcoded URL, so a stale Vite
+  // from a prior session would force the new spawn to fall through to
+  // 5174/5175 — and the URL we hand the frontend would still point at
+  // 5173 (the orphan). Idempotent; no-op if the ports are already free.
+  killProcessesOnPort(EDITOR_PORT);
+  killProcessesOnPort(FILE_PORT);
+  await new Promise((r) => setTimeout(r, 500));
+
   // Fresh spawn of `node rs-reels.mjs edit <videoPath>`.
   const child = spawn(
     'node',
@@ -208,10 +242,16 @@ export async function startEditor({ videoId, videoPath, editorUrl }) {
     if (current === sess) current = null;
   });
 
-  // Wait for Vite to come up before returning. If it never does (e.g. the
-  // editor crashed), we return ready=false so the frontend can surface
-  // the error to the user.
-  const ready = await waitForPort(EDITOR_PORT, READY_TIMEOUT_MS);
+  // Wait for BOTH Vite (5173) and the rs-reels file server (7777) to come
+  // up before returning. Probing only Vite leaves a window where Vite is
+  // alive but the file server crashed (e.g. the captionsPath bug we hit on
+  // 2026-04-16) — the editor would open and immediately fail to fetch
+  // /captions.json. ready=false lets the frontend surface a real error.
+  const [editorReady, fileReady] = await Promise.all([
+    waitForPort(EDITOR_PORT, READY_TIMEOUT_MS),
+    waitForPort(FILE_PORT, READY_TIMEOUT_MS),
+  ]);
+  const ready = editorReady && fileReady;
   sess.ready = ready;
 
   return {

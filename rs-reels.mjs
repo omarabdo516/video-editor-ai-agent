@@ -799,7 +799,7 @@ async function runEdit(videoPath, { previewSeconds }) {
     name: baseName,
     saveBase: `http://127.0.0.1:${FILE_PORT}`,
   });
-  if (captionsPath) {
+  if (captionsPathResolved) {
     editorParams.set('captions', `http://127.0.0.1:${FILE_PORT}${captionsRoute}`);
   }
   const editorUrl = `http://localhost:5173/?${editorParams.toString()}`;
