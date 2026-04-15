@@ -875,26 +875,154 @@ function runPhase1(videoPath) {
   console.log(`  scaled:    ${scaledVideoPath}`);
 }
 
+// ─── Phase 10 Round C F19: performance feedback loop ────────────────────
+/**
+ * Appends a post-publish performance entry to feedback/performance_data.json.
+ * Also captures a snapshot of the reel's animation plan so later pattern
+ * analysis can correlate metrics with plan choices (caption style, scene
+ * count, SFX toggle, etc.).
+ *
+ * The first positional arg is either a video path (we derive the project
+ * name from its basename) OR the project folder name inside src/data/.
+ * Either form resolves to the same animation_plan.json.
+ */
+function runPerformance(videoOrProject, flags) {
+  const dataDir = path.join(__dirname, 'feedback');
+  const dataFile = path.join(dataDir, 'performance_data.json');
+
+  if (!fileExists(dataFile)) {
+    mkdirSync(dataDir, { recursive: true });
+    writeFileSync(dataFile, '[]\n', 'utf8');
+  }
+
+  // Resolve project name
+  const projectName = videoOrProject.match(/[/\\]/)
+    ? path.basename(videoOrProject).replace(/\.[^.]+$/, '')
+    : videoOrProject;
+
+  // Load matching animation plan to snapshot reel details
+  const projectDir = path.join(__dirname, 'src', 'data', projectName);
+  const planPath = path.join(projectDir, 'animation_plan.json');
+  let planSnapshot = null;
+  if (fileExists(planPath)) {
+    try {
+      const plan = JSON.parse(readFileSync(planPath, 'utf8'));
+      planSnapshot = {
+        duration_sec: null, // filled from captions below
+        caption_style: plan.caption_style ?? 'hormozi',
+        num_scenes: (plan.scenes ?? []).length,
+        num_big_zooms: (plan.smart_zoom_plan?.moments ?? []).filter(
+          (m) => m.zoomLevel >= 1.3,
+        ).length,
+        num_mini_zooms: (plan.smart_zoom_plan?.moments ?? []).filter(
+          (m) => m.zoomLevel < 1.3,
+        ).length,
+        num_overlays: (plan.overlays ?? []).length,
+        num_micro_events: (plan.micro_events ?? []).length,
+        num_chapter_dividers: (plan.chapter_dividers ?? []).length,
+      };
+    } catch (e) {
+      console.warn(`  (couldn't parse animation_plan: ${e.message})`);
+    }
+  }
+
+  // Try to fill duration from captions
+  const capsPath = path.join(projectDir, 'captions.json');
+  if (fileExists(capsPath) && planSnapshot) {
+    try {
+      const caps = JSON.parse(readFileSync(capsPath, 'utf8'));
+      planSnapshot.duration_sec = Math.round(caps.totalDuration ?? 0);
+    } catch {
+      // ignore — duration is optional
+    }
+  }
+
+  // Parse metrics
+  const num = (v) => (v == null || v === true ? null : Number(v));
+  const metrics = {
+    views: num(flags.views),
+    reach: num(flags.reach),
+    saves: num(flags.saves),
+    shares: num(flags.shares),
+    likes: num(flags.likes),
+    comments: num(flags.comments),
+    retention_rate: num(flags.retention),
+    drop_off_sec: num(flags['drop-off']),
+  };
+
+  // Require at least one metric — otherwise the entry is useless
+  const hasAnyMetric = Object.values(metrics).some((v) => v != null);
+  if (!hasAnyMetric) {
+    console.error(
+      'Error: pass at least one metric. Example:\n' +
+        '  rs-reels performance "lecture-name" --views 12500 --retention 0.65',
+    );
+    process.exit(1);
+  }
+
+  const entry = {
+    project: projectName,
+    platform: flags.platform || 'instagram',
+    posted_date: flags['posted-date'] || new Date().toISOString().slice(0, 10),
+    measured_date: new Date().toISOString().slice(0, 10),
+    metrics,
+    reel_details: planSnapshot,
+    notes: flags.notes || null,
+  };
+
+  const existing = JSON.parse(readFileSync(dataFile, 'utf8'));
+  existing.push(entry);
+  writeFileSync(dataFile, JSON.stringify(existing, null, 2) + '\n', 'utf8');
+
+  // Summary
+  console.log(`\n📊 Performance entry recorded for: ${projectName}`);
+  console.log(`   platform: ${entry.platform}`);
+  console.log(`   posted:   ${entry.posted_date}`);
+  console.log(`   measured: ${entry.measured_date}`);
+  console.log('   metrics:');
+  for (const [k, v] of Object.entries(metrics)) {
+    if (v != null) console.log(`     ${k}: ${v}`);
+  }
+  if (planSnapshot) {
+    console.log('   reel snapshot:');
+    console.log(`     duration: ${planSnapshot.duration_sec ?? '?'}s`);
+    console.log(`     caption_style: ${planSnapshot.caption_style}`);
+    console.log(
+      `     scenes/zooms/overlays/micro: ${planSnapshot.num_scenes}/${planSnapshot.num_big_zooms}+${planSnapshot.num_mini_zooms}/${planSnapshot.num_overlays}/${planSnapshot.num_micro_events}`,
+    );
+  } else {
+    console.log('   (no animation_plan found — entry has no reel snapshot)');
+  }
+  console.log(`\n   total entries: ${existing.length}`);
+  if (existing.length >= 3) {
+    console.log(
+      '   ≥3 entries available — ask Claude Code to refresh feedback/performance_insights.md',
+    );
+  }
+}
+
 // ─── main ──────────────────────────────────────────────────────────────────
 async function main() {
   const args = parseArgs(process.argv);
   const [cmd, videoArg] = args._;
 
-  const VALID_CMDS = ['make', 'studio', 'phase1', 'edit', 'doctor'];
+  const VALID_CMDS = ['make', 'studio', 'phase1', 'edit', 'doctor', 'performance'];
 
   if (!cmd || (cmd !== 'doctor' && !videoArg) || !VALID_CMDS.includes(cmd)) {
     console.log('Usage:');
-    console.log('  rs-reels make   <video> --lecturer "Name" --workshop "Title" [--output reel.mp4]');
-    console.log('                                                              [--preview seconds]');
-    console.log('                                                              [--from sec --to sec]   # range render');
-    console.log('  rs-reels studio <video> --lecturer "Name" --workshop "Title" [--preview seconds]');
-    console.log('  rs-reels phase1 <video>');
-    console.log('  rs-reels edit   <video>                                      # opens the subtitle editor');
-    console.log('  rs-reels doctor                                              # pre-flight health check');
+    console.log('  rs-reels make        <video> --lecturer "Name" --workshop "Title" [--output reel.mp4]');
+    console.log('                                                                    [--preview seconds]');
+    console.log('                                                                    [--from sec --to sec]   # range render');
+    console.log('  rs-reels studio      <video> --lecturer "Name" --workshop "Title" [--preview seconds]');
+    console.log('  rs-reels phase1      <video>');
+    console.log('  rs-reels edit        <video>                                      # opens the subtitle editor');
+    console.log('  rs-reels performance <video|project> --views N --retention 0.65 [--saves N --shares N ...]');
+    console.log('  rs-reels doctor                                                   # pre-flight health check');
     console.log('\nCommon flags: --skip-audio --skip-transcribe --dry');
-    console.log('\nphase1 = audio + 1080x1920 scale + metadata + face_map + audio_energy');
-    console.log('edit   = serves the video + captions on :7777, runs the Vite editor on :5173');
-    console.log('doctor = verifies venv, ffmpeg, deps, CUDA, and tsc pass');
+    console.log('\nphase1      = audio + 1080x1920 scale + metadata + face_map + audio_energy');
+    console.log('edit        = serves the video + captions on :7777, runs the Vite editor on :5173');
+    console.log('performance = record post-publish metrics to feedback/performance_data.json');
+    console.log('doctor      = verifies venv, ffmpeg, deps, CUDA, and tsc pass');
     console.log('\nRange render example:');
     console.log('  node rs-reels.mjs make video.mp4 --lecturer "X" --workshop "Y" \\');
     console.log('    --skip-audio --skip-transcribe --from 70 --to 90 --output preview.mp4');
@@ -904,6 +1032,13 @@ async function main() {
   // Doctor runs without a video argument
   if (cmd === 'doctor') {
     await runDoctor();
+    return;
+  }
+
+  // Performance command — records post-publish metrics without touching
+  // the video pipeline
+  if (cmd === 'performance') {
+    runPerformance(videoArg, args.flags);
     return;
   }
 

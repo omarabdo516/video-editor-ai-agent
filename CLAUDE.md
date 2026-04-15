@@ -10,9 +10,13 @@
 > - **A3 — Element-level refinement**: ProcessStepperScene + ProcessTimelineScene + EquationScene بقوا بيقروا `getStaggerDelay` بدل القيم الثابتة.
 > - **A4 — WordCaption emphasis variants**: 3 variants (`normal` / `pop` / `glow`) — كلهم بنفس الذهبي، variation في scale + letter-spacing + shadow intensity (brand rule: single accent). الـ `EmphasisBeat` type جديد. Reel.tsx بيـ map `word_pop.intensity` → variant بـ `resolveEmphasisIntensity()` (بيقبل `low/medium/high` legacy و `normal/pop/glow` الجديد).
 
-**الحالة:** Phase 0-9 كاملين. Phase 10 Round A (Tier 1 + Tier 2) + Round B كاملين. Round C (performance loop + docs updates) لسه.
+**الحالة:** Phase 0-9 كاملين. **Phase 10 كامل** (Round A Tier 1+2 + Round B + Round C). الـ 11 features اللي عدّت من الـ triage بقت متطبّقة. التعليمات التفصيلية في Phase 5 + Phase 6 docs للـ (1) Hook analysis، (2) Adaptive difficulty per key_moment، (3) Scene entrance/exit override، (4) Smart zoom curve selection، (5) WordCaption intensity variants.
 
-**الخطوة الجاية:** **Round C** — data foundation (1 CLI + 2 docs updates)
+**الخطوة الجاية:** **فيديو RS جديد** (end-to-end run)
+
+**ما اتضافش في Phase 10:**
+- ❌ محذوف نهائياً: Emotion Colors (F13) · Intro 3.5s (F6) · Auto-CTA (F11) · Notifications (F15) · BG Music (F2)
+- ⏸️ مؤجّل لـ Phase 11: Retention Heatmap (F21) · Audio Ducking (F17) · Auto-Splitter (F4)
 
 اقرأ بالترتيب في الـ session الجاي:
 1. الملف ده بالكامل (CLAUDE.md)
@@ -165,6 +169,11 @@
 - [x] **F1 — SFX layer**: 4 أصوات synthesized بـ ffmpeg (pink/brown noise + sine bursts) في [`public/sfx/`](public/sfx/). [`SfxLayer.tsx`](src/components/SfxLayer.tsx) بيقرا الـ scenes + overlays + zoomPlan + يدور Audio Sequence عند كل event. `tokens.sfx.enabled = false` بيقفّلهم كلهم. volumes quiet (12-20%).
 - [x] **F20 — Speech rhythm script**: [`scripts/speech_rhythm.py`](scripts/speech_rhythm.py) — بياخد captions.json ويطلع speech_rhythm.json فيها pace classification + pause detection (micro / breath / dramatic) + summary stats. متكامل في `rs-reels.mjs make` pipeline بعد transcribe (fails soft).
 - [x] **F12 — Manual transitions**: ✅ مغطّى أصلاً بـ A1 (entrance variety) + A5 (exit variety) — مفيش حاجة جديدة مطلوبة.
+
+### Phase 10 Round C ✅ (data foundation)
+- [x] **F19 — Performance loop**: [`rs-reels.mjs performance <video_or_project> --views N --retention 0.65 ...`](rs-reels.mjs) subcommand. بيكتب entry في [`feedback/performance_data.json`](feedback/performance_data.json) — metrics (views/reach/saves/shares/likes/comments/retention/drop-off) + snapshot من الـ animation_plan (caption_style, num_scenes, num_zooms, num_overlays, num_micro_events). [`feedback/performance_insights.md`](feedback/performance_insights.md) فيه template الـ patterns اللي Claude Code يـ refresh بعد 3+ entries. Phase 6 docs اتحدّثت عشان تقرا الـ insights في البداية.
+- [x] **F9 — Hook detector (docs update)**: [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) — Step 5.2 جديد "Hook Analysis" بيحلل أول 3s من الـ captions. لو ضعيف (بداية مؤسسية)، يقترح `alternative_start_sec` من أول 30s فيها سؤال/statement. `hook_analysis` block جديد في schema. Phase 6 بيسأل المستخدم قبل تطبيق الاقتراح (Step 6.3).
+- [x] **F23 — Adaptive difficulty (docs update)**: [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) — كل key_moment بياخد `difficulty: simple | medium | complex` + `difficulty_score` + `visual_complexity`. [`docs/phase-6-animation-planning.md`](docs/phase-6-animation-planning.md) — Step 6.3 فيه جدول بيربط difficulty بـ scene_type + عدد عناصر + duration + entrance + stagger. برضو Phase 6 docs بتشرح إزاي نكتب `scene.entrance/exit` و `zoom_moment.easing` و `word_pop.intensity`.
 
 ### Phase 7 ⚠️ (base كامل — iteration مستمر)
 

@@ -27,6 +27,8 @@
 
 **إجباري:** اقرأ `docs/scene-validation-rules.md` قبل أي اقتراح.
 
+**Phase 10 Round C — data-driven planning**: اقرأ [`feedback/performance_insights.md`](../feedback/performance_insights.md). لو فيه 3+ reels متقاسة، Claude Code لازم يكيّف قراراته على الـ patterns المرصودة (hook type, visual pacing, caption variant, scene count). لو لسه مفيش data، كمّل بالقواعد الـ default.
+
 ### Step 6.2: اقرأ كل ملفات البيانات
 
 اقرأ content_analysis + subtitles + face_map + audio_energy + design-system + RS_BRAND
@@ -49,6 +51,47 @@
 
 **هل يحتاج Chapter Divider?**
 - ✅ لو: بداية قسم جديد في content_analysis.sections
+
+#### Phase 10 Round C — F23: Adaptive Difficulty
+
+كل key_moment في content_analysis جاي مع حقل `difficulty` (`simple | medium | complex`). استخدمه كـ hint للـ scene properties:
+
+| difficulty | scene_type مقترح | عدد العناصر | duration_sec | entrance | stagger |
+|-----------|------------------|-------------|--------------|----------|---------|
+| `simple` (1) | `definition` / `big_metaphor` (headline + subline) | 2-3 | 4-5 | `fade` أو `scale_bounce` | fixed 15 frames |
+| `medium` (2) | `equation` / `counter` / `process_timeline` | 4-5 | 6-8 | `blur_reveal` أو `scale_bounce` | `getStaggerDelay(n)` = 10 |
+| `complex` (3) | `process_stepper` / `comparison_two_paths` (✗ vs ✓) | 6-8 | 8-10 | `stagger_cascade` | `getStaggerDelay(n)` = 7 |
+
+**قاعدة:** ما تخلطش مستويات في scene واحدة. لو key_moment `simple` ومقترح definition، متزوّدلوش 6 elements عشان "تملّي" المدة. خلّيه بسيط ومريح للعين.
+
+#### Phase 10 Round C — F9: Hook fix
+
+اقرا `content_analysis.hook_analysis`. لو `hook_strength === 'weak'`:
+1. اسأل المستخدم: "الـ hook ضعيف — عايز أطبّق اقتراح البداية البديلة من ثانية X؟"
+2. لو وافق، عدّل الـ scene plan عشان يبدأ من `alternative_start_sec` (زوّد smart_zoom crash curve على أول 2s + AccentFlash على أول كلمة مهمة)
+3. لو رفض، خلّي الخطة زي ما هي بس زوّد intensity في أول 3 seconds (keyword_highlight overlay مبكر + word_pop بـ `glow` variant)
+
+#### Phase 10 Round C — Scene entrance/exit variety
+
+كل scene في animation_plan يقدر ياخد (اختياري):
+- `entrance`: `fade | scale_bounce | blur_reveal | stagger_cascade`
+- `exit`: `fade | scale_out | slide_down`
+
+لو سبتهم فاضيين، FullScreenScene بيختار default من element type. استخدم override بس لو عايز feel معيّن لـ scene معيّنة (مثلاً big_metaphor في نهاية الفيديو ياخد `scale_bounce` exit عشان يحسّس بالكliMax).
+
+#### Phase 10 Round C — Smart zoom easing
+
+كل `smart_zoom_plan.moments[i]` يقدر ياخد `easing`: `smooth_glide | dolly_in | crash_zoom`. default `dolly_in`. اختار على أساس audio_energy عند لحظة الـ zoom:
+- `crash_zoom`: energy في الـ top 20% — لحظة حماسية
+- `dolly_in`: energy في الـ mid range — لحظة متوسطة
+- `smooth_glide`: energy في الـ bottom 40% — لحظة هادية
+
+#### Phase 10 Round C — Emphasis intensity
+
+كل `word_pop` micro event يقدر ياخد `intensity`: `normal | pop | glow` (أو legacy `low/medium/high`). اختار على أساس:
+- `glow` (high): top 20% emphasis — كلمة منفردة في لحظة revelation
+- `pop` (medium): top 50% — كلمة مهمة وسط جملة
+- `normal` (low): اللي فاضل — beat عادي
 
 ### Step 6.4: أنشئ animation_plan.json
 

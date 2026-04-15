@@ -109,10 +109,26 @@ src/data/
       "content": "نص اللحظة المفتاحية",
       "importance": "high",
       "concept_type": "process",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
       "suggested_animation": "full_screen_scene",
       "animation_description": "وصف بصري تفصيلي للأنيميشن المقترح"
     }
   ],
+
+  "hook_analysis": {
+    "first_3_seconds_text": "النهارده هنتكلم عن الميزانية",
+    "hook_strength": "weak",
+    "reason": "بداية مؤسسية — ما بتعملش attention capture في الـ first frame",
+    "suggestion": "ابدأ من ثانية 15 فيها سؤال 'إيه الفرق بين الأصول والخصوم؟'",
+    "alternative_start_sec": 15.2,
+    "alternative_subtitle_id": 8,
+    "visual_suggestions": [
+      "Smart Zoom crash_zoom على اللحظة دي",
+      "AccentFlash على أول كلمة"
+    ]
+  },
 
   "keywords": [
     {
@@ -160,6 +176,16 @@ src/data/
 - `keyword_highlight` — كلمة بـ accent + scale
 - `overlay_only` — overlay صغير من غير zoom
 
+**Phase 10 Round C — `difficulty`** (للـ key_moments): `simple | medium | complex`
+- `simple` (1 point): تعريف مباشر، جملة واحدة — scene بسيطة 2-3 عناصر، 4-5s، fade animation
+- `medium` (2 points): معادلة 3 عناصر، خطوات متسلسلة — 4-5 عناصر، 6-8s، stagger
+- `complex` (3 points): مقارنة 4+ أبعاد، عملية طويلة — 6-8 عناصر، 8-10s، step-by-step reveal
+
+**Phase 10 Round C — `hook_strength`** (لحقل `hook_analysis`): `strong | medium | weak`
+- `strong`: أول 3s فيها سؤال / رقم صادم / ادعاء جريء — hook ممتاز، اكمّل كده
+- `medium`: بداية عادية لكن ممكن تمشي — اقتراح optional
+- `weak`: "النهارده هنتكلم عن..." أو intro مؤسسي — الـ retention هينخسر. حدد `alternative_start_sec` من أول 30s فيها سؤال/statement مثير
+
 ---
 
 ## الخطوات
@@ -181,12 +207,20 @@ src/data/
 4. **Key Moments** — لحظات تحتاج treatment بصري:
    - عرّف importance بناءً على القيمة التعليمية
    - اختار concept_type بدقة
+   - **Phase 10 Round C F23 — `difficulty`**: `simple` (جملة واحدة/تعريف مباشر، 2-3 عناصر بصرية، 4-5s) / `medium` (معادلة 3 عناصر، خطوات، 4-5 عناصر، 6-8s) / `complex` (مقارنة 4+ أبعاد، 6-8 عناصر، 8-10s). ده بيدي Phase 6 حد للـ scene complexity المناسبة
    - اقترح animation type واكتب animation_description تفصيلي يقدر Phase 6 يحوّله لـ component
 5. **Keywords** — مصطلحات مهمة (workshop names, roles, concepts, brand terms, metaphors)
 6. **Emphasis Moments** — لكل entry في `energy.json`:
    - لاقي الـ subtitle المتطابق زمنياً (segment.start ≤ energy_time ≤ segment.end)
    - حدّد intensity حسب: text importance + energy value + علاقة بـ key_moment
    - اقترح treatment
+7. **Phase 10 Round C F9 — Hook Analysis**: شوف أول 3 ثواني من الفيديو (captions + energy):
+   - اقرا الـ text في أول 3s. لو بيبدأ بـ "النهارده هنتكلم عن..." أو "في الحلقة دي..." → `hook_strength: weak`
+   - لو بيبدأ بسؤال، رقم صادم، ادعاء جريء → `hook_strength: strong`
+   - لو عادي → `hook_strength: medium`
+   - لو `weak`: دوّر على أول 30s عن لحظة فيها سؤال قوي أو statement مثير، واقترحها كـ `alternative_start_sec`
+   - اكتب suggestion نصّية مختصرة للمستخدم يقدر يعدّل بيها في الـ subtitle editor قبل الـ render
+   - Output في `hook_analysis` block في content_analysis.json
 
 ### Step 5.3: اكتب الـ JSON
 
