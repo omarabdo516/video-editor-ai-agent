@@ -1,4 +1,4 @@
-# RS Reels Dashboard — desktop shortcut installer
+﻿# RS Reels Dashboard - desktop shortcut installer
 #
 # Creates a "RS Reels Dashboard" shortcut on your Windows desktop that
 # launches the dashboard in a hidden window and opens the browser
@@ -53,7 +53,7 @@ $Shortcut.WindowStyle      = 7    # minimized (no terminal)
 if (Test-Path $IconPath) {
     $Shortcut.IconLocation = "$IconPath,0"
 } else {
-    Write-Host "WARNING: rs-dashboard.ico missing — using default Windows icon." -ForegroundColor Yellow
+    Write-Host "WARNING: rs-dashboard.ico missing - using default Windows icon." -ForegroundColor Yellow
     Write-Host "   Run launcher/generate-icon.cmd to recreate it." -ForegroundColor Yellow
 }
 
