@@ -26,6 +26,13 @@ import json
 import sys
 from pathlib import Path
 
+# Windows cp1252 codec can't encode Arabic paths — reconfigure stdout
+# to UTF-8 so print(output_path) on Arabic filenames doesn't crash.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 
 def classify_pause(gap_sec: float) -> str:
     if gap_sec > 0.8:

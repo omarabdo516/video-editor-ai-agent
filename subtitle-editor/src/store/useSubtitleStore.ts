@@ -41,6 +41,28 @@ interface SubtitleState {
   moveFirstWordToPrev: (id: string) => void;
   /** Flatten all words and regroup into chunks of exactly N words each. */
   rechunkToNWords: (n: number) => void;
+  /**
+   * Find/Replace across every segment (and word-level timings). Returns
+   * the number of replacements made so the UI can show a toast.
+   */
+  findReplaceAll: (
+    find: string,
+    replaceWith: string,
+    caseSensitive: boolean,
+  ) => number;
+  /**
+   * Count how many occurrences of `find` exist across all segments —
+   * used by the UI for a live match count before running a replace.
+   */
+  countMatches: (find: string, caseSensitive: boolean) => number;
+  /**
+   * Normalize punctuation across every segment:
+   *   - convert ASCII `?` → Arabic `؟`
+   *   - strip all punctuation except `؟` and `!`
+   *   - collapse multi-spaces, trim
+   * Brand rule: only `؟` and `!` are allowed in Arabic captions.
+   */
+  normalizePunctuation: () => number;
 
   /* ─── History ─── */
   undo: () => void;
@@ -329,6 +351,68 @@ export const useSubtitleStore = create<SubtitleState>((set, get) => ({
     pushAndCommit(set, get, rebuilt, rebuilt[0]?.id ?? null);
   },
 
+  findReplaceAll: (find, replaceWith, caseSensitive) => {
+    if (!find) return 0;
+    const re = buildFindRegex(find, caseSensitive);
+    let count = 0;
+
+    const next = get().subtitles.map((s) => {
+      // Replace in text — count via the callback so we get one number
+      const newText = s.text.replace(re, () => {
+        count++;
+        return replaceWith;
+      });
+
+      // Also replace in word-level timings if present, keeping alignment.
+      // Word-level re uses a fresh regex (RegExp state is shared otherwise).
+      const reWord = buildFindRegex(find, caseSensitive);
+      const newWords = s.words
+        ? s.words
+            .map((w) => ({ ...w, word: w.word.replace(reWord, replaceWith) }))
+            // Drop any word that became empty after replacement (rare —
+            // happens if the replacement is '' and the whole word matched).
+            .filter((w) => w.word.length > 0)
+        : s.words;
+
+      return { ...s, text: newText, words: newWords };
+    });
+
+    if (count === 0) return 0;
+    pushAndCommit(set, get, next);
+    return count;
+  },
+
+  countMatches: (find, caseSensitive) => {
+    if (!find) return 0;
+    const re = buildFindRegex(find, caseSensitive);
+    let count = 0;
+    for (const s of get().subtitles) {
+      const matches = s.text.match(re);
+      if (matches) count += matches.length;
+    }
+    return count;
+  },
+
+  normalizePunctuation: () => {
+    let count = 0;
+    const next = get().subtitles.map((s) => {
+      const normalized = normalizePunct(s.text);
+      if (normalized !== s.text) count++;
+
+      const newWords = s.words
+        ? s.words
+            .map((w) => ({ ...w, word: normalizePunct(w.word) }))
+            .filter((w) => w.word.length > 0)
+        : s.words;
+
+      return { ...s, text: normalized, words: newWords };
+    });
+
+    if (count === 0) return 0;
+    pushAndCommit(set, get, next);
+    return count;
+  },
+
   undo: () => {
     const { history, historyIndex } = get();
     if (historyIndex <= 0) return;
@@ -378,6 +462,30 @@ export const useSubtitleStore = create<SubtitleState>((set, get) => ({
 
 function makeId(): string {
   return `sub-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+/**
+ * Builds a global-match regex for find/replace. Escapes regex metachars in
+ * the user's input so `.`, `(`, etc. are treated as literals.
+ */
+function buildFindRegex(find: string, caseSensitive: boolean): RegExp {
+  const escaped = find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(escaped, caseSensitive ? 'g' : 'gi');
+}
+
+/**
+ * Strips any character that isn't a Unicode letter/digit/whitespace, `؟`,
+ * or `!`. Also converts ASCII `?` → Arabic `؟` first so existing captions
+ * with the wrong question mark get fixed. Brand rule for RS reels: only
+ * `؟` and `!` are allowed in Arabic captions — everything else (periods,
+ * commas, brackets, dashes) is noise that clutters word-by-word highlights.
+ */
+export function normalizePunct(text: string): string {
+  return text
+    .replace(/\?/g, '؟')
+    .replace(/[^\p{L}\p{N}\s؟!]/gu, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function reindex(subs: Subtitle[]): Subtitle[] {

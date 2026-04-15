@@ -1,5 +1,6 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useSubtitleStore } from '../store/useSubtitleStore';
+import { FindReplacePanel } from './FindReplacePanel';
 
 const RECHUNK_SIZES = [3, 4, 5, 6, 7] as const;
 
@@ -16,8 +17,13 @@ export function Toolbar() {
   const exportSRT = useSubtitleStore((s) => s.exportSRT);
   const exportAgentJSON = useSubtitleStore((s) => s.exportAgentJSON);
   const rechunkToNWords = useSubtitleStore((s) => s.rechunkToNWords);
+  const normalizePunctuation = useSubtitleStore((s) => s.normalizePunctuation);
   const followPlayback = useSubtitleStore((s) => s.followPlayback);
   const setFollowPlayback = useSubtitleStore((s) => s.setFollowPlayback);
+
+  // Local UI state for the Find/Replace panel — keeps the store lean since
+  // the open/closed flag doesn't need history or cross-component sync.
+  const [showFindReplace, setShowFindReplace] = useState(false);
 
   const canUndo = historyIndex > 0;
   const canRedo = historyIndex < historyLength - 1;
@@ -55,6 +61,19 @@ export function Toolbar() {
   const handleExportSRT = () => {
     const baseName = videoFileName?.replace(/\.[^.]+$/, '') ?? 'subtitles';
     downloadFile(exportSRT(), `${baseName}.srt`, 'text/plain;charset=utf-8');
+  };
+
+  const handleNormalizePunct = () => {
+    if (subtitleCount === 0) return;
+    if (
+      !window.confirm(
+        'هيشيل كل علامات الترقيم غير ؟ و ! من كل الكابشنز، ويحوّل ? العادية لـ ؟ عربي. تقدر تعمل Undo.',
+      )
+    ) {
+      return;
+    }
+    const n = normalizePunctuation();
+    alert(n > 0 ? `✅ اتنضّفت ${n} كابشن` : 'مفيش حاجة محتاجة تعديل');
   };
 
   const handleApprove = async () => {
@@ -97,6 +116,7 @@ export function Toolbar() {
   };
 
   return (
+    <>
     <div className="flex items-center justify-between border-b border-[var(--color-border-subtle)] bg-[var(--color-bg-panel)] px-4 py-2.5">
       <div className="flex items-center gap-2">
         <h1 className="font-cairo text-sm font-bold text-[var(--color-brand-accent)]">
@@ -139,6 +159,25 @@ export function Toolbar() {
         </ToolbarBtn>
         <ToolbarBtn onClick={redo} disabled={!canRedo} title="Redo (Ctrl+Shift+Z)">
           ↷ Redo
+        </ToolbarBtn>
+
+        <div className="mx-1 h-6 w-px bg-[var(--color-border-subtle)]" />
+
+        {/* Find / Replace toggle — opens the panel below the toolbar */}
+        <ToolbarBtn
+          onClick={() => setShowFindReplace((v) => !v)}
+          title="Find & Replace across all captions"
+        >
+          🔍 Find
+        </ToolbarBtn>
+
+        {/* Normalize: strip punctuation except ؟ and ! */}
+        <ToolbarBtn
+          onClick={handleNormalizePunct}
+          disabled={subtitleCount === 0}
+          title="شيل كل علامات الترقيم غير ؟ و !"
+        >
+          🧹 Normalize
         </ToolbarBtn>
 
         <div className="mx-1 h-6 w-px bg-[var(--color-border-subtle)]" />
@@ -201,6 +240,10 @@ export function Toolbar() {
         </button>
       </div>
     </div>
+    {showFindReplace && (
+      <FindReplacePanel onClose={() => setShowFindReplace(false)} />
+    )}
+    </>
   );
 }
 
