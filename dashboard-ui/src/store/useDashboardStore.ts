@@ -1,5 +1,11 @@
 import { create } from 'zustand';
-import type { PhaseId, PhaseState, Video, AddVideoInput } from '../api/types';
+import type {
+  PhaseId,
+  PhaseState,
+  Video,
+  AddVideoInput,
+  BulkAddResponse,
+} from '../api/types';
 import {
   listVideos,
   addVideo as apiAddVideo,
@@ -7,6 +13,7 @@ import {
   runPhase as apiRunPhase,
   subscribeToProgress,
   submitRating as apiSubmitRating,
+  bulkAddVideos as apiBulkAddVideos,
 } from '../api/client';
 
 // Phases that are actually job-spawning POST routes (excludes edit + analyze).
@@ -29,6 +36,7 @@ interface DashboardState {
 
   refresh: () => Promise<void>;
   addVideo: (input: AddVideoInput) => Promise<Video>;
+  bulkAddVideos: (inputs: AddVideoInput[]) => Promise<BulkAddResponse>;
   removeVideo: (id: string) => Promise<void>;
   runPhase: (videoId: string, phase: JobPhase) => Promise<void>;
   toggleSelect: (id: string) => void;
@@ -83,6 +91,20 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       const video = await apiAddVideo(input);
       set((s) => ({ videos: [...s.videos, video] }));
       return video;
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      set({ error: msg });
+      throw e;
+    }
+  },
+
+  bulkAddVideos: async (inputs) => {
+    try {
+      const resp = await apiBulkAddVideos(inputs);
+      if (resp.added.length > 0) {
+        set((s) => ({ videos: [...s.videos, ...resp.added] }));
+      }
+      return resp;
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       set({ error: msg });

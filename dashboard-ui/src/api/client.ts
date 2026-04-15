@@ -12,6 +12,9 @@ import type {
   BatchResult,
   BatchSnapshot,
   StartBatchResponse,
+  ParseResult,
+  ScanFolderResponse,
+  BulkAddResponse,
 } from './types';
 
 const API = '/api';
@@ -67,6 +70,50 @@ export async function removeVideo(id: string): Promise<void> {
     }),
     'removeVideo',
   );
+}
+
+// ─── Parse a single video path (auto-fill suggestion) ───────────────────
+export async function parseVideoPath(videoPath: string): Promise<ParseResult> {
+  const body = (await jsonOrThrow(
+    await fetch(`${API}/videos/parse`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: videoPath }),
+    }),
+    'parseVideoPath',
+  )) as ParseResult;
+  return body;
+}
+
+// ─── Scan a folder for videos ────────────────────────────────────────────
+export async function scanFolder(
+  folderPath: string,
+  recursive = false,
+): Promise<ScanFolderResponse> {
+  const body = (await jsonOrThrow(
+    await fetch(`${API}/videos/scan-folder`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ folderPath, recursive }),
+    }),
+    'scanFolder',
+  )) as ScanFolderResponse;
+  return body;
+}
+
+// ─── Bulk add multiple videos at once ────────────────────────────────────
+export async function bulkAddVideos(
+  videos: AddVideoInput[],
+): Promise<BulkAddResponse> {
+  const body = (await jsonOrThrow(
+    await fetch(`${API}/videos/bulk-add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ videos }),
+    }),
+    'bulkAddVideos',
+  )) as BulkAddResponse;
+  return body;
 }
 
 // Routes for job-spawning phases. `edit` is NOT included — it has a different

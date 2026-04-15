@@ -16,6 +16,7 @@ import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import url from 'node:url';
 import { derivedOutputs, videoBasename } from './paths.mjs';
+import { parseVideoName } from './parseName.mjs';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -141,12 +142,23 @@ export function addVideo({ path: videoPath, name, lecturer, workshop }) {
 
   const duration_sec = probeDuration(videoPath);
 
+  // Auto-parse lecturer/workshop from the basename if the caller didn't
+  // supply them. Omar's naming convention is "<lecturer> - <workshop>"
+  // — see lib/parseName.mjs for the full rules.
+  let finalLecturer = lecturer ?? null;
+  let finalWorkshop = workshop ?? null;
+  if (!finalLecturer || !finalWorkshop) {
+    const parsed = parseVideoName(videoBasename(videoPath));
+    if (!finalLecturer) finalLecturer = parsed.lecturer;
+    if (!finalWorkshop) finalWorkshop = parsed.workshop;
+  }
+
   const video = {
     id,
     path: videoPath,
     name: displayName,
-    lecturer: lecturer || null,
-    workshop: workshop || null,
+    lecturer: finalLecturer,
+    workshop: finalWorkshop,
     addedAt: new Date().toISOString(),
     duration_sec,
     phases: emptyPhases(),

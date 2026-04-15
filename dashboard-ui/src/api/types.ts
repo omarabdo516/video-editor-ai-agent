@@ -71,6 +71,35 @@ export interface AddVideoInput {
   workshop?: string;
 }
 
+// ─── Folder scan + bulk add ──────────────────────────────────────────────
+
+export interface ParseResult {
+  name: string;
+  lecturer: string | null;
+  workshop: string | null;
+}
+
+export interface ScanFolderEntry {
+  path: string;
+  basename: string;
+  suggestedName: string;
+  suggestedLecturer: string | null;
+  suggestedWorkshop: string | null;
+  alreadyTracked: boolean;
+}
+
+export interface ScanFolderResponse {
+  folder: string;
+  recursive: boolean;
+  found: ScanFolderEntry[];
+}
+
+export interface BulkAddResponse {
+  added: Video[];
+  skipped: Array<{ path: string; reason: string }>;
+  errors: Array<{ path: string; error: string }>;
+}
+
 export interface HandoffResponse {
   message: string;
 }
