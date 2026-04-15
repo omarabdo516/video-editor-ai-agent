@@ -6,12 +6,23 @@ import type { OverlayItem } from '../../types';
 type Props = { overlay: OverlayItem };
 
 /**
- * Pill-style overlay positioned at top-center. Supports:
+ * Floating text overlay — sits in the body zone (y=900 default), above
+ * the lower-third and caption zone. Text floats without a background
+ * card — a strong layered drop shadow keeps it legible against any
+ * video frame.
+ *
+ * Supports:
  *  - single line: just `keyword`
  *  - two lines: `primary_text` (big accent) + `secondary_text` (small white)
  *  - optional `badge` in the top-right corner
  *
  * Fade-slide-down on enter, fade-slide-up on exit.
+ *
+ * History: earlier versions used a pill background with backdrop blur,
+ * but Omar flagged that the card was visually covering the captions
+ * underneath (and the default y=1140 intruded into the caption zone).
+ * Rebuilt as a floating text block per the "avoid 1100-1460" safe-zone
+ * rule.
  */
 export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
   const frame = useCurrentFrame();
@@ -39,13 +50,20 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
   );
 
   const y = overlay.y_px ?? tokens.overlays.defaultY;
-  const padX = tokens.overlays.defaultPaddingX;
-  const padY = tokens.overlays.defaultPaddingY;
 
   // Determine layout: 1-line vs 2-line
   const hasPrimary = !!overlay.primary_text;
   const hasSecondary = !!overlay.secondary_text;
   const singleText = !hasPrimary ? overlay.keyword || overlay.text || '' : null;
+
+  // Heavy layered shadow so gold text stays legible over any video
+  // frame — replaces the old background card entirely.
+  const TEXT_SHADOW = [
+    '0 0 16px rgba(0,0,0,0.85)',
+    '0 4px 18px rgba(0,0,0,0.75)',
+    '0 2px 6px rgba(0,0,0,1)',
+    '0 0 28px rgba(255,181,1,0.35)',
+  ].join(', ');
 
   return (
     <div
@@ -64,24 +82,19 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
       <div
         style={{
           position: 'relative',
-          background: overlay.background ?? 'rgba(13, 31, 60, 0.85)',
-          backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)',
-          borderRadius: overlay.background_radius ?? tokens.overlays.defaultRadius,
-          padding: overlay.background_padding ?? `${padY}px ${padX}px`,
-          border: `2px solid rgba(255, 181, 1, 0.35)`,
-          boxShadow: '0 18px 50px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04)',
+          // No background / border / shadow card — the text floats.
           direction: 'rtl',
           textAlign: 'center',
           maxWidth: width - 200,
         }}
       >
-        {/* Badge in top-right (RTL: right side) */}
+        {/* Badge — still rendered when present (badges are for stamp-style
+            callouts and stay useful even without a card) */}
         {overlay.badge && (
           <div
             style={{
               position: 'absolute',
-              top: -16,
+              top: -28,
               right: -8,
               background: tokens.colors.accent,
               color: tokens.colors.dark,
@@ -111,7 +124,7 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
                   ? tokens.colors.accent
                   : overlay.text_color || tokens.colors.accent,
               lineHeight: 1.1,
-              textShadow: '0 2px 6px rgba(0,0,0,0.6)',
+              textShadow: TEXT_SHADOW,
             }}
           >
             {singleText}
@@ -130,7 +143,7 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
                   ? tokens.colors.accent
                   : overlay.primary_color || tokens.colors.accent,
               lineHeight: 1.1,
-              textShadow: '0 2px 6px rgba(0,0,0,0.6)',
+              textShadow: TEXT_SHADOW,
               letterSpacing: '-0.5px',
             }}
           >
@@ -141,16 +154,18 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
         {hasSecondary && (
           <div
             style={{
-              marginTop: 6,
+              marginTop: 8,
               fontFamily: tokens.fonts.heading,
-              fontWeight: overlay.secondary_weight || 500,
+              fontWeight: overlay.secondary_weight || 600,
               fontSize: overlay.secondary_size || tokens.overlays.defaultSecondarySize,
               color:
                 overlay.secondary_color === 'accent'
                   ? tokens.colors.accent
                   : overlay.secondary_color || tokens.colors.white,
-              opacity: 0.92,
+              opacity: 0.95,
               lineHeight: 1.2,
+              textShadow:
+                '0 0 12px rgba(0,0,0,0.85), 0 3px 10px rgba(0,0,0,0.7), 0 2px 4px rgba(0,0,0,1)',
             }}
           >
             {overlay.secondary_text}

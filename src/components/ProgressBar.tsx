@@ -10,11 +10,11 @@ type Props = {
 /**
  * Phase 10 Round B — F3: thin progress bar.
  *
- * Position: y ≈ 210 (just inside the top safe area, below the platform
- * UI). The original spec put it at y=0 but Instagram/TikTok chrome
- * (status bar + username header) masks that region — the bar would be
- * invisible. Sitting inside the safe area also keeps it away from the
- * caption zone (y=1100-1460).
+ * Position: y ≈ 1895 (very bottom of the 1920-tall comp, 25px above
+ * the bottom edge). Omar asked for "تحت خالص" — the bottom edge.
+ * Instagram/TikTok have action buttons on the bottom-right but the
+ * centered region is free for a thin horizontal bar. Width inset by
+ * 100px on both sides to match the safe-area padding.
  *
  * Width scales from 0 → 100% across the reel's lecture section. Color
  * is the brand accent on a faint white track for contrast.
@@ -24,18 +24,18 @@ export const ProgressBar: React.FC<Props> = ({ totalFrames }) => {
   const progress = totalFrames > 0 ? Math.min(1, frame / totalFrames) : 0;
 
   const TRACK_HEIGHT = 4;
-  const TRACK_Y = 210; // just below the logo bug (y=143, width 170)
+  const TRACK_BOTTOM = 25; // 25px from the bottom edge of the 1920 comp
   const TRACK_INSET_X = 100; // matches safe area padding
 
   return (
     <div
       style={{
         position: 'absolute',
-        top: TRACK_Y,
+        bottom: TRACK_BOTTOM,
         left: TRACK_INSET_X,
         right: TRACK_INSET_X,
         height: TRACK_HEIGHT,
-        backgroundColor: 'rgba(255,255,255,0.12)',
+        backgroundColor: 'rgba(255,255,255,0.18)',
         borderRadius: TRACK_HEIGHT / 2,
         overflow: 'hidden',
         pointerEvents: 'none',
@@ -47,7 +47,7 @@ export const ProgressBar: React.FC<Props> = ({ totalFrames }) => {
           width: `${(progress * 100).toFixed(2)}%`,
           height: '100%',
           backgroundColor: tokens.colors.accent,
-          boxShadow: `0 0 8px rgba(255,181,1,0.5)`,
+          boxShadow: `0 0 10px rgba(255,181,1,0.6)`,
         }}
       />
     </div>

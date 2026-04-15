@@ -1,0 +1,516 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-15",
+  "generated_by": "Claude Code (opus-4-6)",
+
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.mp4.captions.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.16k.wav.energy.json",
+    "metadata": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.1080x1920.mp4.metadata.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.1080x1920.mp4.face_map.json",
+    "speech_rhythm": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.mp4.speech_rhythm.json"
+  },
+
+  "video": {
+    "duration_sec": 212.4,
+    "duration_str": "03:32",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 189
+  },
+
+  "lecturer": {
+    "name": "محمد علاء",
+    "title": "خبير محاسبة مالية",
+    "workshop": "ورشة المحاسب المالي"
+  },
+
+  "summary": "محمد علاء بيشرح إزاي تقيّد فروق الفحص الضريبي اللي بتطلع من مصلحة الضرايب. بياخد مثال عملي: طلعت فروق بـ 809 ألف، وبيبني حساب الأستاذ للمصروف والالتزام خطوة خطوة. لما تسدّد جزء من الالتزام (722 ألف)، الـ 87 ألف المتبقية بتفضل على الميزانية، بينما المصروف كله (809) بيظل في قائمة الدخل. الخلاصة: المصروف اللي اتسجّل ≠ المدفوع كاش، والفرق بيعمل التزام قائم.",
+
+  "topics": [
+    "قيد فروق الفحص الضريبي",
+    "حساب الأستاذ للمصروف",
+    "حساب الأستاذ للالتزام",
+    "سداد جزء من الالتزام",
+    "الفرق بين قائمة الدخل والميزانية",
+    "تسوية المصروف المسجّل مع المدفوع كاش",
+    "مبدأ الاستحقاق في المحاسبة"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "السيناريو — مصلحة الضرايب طلعت فروق",
+      "start_sec": 0.0,
+      "end_sec": 27.0,
+      "start_str": "00:00",
+      "end_str": "00:27",
+      "subtitle_range": [1, 26],
+      "summary": "مصلحة الضرايب فحصت السنة وطلعت فروق فحص بـ 809 ألف. المحاضر بيسأل: هتقيّد ده إزاي؟"
+    },
+    {
+      "id": 2,
+      "title": "بناء حساب الأستاذ للمصروف",
+      "start_sec": 27.0,
+      "end_sec": 52.0,
+      "start_str": "00:27",
+      "end_str": "00:52",
+      "subtitle_range": [27, 47],
+      "summary": "المحاضر بيعمل حساب الأستاذ لمصاريف فروق الفحص — يقيّد 809 مدين، يقفل السنة، يطلع الرصيد 809 مدين."
+    },
+    {
+      "id": 3,
+      "title": "بناء حساب الأستاذ للالتزام",
+      "start_sec": 52.0,
+      "end_sec": 78.0,
+      "start_str": "00:52",
+      "end_str": "01:18",
+      "subtitle_range": [48, 74],
+      "summary": "المحاضر بيعمل حساب الأستاذ لالتزام فروق الفحص — يقيّد 809 دائن، ويطلع الرصيد 809 دائن."
+    },
+    {
+      "id": 4,
+      "title": "سداد جزء من الالتزام",
+      "start_sec": 78.0,
+      "end_sec": 108.0,
+      "start_str": "01:18",
+      "end_str": "01:48",
+      "subtitle_range": [75, 97],
+      "summary": "في نص السنة، يسدّد 722 ألف من الالتزام (من ح/ الالتزام إلى ح/ البنك). الرصيد المتبقي يبقى 87 ألف."
+    },
+    {
+      "id": 5,
+      "title": "الأثر على قائمة الدخل والميزانية",
+      "start_sec": 108.0,
+      "end_sec": 152.0,
+      "start_str": "01:48",
+      "end_str": "02:32",
+      "subtitle_range": [98, 151],
+      "summary": "في ميزان المراجعة: المصروف 809 (داخل المصاريف الإدارية)، والالتزام 87 (داخل الدائنون). الفرق 722 هو الكاش اللي اتدفع فعلياً."
+    },
+    {
+      "id": 6,
+      "title": "التسوية — المصروف مش المدفوع",
+      "start_sec": 152.0,
+      "end_sec": 212.4,
+      "start_str": "02:32",
+      "end_str": "03:32",
+      "subtitle_range": [152, 189],
+      "summary": "خلاصة: المحاضر بيثبت مصروف كامل (809) وبيضع التزام بنفس القيمة، وبيخصم منه اللي اتدفع (722). الفرق اللي لسه التزام قائم هو 87 ألف — مصروف اعترفت بيه بس مدفعتهوش."
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [24, 25, 26],
+      "timestamp_start_sec": 23.7,
+      "timestamp_end_sec": 27.5,
+      "timestamp_start": "00:23",
+      "timestamp_end": "00:27",
+      "content": "قولوا لي القيمة كام؟ 809 ألف — 809 ألف",
+      "importance": "high",
+      "concept_type": "statistic",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "big_metaphor: headline '809 ألف' ضخم، subline 'فروق فحص ضريبي'، footer 'هتقيّده إزاي؟'. scale_bounce entrance. ده الـ anchor للقيمة اللي هتتردد في كل الريل."
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [36, 37, 38, 39, 40, 41, 42],
+      "timestamp_start_sec": 35.5,
+      "timestamp_end_sec": 49.1,
+      "timestamp_start": "00:35",
+      "timestamp_end": "00:49",
+      "content": "اثبات فروق فحص — القيد ده هقول: من [مصروف فروق فحص] مدين 809 / اقفل السنة / يبقى رصيد 809",
+      "importance": "high",
+      "concept_type": "process",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "process_stepper بـ 3 cards: (1) قيد مدين 809 (2) إقفال السنة (3) رصيد 809 مدين — بيوضّح بناء حساب الأستاذ للمصروف خطوة خطوة."
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [66, 67, 68, 69],
+      "timestamp_start_sec": 71.5,
+      "timestamp_end_sec": 76.7,
+      "timestamp_start": "01:11",
+      "timestamp_end": "01:16",
+      "content": "اثبات قيمة فروق فحص — 809 دائن، رصيد 809 دائن — التزام على المنشأة",
+      "importance": "high",
+      "concept_type": "process",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "big_metaphor: headline 'التزام 809' subline 'فروق فحص ضريبي' footer 'دائن'. ده balances الـ scene 1 — لو 809 طلع مصروف يبقى 809 طلع التزام بنفس القيمة."
+    },
+    {
+      "id": 4,
+      "subtitle_ids": [75, 76, 77, 78, 79, 80, 81],
+      "timestamp_start_sec": 80.1,
+      "timestamp_end_sec": 88.8,
+      "timestamp_start": "01:20",
+      "timestamp_end": "01:28",
+      "content": "في نص السنة رحت عامل قيد: من ح/ التزام فروق الفحص إلى ح/ البنك بـ 722 ألف",
+      "importance": "high",
+      "concept_type": "process",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "equation scene: (من) الالتزام = (إلى) البنك، بقيمة 722. يحل محل الـ scene البنائي الطويل بقيد تنفيذي مختصر."
+    },
+    {
+      "id": 5,
+      "subtitle_ids": [95, 96, 97],
+      "timestamp_start_sec": 102.5,
+      "timestamp_end_sec": 106.7,
+      "timestamp_start": "01:42",
+      "timestamp_end": "01:46",
+      "content": "هيطلع الرصيد كام؟ 87 — ادي 87 ألف",
+      "importance": "high",
+      "concept_type": "equation",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "equation scene: 809 - 722 = 87 (متبقي). الـ 87 يطلع بـ is_result + accent glow. ده لحظة revelation رياضية."
+    },
+    {
+      "id": 6,
+      "subtitle_ids": [117, 118, 119, 120, 121, 122, 123, 124, 125, 126],
+      "timestamp_start_sec": 126.8,
+      "timestamp_end_sec": 138.4,
+      "timestamp_start": "02:06",
+      "timestamp_end": "02:18",
+      "content": "مصروف فروق فحص في المصاريف الإدارية بـ 809، والتزام فروق فحص في الميزانية بـ 87",
+      "importance": "high",
+      "concept_type": "comparison",
+      "difficulty": "complex",
+      "difficulty_score": 3,
+      "visual_complexity": "rich",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "comparison_two_paths: العمود الأول 'قائمة الدخل' / steps: [مصروف فروق فحص، 809 ألف، عبء على الإيراد]. العمود التاني 'الميزانية' / steps: [التزام فروق فحص، 87 ألف، ضمن الدائنون]. ده الـ payoff الـ conceptual."
+    },
+    {
+      "id": 7,
+      "subtitle_ids": [181, 182, 183, 184, 185, 186, 187, 188, 189],
+      "timestamp_start_sec": 203.3,
+      "timestamp_end_sec": 212.4,
+      "timestamp_start": "03:23",
+      "timestamp_end": "03:32",
+      "content": "كان علي التزام، ثبته مصروف (809) بالكامل، رجعت سددت جزء (722)، الفرق لسه التزام على نفسي (87)",
+      "importance": "high",
+      "concept_type": "equation",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "equation scene (recap/closing): المصروف 809 - المدفوع 722 = الالتزام المتبقي 87. scale_bounce entrance، result token فيه accent glow. closing moment."
+    },
+    {
+      "id": 8,
+      "subtitle_ids": [17, 18, 19, 20, 21],
+      "timestamp_start_sec": 17.0,
+      "timestamp_end_sec": 22.0,
+      "timestamp_start": "00:17",
+      "timestamp_end": "00:22",
+      "content": "هتعمل التزام بالقيمة دي إلى حساب إيه؟ فروق أو التزامات فروق فحص ضريبي",
+      "importance": "medium",
+      "concept_type": "definition",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "overlay",
+      "animation_description": "keyword_highlight overlay: 'التزامات فروق فحص' — بيعرّف الـ account الجديد اللي هيستخدمه في كل الشرح."
+    }
+  ],
+
+  "keywords": [
+    {
+      "term": "فروق فحص ضريبي",
+      "first_seen_subtitle": 4,
+      "first_seen_sec": 2.3,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "مصلحة الضرايب",
+      "first_seen_subtitle": 1,
+      "first_seen_sec": 0.0,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "809 ألف",
+      "first_seen_subtitle": 25,
+      "first_seen_sec": 24.8,
+      "category": "number",
+      "weight": 5
+    },
+    {
+      "term": "722 ألف",
+      "first_seen_subtitle": 76,
+      "first_seen_sec": 80.9,
+      "category": "number",
+      "weight": 5
+    },
+    {
+      "term": "87 ألف",
+      "first_seen_subtitle": 97,
+      "first_seen_sec": 104.8,
+      "category": "number",
+      "weight": 5
+    },
+    {
+      "term": "حساب الأستاذ",
+      "first_seen_subtitle": 28,
+      "first_seen_sec": 28.4,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "ميزان المراجعة",
+      "first_seen_subtitle": 110,
+      "first_seen_sec": 120.7,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "التزامات فروق فحص",
+      "first_seen_subtitle": 21,
+      "first_seen_sec": 20.1,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "قائمة الدخل",
+      "first_seen_subtitle": 141,
+      "first_seen_sec": 152.3,
+      "category": "concept",
+      "weight": 4
+    }
+  ],
+
+  "emphasis_moments": [
+    {
+      "energy_time_sec": 0.4,
+      "energy": 0.2722,
+      "energy_type": "high_energy",
+      "subtitle_id": 1,
+      "text": "مصلحة الضرايب",
+      "intensity": "high",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "أول جملة في الريل — establishes the problem frame"
+    },
+    {
+      "energy_time_sec": 5.9,
+      "energy": 0.3183,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 7,
+      "text": "وبعت لك جواب",
+      "intensity": "medium",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "الوقفة قبل كشف السيناريو — مناسبة لـ smart zoom"
+    },
+    {
+      "energy_time_sec": 8.9,
+      "energy": 0.2892,
+      "energy_type": "high_energy",
+      "subtitle_id": 10,
+      "text": "فروق فحص ضريبي",
+      "intensity": "high",
+      "suggested_treatment": "keyword_highlight",
+      "rationale": "المصطلح الأساسي — أول ذكر واضح"
+    },
+    {
+      "energy_time_sec": 18.4,
+      "energy": 0.2716,
+      "energy_type": "high_energy",
+      "subtitle_id": 19,
+      "text": "التزام بالقيمة دي",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "rationale": "السؤال الجوهري — الطرف التاني للقيد"
+    },
+    {
+      "energy_time_sec": 25.0,
+      "energy": 0.28,
+      "energy_type": "high_energy",
+      "subtitle_id": 25,
+      "text": "809 ألف",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 1,
+      "rationale": "الرقم الأساسي — anchor للـ big_metaphor scene"
+    },
+    {
+      "energy_time_sec": 38.1,
+      "energy": 0.2037,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 38,
+      "text": "من يبقى مدين",
+      "intensity": "medium",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 2,
+      "rationale": "لحظة بناء القيد — انتقال لمرحلة التطبيق"
+    },
+    {
+      "energy_time_sec": 46.2,
+      "energy": 0.2621,
+      "energy_type": "high_energy",
+      "subtitle_id": 46,
+      "text": "809 ألف",
+      "intensity": "medium",
+      "suggested_treatment": "overlay_only",
+      "rationale": "تكرار قيمة الرصيد — keyword_highlight مناسب"
+    },
+    {
+      "energy_time_sec": 82.0,
+      "energy": 0.25,
+      "energy_type": "high_energy",
+      "subtitle_id": 76,
+      "text": "722 ألف",
+      "intensity": "high",
+      "suggested_treatment": "keyword_highlight",
+      "rationale": "رقم جديد — قيمة السداد الجزئي"
+    },
+    {
+      "energy_time_sec": 103.7,
+      "energy": 0.2326,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 96,
+      "text": "87 ماشي",
+      "intensity": "medium",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 5,
+      "rationale": "revelation moment — المتبقي ظهر"
+    },
+    {
+      "energy_time_sec": 108.9,
+      "energy": 0.2185,
+      "energy_type": "high_energy",
+      "subtitle_id": 99,
+      "text": "اقفل الحساب",
+      "intensity": "medium",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "تأكيد على الإقفال — face conf في الـ window دي ممتاز (83%)"
+    },
+    {
+      "energy_time_sec": 118.2,
+      "energy": 0.2004,
+      "energy_type": "high_energy",
+      "subtitle_id": 108,
+      "text": "بقفل الحسابات",
+      "intensity": "low",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "استمرار الـ zoom المحتمل في الـ window نفسه"
+    },
+    {
+      "energy_time_sec": 135.4,
+      "energy": 0.3203,
+      "energy_type": "high_energy",
+      "subtitle_id": 122,
+      "text": "مش 809",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 6,
+      "rationale": "question moment — الـ lecturer بيسأل ويجيب — anchor للـ comparison scene"
+    },
+    {
+      "energy_time_sec": 157.6,
+      "energy": 0.2255,
+      "energy_type": "high_energy",
+      "subtitle_id": 146,
+      "text": "التزام قائم",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "rationale": "مصطلح محوري للخلاصة"
+    },
+    {
+      "energy_time_sec": 171.6,
+      "energy": 0.2397,
+      "energy_type": "high_energy",
+      "subtitle_id": 152,
+      "text": "محتاج اعرف",
+      "intensity": "medium",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "لحظة استهلال المراجعة — face conf good"
+    },
+    {
+      "energy_time_sec": 189.1,
+      "energy": 0.328,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 167,
+      "text": "87",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 7,
+      "rationale": "revelation moment — في لحظة المراجعة، الـ 87 بيتأكد مرة تانية"
+    },
+    {
+      "energy_time_sec": 201.0,
+      "energy": 0.3517,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 178,
+      "text": "قفلت السنة",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 7,
+      "rationale": "peak energy في الريل كله — لحظة الخلاصة"
+    }
+  ],
+
+  "hook_analysis": {
+    "first_3_seconds_text": "مصلحة الضرايب فحصتك عن كام سنة طلعت لك فروق فحص ضريبي",
+    "hook_strength": "medium",
+    "reason": "البداية بتدخل المشاهد في موقف محدد (فحص ضريبي) بدون ما تبدأ بـ 'النهارده هنتكلم عن' — لكن مش بدأت بسؤال أو رقم صادم. مناسبة للمحتوى المحاسبي المحترف، لكن مش أقوى hook ممكن.",
+    "suggestion": "احتفظ بالبداية زي ما هي — المحاضر بيفتح بسيناريو واقعي. زوّد smart zoom على أول 6s + accent_flash micro event على الفريم 0 لبناء اللحظة.",
+    "alternative_start_sec": null,
+    "visual_suggestions": [
+      "smart_zoom crash_zoom على 0-6s يبدأ على 1.35x",
+      "accent_flash في أول 0.5s",
+      "overlay على 'فروق فحص ضريبي' في 9-13s (أول ذكر واضح للمصطلح)"
+    ]
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": 5,
+    "scene_count_reason": "الريل 212s (3:32) أطول من الـ reels السابقة. 5 scenes × 8s average = 40s (19% من الريل) — مساحة كافية للمحتوى التعليمي بدون ما يطغى على اللقطات.",
+    "top_priority_scenes": [1, 2, 5, 6, 7],
+    "smart_zoom_density": 3,
+    "smart_zoom_reason": "face_map بيعرض جودة متفاوتة جداً: 20-30s + 80-90s noface عالي، بس 0-10s و 100-120s + 170-190s face conf ممتاز. نستخدم 3 zooms في الـ windows الآمنة دي.",
+    "overlays_density": 3,
+    "caption_style": "hormozi",
+    "chapter_dividers": 0,
+    "chapter_dividers_reason": "الريل فيه 6 sections منطقية بس dividers هتقطع التسلسل التعليمي. الـ scenes اللي بنختارها بتخدم الـ section boundaries بشكل أوضح.",
+    "audio_layer_notes": "الـ speech rhythm style='dynamic' — mix of fast (28) + slow_emphasis (65) + normal (87). SFX layer هتبقى مفيدة لأن الـ pace بيتغير. face_map فيه noface زيادة (23.5%) — الـ big zooms محدودة."
+  },
+
+  "stats": {
+    "duration_sec": 212.4,
+    "duration_str": "03:32",
+    "segments": 189,
+    "sections": 6,
+    "key_moments": 8,
+    "high_importance_moments": 7,
+    "medium_importance_moments": 1,
+    "keywords": 9,
+    "emphasis_moments": 16,
+    "avg_energy": 0.098,
+    "face_no_face_percentage": 23.5,
+    "speaking_style": "dynamic",
+    "avg_words_per_sec": 2.68
+  }
+}

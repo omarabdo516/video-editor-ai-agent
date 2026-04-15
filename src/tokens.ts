@@ -177,11 +177,13 @@ export const tokens = {
     timelineConnectorThickness: 6,
   },
   overlays: {
-    // Overlays live in the bottom third near the captions (which sit at
-    // y=1280-1460 with current tokens). Default y puts the overlay just
-    // above the caption text — feedback: keyword overlays must NOT compete
-    // with the lecturer's face at the top of the frame.
-    defaultY: 1140,
+    // Body zone (y=900) is the only safe spot for floating overlays —
+    // above the lower-third (y=1100) and captions (y=1280-1460). The
+    // earlier default y=1140 collided with caption text and Omar
+    // flagged the background card as visually covering the captions.
+    // Fix: move to body zone AND drop the card — text floats with a
+    // strong drop shadow instead of living inside a dark pill.
+    defaultY: 900,
     defaultPaddingX: 36,
     defaultPaddingY: 20,
     defaultRadius: 12,
@@ -191,11 +193,12 @@ export const tokens = {
     slideOffsetPx: 24,
   },
   // ─── Phase 10 Round B — F1: SFX layer ─────────────────────────────
-  // The files live in public/sfx/ and are referenced by staticFile().
-  // Volumes are intentionally quiet — SFX should be felt, not heard.
-  // Toggle `enabled: false` to mute all SFX at once for comparison.
+  // Disabled by default. Omar reviewed the first reel with SFX on
+  // (2026-04-15) and flagged them as distracting even at 12-20%
+  // volumes. The layer stays in the codebase but is off by default;
+  // flip `enabled: true` per-project if desired.
   sfx: {
-    enabled: true,
+    enabled: false,
     globalVolume: 1.0, // multiplier on top of per-event volume
     events: {
       scene_enter:   { file: 'sfx/scene_enter.mp3',   volume: 0.18 },

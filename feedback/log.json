@@ -254,6 +254,69 @@
           "action_taken": "Logged as a next-session priority. Concrete directions to explore: (1) more layered motion per element (scale+rotate+glow+shimmer instead of one effect), (2) varied entrance patterns across the 4 scenes (don't use the same spring config for every element), (3) richer background atmosphere (continuous shimmer, particles, or radial pulse), (4) signature 'Omar beats' — maybe an impact flash on scene-open, or a continuous parallax on scene elements."
         }
       ]
+    },
+    {
+      "project": "محمد علاء - ورشة المحاسب المالي",
+      "date": "2026-04-15",
+      "template_used": null,
+      "brand": "rs",
+      "video_duration_sec": 212.4,
+      "total_duration_sec": 217.4,
+      "pipeline": {
+        "phase_1": "done",
+        "phase_2": "done (faster-whisper + unicode fix to transcribe.py)",
+        "phase_3": "approved in subtitle editor (Find/Replace + Normalize added mid-session)",
+        "phase_5": "auto (Claude Code in-context)",
+        "phase_6": "auto (Claude Code in-context) — first plan using Phase 10 Round A entrance/exit variety + Round B polish layer",
+        "phase_6_5_micro_events": "auto (scripts/generate_micro_events.mjs)",
+        "phase_7": "no changes — rendered on Phase 10 baseline",
+        "phase_8": "full render x2 (first + post-feedback rebuild)"
+      },
+      "counts": {
+        "scenes": 5,
+        "smart_zooms": 3,
+        "big_overlays": 3,
+        "micro_events": 23,
+        "word_pop": 21,
+        "caption_underline": 1,
+        "mini_zoom": 0,
+        "accent_flash": 1,
+        "total_events": 34,
+        "cadence_sec": 6.25
+      },
+      "output_files": {
+        "content_analysis": "src/data/محمد علاء - ورشة المحاسب المالي/content_analysis.json",
+        "animation_plan": "src/data/محمد علاء - ورشة المحاسب المالي/animation_plan.json",
+        "rendered": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي-reel.mp4"
+      },
+      "overall_rating": null,
+      "overall_note": "First reel rendered on full Phase 10 feature set (entrance/exit variety + motion backgrounds + dynamic font + SFX + progress bar). Three fixes applied same session based on Omar first-review feedback — ratings will be collected after the second preview.",
+      "feedback": [
+        {
+          "element_type": "progress_bar_position",
+          "element_name": "ProgressBar y=210 (top safe area)",
+          "timestamp": "throughout reel",
+          "rating": 2,
+          "note": "Omar: \"محتاج ال Progress bar تحت خالص\". Top placement under the logo bug was not where he wanted it — he expected a bottom-edge bar (classic video-player convention).",
+          "action_taken": "Moved ProgressBar to bottom=25 (y≈1895) on the 1920 comp. Kept 4px thickness + 100px horizontal inset, boosted track opacity 0.12→0.18 and glow radius 8→10 so the accent fill is more visible at the bottom edge."
+        },
+        {
+          "element_type": "overlay_background_card",
+          "element_name": "KeywordHighlightOverlay pill background",
+          "timestamp": "00:09, 01:20, 02:36 (3 overlays)",
+          "rating": 1,
+          "note": "Omar: \"الباكجراوند بتاعها مغطي علي التيسكت\". The dark-blue 0.85-opacity pill with gold border was visually dominating the frame AND the default y=1140 was colliding with the caption zone (1280-1460), covering the caption text beneath. Both issues at once — this violated the safe-zones memory (avoid y=1100-1460).",
+          "action_taken": "Two changes: (1) removed the background card entirely from KeywordHighlightOverlay — no more dark pill, no border, no shadow box. Text now floats with a heavy 4-layer text-shadow (black layered + gold glow halo) for legibility over any video frame. (2) Changed tokens.overlays.defaultY from 1140 → 900 (body zone, above lower-third and captions). Updated the animation_plan.json overlays to use y_px=900. The memory feedback_safe_zones now needs its default overlay-y line updated."
+        },
+        {
+          "element_type": "sfx_layer",
+          "element_name": "SFX on scene_enter + keyword_pop + zoom_start + outro",
+          "timestamp": "throughout reel",
+          "rating": 1,
+          "note": "Omar: \"شيل ال SFX خالص حاسسها مزعجة\". Even at 12-20% volumes, the pink/brown noise + sine bursts felt mechanical and distracting on top of the lecturer audio. Every scene/zoom/overlay had a cue, which compounded the noise.",
+          "action_taken": "Flipped tokens.sfx.enabled from true to false globally. The SfxLayer component still works when enabled (can be per-project flipped back on) but the default is OFF. Kept public/sfx/*.mp3 files in the repo for future experiments. Updated the tokens.sfx comment to note the 2026-04-15 feedback."
+        }
+      ]
     }
   ]
 }

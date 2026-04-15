@@ -1,0 +1,552 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-15",
+  "generated_by": "Claude Code (opus-4-6)",
+  "source_video_basename": "محمد علاء - ورشة المحاسب المالي",
+  "video": {
+    "duration_sec": 212.4
+  },
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.mp4.captions.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.16k.wav.energy.json",
+    "metadata": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/Video 1/محمد علاء - ورشة المحاسب المالي.1080x1920.mp4.metadata.json"
+  },
+  "caption_style": "hormozi",
+  "smart_zoom_plan": {
+    "source": "محمد علاء - ورشة المحاسب المالي",
+    "spring": "smooth",
+    "moments": [
+      {
+        "startSec": 0.2,
+        "endSec": 6,
+        "zoomLevel": 1.35,
+        "centerX": 0.37,
+        "centerY": 0.26,
+        "easing": "crash_zoom",
+        "reason": "Hook opening: 'مصلحة الضرايب فحصتك' + 'فروق فحص ضريبي' — high energy + face conf 79% in 0-10s window"
+      },
+      {
+        "startSec": 60,
+        "endSec": 67,
+        "zoomLevel": 1.3,
+        "centerX": 0.29,
+        "centerY": 0.31,
+        "easing": "dolly_in",
+        "reason": "Liability ledger buildup — lecturer explaining second T-account, face conf good, dramatic pause at 59.1s"
+      },
+      {
+        "startSec": 112,
+        "endSec": 120,
+        "zoomLevel": 1.35,
+        "centerX": 0.4,
+        "centerY": 0.27,
+        "easing": "smooth_glide",
+        "reason": "Balance-sheet transition — face conf EXCELLENT (83% in 100-120s), lecturer setting up the closing-balance story. Emphasis at 118.2s."
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "big_metaphor",
+      "start_sec": 23,
+      "end_sec": 31,
+      "duration_sec": 8,
+      "title": "",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "809 ألف",
+          "headline_size": 220,
+          "headline_color": "accent",
+          "headline_weight": 800,
+          "subline": "فروق فحص ضريبي",
+          "subline_size": 56,
+          "subline_color": "white",
+          "subline_weight": 700,
+          "subline_delay_frames": 18,
+          "footer_label": "هتقيّده إزاي؟",
+          "footer_size": 38,
+          "footer_color": "white",
+          "footer_opacity": 0.85,
+          "footer_delay_frames": 38
+        }
+      ]
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "scene_type": "process_stepper",
+      "start_sec": 45,
+      "end_sec": 55,
+      "duration_sec": 10,
+      "title": "اثبات القيد",
+      "title_size": 72,
+      "title_weight": 700,
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "step_card",
+          "step": 1,
+          "label": "من ح/ مصاريف فروق الفحص",
+          "status": "next",
+          "status_badge": "مدين 809"
+        },
+        {
+          "type": "step_card",
+          "step": 2,
+          "label": "إقفال نهاية السنة",
+          "status": "next",
+          "status_badge": "بدون حركة"
+        },
+        {
+          "type": "step_card",
+          "step": 3,
+          "label": "رصيد حـ/ المصروف",
+          "status": "current",
+          "status_badge": "809 مدين"
+        }
+      ]
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "scene_type": "equation",
+      "start_sec": 100,
+      "end_sec": 108,
+      "duration_sec": 8,
+      "title": "المتبقي بعد السداد",
+      "title_size": 58,
+      "title_weight": 700,
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "equation",
+          "terms": [
+            {
+              "text": "809",
+              "label": "مصروف"
+            },
+            {
+              "text": "−"
+            },
+            {
+              "text": "722",
+              "label": "مدفوع"
+            },
+            {
+              "text": "="
+            },
+            {
+              "text": "87",
+              "label": "متبقي",
+              "is_result": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "scene_type": "comparison_two_paths",
+      "start_sec": 128,
+      "end_sec": 138,
+      "duration_sec": 10,
+      "title": "وبيظهروا فين؟",
+      "title_size": 64,
+      "title_weight": 700,
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "comparison_two_paths",
+          "left": {
+            "label": "الميزانية",
+            "icon": "check",
+            "steps": [
+              "التزام فروق فحص",
+              "87 ألف",
+              "ضمن الدائنون"
+            ],
+            "highlight": "87 ألف",
+            "highlight_color": "accent"
+          },
+          "right": {
+            "label": "قائمة الدخل",
+            "icon": "check",
+            "steps": [
+              "مصروف فروق فحص",
+              "809 ألف",
+              "عبء على الإيراد"
+            ],
+            "highlight": "809 ألف",
+            "highlight_color": "accent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene_5",
+      "type": "full_screen_scene",
+      "scene_type": "equation",
+      "start_sec": 195,
+      "end_sec": 207,
+      "duration_sec": 12,
+      "entrance": "scale_bounce",
+      "exit": "scale_out",
+      "title": "الخلاصة",
+      "title_size": 64,
+      "title_weight": 700,
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "elements": [
+        {
+          "type": "equation",
+          "terms": [
+            {
+              "text": "809",
+              "label": "مصروف"
+            },
+            {
+              "text": "−"
+            },
+            {
+              "text": "722",
+              "label": "مدفوع كاش"
+            },
+            {
+              "text": "="
+            },
+            {
+              "text": "87",
+              "label": "التزام قائم",
+              "is_result": true
+            }
+          ],
+          "footer": "المصروف المسجّل ≠ المدفوع كاش"
+        }
+      ]
+    }
+  ],
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 9,
+      "end_sec": 13,
+      "keyword": "فروق فحص ضريبي",
+      "primary_text": "فروق فحص ضريبي",
+      "primary_color": "accent",
+      "primary_size": 72,
+      "primary_weight": 800,
+      "secondary_text": "التعريف الأساسي",
+      "secondary_size": 32,
+      "y_px": 900
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 80,
+      "end_sec": 84,
+      "keyword": "722 ألف",
+      "primary_text": "722 ألف",
+      "primary_color": "accent",
+      "primary_size": 84,
+      "primary_weight": 800,
+      "secondary_text": "قيمة السداد الجزئي",
+      "secondary_size": 30,
+      "y_px": 900
+    },
+    {
+      "id": "overlay_3",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 156,
+      "end_sec": 160,
+      "keyword": "التزام قائم",
+      "primary_text": "التزام قائم",
+      "primary_color": "accent",
+      "primary_size": 72,
+      "primary_weight": 800,
+      "secondary_text": "على الميزانية",
+      "secondary_size": 32,
+      "y_px": 900
+    }
+  ],
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "word_pop",
+      "start_sec": 18.25,
+      "end_sec": 19,
+      "word": "هتعمل",
+      "anchor_subtitle_id": 19,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_2",
+      "type": "word_pop",
+      "start_sec": 34.4,
+      "end_sec": 35.15,
+      "word": "فحص",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_3",
+      "type": "caption_underline",
+      "start_sec": 37.9,
+      "end_sec": 39.1,
+      "anchor_subtitle_id": 38,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_4",
+      "type": "word_pop",
+      "start_sec": 41.4,
+      "end_sec": 42.15,
+      "word": "بكام؟",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_5",
+      "type": "word_pop",
+      "start_sec": 70.1,
+      "end_sec": 70.85,
+      "word": "فروق",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_6",
+      "type": "word_pop",
+      "start_sec": 73.35,
+      "end_sec": 74.1,
+      "word": "مدين",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_7",
+      "type": "word_pop",
+      "start_sec": 76.6,
+      "end_sec": 77.35,
+      "word": "حلو",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_8",
+      "type": "word_pop",
+      "start_sec": 87.05,
+      "end_sec": 87.8,
+      "word": "البنك",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_9",
+      "type": "word_pop",
+      "start_sec": 90.25,
+      "end_sec": 91,
+      "word": "الفحص",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_10",
+      "type": "word_pop",
+      "start_sec": 93.45,
+      "end_sec": 94.2,
+      "word": "جزء",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_11",
+      "type": "word_pop",
+      "start_sec": 96.65,
+      "end_sec": 97.4,
+      "word": "722",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_12",
+      "type": "word_pop",
+      "start_sec": 122.52,
+      "end_sec": 123.27,
+      "word": "نفترض",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_13",
+      "type": "word_pop",
+      "start_sec": 141.45,
+      "end_sec": 142.2,
+      "word": "كاش",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_14",
+      "type": "word_pop",
+      "start_sec": 145.05,
+      "end_sec": 145.8,
+      "word": "سطر",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_15",
+      "type": "word_pop",
+      "start_sec": 148.65,
+      "end_sec": 149.4,
+      "word": "ضمن",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_16",
+      "type": "word_pop",
+      "start_sec": 152.25,
+      "end_sec": 153,
+      "word": "عبئ",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_17",
+      "type": "word_pop",
+      "start_sec": 163.72,
+      "end_sec": 164.47,
+      "word": "معي؟",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_18",
+      "type": "word_pop",
+      "start_sec": 171.45,
+      "end_sec": 172.2,
+      "word": "",
+      "anchor_subtitle_id": 152,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_19",
+      "type": "word_pop",
+      "start_sec": 174.95,
+      "end_sec": 175.7,
+      "word": "الضريبيي؟",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_20",
+      "type": "word_pop",
+      "start_sec": 178.45,
+      "end_sec": 179.2,
+      "word": "البساطة",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_21",
+      "type": "word_pop",
+      "start_sec": 181.95,
+      "end_sec": 182.7,
+      "word": "ب809",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_22",
+      "type": "word_pop",
+      "start_sec": 185.45,
+      "end_sec": 186.2,
+      "word": "لفروق",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_23",
+      "type": "accent_flash",
+      "start_sec": 189,
+      "end_sec": 189.6,
+      "side": "right",
+      "anchor_subtitle_id": 167,
+      "intensity": "high",
+      "source": "emphasis"
+    }
+  ],
+  "chapter_dividers": [],
+  "validation_notes": {
+    "scene_count": 5,
+    "scene_spacing_min_sec": 20,
+    "scene_spacing_actual": [
+      22,
+      45,
+      20,
+      57
+    ],
+    "scene_total_duration_sec": 48,
+    "scene_coverage_pct": 22.6,
+    "zoom_count": 3,
+    "zoom_spacing_actual": [
+      54,
+      45
+    ],
+    "overlay_count": 3,
+    "overlay_spacing_actual": [
+      67,
+      71
+    ],
+    "notes": "Plan respects all Phase 10 validation rules. Face quality prevented a 4th zoom in the 120-170s window. Scene 2 (process_stepper) placed at 45-55s overlaps slightly with expense-ledger-buildup narration (27-52s) so the visual and verbal beats reinforce each other."
+  },
+  "micro_events_generated_at": "2026-04-15",
+  "micro_events_stats": {
+    "total": 23,
+    "cadence_sec": 9.23,
+    "by_type": {
+      "word_pop": 21,
+      "caption_underline": 1,
+      "accent_flash": 1
+    },
+    "by_source": {
+      "emphasis": 4,
+      "gap_fill": 19
+    }
+  }
+}

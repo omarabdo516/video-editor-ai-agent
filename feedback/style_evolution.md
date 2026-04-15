@@ -32,10 +32,11 @@
 - **السبب:** "محتاج انيميشنز احسن" — الـ first-pass implementations كانت basic جداً (fade + slide). Reels محتاجة motion أغنى عشان retention.
 - **المصدر:** "محمد ريان - ورشة الشامل" (Apr 2026)
 
-### Overlays — near caption zone (y ≈ 1140)
-- **القاعدة:** Keyword overlays بتعيش في الـ bottom third قريب من الكابشنز، مش في top of screen.
-- **السبب:** Omar قال "خليها تحت أو فوق مكان الكابشنز أفضل" لما الـ overlays كانت عند y=280 (top). الرأي: الوش في الـ upper third، والكابشنز في bottom، وoverlays at top بتنافس الوش. خليها في نفس zone الكابشنز.
-- **المصدر:** "محمد ريان - ورشة الشامل" (Apr 2026)
+### Overlays — body zone (y ≈ 900), no background card
+- **القاعدة (المحدّثة 2026-04-15):** Keyword overlays بتعيش في الـ body zone عند y=900 (فوق الـ lower-third/captions). **مفيش background pill** — الـ text بيعوم مباشرة مع layered drop shadow قوي (4 طبقات: 3 سوداء + 1 gold halo).
+- **السبب:** اتجربت قيمة y=1140 في ريل "محمد علاء - ورشة المحاسب المالي" — Omar قال "الباكجراوند بتاعها مغطي علي التيسكت": الـ dark pill card (rgba 0.85) كان بيغطي على الكابشنز اللي تحته، وy=1140 بيتداخل مع caption zone (1280-1460). الحل: نقل لـ y=900 (body zone) + إزالة الـ card كلياً.
+- **المصدر (تاريخياً):** "محمد ريان - ورشة الشامل" (Apr 2026) — كانت y=1140 مع pill
+- **المصدر (المحدث):** "محمد علاء - ورشة المحاسب المالي" (2026-04-15) — y=900 بلا card
 
 ### In-caption word boost (retention rhythm pattern)
 - **القاعدة:** لـ Tier 2 retention beats، ما تعملش floating element. بدل كده، boost الكلمة الـ active حالياً في الـ WordCaption نفسها: scale 1.28 + rotate -2° + glow أقوى + شدة لمدة ~0.45s.
@@ -161,6 +162,43 @@
 ### 1. محمد ريان - ورشة الشامل (Apr 2026) — 4/5
 - **Highlights:** first full pipeline run (Phase 1 → 9). Built 8 scene/overlay/micro components from scratch. Validated the 3-tier event system. Cadence 4.86s.
 - **Takeaways:** Phase 7 iteration في الـ session الجاية — scenes polish + caption styles جديدة.
+
+### 2. محمد علاء - ورشة المحاسب المالي (Apr 15, 2026) — TBD
+- **Highlights:** first reel on the full Phase 10 feature set (entrance/exit variety + motion backgrounds + dynamic font + progress bar + SFX). 5 scenes, 3 zooms, 3 overlays, 23 micro events. Content: tax-examination journal entries (809k → 722k paid → 87k remaining liability).
+- **First-pass issues flagged:** (1) progress bar at y=210 felt wrong — Omar wanted bottom edge. (2) overlay pill background covered caption text underneath. (3) SFX distracting.
+- **Fixes applied same session:** progress bar → bottom=25, overlays → floating text at y=900 without card, SFX → disabled by default.
+
+---
+
+## 📐 القيم المعدّلة
+
+### tokens.overlays.defaultY (1140 → 900)
+- **القيمة القديمة:** 1140 (near caption zone)
+- **القيمة الجديدة:** 900 (body zone, above lower-third)
+- **السبب:** Omar: "الباكجراوند بتاعها مغطي علي التيسكت" — y=1140 بيتداخل مع caption zone 1280-1460
+- **التاريخ:** 2026-04-15
+- **المصدر:** "محمد علاء - ورشة المحاسب المالي"
+
+### tokens.sfx.enabled (true → false)
+- **القيمة القديمة:** true
+- **القيمة الجديدة:** false (default off, per-project opt-in)
+- **السبب:** Omar: "شيل ال SFX خالص حاسسها مزعجة" — حتى على 12-20% volumes، noise + sine bursts حسها ميكانيكية وبتشتت
+- **التاريخ:** 2026-04-15
+- **المصدر:** "محمد علاء - ورشة المحاسب المالي"
+
+### ProgressBar position (top safe area → bottom edge)
+- **القيمة القديمة:** `top: 210` (تحت الـ logo bug)
+- **القيمة الجديدة:** `bottom: 25` (25px من أسفل الـ 1920 comp)
+- **السبب:** Omar: "محتاج ال Progress bar تحت خالص" — convention الـ video players هي الـ bottom bar، مش top
+- **التاريخ:** 2026-04-15
+- **المصدر:** "محمد علاء - ورشة المحاسب المالي"
+
+### KeywordHighlightOverlay — removed background card
+- **القديم:** `background: rgba(13,31,60,0.85)` + `backdropFilter: blur(10px)` + `border: 2px solid rgba(255,181,1,0.35)` + heavy boxShadow
+- **الجديد:** مفيش background/border/shadow — الـ text بيعوم مباشرة مع 4-layer textShadow (3 black + 1 gold halo)
+- **السبب:** نفس feedback الـ overlay background — الـ pill كان بيغطي على اللي تحته
+- **التاريخ:** 2026-04-15
+- **المصدر:** "محمد علاء - ورشة المحاسب المالي"
 
 ---
 
