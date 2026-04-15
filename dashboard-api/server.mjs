@@ -13,14 +13,24 @@ import { ratingRouter } from './routes/rating.mjs';
 import { batchRouter } from './routes/batch.mjs';
 import { loadState } from './lib/state.mjs';
 import { listJobs } from './lib/jobs.mjs';
+import { shutdownEditor } from './lib/editorSession.mjs';
 
 const PORT = Number(process.env.DASHBOARD_PORT) || 7778;
 
 const app = express();
 
+// Accept the full 5174-5179 range so Vite's fallback-port behavior
+// (when 5174 is already taken by an orphan dev server) doesn't
+// break the Dashboard UI's fetch calls.
 app.use(
   cors({
-    origin: ['http://localhost:5174', 'http://127.0.0.1:5174'],
+    origin: (origin, cb) => {
+      if (!origin) return cb(null, true);
+      if (/^https?:\/\/(localhost|127\.0\.0\.1):517[0-9]$/.test(origin)) {
+        return cb(null, true);
+      }
+      cb(null, false);
+    },
   }),
 );
 app.use(express.json({ limit: '5mb' }));
@@ -46,8 +56,15 @@ const server = app.listen(PORT, '127.0.0.1', () => {
   console.log(`Dashboard API on http://localhost:${PORT}`);
 });
 
-const shutdown = (signal) => {
+const shutdown = async (signal) => {
   console.log(`\n${signal} received — closing server`);
+  // Tear down any managed subtitle editor subprocess first so we don't
+  // leave orphans holding ports 7777/5173.
+  try {
+    await shutdownEditor();
+  } catch (e) {
+    console.warn(`[shutdown] editor teardown failed: ${e.message}`);
+  }
   server.close(() => process.exit(0));
   // Fallback: force-exit after 5s if something hangs.
   setTimeout(() => process.exit(0), 5000).unref();

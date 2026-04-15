@@ -55,6 +55,12 @@ export interface EditHandoffResponse {
   editorUrl: string;
   scaledReady: boolean;
   captionsReady: boolean;
+  /** True when the Vite dev server responded to a TCP probe before the API returned. */
+  ready?: boolean;
+  /** True when the API reused an already-running editor session (same video). */
+  reused?: boolean;
+  filePort?: number;
+  editorPort?: number;
   hintCommand: string;
   note: string;
 }

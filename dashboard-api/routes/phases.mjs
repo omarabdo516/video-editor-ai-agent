@@ -12,6 +12,7 @@ import {
   videoBasename,
 } from '../lib/paths.mjs';
 import { buildHandoffMessage } from '../lib/handoff.mjs';
+import { startEditor } from '../lib/editorSession.mjs';
 
 export const phasesRouter = Router();
 
@@ -58,15 +59,21 @@ phasesRouter.post('/:id/render', (req, res) =>
   startPhase(req.params.id, 'render', res),
 );
 
-// ─── /edit — returns an editor URL, no job spawned ────────────────────────
+// ─── /edit — spawns rs-reels.mjs edit and returns a ready-to-open URL ───
 //
-// The subtitle editor needs two things running separately:
+// The subtitle editor needs two things running at once:
 //   1. rs-reels file server on :7777 (serves video + captions + save hooks)
 //   2. Vite dev server on :5173 (the UI itself)
-// Starting either of those from the dashboard is out of scope for session 2,
-// so this route just returns the same URL shape rs-reels would print, plus
-// a hint command. Session 4 will tighten the handoff.
-phasesRouter.post('/:id/edit', (req, res) => {
+//
+// Both are started by `node rs-reels.mjs edit <video>`. This route spawns
+// that command as a managed singleton subprocess (via lib/editorSession)
+// and waits for port 5173 to accept connections before returning. The
+// frontend can then open the URL without hitting a "site can't be reached"
+// error.
+//
+// Because both ports are fixed, only ONE editor session is alive at a
+// time. Switching to a different video tears the old one down first.
+phasesRouter.post('/:id/edit', async (req, res) => {
   const video = getVideo(req.params.id);
   if (!video) return res.status(404).json({ error: 'video not found' });
 
@@ -77,6 +84,7 @@ phasesRouter.post('/:id/edit', (req, res) => {
   const scaledReady = existsSync(scaled);
   const captionsReady = existsSync(caps);
 
+  // Build the same URL shape rs-reels.mjs edit prints internally.
   const params = new URLSearchParams({
     video: 'http://127.0.0.1:7777/video.mp4',
     name: baseName,
@@ -87,17 +95,30 @@ phasesRouter.post('/:id/edit', (req, res) => {
   }
   const editorUrl = `http://localhost:5173/?${params.toString()}`;
 
-  res.json({
-    editorUrl,
-    scaledReady,
-    captionsReady,
-    // Hint the UI can surface to Omar until session 4 automates the handoff.
-    hintCommand: `node rs-reels.mjs edit "${video.path}"`,
-    note:
-      'The file server (:7777) + Vite dev server (:5173) must be running. ' +
-      'Run the hintCommand in a separate terminal, then open editorUrl.',
-  });
+  try {
+    const session = await startEditor({
+      videoId: video.id,
+      videoPath: video.path,
+      editorUrl,
+    });
+    res.json({
+      editorUrl: session.editorUrl,
+      scaledReady,
+      captionsReady,
+      ready: session.ready,
+      reused: session.reused,
+      filePort: session.filePort,
+      editorPort: session.editorPort,
+      hintCommand: `node rs-reels.mjs edit "${video.path}"`,
+      note: session.ready
+        ? 'Editor is ready — open editorUrl in a new tab.'
+        : 'Editor did not become ready within 30s. Check the API log or run hintCommand in a terminal.',
+    });
+  } catch (e) {
+    res.status(500).json({ error: `failed to start editor: ${e.message}` });
+  }
 });
+
 
 // ─── /handoff — Claude Phase 5/6 handoff message (no job spawned) ─────────
 //

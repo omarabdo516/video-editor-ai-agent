@@ -93,14 +93,19 @@ export function VideoCard({ video }: Props) {
 
   const handleEdit = async () => {
     try {
+      // The API now spawns `rs-reels.mjs edit` as a managed subprocess
+      // and waits for port 5173 to become reachable. That takes a few
+      // seconds on first call — the UI should indicate "starting...".
       const handoff = await getEditHandoff(video.id);
-      window.open(handoff.editorUrl, '_blank', 'noopener,noreferrer');
-      if (!handoff.captionsReady || !handoff.scaledReady) {
+      if (!handoff.ready) {
         alert(
-          'The editor URL was opened, but the file server (:7777) + Vite (:5173) must be running.\n\n' +
-            `Run in a separate terminal:\n${handoff.hintCommand}`,
+          'Editor did not become ready within 30s.\n\n' +
+            'Check the API log, or run this in a separate terminal:\n' +
+            handoff.hintCommand,
         );
+        return;
       }
+      window.open(handoff.editorUrl, '_blank', 'noopener,noreferrer');
     } catch (e) {
       alert(`Edit handoff failed: ${e instanceof Error ? e.message : String(e)}`);
     }
