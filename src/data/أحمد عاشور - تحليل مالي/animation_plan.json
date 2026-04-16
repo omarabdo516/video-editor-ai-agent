@@ -1,0 +1,423 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-16",
+  "generated_by": "Claude Code (opus-4-6)",
+  "source_video_basename": "أحمد عاشور - تحليل مالي",
+  "video": {
+    "duration_sec": 141.5
+  },
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.mp4.captions.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.16k.wav.energy.json",
+    "metadata": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.1080x1920.mp4.metadata.json"
+  },
+  "caption_style": "hormozi",
+  "smart_zoom_plan": {
+    "source": "أحمد عاشور - تحليل مالي",
+    "spring": "smooth",
+    "moments": [
+      {
+        "startSec": 67,
+        "endSec": 70,
+        "zoomLevel": 1.35,
+        "centerX": 0.33,
+        "centerY": 0.3,
+        "easing": "dolly_in",
+        "reason": "Best face-conf window in entire reel (0.59). Lecturer setting up numeric example 'حضرتك كان عندك مخزون اجمالي من عدد الوحدات كام' — the intimacy moment before the 500/200 reveal."
+      },
+      {
+        "startSec": 135.5,
+        "endSec": 138.5,
+        "zoomLevel": 1.3,
+        "centerX": 0.37,
+        "centerY": 0.29,
+        "easing": "smooth_glide",
+        "reason": "Second viable window (conf 0.53). Closing commentary 'كلمة اداري عشان الناس ما بتتلخبطش' — bring the viewer into the final clarification."
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "big_metaphor",
+      "start_sec": 20,
+      "end_sec": 26,
+      "duration_sec": 6,
+      "entrance": "scale_bounce",
+      "exit": "fade",
+      "title": "",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "خدعة",
+          "headline_size": 260,
+          "headline_color": "accent",
+          "headline_weight": 800,
+          "subline": "لفة المخزون الوهمية",
+          "subline_size": 56,
+          "subline_color": "white",
+          "subline_weight": 700,
+          "subline_delay_frames": 16,
+          "footer_label": "مش في صالحك",
+          "footer_size": 40,
+          "footer_color": "white",
+          "footer_opacity": 0.85,
+          "footer_delay_frames": 32
+        }
+      ]
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "scene_type": "big_metaphor",
+      "start_sec": 43,
+      "end_sec": 50,
+      "duration_sec": 7,
+      "entrance": "blur_reveal",
+      "exit": "fade",
+      "title": "",
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "STR",
+          "headline_size": 280,
+          "headline_color": "accent",
+          "headline_weight": 800,
+          "subline": "Sales Through Rate",
+          "subline_size": 56,
+          "subline_color": "white",
+          "subline_weight": 700,
+          "subline_delay_frames": 18,
+          "footer_label": "نسبة المخزون اللي اتباع",
+          "footer_size": 38,
+          "footer_color": "white",
+          "footer_opacity": 0.85,
+          "footer_delay_frames": 36
+        }
+      ]
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "scene_type": "big_metaphor",
+      "start_sec": 78,
+      "end_sec": 85,
+      "duration_sec": 7,
+      "entrance": "scale_bounce",
+      "exit": "scale_out",
+      "title": "",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "20%",
+          "headline_size": 320,
+          "headline_color": "accent",
+          "headline_weight": 800,
+          "subline": "بتبيع في المرة الواحدة",
+          "subline_size": 54,
+          "subline_color": "white",
+          "subline_weight": 700,
+          "subline_delay_frames": 18,
+          "footer_label": "من الـ 500 وحدة",
+          "footer_size": 38,
+          "footer_color": "white",
+          "footer_opacity": 0.85,
+          "footer_delay_frames": 36
+        }
+      ]
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "scene_type": "comparison_two_paths",
+      "start_sec": 96,
+      "end_sec": 103,
+      "duration_sec": 7,
+      "entrance": "stagger_cascade",
+      "exit": "fade",
+      "title": "الادعاء × الواقع",
+      "title_size": 60,
+      "title_weight": 700,
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "elements": [
+        {
+          "type": "comparison_two_paths",
+          "left": {
+            "label": "الواقع",
+            "icon": "x",
+            "steps": [
+              "بعت 20% فقط",
+              "لفة واحدة",
+              "مصيبة"
+            ],
+            "highlight": "20%",
+            "highlight_color": "accent"
+          },
+          "right": {
+            "label": "الادعاء",
+            "icon": "check",
+            "steps": [
+              "4 لفات × 20%",
+              "يعني 80% اتباع",
+              "مفروض"
+            ],
+            "highlight": "80%",
+            "highlight_color": "accent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene_5",
+      "type": "full_screen_scene",
+      "scene_type": "big_metaphor",
+      "start_sec": 119,
+      "end_sec": 126,
+      "duration_sec": 7,
+      "entrance": "scale_bounce",
+      "exit": "scale_out",
+      "title": "",
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "اديني المعلومة صح",
+          "headline_size": 96,
+          "headline_color": "accent",
+          "headline_weight": 800,
+          "subline": "انت محلل مالي",
+          "subline_size": 56,
+          "subline_color": "white",
+          "subline_weight": 700,
+          "subline_delay_frames": 18,
+          "footer_label": "مش تحفظ معادلات",
+          "footer_size": 40,
+          "footer_color": "white",
+          "footer_opacity": 0.85,
+          "footer_delay_frames": 36
+        }
+      ]
+    }
+  ],
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 5,
+      "end_sec": 9,
+      "keyword": "رأس المال العامل",
+      "primary_text": "رأس المال العامل",
+      "primary_color": "accent",
+      "primary_size": 68,
+      "primary_weight": 800,
+      "secondary_text": "الفلوس اللي بتشتغل",
+      "secondary_size": 30,
+      "y_px": 900
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 30,
+      "end_sec": 34,
+      "keyword": "STR",
+      "primary_text": "STR",
+      "primary_color": "accent",
+      "primary_size": 96,
+      "primary_weight": 800,
+      "secondary_text": "أداة إدارية",
+      "secondary_size": 32,
+      "y_px": 900
+    },
+    {
+      "id": "overlay_3",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 108,
+      "end_sec": 112,
+      "keyword": "معدل دوران المخزون بلح",
+      "primary_text": "معدل دوران المخزون بلح",
+      "primary_color": "accent",
+      "primary_size": 56,
+      "primary_weight": 800,
+      "secondary_text": "التشخيص",
+      "secondary_size": 30,
+      "y_px": 900
+    }
+  ],
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "word_pop",
+      "start_sec": 0.01,
+      "end_sec": 0.76,
+      "word": "دي",
+      "anchor_subtitle_id": 1,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_2",
+      "type": "word_pop",
+      "start_sec": 12.03,
+      "end_sec": 12.78,
+      "word": "مخزونك",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_3",
+      "type": "caption_underline",
+      "start_sec": 15.16,
+      "end_sec": 16.36,
+      "anchor_subtitle_id": 11,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_4",
+      "type": "word_pop",
+      "start_sec": 36.91,
+      "end_sec": 37.66,
+      "word": "الكيبي",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_5",
+      "type": "word_pop",
+      "start_sec": 39.98,
+      "end_sec": 40.73,
+      "word": "البيعي",
+      "anchor_subtitle_id": 28,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_6",
+      "type": "word_pop",
+      "start_sec": 52.52,
+      "end_sec": 53.27,
+      "word": "تباعت",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_7",
+      "type": "word_pop",
+      "start_sec": 60.86,
+      "end_sec": 61.61,
+      "word": "Inventory",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_8",
+      "type": "word_pop",
+      "start_sec": 72.52,
+      "end_sec": 73.27,
+      "word": "منه",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_9",
+      "type": "caption_underline",
+      "start_sec": 86.07,
+      "end_sec": 87.27,
+      "anchor_subtitle_id": 57,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_10",
+      "type": "word_pop",
+      "start_sec": 89.36,
+      "end_sec": 90.11,
+      "word": "بتقولي",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_11",
+      "type": "word_pop",
+      "start_sec": 92.61,
+      "end_sec": 93.36,
+      "word": "المباع",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_12",
+      "type": "word_pop",
+      "start_sec": 115.35,
+      "end_sec": 116.1,
+      "word": "انت",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_13",
+      "type": "word_pop",
+      "start_sec": 130.51,
+      "end_sec": 131.26,
+      "word": "البيع",
+      "anchor_subtitle_id": 91,
+      "intensity": "medium",
+      "source": "emphasis"
+    }
+  ],
+  "chapter_dividers": [],
+  "validation_notes": {
+    "scene_count": 5,
+    "scene_spacing_min_sec": 15,
+    "scene_spacing_actual": [
+      23,
+      35,
+      18,
+      23
+    ],
+    "scene_total_duration_sec": 34,
+    "scene_coverage_pct": 24,
+    "zoom_count": 2,
+    "zoom_spacing_actual": [
+      68.5
+    ],
+    "overlay_count": 3,
+    "overlay_spacing_actual": [
+      25,
+      78
+    ],
+    "notes": "Face map kept big zooms minimal (77.2% no-face). Plan deliberately places each scene at the lecturer's own emotional punchline — scene 3 uses big_metaphor instead of equation because the lecturer's 200/500=20% math is not arithmetically tight and we don't want the visual to assert a ratio that doesn't hold on screen. Comparison scene uses ✗ (واقع) vs ✓ (ادعاء) framing so the gold accent lands on the shocking Actual side."
+  },
+  "micro_events_generated_at": "2026-04-15",
+  "micro_events_stats": {
+    "total": 13,
+    "cadence_sec": 10.88,
+    "by_type": {
+      "word_pop": 11,
+      "caption_underline": 2
+    },
+    "by_source": {
+      "emphasis": 5,
+      "gap_fill": 8
+    }
+  }
+}

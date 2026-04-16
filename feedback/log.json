@@ -317,6 +317,27 @@
           "action_taken": "Flipped tokens.sfx.enabled from true to false globally. The SfxLayer component still works when enabled (can be per-project flipped back on) but the default is OFF. Kept public/sfx/*.mp3 files in the repo for future experiments. Updated the tokens.sfx comment to note the 2026-04-15 feedback."
         }
       ]
+    },
+    {
+      "project": "أحمد عاشور - تحليل مالي",
+      "date": "2026-04-15",
+      "brand": "rs",
+      "source": "dashboard",
+      "video_duration_sec": 142.433333,
+      "counts": {
+        "scenes": 5,
+        "smart_zooms": 2,
+        "big_overlays": 3,
+        "micro_events": 13,
+        "word_pop": 11,
+        "caption_underline": 2,
+        "mini_zoom": 0,
+        "accent_flash": 0,
+        "total_events": 18
+      },
+      "overall_rating": 3,
+      "overall_note": "حاسس ان الموضوع بقي مكرر ومحتاج اضيف Overlays أكتر بتنوع أكتر في الفيديوهات الجاية",
+      "feedback": []
     }
   ]
 }

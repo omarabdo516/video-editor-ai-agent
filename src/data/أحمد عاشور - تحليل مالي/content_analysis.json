@@ -1,0 +1,549 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-16",
+  "generated_by": "Claude Code (opus-4-6)",
+
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.mp4.captions.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.16k.wav.energy.json",
+    "metadata": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.1080x1920.mp4.metadata.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.1080x1920.mp4.face_map.json",
+    "speech_rhythm": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد عاشور - تحليل مالي.mp4.speech_rhythm.json"
+  },
+
+  "video": {
+    "duration_sec": 141.5,
+    "duration_str": "02:22",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 96
+  },
+
+  "lecturer": {
+    "name": "أحمد عاشور",
+    "title": "محلل مالي",
+    "workshop": "ورشة التحليل المالي"
+  },
+
+  "summary": "أحمد عاشور بيعلّم إزاي ما تتخدعش بالأرقام الإجمالية للمبيعات. بيفرّق بين \"الربح اللي حضرتك بتقوله\" و\"لفة المخزون الحقيقية\". بيقدّم مفهوم الـ STR (Sales Through Rate) كأداة تقيس نسبة المخزون اللي فعلاً اتباع، وبيطبّقها على مثال: مخزون أولي 500، اللي اتباع منه 200 فقط — يعني 20%، مش الـ 80% اللي المفترض لو كنت فعلاً بتلف المخزون 4 مرات في السنة. الرسالة الختامية: شغلك كمحلل مالي مش حفظ معادلات — شغلك توصّل الـ managerial insight اللي بيكشف لإدارة إن معدل الدوران الفعلي \"بلح\".",
+
+  "topics": [
+    "رأس المال العامل والأرباح الحقيقية",
+    "الفرق بين إجمالي الأرباح ولفة المخزون",
+    "Sales Through Rate (STR) كمؤشر إداري",
+    "معادلة STR = Units Sold / Initial Inventory",
+    "تفسير لفة المخزون الضعيفة",
+    "دور المحلل المالي في إعطاء Managerial Information"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "الهوك — رأس المال العامل",
+      "start_sec": 0.0,
+      "end_sec": 4.02,
+      "start_str": "00:00",
+      "end_str": "00:04",
+      "subtitle_range": [1, 3],
+      "summary": "يفتتح بسؤال: رأس مالك العامل اللي بتدوّره — ده كام فعلاً؟ بيأسّس الـ frame إن في فرق بين الأرقام اللي على الورق والأرقام اللي بتشتغل."
+    },
+    {
+      "id": 2,
+      "title": "المثال — ربح 20% وفلوس شغالة",
+      "start_sec": 4.02,
+      "end_sec": 20.52,
+      "start_str": "00:04",
+      "end_str": "00:20",
+      "subtitle_range": [4, 15],
+      "summary": "مثال رقمي: رأس مال بالمليون، ربح 20% = 200 ألف، كسبت 400؟ يبقى لفيت المخزون مرتين. بيبني المتوقع قبل ما يكسره."
+    },
+    {
+      "id": 3,
+      "title": "الكشف — لفة المخزون خدعة",
+      "start_sec": 20.52,
+      "end_sec": 27.26,
+      "start_str": "00:20",
+      "end_str": "00:27",
+      "subtitle_range": [16, 20],
+      "summary": "بيكسر التوقع: الأرقام دي خيانة وخدعة، مش في صالحك. طب نتأكد منين؟ من الأدوات الإدارية."
+    },
+    {
+      "id": 4,
+      "title": "الأداة — Sales Through Rate",
+      "start_sec": 27.26,
+      "end_sec": 50.42,
+      "start_str": "00:27",
+      "end_str": "00:50",
+      "subtitle_range": [21, 34],
+      "summary": "بيقدّم الـ STR كإحدى أدوات الـ KPIs الإدارية. بيوضّح الاسم والمعنى: Sales Through Rate، المعادلة اللي بتحوّل الأداء البيعي لأرقام قابلة للمقارنة."
+    },
+    {
+      "id": 5,
+      "title": "المعادلة — Units Sold / Initial Inventory",
+      "start_sec": 50.42,
+      "end_sec": 74.56,
+      "start_str": "00:50",
+      "end_str": "01:14",
+      "subtitle_range": [35, 49],
+      "summary": "المعادلة: عدد الوحدات اللي اتباعت (Units Sold) مقسوم على المخزون الأولي (Initial Inventory). بيبني المثال: مخزون أولي = 500."
+    },
+    {
+      "id": 6,
+      "title": "المثال الرقمي — 200 من 500 = 20%",
+      "start_sec": 74.56,
+      "end_sec": 87.84,
+      "start_str": "01:14",
+      "end_str": "01:27",
+      "subtitle_range": [50, 58],
+      "summary": "اللي اتباع = 200 وحدة. يعني الـ STR = 20%. الرقم ده بيمثّل نسبة البيع في المرة الواحدة."
+    },
+    {
+      "id": 7,
+      "title": "المفارقة — مفروض 80%، بعت 20%",
+      "start_sec": 87.84,
+      "end_sec": 107.74,
+      "start_str": "01:27",
+      "end_str": "01:47",
+      "subtitle_range": [59, 73],
+      "summary": "لو حقيقي لفيت المخزون 4 مرات، المفروض تكون بعت 80% من مخزونك. بس الواقع 20% فقط. مصيبة. يبقى معدل دوران المخزون بلح."
+    },
+    {
+      "id": 8,
+      "title": "اللحظة — معدل دوران المخزون بلح",
+      "start_sec": 107.74,
+      "end_sec": 119.48,
+      "start_str": "01:47",
+      "end_str": "01:59",
+      "subtitle_range": [74, 83],
+      "summary": "الدياجنوزيس: معدل دوران المخزون بلح. أي معلومة وخلاص، ومحدش شايف حاجة. لحظة اعتراف إن الأرقام العامة بتخبّي الحقيقة."
+    },
+    {
+      "id": 9,
+      "title": "الرسالة — اديني المعلومة صح",
+      "start_sec": 119.48,
+      "end_sec": 141.5,
+      "start_str": "01:59",
+      "end_str": "02:22",
+      "subtitle_range": [84, 96],
+      "summary": "الختام: انت محلل مالي — مش حافظ معادلات. شغلك تديني الـ Managerial Info اللي تخلّي الإدارة تفهم إيه اللي بيحصل فعلاً، مش عبء محاسبي جاف."
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [16, 17, 18],
+      "timestamp_start_sec": 20.52,
+      "timestamp_end_sec": 23.4,
+      "timestamp_start": "00:20",
+      "timestamp_end": "00:23",
+      "content": "يبقى لفة المخزون دي خيانة دي خدعة مش في صالحك",
+      "importance": "high",
+      "concept_type": "metaphor",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "big_metaphor: headline 'خدعة'، subline 'لفة المخزون الوهمية'، footer 'مش في صالحك'. scale_bounce entrance — أول emotional hit في الريل بعد الـ setup."
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [30, 31, 32],
+      "timestamp_start_sec": 42.45,
+      "timestamp_end_sec": 49.7,
+      "timestamp_start": "00:42",
+      "timestamp_end": "00:49",
+      "content": "الـ S-T-R معناها ايه؟ Sales Through Rate",
+      "importance": "high",
+      "concept_type": "definition",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "big_metaphor: headline 'STR'، subline 'Sales Through Rate'، footer 'نسبة المخزون اللي اتباع'. ده الـ tool-reveal moment — بيعرف المشاهد الأداة قبل المعادلة."
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [35, 36, 37],
+      "timestamp_start_sec": 50.42,
+      "timestamp_end_sec": 62.98,
+      "timestamp_start": "00:50",
+      "timestamp_end": "01:02",
+      "content": "بتجيبلي عدد الوحدات اللي تباعت الـ Units Sold وتقسمها على الـ Initial Inventory",
+      "importance": "medium",
+      "concept_type": "equation",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "overlay",
+      "animation_description": "keyword_highlight overlay: 'Units Sold ÷ Initial Inventory'. الـ formula جاي في audio — overlay بيثبّت التعبيرة قبل المثال الرقمي."
+    },
+    {
+      "id": 4,
+      "subtitle_ids": [55, 56, 57],
+      "timestamp_start_sec": 78.5,
+      "timestamp_end_sec": 85.36,
+      "timestamp_start": "01:18",
+      "timestamp_end": "01:25",
+      "content": "المتين دول يمثلوا كام من الـ 500 — 20% يعني انت في المرة الواحدة بتبيع كام",
+      "importance": "high",
+      "concept_type": "statistic",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "big_metaphor: headline '20%'، subline 'بتبيع في المرة الواحدة'، footer 'من الـ 500 وحدة'. يحل محل equation لأن رقم الـ 20% جاي بدون بناء حسابي واضح في الكلام — الأفضل نحتفي بالرقم كـ anchor."
+    },
+    {
+      "id": 5,
+      "subtitle_ids": [63, 64, 65, 66, 67, 68, 69, 70, 71, 72],
+      "timestamp_start_sec": 96.48,
+      "timestamp_end_sec": 106.4,
+      "timestamp_start": "01:36",
+      "timestamp_end": "01:46",
+      "content": "ما انت دلوقتي المفترض لف اربع مرات يعني الـ 20% تبقى كام — 80% هل حضرتك بعت 80% من مخزونك؟ مصيبة",
+      "importance": "high",
+      "concept_type": "comparison",
+      "difficulty": "complex",
+      "difficulty_score": 3,
+      "visual_complexity": "rich",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "comparison_two_paths: العمود الأيمن 'الادعاء' → '4 لفات × 20%' → '80% مفروض'. العمود الأيسر 'الواقع' → '20% فقط' → 'مصيبة'. ده الـ reveal moment — الفارق بين اللي المفروض واللي حصل."
+    },
+    {
+      "id": 6,
+      "subtitle_ids": [74, 75],
+      "timestamp_start_sec": 107.74,
+      "timestamp_end_sec": 111.98,
+      "timestamp_start": "01:47",
+      "timestamp_end": "01:52",
+      "content": "يبقى اذا معدل دوران المخزون بلح",
+      "importance": "high",
+      "concept_type": "metaphor",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "overlay",
+      "animation_description": "keyword_highlight overlay: 'معدل دوران المخزون بلح' — الجملة الإيكونية اللي هتفضل في دماغ المشاهد. overlay كفاية (مش scene) عشان الـ comparison scene قبليها بـ 5 ثواني."
+    },
+    {
+      "id": 7,
+      "subtitle_ids": [84, 85, 86, 87, 88],
+      "timestamp_start_sec": 119.48,
+      "timestamp_end_sec": 128.88,
+      "timestamp_start": "01:59",
+      "timestamp_end": "02:08",
+      "content": "انت محلل مالي اديني المعلومة صح ما تحفظليش معادلات",
+      "importance": "high",
+      "concept_type": "metaphor",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "big_metaphor closing: headline 'اديني المعلومة صح'، subline 'انت محلل مالي'، footer 'مش تحفظ معادلات'. scale_bounce entrance + scale_out exit. آخر scene — بيغلّف الرسالة كلها."
+    },
+    {
+      "id": 8,
+      "subtitle_ids": [4, 5, 6],
+      "timestamp_start_sec": 4.02,
+      "timestamp_end_sec": 11.36,
+      "timestamp_start": "00:04",
+      "timestamp_end": "00:11",
+      "content": "مش حضرتك دلوقتي بتكسب 20% من فلوس شغالة بالمليون يعني المرة تشغيل بتجيب لك كام؟ 200 ألف",
+      "importance": "medium",
+      "concept_type": "statistic",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "overlay",
+      "animation_description": "keyword_highlight overlay للحدث '200 ألف' — يرسّخ الرقم في الـ setup قبل ما الـ lecturer يكسر التوقع."
+    }
+  ],
+
+  "keywords": [
+    {
+      "term": "رأس المال العامل",
+      "first_seen_subtitle": 2,
+      "first_seen_sec": 0.86,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "200 ألف",
+      "first_seen_subtitle": 8,
+      "first_seen_sec": 10.28,
+      "category": "number",
+      "weight": 4
+    },
+    {
+      "term": "لفة المخزون",
+      "first_seen_subtitle": 11,
+      "first_seen_sec": 13.98,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "خدعة",
+      "first_seen_subtitle": 16,
+      "first_seen_sec": 20.52,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "STR",
+      "first_seen_subtitle": 25,
+      "first_seen_sec": 29.16,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "Sales Through Rate",
+      "first_seen_subtitle": 32,
+      "first_seen_sec": 43.02,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "Initial Inventory",
+      "first_seen_subtitle": 39,
+      "first_seen_sec": 58.58,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "20%",
+      "first_seen_subtitle": 54,
+      "first_seen_sec": 81.94,
+      "category": "number",
+      "weight": 5
+    },
+    {
+      "term": "80%",
+      "first_seen_subtitle": 62,
+      "first_seen_sec": 93.86,
+      "category": "number",
+      "weight": 5
+    },
+    {
+      "term": "معدل دوران المخزون بلح",
+      "first_seen_subtitle": 75,
+      "first_seen_sec": 107.74,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "محلل مالي",
+      "first_seen_subtitle": 84,
+      "first_seen_sec": 119.48,
+      "category": "concept",
+      "weight": 4
+    }
+  ],
+
+  "emphasis_moments": [
+    {
+      "energy_time_sec": 0.16,
+      "energy": 0.186,
+      "energy_type": "high_energy",
+      "subtitle_id": 1,
+      "text": "معلومة إدارية",
+      "intensity": "medium",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "أول جملة في الريل — establishes الـ frame 'إداري'"
+    },
+    {
+      "energy_time_sec": 7.46,
+      "energy": 0.192,
+      "energy_type": "high_energy",
+      "subtitle_id": 6,
+      "text": "بالمليون يعني",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "rationale": "الـ setup الرقمي — overlay بيثبّت المثال"
+    },
+    {
+      "energy_time_sec": 15.36,
+      "energy": 0.211,
+      "energy_type": "high_energy",
+      "subtitle_id": 11,
+      "text": "حصل تشغيل لفلوسك",
+      "intensity": "medium",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "السؤال الإرتدادي قبل الكسر"
+    },
+    {
+      "energy_time_sec": 17.86,
+      "energy": 0.215,
+      "energy_type": "high_energy",
+      "subtitle_id": 13,
+      "text": "المفروض تكسب كام",
+      "intensity": "high",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "اللحظة الحاسمة قبل الكشف"
+    },
+    {
+      "energy_time_sec": 22.0,
+      "energy": 0.22,
+      "energy_type": "high_energy",
+      "subtitle_id": 16,
+      "text": "خيانة خدعة",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 1,
+      "rationale": "لحظة الكسر — big_metaphor 'خدعة'"
+    },
+    {
+      "energy_time_sec": 40.13,
+      "energy": 0.218,
+      "energy_type": "high_energy",
+      "subtitle_id": 28,
+      "text": "الأداء البيعي",
+      "intensity": "medium",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "تعبيرة مفتاحية في مقدمة STR"
+    },
+    {
+      "energy_time_sec": 45.41,
+      "energy": 0.234,
+      "energy_type": "high_energy",
+      "subtitle_id": 31,
+      "text": "سيبك من المعنى اكتب",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 2,
+      "rationale": "اللحظة اللي بيعلن فيها 'الاسم' — anchor لـ STR big_metaphor"
+    },
+    {
+      "energy_time_sec": 58.02,
+      "energy": 0.242,
+      "energy_type": "high_energy",
+      "subtitle_id": 38,
+      "text": "Initial Inventory",
+      "intensity": "high",
+      "suggested_treatment": "keyword_highlight",
+      "rationale": "المصطلح التاني في المعادلة — overlay تعريفي"
+    },
+    {
+      "energy_time_sec": 78.21,
+      "energy": 0.272,
+      "energy_type": "high_energy",
+      "subtitle_id": 53,
+      "text": "يمثلوا كام",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 4,
+      "rationale": "اللحظة اللي بيطرح فيها السؤال الرقمي — anchor للـ 20% scene"
+    },
+    {
+      "energy_time_sec": 86.27,
+      "energy": 0.194,
+      "energy_type": "high_energy",
+      "subtitle_id": 57,
+      "text": "20% من مخزونك",
+      "intensity": "medium",
+      "suggested_treatment": "overlay_only",
+      "rationale": "تكرار الرقم — overlay خفيف يثبّت"
+    },
+    {
+      "energy_time_sec": 98.53,
+      "energy": 0.247,
+      "energy_type": "high_energy",
+      "subtitle_id": 65,
+      "text": "المفترض لف اربع مرات",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 5,
+      "rationale": "الـ comparison moment — الادعاء vs الواقع"
+    },
+    {
+      "energy_time_sec": 102.78,
+      "energy": 0.233,
+      "energy_type": "high_energy",
+      "subtitle_id": 68,
+      "text": "80%",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 5,
+      "rationale": "الرقم المفترض — جزء من الـ comparison"
+    },
+    {
+      "energy_time_sec": 112.26,
+      "energy": 0.218,
+      "energy_type": "high_energy",
+      "subtitle_id": 77,
+      "text": "أي معلومة",
+      "intensity": "medium",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "لحظة السخرية — face conf متوسط"
+    },
+    {
+      "energy_time_sec": 122.4,
+      "energy": 0.325,
+      "energy_type": "high_energy",
+      "subtitle_id": 85,
+      "text": "اديني المعلومة صح",
+      "intensity": "high",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 7,
+      "rationale": "peak energy في الريل (0.325) — anchor للـ closing big_metaphor"
+    },
+    {
+      "energy_time_sec": 130.66,
+      "energy": 0.269,
+      "energy_type": "high_energy",
+      "subtitle_id": 91,
+      "text": "كنت بقيس حركة بيع",
+      "intensity": "medium",
+      "suggested_treatment": "smart_zoom_only",
+      "rationale": "face conf في الـ window دي مقبول (0.53)"
+    }
+  ],
+
+  "hook_analysis": {
+    "first_3_seconds_text": "ما دي معلومة إدارية — رأس مالك العامل الفلوس اللي انت مدورها كام",
+    "hook_strength": "strong",
+    "reason": "البداية رهيبة: سؤال مباشر للمشاهد + كلمة 'خدعة' ضمنية ('إدارية مش محاسبية') + انعكاس توقعات. المحاضر مش بيبدأ بتعريف، بيبدأ بتحدّي.",
+    "suggestion": "احتفظ بالبداية زي ما هي. ضيف smart_zoom على أول 6s مع crash_zoom لتقوية الـ intimacy، وعاوز caption_underline micro event على 'معلومة إدارية' في أول ثانية.",
+    "alternative_start_sec": null,
+    "visual_suggestions": [
+      "crash_zoom smart_zoom على 0-6s لو face_map يسمح — بس face conf في الـ window دي ضعيف جداً (9%)، فالأفضل overlay_only",
+      "overlay على 'رأس المال العامل' في 3-7s",
+      "caption_underline في 0.5-1.5s على 'معلومة إدارية'"
+    ]
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": 5,
+    "scene_count_reason": "الريل 141s (2:22). 5 scenes × 7s avg = 35s (25% من الريل) — مناسب للمحتوى المكثف. كل scene بتلتقط beat content-driven: الكشف، الأداة، الرقم، المفارقة، الرسالة.",
+    "top_priority_scenes": [1, 2, 4, 5, 7],
+    "smart_zoom_density": 2,
+    "smart_zoom_reason": "face_map كارثي: 77.2% no-face. الـ scan لقى نافذة واحدة قوية (67-70s, conf 0.59) وواحدة مقبولة (135.5-138.5s, conf 0.53). الاتنين يعدّوا الـ 30s spacing. أي محاولة لـ zoom تالت هتفشل validator.",
+    "overlays_density": 3,
+    "caption_style": "hormozi",
+    "chapter_dividers": 0,
+    "chapter_dividers_reason": "الريل قصير ومتسلسل — dividers هتقطع الـ flow.",
+    "audio_layer_notes": "speech rhythm 'dynamic' — 4 fast / 28 normal / 41 slow_emphasis / 10 very_slow. الـ lecturer بيحكي ببطء في أجزاء كتيرة (retention risk)، فمحتاجين micro events كتيرة تملأ الـ gaps. SFX disabled (per memory)."
+  },
+
+  "stats": {
+    "duration_sec": 141.5,
+    "duration_str": "02:22",
+    "segments": 96,
+    "sections": 9,
+    "key_moments": 8,
+    "high_importance_moments": 6,
+    "medium_importance_moments": 2,
+    "keywords": 11,
+    "emphasis_moments": 15,
+    "avg_energy": 0.083,
+    "face_no_face_percentage": 77.2,
+    "speaking_style": "dynamic",
+    "avg_words_per_sec": 2.38
+  }
+}

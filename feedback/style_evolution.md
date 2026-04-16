@@ -163,10 +163,15 @@
 - **Highlights:** first full pipeline run (Phase 1 → 9). Built 8 scene/overlay/micro components from scratch. Validated the 3-tier event system. Cadence 4.86s.
 - **Takeaways:** Phase 7 iteration في الـ session الجاية — scenes polish + caption styles جديدة.
 
-### 2. محمد علاء - ورشة المحاسب المالي (Apr 15, 2026) — TBD
+### 2. محمد علاء - ورشة المحاسب المالي (Apr 15, 2026) — 3.6/5
 - **Highlights:** first reel on the full Phase 10 feature set (entrance/exit variety + motion backgrounds + dynamic font + progress bar + SFX). 5 scenes, 3 zooms, 3 overlays, 23 micro events. Content: tax-examination journal entries (809k → 722k paid → 87k remaining liability).
 - **First-pass issues flagged:** (1) progress bar at y=210 felt wrong — Omar wanted bottom edge. (2) overlay pill background covered caption text underneath. (3) SFX distracting.
 - **Fixes applied same session:** progress bar → bottom=25, overlays → floating text at y=900 without card, SFX → disabled by default.
+
+### 3. أحمد عاشور - تحليل مالي (Apr 15, 2026) — 3/5
+- **Highlights:** First Bulk batch — first video processed via Dashboard workflow. 5 scenes, 2 zooms, 3 overlays, 13 micro events (11 word_pop + 2 caption_underline), 18 total. 142s duration.
+- **Omar feedback:** "حاسس ان الموضوع بقي مكرر ومحتاج اضيف Overlays أكتر بتنوع أكتر في الفيديوهات الجاية"
+- **Takeaway:** الـ overlay types الحالية (keyword highlight + stamp) مش كفاية للـ content farming — محتاج expand الـ overlay palette (stat callouts, quote boxes, icon badges, comparison cards, etc.) عشان كل ريل يحس مختلف. برضه الـ scene/overlay selection في Phase 6 لازم يتجنب الـ repetitive patterns بين reels في نفس الـ batch.
 
 ---
 
@@ -217,6 +222,12 @@
 - `chart` — bar/pie chart بـ grow animation
 - `diagram` — boxes + arrows build piece by piece
 - `counter` — big number count-up
+
+### Overlay variety expansion (أولوية عالية)
+- الـ overlay types الحالية 2 بس (KeywordHighlight + Stamp). على scale، كل ريل بيحس نفس الشكل.
+- **مطلوب:** stat callout (رقم كبير + label)، quote box (اقتباس مهم)، icon badge (✓/✗/⚠ مع نص قصير)، comparison mini-card (قبل/بعد)، list peek (2-3 bullet points quick flash).
+- **السبب:** Omar بعد أحمد عاشور: "حاسس ان الموضوع بقي مكرر ومحتاج اضيف Overlays أكتر بتنوع أكتر"
+- **المصدر:** "أحمد عاشور - تحليل مالي" (Apr 2026) — 3/5
 
 ### Accent flash tuning
 - حالياً الـ generator بيطلّع 0 accent_flash events. محتاج manual rule في الـ gap-fill pass يضيف الاختيار الثالث بدل الاعتماد على الـ low intensity.
