@@ -1,14 +1,19 @@
 import { Router } from 'express';
-import { readdirSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
+import { spawn } from 'node:child_process';
 import {
   getVideos,
   getVideo,
   addVideo,
   removeVideo,
+  updateVideo,
+  getCategories,
 } from '../lib/state.mjs';
 import { parseVideoName } from '../lib/parseName.mjs';
-import { videoBasename } from '../lib/paths.mjs';
+import { videoBasename, thumbnailPath, ensurePipelineDir } from '../lib/paths.mjs';
+
+const FFMPEG = 'C:/ffmpeg/bin/ffmpeg.exe';
 
 export const videosRouter = Router();
 
@@ -16,6 +21,11 @@ const VIDEO_EXTENSIONS = new Set(['.mp4', '.mov', '.mkv', '.avi', '.webm']);
 
 videosRouter.get('/', (_req, res) => {
   res.json({ videos: getVideos() });
+});
+
+// Must be before /:id routes so Express doesn't match "categories" as an id
+videosRouter.get('/categories', (_req, res) => {
+  res.json({ categories: getCategories() });
 });
 
 videosRouter.post('/', (req, res) => {
@@ -41,6 +51,68 @@ videosRouter.delete('/:id', (req, res) => {
   const ok = removeVideo(req.params.id);
   if (!ok) return res.status(404).json({ error: 'video not found' });
   res.json({ ok: true });
+});
+
+// ─── Update video metadata (category, name, lecturer, workshop) ────────
+// PATCH /api/videos/:id — Body: { category?: string, name?: string, ... }
+videosRouter.patch('/:id', (req, res) => {
+  const video = updateVideo(req.params.id, req.body || {});
+  if (!video) return res.status(404).json({ error: 'video not found' });
+  res.json({ video });
+});
+
+// ─── Thumbnail — on-demand generation + cache ──────────────────────────
+// GET /api/videos/:id/thumbnail → JPEG image (320px wide, ~5s into video)
+videosRouter.get('/:id/thumbnail', async (req, res) => {
+  const video = getVideo(req.params.id);
+  if (!video) return res.status(404).json({ error: 'video not found' });
+
+  // Determine source: use scaled video if it exists, else original
+  const sourcePath = existsSync(video.path) ? video.path : null;
+  if (!sourcePath) {
+    return res.status(404).json({ error: 'source video not found on disk' });
+  }
+
+  const thumbPath = thumbnailPath(video.path);
+
+  // Serve cached thumbnail if it exists
+  if (existsSync(thumbPath)) {
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    return res.sendFile(path.resolve(thumbPath));
+  }
+
+  // Generate thumbnail (async to avoid blocking the event loop)
+  function runFfmpeg(seekSec) {
+    return new Promise((resolve) => {
+      const proc = spawn(FFMPEG, [
+        '-ss', String(seekSec),
+        '-i', sourcePath,
+        '-vframes', '1',
+        '-vf', 'scale=320:-1',
+        '-q:v', '3',
+        '-y',
+        thumbPath,
+      ], { stdio: 'pipe' });
+      const timer = setTimeout(() => { proc.kill(); resolve(false); }, 15000);
+      proc.on('close', (code) => { clearTimeout(timer); resolve(code === 0); });
+      proc.on('error', () => { clearTimeout(timer); resolve(false); });
+    });
+  }
+
+  try {
+    ensurePipelineDir(video.path);
+    let ok = await runFfmpeg(5);
+    if (!ok || !existsSync(thumbPath)) {
+      ok = await runFfmpeg(0); // retry at 0s for very short videos
+    }
+    if (!ok || !existsSync(thumbPath)) {
+      return res.status(500).json({ error: 'thumbnail generation failed' });
+    }
+    res.setHeader('Cache-Control', 'public, max-age=86400');
+    res.sendFile(path.resolve(thumbPath));
+  } catch (e) {
+    res.status(500).json({ error: `thumbnail error: ${e.message}` });
+  }
 });
 
 // ─── Preview parse (auto-fill lecturer/workshop in single-add form) ─────

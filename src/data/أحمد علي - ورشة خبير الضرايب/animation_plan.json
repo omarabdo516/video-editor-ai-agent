@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-16",
+  "generated_by": "Claude Code (claude-opus-4-6)",
+  "source_video_basename": "أحمد علي - ورشة خبير الضرايب",
+  "video": {
+    "duration_sec": 111.4
+  },
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/أحمد علي - ورشة خبير الضرايب.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/أحمد علي - ورشة خبير الضرايب/scaled.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/أحمد علي - ورشة خبير الضرايب/captions.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/أحمد علي - ورشة خبير الضرايب/scaled.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/أحمد علي - ورشة خبير الضرايب/audio.16k.wav.energy.json",
+    "metadata": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/أحمد علي - ورشة خبير الضرايب/scaled.1080x1920.mp4.metadata.json"
+  },
+  "caption_style": "hormozi",
+  "smart_zoom_plan": {
+    "source": "أحمد علي - ورشة خبير الضرايب",
+    "spring": "smooth",
+    "moments": [
+      {
+        "startSec": 32,
+        "endSec": 34.5,
+        "zoomLevel": 1.4,
+        "centerX": 0.34,
+        "centerY": 0.37,
+        "easing": "dolly_in",
+        "reason": "Best face window (conf 0.74 peak at 32.8s, avg 0.55 in window). Lecturer confirming 'محتاج اعرف الضرائب عايزة مني ايه على وجه التحديد صح؟' — intimate confirmation moment, energy 0.199."
+      },
+      {
+        "startSec": 80.2,
+        "endSec": 83.2,
+        "zoomLevel": 1.35,
+        "centerX": 0.39,
+        "centerY": 0.41,
+        "easing": "dolly_in",
+        "reason": "Longest continuous face window in video (79.8-84.8s, avg conf 0.50 in 80.2-83.2). Lecturer explaining quarterly forms 'كل كوارتر عندنا نماذج زي نموذج واحد واربعين' — dramatic_pause energy 0.194. Flows into scene_5 timeline."
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "definition",
+      "start_sec": 5,
+      "end_sec": 10,
+      "duration_sec": 5,
+      "entrance": "scale_bounce",
+      "exit": "fade",
+      "title": "",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "definition",
+          "term": "اعرف مطلوب منك ايه",
+          "term_sub": "الخطوة الأولى",
+          "definition": "مش صعبة — بس اعرف",
+          "example": "قانون الضرائب كله عايز منك حاجات محددة",
+          "icon": "✅"
+        }
+      ]
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "scene_type": "big_metaphor",
+      "start_sec": 21,
+      "end_sec": 27,
+      "duration_sec": 6,
+      "entrance": "blur_reveal",
+      "exit": "scale_out",
+      "title": "",
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "elements": [
+        {
+          "type": "big_metaphor",
+          "headline": "كلمتين",
+          "headline_size": 220,
+          "headline_color": "accent",
+          "headline_weight": 800,
+          "subline": "بمنتهى البساطة",
+          "subline_size": 56,
+          "subline_color": "white",
+          "subline_weight": 700,
+          "subline_delay_frames": 16,
+          "footer_label": "لكل نوع ضريبة",
+          "footer_size": 40,
+          "footer_color": "white",
+          "footer_opacity": 0.85,
+          "footer_delay_frames": 32
+        }
+      ]
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "scene_type": "definition",
+      "start_sec": 37,
+      "end_sec": 43,
+      "duration_sec": 6,
+      "entrance": "scale_bounce",
+      "exit": "fade",
+      "title": "",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "definition",
+          "term": "الالتزامات الضريبية",
+          "term_sub": "Tax Obligations",
+          "definition": "اللي مطلوب منك تقدمه لمصلحة الضرائب",
+          "example": "أول حاجة بتشوفها لما تدخل المنظومة",
+          "icon": "📋"
+        }
+      ]
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "scene_type": "comparison_two_paths",
+      "start_sec": 68,
+      "end_sec": 74,
+      "duration_sec": 6,
+      "entrance": "stagger_cascade",
+      "exit": "slide_down",
+      "title": "أنواع الالتزامات",
+      "title_size": 56,
+      "title_weight": 700,
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "elements": [
+        {
+          "type": "comparison_two_paths",
+          "left": {
+            "label": "إقرار",
+            "icon": "check",
+            "steps": [
+              "القيمة المضافة (شهري)",
+              "الإقرار السنوي"
+            ],
+            "highlight": "إقرار",
+            "highlight_color": "accent"
+          },
+          "right": {
+            "label": "نموذج",
+            "icon": "check",
+            "steps": [
+              "نموذج 41 (ربع سنوي)",
+              "نموذج 4 (مرتبات)"
+            ],
+            "highlight": "نموذج",
+            "highlight_color": "accent"
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene_5",
+      "type": "full_screen_scene",
+      "scene_type": "process_stepper",
+      "start_sec": 84,
+      "end_sec": 90,
+      "duration_sec": 6,
+      "entrance": "stagger_cascade",
+      "exit": "fade",
+      "title": "مواعيد التقديم",
+      "title_size": 56,
+      "title_weight": 700,
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "step_card",
+          "step": 1,
+          "label": "القيمة المضافة",
+          "status": "current",
+          "status_badge": "شهري"
+        },
+        {
+          "type": "step_card",
+          "step": 2,
+          "label": "نموذج 41 + نموذج 4",
+          "status": "pending",
+          "status_badge": "ربع سنوي"
+        },
+        {
+          "type": "step_card",
+          "step": 3,
+          "label": "الإقرار السنوي",
+          "status": "pending",
+          "status_badge": "سنوي"
+        }
+      ]
+    },
+    {
+      "id": "scene_6",
+      "type": "full_screen_scene",
+      "scene_type": "equation",
+      "start_sec": 101,
+      "end_sec": 106,
+      "duration_sec": 5,
+      "entrance": "scale_bounce",
+      "exit": "scale_out",
+      "title": "",
+      "background": "linear-gradient(135deg, #10479D 0%, #0D1F3C 100%)",
+      "elements": [
+        {
+          "type": "equation",
+          "terms": [
+            {
+              "text": "الالتزام",
+              "label": "المطلوب منك"
+            },
+            {
+              "text": "+"
+            },
+            {
+              "text": "المعاد",
+              "label": "القانوني"
+            },
+            {
+              "text": "="
+            },
+            {
+              "text": "خبير ضرايب",
+              "label": "النتيجة",
+              "is_result": true
+            }
+          ],
+          "footer": "أهم حاجة في كل نوع ضريبة"
+        }
+      ]
+    }
+  ],
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 15,
+      "end_sec": 19,
+      "keyword": "مصلحة الضرائب",
+      "primary_text": "مصلحة الضرائب",
+      "primary_color": "accent",
+      "primary_size": 64,
+      "primary_weight": 800,
+      "secondary_text": "عايزة مننا ايه؟",
+      "secondary_size": 30,
+      "y_px": 1080
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 45,
+      "end_sec": 49,
+      "keyword": "المنظومة الضريبية",
+      "primary_text": "المنظومة",
+      "primary_color": "accent",
+      "primary_size": 72,
+      "primary_weight": 800,
+      "secondary_text": "أول حاجة بتشوفها: الالتزامات",
+      "secondary_size": 28,
+      "y_px": 1080
+    },
+    {
+      "id": "overlay_3",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 93,
+      "end_sec": 97,
+      "keyword": "الإقرار السنوي",
+      "primary_text": "الإقرار السنوي",
+      "primary_color": "accent",
+      "primary_size": 64,
+      "primary_weight": 800,
+      "secondary_text": "في نهاية كل سنة",
+      "secondary_size": 28,
+      "y_px": 1080
+    }
+  ],
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "word_pop",
+      "start_sec": 1.07,
+      "end_sec": 1.82,
+      "word": "نتفادى",
+      "anchor_subtitle_id": 1,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_2",
+      "type": "caption_underline",
+      "start_sec": 11.99,
+      "end_sec": 13.19,
+      "anchor_subtitle_id": 7,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_3",
+      "type": "accent_flash",
+      "start_sec": 50.17,
+      "end_sec": 50.77,
+      "side": "right",
+      "anchor_subtitle_id": 33,
+      "intensity": "low",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_4",
+      "type": "mini_zoom",
+      "start_sec": 53.17,
+      "end_sec": 54.37,
+      "zoom_level": 1.08,
+      "center_x": 0.231,
+      "center_y": 0.408,
+      "intensity": "strong",
+      "anchor_subtitle_id": 35,
+      "anchor_text": "ايه؟ الالتزامات هو عايز",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_5",
+      "type": "word_pop",
+      "start_sec": 62.03,
+      "end_sec": 62.78,
+      "word": "بقى",
+      "anchor_subtitle_id": 40,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_6",
+      "type": "caption_underline",
+      "start_sec": 76.31,
+      "end_sec": 77.51,
+      "anchor_subtitle_id": 48,
+      "intensity": "medium",
+      "source": "emphasis"
+    }
+  ],
+  "micro_events_generated_at": "2026-04-16",
+  "micro_events_stats": {
+    "total": 6,
+    "cadence_sec": 18.57,
+    "by_type": {
+      "word_pop": 2,
+      "caption_underline": 2,
+      "accent_flash": 1,
+      "mini_zoom": 1
+    },
+    "by_source": {
+      "emphasis": 6
+    }
+  }
+}

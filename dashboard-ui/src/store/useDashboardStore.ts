@@ -16,18 +16,68 @@ import {
   submitRating as apiSubmitRating,
   bulkAddVideos as apiBulkAddVideos,
   megaCommitBatch as apiMegaCommitBatch,
+  updateVideo as apiUpdateVideo,
 } from '../api/client';
+import { toast } from './useToastStore';
 
 // Phases that are actually job-spawning POST routes (excludes edit + analyze).
 type JobPhase = Exclude<PhaseId, 'edit' | 'analyze'>;
 
 const LOG_BUFFER_LIMIT = 500;
 
+// Tracks in-flight runPhase calls to prevent double-click spawning duplicate jobs.
+// Each entry stores a timeout that auto-clears after 10 minutes as a safety valve
+// in case the SSE connection drops without emitting done/error.
+const _inflight = new Map<string, ReturnType<typeof setTimeout>>();
+const INFLIGHT_TIMEOUT_MS = 10 * 60 * 1000;
+function inflightKey(videoId: string, phase: string) {
+  return `${videoId}:${phase}`;
+}
+function inflightAdd(key: string) {
+  inflightRemove(key);
+  const timer = setTimeout(() => _inflight.delete(key), INFLIGHT_TIMEOUT_MS);
+  _inflight.set(key, timer);
+}
+function inflightRemove(key: string) {
+  const existing = _inflight.get(key);
+  if (existing !== undefined) {
+    clearTimeout(existing);
+    inflightRemove(key);
+  }
+}
+
+export type SortField = 'name' | 'addedAt' | 'rating' | 'duration' | 'progress';
+export type SortDir = 'asc' | 'desc';
+export type GroupField = 'none' | 'lecturer' | 'workshop' | 'category' | 'status';
+export type StatusFilter = 'all' | 'pending' | 'in_progress' | 'done' | 'rated';
+
+export interface Filters {
+  status: StatusFilter;
+  lecturer: string | null;
+  workshop: string | null;
+  category: string | null;
+}
+
 interface DashboardState {
   videos: Video[];
   loading: boolean;
   error: string | null;
   selectedVideoIds: Set<string>;
+  /** The video currently shown in the detail panel (sidebar layout). */
+  activeVideoId: string | null;
+  setActiveVideo: (id: string | null) => void;
+
+  /** Filter + sort + group */
+  filters: Filters;
+  sortField: SortField;
+  sortDir: SortDir;
+  groupBy: GroupField;
+  setFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
+  clearFilters: () => void;
+  setSortField: (field: SortField) => void;
+  toggleSortDir: () => void;
+  setGroupBy: (field: GroupField) => void;
+  updateVideoMeta: (id: string, patch: { category?: string | null; name?: string; lecturer?: string; workshop?: string }) => Promise<void>;
 
   // live job subscriptions keyed by jobId → unsubscribe fn
   // (not persisted; used so refresh/unmount can clean up)
@@ -76,6 +126,33 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   loading: false,
   error: null,
   selectedVideoIds: new Set(),
+  activeVideoId: null,
+  setActiveVideo: (id) => set({ activeVideoId: id }),
+  filters: { status: 'all', lecturer: null, workshop: null, category: null },
+  sortField: 'addedAt',
+  sortDir: 'desc',
+  groupBy: 'none',
+  setFilter: (key, value) =>
+    set((s) => ({ filters: { ...s.filters, [key]: value } })),
+  clearFilters: () =>
+    set({ filters: { status: 'all', lecturer: null, workshop: null, category: null } }),
+  setSortField: (field) => set((s) => ({
+    sortField: field,
+    sortDir: field === s.sortField ? s.sortDir : (field === 'name' ? 'asc' : 'desc'),
+  })),
+  toggleSortDir: () => set((s) => ({ sortDir: s.sortDir === 'asc' ? 'desc' : 'asc' })),
+  setGroupBy: (field) => set({ groupBy: field }),
+  updateVideoMeta: async (id, patch) => {
+    try {
+      const updated = await apiUpdateVideo(id, patch);
+      set((s) => ({
+        videos: s.videos.map((v) => (v.id === id ? updated : v)),
+      }));
+      toast.success('Video updated');
+    } catch (e) {
+      toast.error(`Update failed: ${e instanceof Error ? e.message : String(e)}`);
+    }
+  },
   _subscriptions: new Map(),
   logs: {},
 
@@ -96,10 +173,12 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
     try {
       const video = await apiAddVideo(input);
       set((s) => ({ videos: [...s.videos, video] }));
+      toast.success(`Added "${video.name}"`);
       return video;
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       set({ error: msg });
+      toast.error(`Failed to add video: ${msg}`);
       throw e;
     }
   },
@@ -109,11 +188,16 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       const resp = await apiBulkAddVideos(inputs);
       if (resp.added.length > 0) {
         set((s) => ({ videos: [...s.videos, ...resp.added] }));
+        toast.success(`Added ${resp.added.length} videos`);
+      }
+      if (resp.errors.length > 0) {
+        toast.warning(`${resp.errors.length} videos failed to add`);
       }
       return resp;
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       set({ error: msg });
+      toast.error(`Bulk add failed: ${msg}`);
       throw e;
     }
   },
@@ -138,6 +222,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       await apiRemoveVideo(id);
       set((s) => ({
         videos: s.videos.filter((v) => v.id !== id),
+        activeVideoId: s.activeVideoId === id ? null : s.activeVideoId,
         selectedVideoIds: (() => {
           const next = new Set(s.selectedVideoIds);
           next.delete(id);
@@ -169,6 +254,14 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
   },
 
   runPhase: async (videoId, phase) => {
+    // Prevent duplicate spawns from rapid clicks
+    const key = inflightKey(videoId, phase);
+    if (_inflight.has(key) /* already running */) {
+      toast.info('Phase already running');
+      return;
+    }
+    inflightAdd(key);
+
     // Optimistic: mark running immediately so the button flips before the
     // network round-trip completes.
     set((s) => ({
@@ -200,15 +293,26 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
         }),
         error: msg,
       }));
+      inflightRemove(key);
       return;
     }
 
     // Subscribe to SSE progress and forward every line into the per-job
     // buffer so LogViewer can tail it.
+    const phaseLabels: Record<string, string> = {
+      phase1: 'Phase 1',
+      transcribe: 'Transcribe',
+      microEvents: 'Micro Events',
+      render: 'Render',
+    };
+    const videoName = get().videos.find((v) => v.id === videoId)?.name ?? videoId;
+    const phaseLabel = phaseLabels[phase] ?? phase;
+
     const unsubscribe = subscribeToProgress(jobId, (ev) => {
       if (ev.type === 'line') {
         get().appendLog(jobId, ev.text);
       } else if (ev.type === 'done') {
+        inflightRemove(key);
         const finalStatus = ev.exitCode === 0 ? 'done' : 'failed';
         set((s) => {
           const subs = new Map(s._subscriptions);
@@ -222,9 +326,15 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
             _subscriptions: subs,
           };
         });
+        if (ev.exitCode === 0) {
+          toast.success(`${phaseLabel} done — ${videoName}`);
+        } else {
+          toast.error(`${phaseLabel} failed — ${videoName}`);
+        }
         // Refetch authoritative state from the API so we pick up outputs, etc.
         void get().refresh();
       } else if (ev.type === 'error') {
+        inflightRemove(key);
         get().appendLog(jobId, `[error] ${ev.message}`);
         set((s) => {
           const subs = new Map(s._subscriptions);
@@ -238,6 +348,7 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
             _subscriptions: subs,
           };
         });
+        toast.error(`${phaseLabel} error — ${videoName}`);
       }
     });
 
@@ -254,9 +365,11 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
       set((s) => ({
         videos: s.videos.map((v) => (v.id === videoId ? resp.video : v)),
       }));
+      toast.success(`Rating saved — ${rating}/5`);
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);
       set({ error: msg });
+      toast.error(`Rating failed: ${msg}`);
       throw e;
     }
   },

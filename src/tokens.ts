@@ -59,10 +59,11 @@ export const tokens = {
     startDelaySec: 0.5,
     slideDurationSec: 0.4,
     y: 1100,
-    nameSize: 72,
-    titleSize: 44,
-    barWidth: 820,
-    barHeight: 180,
+    nameSize: 60,
+    titleSize: 38,
+    barWidth: 640,
+    barPaddingV: 28,
+    barPaddingH: 48,
   },
   outro: {
     durationSec: 5,
@@ -177,13 +178,11 @@ export const tokens = {
     timelineConnectorThickness: 6,
   },
   overlays: {
-    // Body zone (y=900) is the only safe spot for floating overlays —
-    // above the lower-third (y=1100) and captions (y=1280-1460). The
-    // earlier default y=1140 collided with caption text and Omar
-    // flagged the background card as visually covering the captions.
-    // Fix: move to body zone AND drop the card — text floats with a
-    // strong drop shadow instead of living inside a dark pill.
-    defaultY: 900,
+    // Between body zone and caption zone. y=900 was too far (520px gap),
+    // y=1200 was too close (elements touching). y=1080 leaves ~240px
+    // clear margin to captions at 1420 after the overlay's ~100px height.
+    // Lower-third (y=1100) is gone by 4.5s; overlays start at 15s+.
+    defaultY: 1080,
     defaultPaddingX: 36,
     defaultPaddingY: 20,
     defaultRadius: 12,

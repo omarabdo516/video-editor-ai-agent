@@ -1,12 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { PhaseId, Video } from '../api/types';
 import { useDashboardStore } from '../store/useDashboardStore';
 import { PhaseButton } from './PhaseButton';
+import { PipelineStepper } from './PipelineStepper';
 import { ProgressBar } from './ProgressBar';
 import { LogViewer } from './LogViewer';
 import { ClaudeHandoffModal } from './ClaudeHandoffModal';
 import { RatingInput } from './RatingInput';
 import { getEditHandoff } from '../api/client';
+import { useModalStore } from '../store/useModalStore';
+import { getPhaseEtaLabel, getElapsedSec, formatEta } from '../utils/phaseEstimates';
 
 interface Props {
   video: Video;
@@ -85,9 +88,32 @@ export function VideoCard({ video }: Props) {
   const progress =
     activeRunning && activePhase === 'render' ? extractProgress(activeLines) : null;
 
-  const handleDelete = () => {
-    if (!confirm(`Remove "${video.name}" from the dashboard?\n\n(Files on disk won't be touched.)`))
-      return;
+  // Ticking ETA — re-renders every second while a phase is running
+  const videos = useDashboardStore((s) => s.videos);
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    if (!activeRunning) return;
+    const id = window.setInterval(() => setTick((t) => t + 1), 1000);
+    return () => window.clearInterval(id);
+  }, [activeRunning]);
+  const etaLabel = activeRunning && activePhase
+    ? getPhaseEtaLabel(videos, activePhase, activeState?.startedAt)
+    : null;
+  const elapsedLabel = activeRunning && activeState?.startedAt
+    ? formatEta(getElapsedSec(activeState.startedAt))
+    : null;
+
+  const showConfirm = useModalStore((s) => s.showConfirm);
+  const showAlert = useModalStore((s) => s.showAlert);
+
+  const handleDelete = async () => {
+    const ok = await showConfirm({
+      title: 'Remove Video',
+      message: `Remove "${video.name}" from the dashboard?\n\nFiles on disk won't be touched.`,
+      confirmLabel: 'Remove',
+      variant: 'danger',
+    });
+    if (!ok) return;
     void removeVideo(video.id);
   };
 
@@ -98,16 +124,20 @@ export function VideoCard({ video }: Props) {
       // seconds on first call — the UI should indicate "starting...".
       const handoff = await getEditHandoff(video.id);
       if (!handoff.ready) {
-        alert(
-          'Editor did not become ready within 30s.\n\n' +
-            'Check the API log, or run this in a separate terminal:\n' +
-            handoff.hintCommand,
-        );
+        showAlert({
+          title: 'Editor Not Ready',
+          message: `Editor did not become ready within 30s.\n\nCheck the API log, or run this in a separate terminal:\n${handoff.hintCommand}`,
+          variant: 'error',
+        });
         return;
       }
       window.open(handoff.editorUrl, '_blank', 'noopener,noreferrer');
     } catch (e) {
-      alert(`Edit handoff failed: ${e instanceof Error ? e.message : String(e)}`);
+      showAlert({
+        title: 'Edit Error',
+        message: `Edit handoff failed: ${e instanceof Error ? e.message : String(e)}`,
+        variant: 'error',
+      });
     }
   };
 
@@ -185,6 +215,9 @@ export function VideoCard({ video }: Props) {
         </button>
       </header>
 
+      {/* Visual pipeline progress */}
+      <PipelineStepper video={video} />
+
       <div className="flex flex-wrap gap-2">
         <PhaseButton video={video} phase="phase1" label="Phase 1" />
         <PhaseButton video={video} phase="transcribe" label="Transcribe" />
@@ -197,6 +230,7 @@ export function VideoCard({ video }: Props) {
           disabledReason="Transcribe must finish first"
           onClick={handleAnalyze}
         />
+        <PhaseButton video={video} phase="microEvents" label="Micro Events" />
         <PhaseButton video={video} phase="render" label="Render" />
       </div>
 
@@ -210,6 +244,16 @@ export function VideoCard({ video }: Props) {
                 : `${phaseLabel} — running (${activeLines.length} lines)`
             }
           />
+          {/* ETA / elapsed timer */}
+          <div
+            className="flex items-center justify-between px-1 text-[10px]"
+            style={{ color: 'var(--color-text-muted)' }}
+          >
+            <span>{elapsedLabel ? `${elapsedLabel} elapsed` : ''}</span>
+            <span style={{ color: 'var(--color-text-secondary)' }}>
+              {etaLabel ?? ''}
+            </span>
+          </div>
         </div>
       )}
 

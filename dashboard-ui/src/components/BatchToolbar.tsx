@@ -2,7 +2,9 @@ import { useState } from 'react';
 import type { BatchPhase } from '../api/types';
 import { useDashboardStore } from '../store/useDashboardStore';
 import { useBatchStore } from '../store/useBatchStore';
+import { useModalStore } from '../store/useModalStore';
 import { MegaHandoffModal } from './MegaHandoffModal';
+import { computePhaseAverages, formatEta } from '../utils/phaseEstimates';
 
 const PHASE_LABELS: Record<BatchPhase, string> = {
   phase1: 'Phase 1',
@@ -33,6 +35,9 @@ export function BatchToolbar() {
   const [submitting, setSubmitting] = useState(false);
   const [prepChainRunning, setPrepChainRunning] = useState(false);
   const [megaHandoffOpen, setMegaHandoffOpen] = useState(false);
+  const showConfirm = useModalStore((s) => s.showConfirm);
+  const showAlert = useModalStore((s) => s.showAlert);
+  const showPrompt = useModalStore((s) => s.showPrompt);
 
   const count = selectedIds.size;
   if (count === 0) return null;
@@ -56,18 +61,27 @@ export function BatchToolbar() {
 
   const handleRun = async () => {
     const ids = [...selectedIds];
-    const ok = confirm(
-      `Run ${PHASE_LABELS[phase]} on ${ids.length} videos? They'll process one at a time.`,
-    );
+    const averages = computePhaseAverages(videos);
+    const avg = averages[phase];
+    const etaHint = avg
+      ? `\n\nEstimated: ~${formatEta(avg.avgSec * ids.length)} total (~${formatEta(avg.avgSec)}/video)`
+      : '';
+    const ok = await showConfirm({
+      title: `Run ${PHASE_LABELS[phase]}`,
+      message: `Run ${PHASE_LABELS[phase]} on ${ids.length} videos? They'll process one at a time.${etaHint}`,
+      confirmLabel: 'Run',
+    });
     if (!ok) return;
     setSubmitting(true);
     try {
       await startBatch(phase, ids, continueOnError);
       clearSelection();
     } catch (e) {
-      alert(
-        `Failed to start batch: ${e instanceof Error ? e.message : String(e)}`,
-      );
+      showAlert({
+        title: 'Batch Failed',
+        message: `Failed to start batch: ${e instanceof Error ? e.message : String(e)}`,
+        variant: 'error',
+      });
     } finally {
       setSubmitting(false);
     }
@@ -76,16 +90,16 @@ export function BatchToolbar() {
   // Mega-action 1: Prep All = Phase 1 → Transcribe (chained sequentially)
   const handlePrepAll = async () => {
     if (count === 0) return;
-    const ok = confirm(
-      `Prep All on ${count} videos?\n\nThis runs Phase 1 (preprocessing) then Transcribe on each video sequentially. It takes ~4-8 min per video. The Dashboard window should stay open until both batches finish.`,
-    );
+    const ok = await showConfirm({
+      title: 'Prep All',
+      message: `Run Phase 1 (preprocessing) then Transcribe on ${count} videos sequentially.\n\nThis takes ~4-8 min per video. Keep the Dashboard open until both batches finish.`,
+      confirmLabel: 'Start Prep',
+    });
     if (!ok) return;
     const ids = [...selectedIds];
     setPrepChainRunning(true);
     try {
-      // Run Phase 1 batch first
       await startBatch('phase1', ids, continueOnError);
-      // Wait for it to fully finish before starting transcribe
       await new Promise<void>((resolve) => {
         const check = () => {
           const s = useBatchStore.getState().active;
@@ -94,12 +108,13 @@ export function BatchToolbar() {
         };
         check();
       });
-      // Then kick off transcribe
       await startBatch('transcribe', ids, continueOnError);
     } catch (e) {
-      alert(
-        `Prep All failed: ${e instanceof Error ? e.message : String(e)}`,
-      );
+      showAlert({
+        title: 'Prep Failed',
+        message: `Prep All failed: ${e instanceof Error ? e.message : String(e)}`,
+        variant: 'error',
+      });
     } finally {
       setPrepChainRunning(false);
     }
@@ -108,9 +123,11 @@ export function BatchToolbar() {
   // Mega-action 2: Send All to Claude — opens MegaHandoffModal
   const handleSendToClaude = () => {
     if (!allHaveTranscribeDone) {
-      alert(
-        'Some videos still need Phase 1 + Transcribe done. Click "Prep All" first.',
-      );
+      showAlert({
+        title: 'Not Ready',
+        message: 'Some videos still need Phase 1 + Transcribe done. Click "Prep All" first.',
+        variant: 'error',
+      });
       return;
     }
     setMegaHandoffOpen(true);
@@ -119,59 +136,70 @@ export function BatchToolbar() {
   // Mega-action 3: Render All — delegate to existing bulk render
   const handleRenderAll = async () => {
     if (!allHaveTranscribeDone) {
-      alert('Some videos are not transcribed yet.');
+      showAlert({
+        title: 'Not Ready',
+        message: 'Some videos are not transcribed yet.',
+        variant: 'error',
+      });
       return;
     }
-    const ok = confirm(
-      `Render All on ${count} videos?\n\nMake sure Claude has finished Phase 5/6 (animation_plan.json exists for each). Rendering takes ~5 min per video. Sequential because GPU is single.`,
-    );
+    const ok = await showConfirm({
+      title: 'Render All',
+      message: `Render ${count} videos sequentially.\n\nMake sure Claude has finished Phase 5/6 (animation_plan.json exists for each). ~5 min per video.`,
+      confirmLabel: 'Start Render',
+    });
     if (!ok) return;
     try {
       await startBatch('render', [...selectedIds], continueOnError);
     } catch (e) {
-      alert(
-        `Render All failed: ${e instanceof Error ? e.message : String(e)}`,
-      );
+      showAlert({
+        title: 'Render Failed',
+        message: `Render All failed: ${e instanceof Error ? e.message : String(e)}`,
+        variant: 'error',
+      });
     }
   };
 
   // Mega-action 4: Commit Batch — atomic feedback + CLAUDE.md + git commit
   const handleCommitBatch = async () => {
     if (!allHaveRatings) {
-      alert(
-        'All videos must have a rating before you can commit the batch. Rate each rendered reel first.',
-      );
+      showAlert({
+        title: 'Rating Required',
+        message: 'All videos must have a rating before you can commit the batch. Rate each rendered reel first.',
+        variant: 'error',
+      });
       return;
     }
-    const note = prompt(
-      'Optional batch note (goes into the commit message):',
-      '',
-    );
+    const note = await showPrompt({
+      title: 'Commit Batch',
+      message: 'Optional batch note (goes into the commit message):',
+      placeholder: 'e.g. First batch of Ahmed Ali workshop...',
+    });
     if (note === null) return; // cancelled
     try {
       const res = await megaCommitBatch(selectedIdList, note || undefined);
-      alert(
-        `✅ Committed ${selectedIdList.length} videos.\n\n` +
-          `Commit: ${res.commitHash}\n` +
-          `Files: ${res.stagedFiles.length} staged\n\n` +
-          `feedback/log.json + CLAUDE.md + each src/data/<slug>/ were updated and committed together.`,
-      );
+      showAlert({
+        title: 'Batch Committed',
+        message: `Committed ${selectedIdList.length} videos.\n\nCommit: ${res.commitHash}\nFiles: ${res.stagedFiles.length} staged\n\nfeedback/log.json + CLAUDE.md + each src/data/<slug>/ were updated and committed together.`,
+        variant: 'success',
+      });
       clearSelection();
     } catch (e) {
-      alert(
-        `Commit failed: ${e instanceof Error ? e.message : String(e)}`,
-      );
+      showAlert({
+        title: 'Commit Failed',
+        message: `Commit failed: ${e instanceof Error ? e.message : String(e)}`,
+        variant: 'error',
+      });
     }
   };
 
   return (
     <>
       <div
-        className="sticky top-2 z-20 mb-4 flex flex-col gap-3 rounded-xl border px-4 py-3 shadow-lg"
+        className="flex flex-col gap-2 rounded-xl border px-3 py-2"
         style={{
           borderColor: 'var(--color-brand-accent)',
           background: 'var(--color-bg-panel)',
-          boxShadow: '0 4px 20px rgba(255, 181, 1, 0.15)',
         }}
       >
         {/* Row 1: selection summary + single-phase controls */}

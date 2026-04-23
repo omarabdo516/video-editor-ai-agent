@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-16",
+  "generated_by": "Claude Code (opus-4-6)",
+  "source_video_basename": "محمد ريان ورشة الشامل 1",
+  "video": {
+    "duration_sec": 27.3
+  },
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/محمد ريان ورشة الشامل 1.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 1/scaled.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 1/captions.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 1/scaled.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 1/audio.16k.wav.energy.json"
+  },
+  "caption_style": "hormozi",
+  "smart_zoom_plan": {
+    "source": "محمد ريان ورشة الشامل 1",
+    "spring": "smooth",
+    "moments": [
+      {
+        "id": "zoom_1",
+        "startSec": 18,
+        "endSec": 21.5,
+        "zoomLevel": 1.4,
+        "centerX": 0.53,
+        "centerY": 0.315,
+        "easing": "crash_zoom",
+        "reason": "Peak energy window: high_energy 0.2261 at 18.0s + 0.3039 at 20.16s (أعلى energy في الكليب). Face conf 0.837 at 18.0s, stable 0.77-0.93 across window. Story climax — 'يقولك خمسين علبة سجاير من غيره'.",
+        "anchor_subtitle_id": 15,
+        "anchor_text": "ورايح جاي يقولك خمسين"
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "definition",
+      "key_moment_ref": 2,
+      "start_sec": 7,
+      "end_sec": 12,
+      "duration_sec": 5,
+      "entrance": "scale_bounce",
+      "exit": "fade",
+      "anchor_subtitle_ids": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "anchor_text": "على المشروع التكاليف اللازمة لاتمام المشروع ما قالكش اسمنت ولا ظلط",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "التكاليف اللازمة",
+      "title_size": 64,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "definition",
+          "term": "التكاليف اللازمة",
+          "term_accent": true,
+          "definition": "أي تكلفة مطلوبة لإتمام المشروع",
+          "icon": "📋",
+          "example": "مش بس اسمنت وزلط — أياً كانت"
+        }
+      ],
+      "reason": "المحاضر بيشرح مصطلح محاسبي مجرد — 'التكاليف اللازمة' مش معناها بس خامات، ده أي حاجة مطلوبة للإتمام. مفهوم بيتوضح بصرياً أحسن من مجرد كلام."
+    }
+  ],
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 1,
+      "end_sec": 4,
+      "keyword": "إكرامية",
+      "primary_text": "إكرامية",
+      "primary_color": "accent",
+      "primary_size": 72,
+      "primary_weight": 800,
+      "secondary_text": "تكلفة... لازمة؟",
+      "secondary_size": 32,
+      "y_px": 900,
+      "reason": "الكلمة المفتاحية الأولى في الـ hook — بتحدد موضوع الكليب. Dramatic pause energy 0.2286 at 2.43s."
+    }
+  ],
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "mini_zoom",
+      "start_sec": 15.7,
+      "end_sec": 16.9,
+      "zoom_level": 1.08,
+      "center_x": 0.53,
+      "center_y": 0.306,
+      "intensity": "strong",
+      "anchor_subtitle_id": 14,
+      "anchor_text": "واقف ببتاعه",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_2",
+      "type": "accent_flash",
+      "start_sec": 25.37,
+      "end_sec": 25.97,
+      "side": "left",
+      "anchor_subtitle_id": 19,
+      "intensity": "low",
+      "source": "emphasis"
+    }
+  ],
+  "chapter_dividers": [],
+  "validation_notes": {
+    "scene_count": 1,
+    "scene_spacing_min_sec": 15,
+    "scene_spacing_actual": [],
+    "scene_total_duration_sec": 5,
+    "scene_coverage_pct": 18,
+    "zoom_count": 1,
+    "zoom_spacing_actual": [],
+    "overlay_count": 1,
+    "overlay_spacing_actual": [],
+    "notes": "ريل قصير جداً (27s). Scene واحدة كافية — 15s spacing يمنع أكتر من scene. Zoom واحد على peak energy window (18-21.5s). Overlay واحد في الـ hook zone (1-4s). الـ scene definition بسيطة (difficulty: simple) — 3 عناصر فقط. Scene coverage 18% (5s من 27s) — المحاضر ظاهر باقي الوقت. Zoom easing crash_zoom لأن energy في الـ top 20%. Micro events هيتولّدوا في Phase 6.5 ويملوا الـ retention gaps."
+  },
+  "micro_events_generated_at": "2026-04-16",
+  "micro_events_stats": {
+    "total": 2,
+    "cadence_sec": 13.65,
+    "by_type": {
+      "mini_zoom": 1,
+      "accent_flash": 1
+    },
+    "by_source": {
+      "emphasis": 2
+    }
+  }
+}

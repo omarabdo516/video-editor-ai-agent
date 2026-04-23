@@ -1,0 +1,622 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-16",
+  "generated_by": "Claude Code (claude-opus-4-6)",
+
+  "source": {
+    "video": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\أحمد علي - ورشة خبير الضرايب.mp4",
+    "video_scaled": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\_pipeline\\أحمد علي - ورشة خبير الضرايب\\scaled.1080x1920.mp4",
+    "captions": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\_pipeline\\أحمد علي - ورشة خبير الضرايب\\captions.json",
+    "energy": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\_pipeline\\أحمد علي - ورشة خبير الضرايب\\audio.16k.wav.energy.json",
+    "metadata": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\_pipeline\\أحمد علي - ورشة خبير الضرايب\\scaled.1080x1920.mp4.metadata.json"
+  },
+
+  "video": {
+    "duration_sec": 111.4,
+    "duration_str": "01:51",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 71
+  },
+
+  "lecturer": {
+    "name": "أحمد علي",
+    "title": "خبير ضرائب",
+    "workshop": "ورشة خبير الضرايب"
+  },
+
+  "summary": "أحمد علي بيشرح إزاي تتفادى مشاكل الضرائب بطريقة بسيطة. بيقول إن الموضوع مش صعب — كل اللي محتاج تعرفه هو كلمتين: الالتزامات الضريبية. لكل نوع ضريبة عليك التزام (إقرار أو نموذج) ومعاد قانوني تقدمه فيه. في التزامات شهرية زي القيمة المضافة، ربع سنوية زي نموذج 41 ونموذج 4 بتاع المرتبات، وسنوية زي الإقرار السنوي.",
+
+  "topics": [
+    "تفادي مشاكل الضرائب",
+    "الالتزامات الضريبية",
+    "مصلحة الضرائب",
+    "المنظومة الضريبية الإلكترونية",
+    "الإقرارات الشهرية (القيمة المضافة)",
+    "النماذج الربع سنوية (نموذج 41، نموذج 4)",
+    "الإقرار السنوي",
+    "المعاد القانوني للتقديم"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "المشكلة والسؤال",
+      "start_sec": 0,
+      "end_sec": 8.36,
+      "start_str": "00:00",
+      "end_str": "00:08",
+      "subtitle_range": [0, 4],
+      "summary": "أحمد بيطرح المشكلة: عندك ضرائب كتير، هتعمل ايه؟ الحل: اعرف المطلوب منك"
+    },
+    {
+      "id": 2,
+      "title": "مصلحة الضرائب عايزة ايه",
+      "start_sec": 8.36,
+      "end_sec": 16.84,
+      "start_str": "00:08",
+      "end_str": "00:16",
+      "subtitle_range": [5, 12],
+      "summary": "قانون الضرائب مش صعب — مصلحة الضرائب عايزة منك حاجات محددة"
+    },
+    {
+      "id": 3,
+      "title": "الإجابة: كلمتين بمنتهى البساطة",
+      "start_sec": 16.84,
+      "end_sec": 36.36,
+      "start_str": "00:16",
+      "end_str": "00:36",
+      "subtitle_range": [12, 24],
+      "summary": "الالتزامات الضريبية — كل نوع ضريبة عليه التزامات مختلفة حسب الشركة، ومحتاج تعرفها على وجه التحديد"
+    },
+    {
+      "id": 4,
+      "title": "الالتزامات الضريبية في المنظومة",
+      "start_sec": 36.36,
+      "end_sec": 66.9,
+      "start_str": "00:36",
+      "end_str": "01:06",
+      "subtitle_range": [25, 42],
+      "summary": "كلمة الالتزامات الضريبية معناها إيه عملياً — لما تدخل المنظومة أول حاجة بتشوفها: الالتزامات. يعني إيه عليك التزام وهتقدم ايه"
+    },
+    {
+      "id": 5,
+      "title": "أنواع الالتزامات: إقرار ونموذج",
+      "start_sec": 66.9,
+      "end_sec": 95.98,
+      "start_str": "01:06",
+      "end_str": "01:35",
+      "subtitle_range": [43, 59],
+      "summary": "في الضرائب حاجتين: إقرارات (شهرية زي القيمة المضافة، سنوية) ونماذج (ربع سنوية زي نموذج 41 بتاع المرتبات ونموذج 4)"
+    },
+    {
+      "id": 6,
+      "title": "الخلاصة: الالتزام والمعاد القانوني",
+      "start_sec": 95.98,
+      "end_sec": 110.42,
+      "start_str": "01:35",
+      "end_str": "01:50",
+      "subtitle_range": [60, 70],
+      "summary": "أهم حاجة في كل نوع ضريبة: اعرف الالتزام المطلوب منك والمعاد القانوني اللي هتقدمه فيه"
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [3, 4],
+      "timestamp_start_sec": 4.68,
+      "timestamp_end_sec": 8.36,
+      "timestamp_start": "00:04",
+      "timestamp_end": "00:08",
+      "content": "هعمل ايه؟ اعرف انت مطلوب منك ايه — دي صعبة؟ مش صعبة",
+      "importance": "high",
+      "concept_type": "tip",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "definition scene — عنوان 'اعرف مطلوب منك ايه' مع أيقونة علامة استفهام تتحول لعلامة صح، subline 'مش صعبة'. رسالة مطمئنة"
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [10, 11],
+      "timestamp_start_sec": 15.36,
+      "timestamp_end_sec": 16.84,
+      "timestamp_start": "00:15",
+      "timestamp_end": "00:16",
+      "content": "مصلحة الضرائب عايزة مننا ايه؟",
+      "importance": "medium",
+      "concept_type": "tip",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "keyword overlay لـ 'مصلحة الضرائب' — أول ذكر للمصطلح الرئيسي"
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [13, 14, 15, 16, 17],
+      "timestamp_start_sec": 17.88,
+      "timestamp_end_sec": 25.94,
+      "timestamp_start": "00:17",
+      "timestamp_end": "00:25",
+      "content": "كلمتين بمنتهى البساطة — تعرفهم في كل نوع من أنواع الضرائب اللي احنا خاضعين لها كشركة",
+      "importance": "high",
+      "concept_type": "metaphor",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "big_metaphor scene — headline ضخم 'كلمتين بمنتهى البساطة' يظهر مع spring bounce، تحته subline 'لكل نوع ضريبة'. لحظة الـ reveal الرئيسية"
+    },
+    {
+      "id": 4,
+      "subtitle_ids": [20, 21, 22],
+      "timestamp_start_sec": 29.04,
+      "timestamp_end_sec": 33.58,
+      "timestamp_start": "00:29",
+      "timestamp_end": "00:33",
+      "content": "محتاج اعرف انا الضرائب عايزة مني ايه على وجه التحديد",
+      "importance": "medium",
+      "concept_type": "tip",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "smart_zoom_only",
+      "animation_description": "smart zoom على الوش — لحظة تأكيد مع energy عالية (0.199 at 33.8s)"
+    },
+    {
+      "id": 5,
+      "subtitle_ids": [25, 26, 27],
+      "timestamp_start_sec": 36.36,
+      "timestamp_end_sec": 42.5,
+      "timestamp_start": "00:36",
+      "timestamp_end": "00:42",
+      "content": "كلمة اسمها الالتزامات الضريبية — لو فيه حد بيدخل على المنظومة",
+      "importance": "high",
+      "concept_type": "definition",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "definition scene — term 'الالتزامات الضريبية' بـ accent highlight، body: 'اللي مطلوب منك تقدمه لمصلحة الضرائب'، مثال: 'أول حاجة بتشوفها لما تدخل المنظومة'"
+    },
+    {
+      "id": 6,
+      "subtitle_ids": [35, 36],
+      "timestamp_start_sec": 51.06,
+      "timestamp_end_sec": 53.26,
+      "timestamp_start": "00:51",
+      "timestamp_end": "00:53",
+      "content": "الالتزامات — هو عايز يقولك انت لو ما تعرفش",
+      "importance": "medium",
+      "concept_type": "tip",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "overlay_only",
+      "animation_description": "overlay 'المنظومة الضريبية' — keyword highlight لأول ذكر عملي"
+    },
+    {
+      "id": 7,
+      "subtitle_ids": [43, 44, 45, 46],
+      "timestamp_start_sec": 66.9,
+      "timestamp_end_sec": 72.56,
+      "timestamp_start": "01:06",
+      "timestamp_end": "01:12",
+      "content": "في الضرائب حاجتين: ياما عندنا إقرار ياما عندنا نموذج",
+      "importance": "high",
+      "concept_type": "comparison",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "comparison_two_paths scene — العمود الأيسر: 'إقرار' (declaration) مع أمثلة، العمود الأيمن: 'نموذج' (form) مع أمثلة. الاتنين تحت عنوان 'أنواع الالتزامات'"
+    },
+    {
+      "id": 8,
+      "subtitle_ids": [47, 48, 49, 50, 51, 52],
+      "timestamp_start_sec": 73.18,
+      "timestamp_end_sec": 84.12,
+      "timestamp_start": "01:13",
+      "timestamp_end": "01:24",
+      "content": "إقرارات شهرية زي القيمة المضافة — ربع سنوية زي نموذج 41 ونموذج 4 بتاع المرتبات",
+      "importance": "high",
+      "concept_type": "process",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "process_timeline scene — 3 nodes: 'شهري' (القيمة المضافة) → 'ربع سنوي' (نموذج 41 + نموذج 4) → 'سنوي' (الإقرار السنوي). timeline أفقي مع labels"
+    },
+    {
+      "id": 9,
+      "subtitle_ids": [55, 56, 57, 58],
+      "timestamp_start_sec": 89.42,
+      "timestamp_end_sec": 95.98,
+      "timestamp_start": "01:29",
+      "timestamp_end": "01:35",
+      "content": "في نهاية السنة — الإقرار السنوي",
+      "importance": "medium",
+      "concept_type": "definition",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "keyword overlay لـ 'الإقرار السنوي' — مصطلح مهم يستحق highlight"
+    },
+    {
+      "id": 10,
+      "subtitle_ids": [62, 63, 64, 65, 66, 67, 68, 69, 70],
+      "timestamp_start_sec": 98.92,
+      "timestamp_end_sec": 110.42,
+      "timestamp_start": "01:38",
+      "timestamp_end": "01:50",
+      "content": "أهم حاجة في الضرائب: في كل نوع تعرف الالتزام اللي مطلوب منك والمعاد القانوني اللي هتقدمه فيه",
+      "importance": "high",
+      "concept_type": "equation",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "equation scene — 'الالتزام' + 'المعاد القانوني' = 'خبير ضرايب'. معادلة بسيطة تلخص الفيديو كله"
+    }
+  ],
+
+  "hook_analysis": {
+    "first_3_seconds_text": "هو احنا عشان نتفادى المشاكل اللي انا يبقى علي ضرائب قد كده",
+    "hook_strength": "medium",
+    "reason": "بيبدأ بمشكلة حقيقية (ضرائب كتير) وسؤال ضمني (إزاي نتفادى)، مش بداية مؤسسية بس مش سؤال صادم",
+    "suggestion": "ممكن تقوي الـ hook بـ smart zoom خفيف في أول 2s عشان تلفت الانتباه",
+    "alternative_start_sec": null,
+    "alternative_subtitle_id": null,
+    "visual_suggestions": [
+      "AccentFlash على كلمة 'ضرائب' في أول ثانية",
+      "word_pop glow على 'نتفادى' عشان تركز على الـ pain point"
+    ]
+  },
+
+  "keywords": [
+    {
+      "term": "الضرائب",
+      "first_seen_subtitle": 2,
+      "first_seen_sec": 3.12,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "مصلحة الضرائب",
+      "first_seen_subtitle": 10,
+      "first_seen_sec": 15.36,
+      "category": "institution",
+      "weight": 4
+    },
+    {
+      "term": "الالتزامات الضريبية",
+      "first_seen_subtitle": 25,
+      "first_seen_sec": 37.4,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "المنظومة",
+      "first_seen_subtitle": 28,
+      "first_seen_sec": 43.32,
+      "category": "system",
+      "weight": 3
+    },
+    {
+      "term": "إقرار",
+      "first_seen_subtitle": 45,
+      "first_seen_sec": 70.22,
+      "category": "document",
+      "weight": 4
+    },
+    {
+      "term": "نموذج",
+      "first_seen_subtitle": 46,
+      "first_seen_sec": 71.68,
+      "category": "document",
+      "weight": 4
+    },
+    {
+      "term": "القيمة المضافة",
+      "first_seen_subtitle": 49,
+      "first_seen_sec": 76.98,
+      "category": "tax_type",
+      "weight": 4
+    },
+    {
+      "term": "نموذج 41",
+      "first_seen_subtitle": 51,
+      "first_seen_sec": 83.1,
+      "category": "form",
+      "weight": 3
+    },
+    {
+      "term": "نموذج 4",
+      "first_seen_subtitle": 52,
+      "first_seen_sec": 84.76,
+      "category": "form",
+      "weight": 3
+    },
+    {
+      "term": "المرتبات",
+      "first_seen_subtitle": 52,
+      "first_seen_sec": 86.42,
+      "category": "concept",
+      "weight": 3
+    },
+    {
+      "term": "الإقرار السنوي",
+      "first_seen_subtitle": 57,
+      "first_seen_sec": 90.72,
+      "category": "document",
+      "weight": 4
+    },
+    {
+      "term": "المعاد القانوني",
+      "first_seen_subtitle": 69,
+      "first_seen_sec": 107.92,
+      "category": "concept",
+      "weight": 5
+    }
+  ],
+
+  "emphasis_moments": [
+    {
+      "energy_time_sec": 1.216,
+      "energy": 0.1964,
+      "energy_type": "high_energy",
+      "subtitle_id": 1,
+      "text": "المشاكل اللي انا يبقى",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "بداية الفيديو — energy عالية لكن مفيش مفهوم مجرد يستحق scene"
+    },
+    {
+      "energy_time_sec": 5.888,
+      "energy": 0.2128,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 3,
+      "text": "هعمل ايه؟ اعرف انت",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 1,
+      "rationale": "لحظة السؤال الجوهري — energy عالية + dramatic pause + سؤال مباشر"
+    },
+    {
+      "energy_time_sec": 12.192,
+      "energy": 0.2138,
+      "energy_type": "high_energy",
+      "subtitle_id": 7,
+      "text": "الضرائب قانون الضرائب ده",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "تأكيد على إن الضرائب مش صعبة — energy عالية"
+    },
+    {
+      "energy_time_sec": 16.672,
+      "energy": 0.1881,
+      "energy_type": "high_energy",
+      "subtitle_id": 11,
+      "text": "عايزة مننا ايه؟",
+      "intensity": "medium",
+      "suggested_treatment": "overlay_only",
+      "key_moment_ref": 2,
+      "rationale": "سؤال مصلحة الضرائب — مرتبط بـ key moment 2"
+    },
+    {
+      "energy_time_sec": 22.56,
+      "energy": 0.1838,
+      "energy_type": "high_energy",
+      "subtitle_id": 15,
+      "text": "تعرفهم في كل نوع",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 3,
+      "rationale": "جزء من لحظة الـ reveal — كلمتين بمنتهى البساطة"
+    },
+    {
+      "energy_time_sec": 27.232,
+      "energy": 0.1928,
+      "energy_type": "high_energy",
+      "subtitle_id": 18,
+      "text": "كشركة لان كل شركة",
+      "intensity": "low",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "elaboration — كل شركة مختلفة"
+    },
+    {
+      "energy_time_sec": 33.824,
+      "energy": 0.199,
+      "energy_type": "high_energy",
+      "subtitle_id": 22,
+      "text": "وجه التحديد صح؟",
+      "intensity": "strong",
+      "suggested_treatment": "smart_zoom_only",
+      "key_moment_ref": 4,
+      "rationale": "تأكيد مباشر — energy عالية + سؤال تأكيدي 'صح؟'"
+    },
+    {
+      "energy_time_sec": 37.984,
+      "energy": 0.198,
+      "energy_type": "high_energy",
+      "subtitle_id": 25,
+      "text": "كلمة كده اسمها الالتزامات",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 5,
+      "rationale": "reveal المصطلح الرئيسي — 'الالتزامات الضريبية'"
+    },
+    {
+      "energy_time_sec": 40.544,
+      "energy": 0.217,
+      "energy_type": "high_energy",
+      "subtitle_id": 26,
+      "text": "الالتزامات اللي ايه؟ الضريبية",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 5,
+      "rationale": "أعلى energy في القسم — تكرار 'الالتزامات الضريبية' للتأكيد"
+    },
+    {
+      "energy_time_sec": 45.472,
+      "energy": 0.1907,
+      "energy_type": "high_energy",
+      "subtitle_id": 30,
+      "text": "بتاعة الضرائب حد جرب",
+      "intensity": "medium",
+      "suggested_treatment": "overlay_only",
+      "key_moment_ref": 6,
+      "rationale": "ذكر المنظومة + سؤال تفاعلي 'حد جرب يدخل؟'"
+    },
+    {
+      "energy_time_sec": 50.272,
+      "energy": 0.1882,
+      "energy_type": "high_energy",
+      "subtitle_id": 33,
+      "text": "ال username والباسورد وبعد",
+      "intensity": "low",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "وصف عملي — مش مفهوم مجرد"
+    },
+    {
+      "energy_time_sec": 53.472,
+      "energy": 0.2382,
+      "energy_type": "high_energy",
+      "subtitle_id": 35,
+      "text": "ايه؟ الالتزامات هو عايز",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 6,
+      "rationale": "أعلى energy في الفيديو كله (0.238) — تكرار كلمة 'الالتزامات' على المنظومة"
+    },
+    {
+      "energy_time_sec": 62.176,
+      "energy": 0.1845,
+      "energy_type": "high_energy",
+      "subtitle_id": 40,
+      "text": "لا استنى بقى انا",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "لحظة تصحيح — 'مش هدفع فلوس، استنى'"
+    },
+    {
+      "energy_time_sec": 72.064,
+      "energy": 0.1839,
+      "energy_type": "high_energy",
+      "subtitle_id": 46,
+      "text": "حاجة اسمها نموذج",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 7,
+      "rationale": "ذكر 'نموذج' لأول مرة — الفرق بين إقرار ونموذج"
+    },
+    {
+      "energy_time_sec": 76.512,
+      "energy": 0.1929,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 48,
+      "text": "شهرية اللي هو زي",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 8,
+      "rationale": "dramatic pause قبل ذكر القيمة المضافة"
+    },
+    {
+      "energy_time_sec": 88.672,
+      "energy": 0.196,
+      "energy_type": "high_energy",
+      "subtitle_id": 54,
+      "text": "كمان حاجات في نهاية",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 9,
+      "rationale": "انتقال للإقرارات السنوية"
+    },
+    {
+      "energy_time_sec": 95.008,
+      "energy": 0.2099,
+      "energy_type": "high_energy",
+      "subtitle_id": 58,
+      "text": "السنوي الاقرار الايه السنوي",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 9,
+      "rationale": "تكرار 'الإقرار السنوي' بـ energy عالية — تأكيد مهم"
+    },
+    {
+      "energy_time_sec": 102.048,
+      "energy": 0.1992,
+      "energy_type": "high_energy",
+      "subtitle_id": 64,
+      "text": "الضرائب في كل نوع",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 10,
+      "rationale": "بداية الخلاصة — energy عالية + محتوى تلخيصي"
+    },
+    {
+      "energy_time_sec": 104.48,
+      "energy": 0.2165,
+      "energy_type": "high_energy",
+      "subtitle_id": 65,
+      "text": "من انواع الضرائب تعرف",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 10,
+      "rationale": "ذروة الخلاصة — 'تعرف كلمتين: الالتزام والمعاد القانوني'"
+    },
+    {
+      "energy_time_sec": 106.656,
+      "energy": 0.187,
+      "energy_type": "high_energy",
+      "subtitle_id": 67,
+      "text": "الالتزام اللي مطلوب منك",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 10,
+      "rationale": "الكلمة الأولى: الالتزام — مع energy عالية"
+    }
+  ],
+
+  "stats": {
+    "total_emphasis": 19,
+    "strong_emphasis": 9,
+    "medium_emphasis": 6,
+    "low_emphasis": 2,
+    "high_energy_count": 22,
+    "dramatic_pause_count": 5,
+    "avg_energy": 0.1046,
+    "max_energy": 0.2382,
+    "max_energy_time": 53.472,
+    "speaking_style": "steady",
+    "words_per_sec": 2.45
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": 6,
+    "top_priority_scenes": [
+      { "key_moment_id": 1, "reason": "Hook question — tip scene بسيط" },
+      { "key_moment_id": 3, "reason": "THE reveal — big_metaphor 'كلمتين بمنتهى البساطة'" },
+      { "key_moment_id": 5, "reason": "Definition — 'الالتزامات الضريبية' المصطلح الأساسي" },
+      { "key_moment_id": 7, "reason": "Comparison — إقرار vs نموذج" },
+      { "key_moment_id": 8, "reason": "Process — timeline الالتزامات (شهري/ربع سنوي/سنوي)" },
+      { "key_moment_id": 10, "reason": "Equation — الخلاصة: الالتزام + المعاد القانوني" }
+    ],
+    "smart_zoom_density": "2 zooms max — face detection 81.9% no-face, sporadic windows",
+    "overlays_density": "3-4 overlays — مصلحة الضرائب + المنظومة + القيمة المضافة + الإقرار السنوي",
+    "hook_action": "medium hook — no alternative start needed, just add AccentFlash on first emphasis"
+  }
+}

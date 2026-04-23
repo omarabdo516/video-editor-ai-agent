@@ -37,6 +37,7 @@ export {
   captionsSrtPath,
   speechRhythmPath,
   reelOutputPath,
+  thumbnailPath,
   legacyCandidates,
   canonicalPath,
   resolveExisting,
@@ -69,6 +70,7 @@ import {
   energyPath as _energy,
   metadataPath as _meta,
   speechRhythmPath as _rhythm,
+  thumbnailPath as _thumb,
   reelOutputPath as _reel,
 } from '../../lib/paths.mjs';
 
@@ -83,6 +85,7 @@ export function derivedOutputs(videoPath) {
     energy: _energy(videoPath),
     metadata: _meta(videoPath),
     speech_rhythm: _rhythm(videoPath),
+    thumbnail: _thumb(videoPath),
     animation_plan: animationPlanPath(videoPath),
     content_analysis: contentAnalysisPath(videoPath),
     reel: _reel(videoPath),

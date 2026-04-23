@@ -1,0 +1,536 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-16",
+  "generated_by": "Claude Code (Claude Opus 4.6)",
+
+  "source": {
+    "video": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\محمد ريان ورشة الشامل 2.mp4",
+    "captions": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\_pipeline\\محمد ريان ورشة الشامل 2\\captions.json",
+    "energy": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\_pipeline\\محمد ريان ورشة الشامل 2\\audio.16k.wav.energy.json",
+    "face_map": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\_pipeline\\محمد ريان ورشة الشامل 2\\scaled.1080x1920.mp4.face_map.json",
+    "speech_rhythm": "D:\\Work\\Saed Tantawy\\RS\\MATRIAL 2026\\Montage\\p5\\First Bulk\\_pipeline\\محمد ريان ورشة الشامل 2\\speech_rhythm.json"
+  },
+
+  "video": {
+    "duration_sec": 64.66,
+    "duration_str": "01:04",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 59
+  },
+
+  "lecturer": {
+    "name": "محمد ريان",
+    "title": "خبير محاسبة",
+    "workshop": "ورشة المحاسب الشامل"
+  },
+
+  "summary": "محمد ريان بيشرح ليه البرامج المحاسبية الحديثة زي Odoo وOracle بتستخدم مراكز تكلفة بدل فتح حساب مستقل لكل مشروع. بيوضح إن لو عندك 1000 خامة و100 مشروع، هتبقى 100 ألف entry — headache على أي سيرفر. الحل: تسكّن الخامات مرة واحدة في حساب رئيسي، وتعمل مراكز تكلفة للمشاريع. مثال عملي: شركة نقليات — كل عربية ليها مركز تكلفة (صيانة، أسمنت، زلط، سواقين). استثناء مهم: العموميات زي الإكراميات ما تحملش على مركز تكلفة — بس مصاريف التشغيل.",
+
+  "topics": [
+    "شجرة الحسابات في البرامج المحاسبية",
+    "مراكز التكلفة (Cost Centers)",
+    "الفرق بين الحسابات المستقلة ومراكز التكلفة",
+    "مشكلة تكرار الخامات في المشاريع",
+    "تطبيق مراكز التكلفة في شركات النقليات",
+    "مصاريف التشغيل vs العموميات",
+    "Odoo / Oracle ERP",
+    "الإكراميات كمصروف عمومي"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "المشكلة — شجرة الحسابات والتكرار",
+      "start_sec": 0,
+      "end_sec": 16.06,
+      "start_str": "00:00",
+      "end_str": "00:16",
+      "subtitle_range": [0, 15],
+      "summary": "بيطرح السؤال: البرامج الحديثة بتلعب على إيه؟ لو فتحت حساب مستقل لكل مشروع، الألف خامة هتتكرر 3000 مرة — headache ضخم"
+    },
+    {
+      "id": 2,
+      "title": "الحل — مراكز التكلفة",
+      "start_sec": 16.06,
+      "end_sec": 24.82,
+      "start_str": "00:16",
+      "end_str": "00:24",
+      "subtitle_range": [16, 23],
+      "summary": "البرنامج بيقولك: سكّن الخامات في حساب رئيسي مرة واحدة، وارمي برة حاجة اسمها مراكز تكلفة. المشاريع اعمل 100 مشروع عادي"
+    },
+    {
+      "id": 3,
+      "title": "حجم المشكلة بالأرقام",
+      "start_sec": 24.82,
+      "end_sec": 38.64,
+      "start_str": "00:24",
+      "end_str": "00:38",
+      "subtitle_range": [24, 33],
+      "summary": "100 مشروع × 1000 خامة = 100,000 خامة. أنهي سيرفر هيتحمل ده؟ الحل: ألف خامة مرة واحدة + ألف مشروع ياخدوا نفس الأسمنت والزلط"
+    },
+    {
+      "id": 4,
+      "title": "مثال عملي — شركة النقليات",
+      "start_sec": 38.64,
+      "end_sec": 53.64,
+      "start_str": "00:38",
+      "end_str": "00:53",
+      "subtitle_range": [34, 46],
+      "summary": "شركة عندها 200 عربية — تعمل مركز تكلفة وتحتيه كل عربية ليها مركز تكلفة فرعي (صيانة، أسمنت، زلط، سواقين، رخص)"
+    },
+    {
+      "id": 5,
+      "title": "القاعدة — العموميات لا تحمّل",
+      "start_sec": 53.64,
+      "end_sec": 64.66,
+      "start_str": "00:53",
+      "end_str": "01:04",
+      "subtitle_range": [47, 58],
+      "summary": "الإكراميات عمومية — ما تحملش على مركز تكلفة. اللي بيتحمّل على مراكز التكلفة = مصاريف التشغيل بس. العموميات مش جزء من التشغيل أصلاً"
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [3, 4, 5, 6],
+      "timestamp_start_sec": 3.36,
+      "timestamp_end_sec": 6.84,
+      "timestamp_start": "00:03",
+      "timestamp_end": "00:06",
+      "content": "بيلعب على إيه؟ أنا دلوقتي عندي عشان أعمل مشروعات تحت تنفيذ عندي ألف خامة",
+      "importance": "high",
+      "concept_type": "definition",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "overlay",
+      "animation_description": "keyword overlay 'ألف خامة' عشان يثبّت الرقم في ذهن المشاهد"
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [7, 8, 9, 10],
+      "timestamp_start_sec": 6.84,
+      "timestamp_end_sec": 11.6,
+      "timestamp_start": "00:06",
+      "timestamp_end": "00:11",
+      "content": "لو أنا فتحت لكل مشروع عندي حساب مستقل لازم أحط تحت كل مشروع الألف خامة صح كده؟",
+      "importance": "high",
+      "concept_type": "equation",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "equation scene: 'مشروع واحد × 1,000 خامة = 1,000 حساب' مع build-up token بـ token"
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [15, 16, 17],
+      "timestamp_start_sec": 16.06,
+      "timestamp_end_sec": 18.84,
+      "timestamp_start": "00:16",
+      "timestamp_end": "00:18",
+      "content": "بقى Headache ضخم فراح قالك لا — انت سكّنلي في الحساب الرئيسي",
+      "importance": "high",
+      "concept_type": "tip",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "smart_zoom_plus_overlay",
+      "animation_description": "stamp overlay 'Headache ضخم' مع smart zoom crash على الوش عند نقطة التحول"
+    },
+    {
+      "id": 4,
+      "subtitle_ids": [19, 20, 21],
+      "timestamp_start_sec": 20.22,
+      "timestamp_end_sec": 23.08,
+      "timestamp_start": "00:20",
+      "timestamp_end": "00:23",
+      "content": "حاجة اسمها مراكز تكلفة — والأسمنت والزلط مرة واحدة",
+      "importance": "high",
+      "concept_type": "definition",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "definition scene: المصطلح 'مراكز التكلفة' مع شرح قصير — خامات في حساب رئيسي واحد + مشاريع كمراكز"
+    },
+    {
+      "id": 5,
+      "subtitle_ids": [25, 26, 27, 28],
+      "timestamp_start_sec": 26.22,
+      "timestamp_end_sec": 30.34,
+      "timestamp_start": "00:26",
+      "timestamp_end": "00:30",
+      "content": "100 مشروع في 1000 خامة يعني بقى 100,000 خامة — أنهي سيرفر اللي هيتحمل معايا ده",
+      "importance": "high",
+      "concept_type": "equation",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "counter scene: رقم ضخم '100,000' خامة مع count-up effect + label 'أنهي سيرفر هيتحمل؟'"
+    },
+    {
+      "id": 6,
+      "subtitle_ids": [36, 37, 38, 39, 40],
+      "timestamp_start_sec": 39.64,
+      "timestamp_end_sec": 43.34,
+      "timestamp_start": "00:39",
+      "timestamp_end": "00:43",
+      "content": "أنا بعمل لكل عربية مركز تكلفة — صيانة وأسمنت وزلط وسواقين ورخص",
+      "importance": "high",
+      "concept_type": "process",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "process_stepper scene: عربية → مركز تكلفة → (صيانة / أسمنت / زلط / سواقين / رخص) كـ cards مع stagger"
+    },
+    {
+      "id": 7,
+      "subtitle_ids": [47, 48, 49, 50],
+      "timestamp_start_sec": 53.8,
+      "timestamp_end_sec": 57.86,
+      "timestamp_start": "00:53",
+      "timestamp_end": "00:57",
+      "content": "الإكراميات عمومية — ما تحملش على مركز تكلفة. عموماً ما تحملش على مركز تكلفة",
+      "importance": "high",
+      "concept_type": "comparison",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "comparison_two_paths: عمود ✓ مصاريف التشغيل (بتتحمّل) vs عمود ✗ العموميات/الإكراميات (ما بتتحملش)"
+    }
+  ],
+
+  "hook_analysis": {
+    "first_3_seconds_text": "شجرة الاحسابات الجديدة دلوقتي في برامج زي اودو واوريكل والكلام ده",
+    "hook_strength": "medium",
+    "reason": "بداية topical بتقدم السياق (شجرة حسابات + ERP) مع سؤال 'بيلعب على إيه؟' في ثانية 3.36 — مش أقوى hook لكنه بيدخل في الموضوع بسرعة",
+    "suggestion": "الـ hook مقبول — السؤال بييجي في ثانية 3.5 وده سريع كفاية. ممكن يتحسّن لو بدأ من السؤال مباشرة.",
+    "alternative_start_sec": null,
+    "alternative_subtitle_id": null,
+    "visual_suggestions": [
+      "AccentFlash على كلمة 'اودو' في ثانية 2.18",
+      "word_pop على 'بيلعب على إيه؟' في ثانية 3.36"
+    ]
+  },
+
+  "keywords": [
+    {
+      "term": "شجرة الحسابات",
+      "first_seen_subtitle": 0,
+      "first_seen_sec": 0,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "Odoo",
+      "first_seen_subtitle": 1,
+      "first_seen_sec": 2.18,
+      "category": "tool",
+      "weight": 3
+    },
+    {
+      "term": "Oracle",
+      "first_seen_subtitle": 2,
+      "first_seen_sec": 2.4,
+      "category": "tool",
+      "weight": 3
+    },
+    {
+      "term": "مشروعات تحت تنفيذ",
+      "first_seen_subtitle": 5,
+      "first_seen_sec": 5.0,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "حساب مستقل",
+      "first_seen_subtitle": 8,
+      "first_seen_sec": 8.28,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "Headache",
+      "first_seen_subtitle": 15,
+      "first_seen_sec": 16.44,
+      "category": "metaphor",
+      "weight": 5
+    },
+    {
+      "term": "مراكز تكلفة",
+      "first_seen_subtitle": 19,
+      "first_seen_sec": 20.96,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "شركة نقليات",
+      "first_seen_subtitle": 42,
+      "first_seen_sec": 48.42,
+      "category": "example",
+      "weight": 4
+    },
+    {
+      "term": "مصاريف التشغيل",
+      "first_seen_subtitle": 51,
+      "first_seen_sec": 58.92,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "الإكراميات",
+      "first_seen_subtitle": 47,
+      "first_seen_sec": 53.8,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "العموميات",
+      "first_seen_subtitle": 55,
+      "first_seen_sec": 61.54,
+      "category": "concept",
+      "weight": 4
+    }
+  ],
+
+  "emphasis_moments": [
+    {
+      "energy_time_sec": 0.032,
+      "energy": 0.2871,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 0,
+      "text": "شجرة الاحسابات الجديدة دلوقتي",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "بداية الفيديو — pause قبل الكلام"
+    },
+    {
+      "energy_time_sec": 3.52,
+      "energy": 0.2519,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 3,
+      "text": "بيلعب علي اية؟",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 1,
+      "rationale": "السؤال الجوهري اللي بيفتح الموضوع — لحظة hook"
+    },
+    {
+      "energy_time_sec": 6.848,
+      "energy": 0.2403,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 7,
+      "text": "لو انا فتحت لكل مشروع",
+      "intensity": "medium",
+      "suggested_treatment": "overlay_only",
+      "key_moment_ref": 2,
+      "rationale": "بداية طرح المشكلة"
+    },
+    {
+      "energy_time_sec": 8.864,
+      "energy": 0.2388,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 8,
+      "text": "مشروع عندي حساب مستقل",
+      "intensity": "medium",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 2,
+      "rationale": "مرساة scene الـ equation — حساب مستقل لكل مشروع"
+    },
+    {
+      "energy_time_sec": 11.2,
+      "energy": 0.2298,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 10,
+      "text": "الالف خامة صح كده ؟",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 2,
+      "rationale": "تأكيد على حجم المشكلة"
+    },
+    {
+      "energy_time_sec": 13.408,
+      "energy": 0.2928,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 12,
+      "text": "عندي كام مرة ثلاث",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "تصاعد في الصوت عند الأرقام — 3000 مرة"
+    },
+    {
+      "energy_time_sec": 16.0,
+      "energy": 0.3151,
+      "energy_type": "high_energy",
+      "subtitle_id": 15,
+      "text": "بقى Headache ضخم",
+      "intensity": "strong",
+      "suggested_treatment": "smart_zoom_plus_overlay",
+      "key_moment_ref": 3,
+      "rationale": "أعلى طاقة في المقطع الأول — نقطة التحول ومدخل الحل"
+    },
+    {
+      "energy_time_sec": 18.112,
+      "energy": 0.2766,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 17,
+      "text": "انت سكنلي في الحساب الرئيسي",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 3,
+      "rationale": "تقديم الحل — الحساب الرئيسي"
+    },
+    {
+      "energy_time_sec": 20.384,
+      "energy": 0.2691,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 19,
+      "text": "حاجة اسمها مراكز تكلفة",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 4,
+      "rationale": "أول ذكر لـ 'مراكز التكلفة' — المصطلح الأساسي"
+    },
+    {
+      "energy_time_sec": 22.496,
+      "energy": 0.2635,
+      "energy_type": "high_energy",
+      "subtitle_id": 20,
+      "text": "والاسمنت والظلط مرة واحدة",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 4,
+      "rationale": "تأكيد على فكرة 'مرة واحدة' — جوهر الحل"
+    },
+    {
+      "energy_time_sec": 25.504,
+      "energy": 0.3399,
+      "energy_type": "high_energy",
+      "subtitle_id": 24,
+      "text": "ايه مية مشروع",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 5,
+      "rationale": "ذروة الطاقة — بيقول الأرقام بحماس شديد"
+    },
+    {
+      "energy_time_sec": 27.552,
+      "energy": 0.3041,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 26,
+      "text": "يعني بقى مية الف",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 5,
+      "rationale": "الرقم المفاجئ 100,000 — لحظة reveal"
+    },
+    {
+      "energy_time_sec": 32.704,
+      "energy": 0.3414,
+      "energy_type": "high_energy",
+      "subtitle_id": 31,
+      "text": "هما الف خامة مرا واحدة",
+      "intensity": "strong",
+      "suggested_treatment": "smart_zoom_only",
+      "key_moment_ref": null,
+      "rationale": "أعلى طاقة في الفيديو كله — بيأكد إن الحل بسيط: ألف خامة مرة واحدة بس"
+    },
+    {
+      "energy_time_sec": 35.296,
+      "energy": 0.2965,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 32,
+      "text": "واعمللي ياربي الف مشروع",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "استمرار للتأكيد — ألف مشروع"
+    },
+    {
+      "energy_time_sec": 38.432,
+      "energy": 0.254,
+      "energy_type": "high_energy",
+      "subtitle_id": 33,
+      "text": "دة العربيات اولا ده",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 6,
+      "rationale": "انتقال للمثال العملي — العربيات"
+    },
+    {
+      "energy_time_sec": 42.24,
+      "energy": 0.3206,
+      "energy_type": "high_energy",
+      "subtitle_id": 38,
+      "text": "انا عندي الصيانة واسمنت وظلط",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 6,
+      "rationale": "مرساة scene المثال العملي — تعداد المصاريف بحماس"
+    },
+    {
+      "energy_time_sec": 44.96,
+      "energy": 0.3074,
+      "energy_type": "high_energy",
+      "subtitle_id": 39,
+      "text": "صيانة وسواقين ورخص",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 6,
+      "rationale": "تكملة المثال — تفاصيل المصاريف"
+    }
+  ],
+
+  "stats": {
+    "total_emphasis_moments": 17,
+    "strong_emphasis": 7,
+    "medium_emphasis": 9,
+    "low_emphasis": 1,
+    "high_energy_peaks": 7,
+    "dramatic_pauses": 10,
+    "mean_energy": 0.1067,
+    "max_energy": 0.3414,
+    "speech_style": "steady",
+    "avg_words_per_sec": 3.23
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": 4,
+    "top_priority_scenes": [
+      {
+        "key_moment_id": 2,
+        "type": "equation",
+        "reason": "مشروع × 1000 خامة = المشكلة — equation واضحة"
+      },
+      {
+        "key_moment_id": 5,
+        "type": "counter",
+        "reason": "100,000 خامة — رقم صادم يحتاج count-up"
+      },
+      {
+        "key_moment_id": 6,
+        "type": "process_stepper",
+        "reason": "عربية → مركز تكلفة → (صيانة/أسمنت/زلط/سواقين/رخص)"
+      },
+      {
+        "key_moment_id": 7,
+        "type": "comparison_two_paths",
+        "reason": "مصاريف تشغيل ✓ vs عموميات ✗ — مقارنة واضحة"
+      }
+    ],
+    "smart_zoom_density": "1 big zoom (video < 90s, tight windows)",
+    "overlays_density": "2-3 overlays (20s spacing)"
+  }
+}

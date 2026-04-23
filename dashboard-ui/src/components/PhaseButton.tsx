@@ -1,5 +1,6 @@
 import type { PhaseId, PhaseState, Video } from '../api/types';
 import { useDashboardStore } from '../store/useDashboardStore';
+import { useModalStore } from '../store/useModalStore';
 
 interface Props {
   video: Video;
@@ -60,11 +61,12 @@ export function PhaseButton({
   onClick,
 }: Props) {
   const runPhase = useDashboardStore((s) => s.runPhase);
+  const showConfirm = useModalStore((s) => s.showConfirm);
   const state = video.phases[phase] ?? { status: 'pending' };
   const style = statusStyle(state.status);
   const isRunning = state.status === 'running';
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (onClick) {
       onClick();
       return;
@@ -73,7 +75,12 @@ export function PhaseButton({
     if (phase === 'edit' || phase === 'analyze') return;
 
     if (state.status === 'done') {
-      if (!confirm(`Re-run "${label}" for this video?`)) return;
+      const ok = await showConfirm({
+        title: `Re-run ${label}?`,
+        message: `This phase already completed. Running it again will overwrite the previous output.`,
+        confirmLabel: 'Re-run',
+      });
+      if (!ok) return;
     }
     void runPhase(video.id, phase);
   };
@@ -86,18 +93,13 @@ export function PhaseButton({
       disabled={isDisabled}
       onClick={handleClick}
       title={disabled ? disabledReason : state.error ?? undefined}
-      className={BASE_CLASSES}
+      className={`${BASE_CLASSES} phase-btn`}
       style={{
         borderColor: style.border,
         background: style.bg,
         color: style.fg,
-      }}
-      onMouseEnter={(e) => {
-        if (!isDisabled) e.currentTarget.style.background = style.hover;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = style.bg;
-      }}
+        '--phase-btn-hover': style.hover,
+      } as React.CSSProperties}
     >
       <span className="text-sm font-semibold">{label}</span>
       <span className="flex items-center gap-1.5 text-xs opacity-80">

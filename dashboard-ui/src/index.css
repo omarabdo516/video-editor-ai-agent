@@ -11,19 +11,44 @@
 
   /* Dashboard palette (dark theme) */
   --color-bg-base: #0a0a0f;
-  --color-bg-panel: #14151c;
+  --color-bg-panel: #13141b;
   --color-bg-elevated: #1a1c25;
-  --color-border-subtle: #262834;
-  --color-border-strong: #383b4a;
-  --color-text-primary: #f5f5f7;
+  --color-border-subtle: #23252f;
+  --color-border-strong: #363844;
+  --color-text-primary: #f0f0f4;
   --color-text-secondary: #9ca0ac;
-  --color-text-muted: #5f6273;
+  --color-text-muted: #5c5f70;
 
   /* Status colors */
   --color-status-pending: #6b7280;
   --color-status-running: #ffb501;
   --color-status-done: #10b981;
   --color-status-failed: #ef4444;
+
+  /* Semantic surfaces */
+  --color-backdrop: rgba(0, 0, 0, 0.55);
+  --color-accent-subtle: rgba(255, 181, 1, 0.08);
+  --color-success-subtle: rgba(16, 185, 129, 0.1);
+  --color-danger-subtle: rgba(239, 68, 68, 0.08);
+
+  /* Spacing scale — reference, used in component styles */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
 }
 
 * {
@@ -46,24 +71,32 @@ body {
   min-height: 100vh;
 }
 
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-base);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-border-strong);
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #4a4d5e;
+  background: var(--color-text-muted);
 }
 
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+/* Base form elements */
 input,
 textarea,
 button {
@@ -75,23 +108,67 @@ input,
 textarea {
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border-subtle);
-  border-radius: 6px;
-  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) 10px;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+input:hover,
+textarea:hover {
+  border-color: var(--color-border-strong);
 }
 
 input:focus,
 textarea:focus {
   outline: 2px solid var(--color-brand-accent);
   outline-offset: 1px;
+  border-color: transparent;
 }
 
 button {
   cursor: pointer;
+  transition: opacity var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
 }
 
 button:disabled {
   cursor: not-allowed;
   opacity: 0.4;
+}
+
+/* Phase button hover via CSS custom property */
+.phase-btn:not(:disabled):hover {
+  background: var(--phase-btn-hover) !important;
+}
+
+/* Focus-visible ring for keyboard navigation */
+.phase-btn:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-brand-accent);
+  outline-offset: 2px;
+}
+
+/* LTR text utility for paths */
+.text-ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @keyframes spin {
@@ -108,4 +185,24 @@ button:disabled {
   border-top-color: transparent;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
+}
+
+@keyframes toast-shrink {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+@keyframes toast-enter {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

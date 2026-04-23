@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-16",
+  "generated_by": "Claude Code (opus-4-6)",
+
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/محمد ريان ورشة الشامل 1.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 1/scaled.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 1/captions.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 1/audio.16k.wav.energy.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 1/scaled.1080x1920.mp4.face_map.json",
+    "speech_rhythm": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 1/speech_rhythm.json"
+  },
+
+  "video": {
+    "duration_sec": 27.3,
+    "duration_str": "0:27",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 20
+  },
+
+  "lecturer": {
+    "name": "محمد ريان",
+    "title": "خبير محاسبة",
+    "workshop": "ورشة المحاسب الشامل"
+  },
+
+  "summary": "محمد ريان بيتكلم عن الإكراميات كتكاليف مشاريع — بيوضح إن المعيار المحاسبي بيقول إن المشروع بيتحمّل أي تكلفة \"لازمة\" لإتمامه، مش بس اسمنت وزلط. بيحكي قصة واقعية عن بلطجي في موقع بناء بيطلب 50 جنيه علبة سجاير، والسؤال: ندفعله ولا لأ؟ يختم ساخراً: \"لأ العرب حبايبنا\". كليب خفيف بيوصّل فكرة محاسبية جادة بأسلوب مضحك.",
+
+  "topics": [
+    "الإكراميات كتكاليف مشاريع",
+    "التكاليف اللازمة لإتمام المشروع",
+    "تكاليف المشاريع في المحاسبة",
+    "قصة واقعية من موقع بناء"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "الإكراميات وتكاليف المشاريع",
+      "start_sec": 0,
+      "end_sec": 13.02,
+      "start_str": "0:00",
+      "end_str": "0:13",
+      "subtitle_range": [0, 11],
+      "summary": "بيفتح بـ hook إن الإكراميات بقت جزء أساسي، ويربطها بالمصطلح المحاسبي: التكاليف اللازمة لإتمام المشروع — مش بس اسمنت وزلط."
+    },
+    {
+      "id": 2,
+      "title": "قصة البلطجي في الموقع",
+      "start_sec": 13.02,
+      "end_sec": 25.98,
+      "start_str": "0:13",
+      "end_str": "0:25",
+      "subtitle_range": [12, 19],
+      "summary": "بيحكي قصة بلطجي واقف في موقع بناء بيطلب 50 جنيه علبة سجاير. السؤال: ندفعله؟ الإجابة ساخرة: \"لأ العرب حبايبنا تمام خلاص\"."
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [0, 1, 2, 3],
+      "timestamp_start_sec": 0,
+      "timestamp_end_sec": 4.46,
+      "timestamp_start": "0:00",
+      "timestamp_end": "0:04",
+      "content": "احيانا لازم تدفع اكرامية عشان الدنيا تمشي — بقت جزء اساسي",
+      "importance": "medium",
+      "concept_type": "tip",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "Keyword overlay لـ 'إكرامية' — highlight الكلمة المفتاحية اللي بتحدد موضوع الكليب كله."
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [6, 7, 8, 9, 10],
+      "timestamp_start_sec": 5.42,
+      "timestamp_end_sec": 11.1,
+      "timestamp_start": "0:05",
+      "timestamp_end": "0:11",
+      "content": "في تكاليف المشاريع يحمل على المشروع التكاليف اللازمة لاتمام المشروع — ما قالكش اسمنت ولا ظلط — قالك التكاليف اللازمة",
+      "importance": "high",
+      "concept_type": "definition",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "Definition scene: المصطلح 'التكاليف اللازمة' بالـ accent color + تحته التعريف: أي تكلفة مطلوبة لإتمام المشروع. Optional icon أو example line: 'مش بس اسمنت وزلط'."
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [14, 15, 16, 17],
+      "timestamp_start_sec": 15.3,
+      "timestamp_end_sec": 21.74,
+      "timestamp_start": "0:15",
+      "timestamp_end": "0:21",
+      "content": "بلطجي واقف ببتاعه ورايح جاي يقولك خمسين علبة سجاير من غيره الواد هيجي لنا",
+      "importance": "high",
+      "concept_type": "example",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "smart_zoom_only",
+      "animation_description": "Smart zoom crash على وش المحاضر وهو بيحكي القصة — peak energy (0.3039 at 20.16s) + face conf 0.83+. القصة بتحتاج face expression مش scene بصري."
+    }
+  ],
+
+  "hook_analysis": {
+    "first_3_seconds_text": "احيانا لازم تدفع اكرامية عشان الدنيا تمشي بقت جزء اساسي",
+    "hook_strength": "strong",
+    "reason": "بداية استفزازية — بيقول صراحةً إنك لازم تدفع إكرامية (رشوة). ده attention grab من أول فريم. مش بداية مؤسسية ولا 'النهارده هنتكلم عن'.",
+    "suggestion": null,
+    "alternative_start_sec": null,
+    "alternative_subtitle_id": null,
+    "visual_suggestions": [
+      "Keyword overlay لـ 'إكرامية' في أول 3 ثواني",
+      "word_pop بـ glow على 'اكرامية' لما تتقال"
+    ]
+  },
+
+  "keywords": [
+    {
+      "term": "إكرامية",
+      "first_seen_subtitle": 0,
+      "first_seen_sec": 1.02,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "تكاليف المشاريع",
+      "first_seen_subtitle": 6,
+      "first_seen_sec": 5.52,
+      "category": "accounting",
+      "weight": 5
+    },
+    {
+      "term": "التكاليف اللازمة",
+      "first_seen_subtitle": 7,
+      "first_seen_sec": 7.3,
+      "category": "accounting",
+      "weight": 5
+    },
+    {
+      "term": "بلطجي",
+      "first_seen_subtitle": 14,
+      "first_seen_sec": 15.52,
+      "category": "story",
+      "weight": 3
+    }
+  ],
+
+  "emphasis_moments": [
+    {
+      "energy_time_sec": 2.432,
+      "energy": 0.2286,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 2,
+      "text": "بقت جزء اساسي",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 1,
+      "rationale": "Dramatic pause بعد الـ hook — المحاضر بيأكد إن الإكراميات بقت أساسية."
+    },
+    {
+      "energy_time_sec": 12.256,
+      "energy": 0.2067,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 11,
+      "text": "اللازمة اللازمة",
+      "intensity": "medium",
+      "suggested_treatment": "overlay_only",
+      "key_moment_ref": 2,
+      "rationale": "تكرار 'اللازمة' مرتين للتأكيد — dramatic pause بعد الـ scene zone."
+    },
+    {
+      "energy_time_sec": 16.0,
+      "energy": 0.2756,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 14,
+      "text": "واقف ببتاعه",
+      "intensity": "strong",
+      "suggested_treatment": "smart_zoom_only",
+      "key_moment_ref": 3,
+      "rationale": "أعلى dramatic_pause energy في الكليب — البلطجي 'واقف ببتاعه'. رابع أعلى energy عموماً."
+    },
+    {
+      "energy_time_sec": 18.016,
+      "energy": 0.2261,
+      "energy_type": "high_energy",
+      "subtitle_id": 15,
+      "text": "يقولك خمسين",
+      "intensity": "strong",
+      "suggested_treatment": "smart_zoom_only",
+      "key_moment_ref": 3,
+      "rationale": "High energy — لحظة المواجهة، البلطجي بيطلب فلوس. Face conf 0.837."
+    },
+    {
+      "energy_time_sec": 20.16,
+      "energy": 0.3039,
+      "energy_type": "high_energy",
+      "subtitle_id": 16,
+      "text": "سجاير من غيره",
+      "intensity": "strong",
+      "suggested_treatment": "smart_zoom_only",
+      "key_moment_ref": 3,
+      "rationale": "أعلى energy في الكليب كله (0.3039). Peak القصة."
+    },
+    {
+      "energy_time_sec": 22.368,
+      "energy": 0.2924,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 18,
+      "text": "واقعة صح ندفعله",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "السؤال البلاغي: ندفعله ولا لأ؟ Energy عالية + dramatic pause."
+    },
+    {
+      "energy_time_sec": 25.472,
+      "energy": 0.202,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 19,
+      "text": "تمام خلاص",
+      "intensity": "low",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "Close. Energy معتدلة — الكليب بيخلص."
+    }
+  ],
+
+  "stats": {
+    "total_key_moments": 3,
+    "high_importance": 2,
+    "medium_importance": 1,
+    "total_keywords": 4,
+    "total_emphasis_moments": 7,
+    "strong_emphasis": 3,
+    "medium_emphasis": 3,
+    "low_emphasis": 1,
+    "speaking_style": "dynamic",
+    "avg_words_per_sec": 2.93
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": 1,
+    "top_priority_scenes": [
+      {
+        "key_moment_id": 2,
+        "suggested_type": "definition",
+        "rationale": "المصطلح المحاسبي 'التكاليف اللازمة' — مفهوم مجرد بيتوضح بصرياً أحسن. الـ key moment الوحيد اللي بيحتاج full-screen treatment."
+      }
+    ],
+    "smart_zoom_density": "1 zoom max (video < 30s — 30s spacing rule)",
+    "overlays_density": "1 overlay max (video < 30s — 20s spacing rule)",
+    "notes": "ريل قصير جداً (27s). Scene واحدة + zoom واحد + overlay واحد = كافي. الـ micro_events هي اللي هتملا الـ retention gaps."
+  }
+}

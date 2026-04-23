@@ -138,10 +138,10 @@
 | `startDelaySec` | 0.5 | يدي المشاهد نص ثانية يستوعب الفيديو قبل ما يظهر |
 | `slideDurationSec` | 0.4 | سلس مش مفاجئ |
 | `y` | 1100 | وسط-أسفل، فوق الكابشنز |
-| `nameSize` | 72 | كبير + واضح |
-| `titleSize` | 44 | أصغر شوية — hierarchy |
-| `barWidth` | 820 | نفس maxWidth الكابشنز |
-| `barHeight` | 180 | كفاية للاسمين |
+| `nameSize` | 60 | كبير + واضح — اتصغّر من 72 عشان التناسب مع العرض الأضيق |
+| `titleSize` | 38 | أصغر شوية — hierarchy — اتصغّر من 44 |
+| `barWidth` | 640 | أضيق من الكابشنز عشان ما يبقاش dominant — كان 820 |
+| `barPaddingV` | 28 | auto height بـ padding بدل fixed barHeight 180 — الكلام يتنفس |
 
 ### Animation
 - Bar: spring slide من اليمين لليسار (RTL)

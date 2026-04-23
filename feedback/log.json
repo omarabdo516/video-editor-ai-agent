@@ -338,6 +338,27 @@
       "overall_rating": 3,
       "overall_note": "حاسس ان الموضوع بقي مكرر ومحتاج اضيف Overlays أكتر بتنوع أكتر في الفيديوهات الجاية",
       "feedback": []
+    },
+    {
+      "project": "محمد ريان ورشة الشامل 2",
+      "date": "2026-04-16",
+      "brand": "rs",
+      "source": "dashboard",
+      "video_duration_sec": 64.833333,
+      "counts": {
+        "scenes": 4,
+        "smart_zooms": 1,
+        "big_overlays": 2,
+        "micro_events": 4,
+        "word_pop": 2,
+        "caption_underline": 1,
+        "mini_zoom": 1,
+        "accent_flash": 0,
+        "total_events": 7
+      },
+      "overall_rating": 4,
+      "overall_note": "test note",
+      "feedback": []
     }
   ]
 }

@@ -11,6 +11,7 @@ import {
   subscribeToBatch as apiSubscribeToBatch,
 } from '../api/client';
 import { useDashboardStore } from './useDashboardStore';
+import { toast } from './useToastStore';
 
 const LOG_LIMIT = 200;
 
@@ -30,6 +31,7 @@ interface ActiveBatch {
   currentVideoId: string | null;
   error: string | null;
   log: BatchLogLine[];
+  startedAt: string;
 }
 
 interface BatchState {
@@ -57,6 +59,7 @@ function snapshotToActive(snap: BatchSnapshot): ActiveBatch {
     currentVideoId: snap.videoIds[snap.currentIndex] ?? null,
     error: snap.error ?? null,
     log: [],
+    startedAt: snap.startedAt,
   };
 }
 
@@ -138,6 +141,8 @@ export const useBatchStore = create<BatchState>((set, get) => ({
           }),
         });
       } else if (ev.type === 'done') {
+        const doneCount = ev.results.filter((r) => r.status === 'done').length;
+        const failCount = ev.results.filter((r) => r.status === 'failed').length;
         set({
           active: {
             ...pushLog(cur, { text: 'Batch complete.', kind: 'success' }),
@@ -146,6 +151,9 @@ export const useBatchStore = create<BatchState>((set, get) => ({
           },
           _unsubscribe: null,
         });
+        toast.success(
+          `Batch done — ${doneCount} succeeded${failCount > 0 ? `, ${failCount} failed` : ''}`,
+        );
         void useDashboardStore.getState().refresh();
       } else if (ev.type === 'failed') {
         set({
@@ -159,6 +167,7 @@ export const useBatchStore = create<BatchState>((set, get) => ({
           },
           _unsubscribe: null,
         });
+        toast.error(`Batch failed: ${ev.error}`);
         void useDashboardStore.getState().refresh();
       } else if (ev.type === 'cancelled') {
         set({
@@ -168,6 +177,7 @@ export const useBatchStore = create<BatchState>((set, get) => ({
           },
           _unsubscribe: null,
         });
+        toast.warning('Batch cancelled');
         void useDashboardStore.getState().refresh();
       }
     });
@@ -180,8 +190,8 @@ export const useBatchStore = create<BatchState>((set, get) => ({
     if (!cur) return;
     try {
       await apiCancelBatch(cur.id);
-    } catch (e) {
-      console.error('cancelBatch failed', e);
+    } catch {
+      toast.error('فشل إلغاء الـ Batch');
     }
   },
 

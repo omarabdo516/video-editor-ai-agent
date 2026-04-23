@@ -159,12 +159,32 @@ function syncEditPhaseFromDisk(video) {
   return true;
 }
 
+// If render is done but analyze/microEvents are pending, they must have
+// been completed outside the dashboard (Claude session + script). Mark done.
+function inferCompletedPhases(video) {
+  const phases = video.phases;
+  if (!phases || phases.render?.status !== 'done') return false;
+  let changed = false;
+  for (const p of ['analyze', 'microEvents']) {
+    if (phases[p]?.status === 'pending') {
+      phases[p] = {
+        status: 'done',
+        finishedAt: phases.render.finishedAt || new Date().toISOString(),
+        source: 'inferred',
+      };
+      changed = true;
+    }
+  }
+  return changed;
+}
+
 // ─── reads ────────────────────────────────────────────────────────────────
 export function getVideos() {
   const cache = ensureLoaded();
   let anyChanged = false;
   for (const video of cache.videos) {
     if (syncEditPhaseFromDisk(video)) anyChanged = true;
+    if (inferCompletedPhases(video)) anyChanged = true;
   }
   if (anyChanged) persist();
   return cache.videos;
@@ -174,7 +194,9 @@ export function getVideo(id) {
   const cache = ensureLoaded();
   const video = cache.videos.find((v) => v.id === id);
   if (!video) return null;
-  if (syncEditPhaseFromDisk(video)) persist();
+  let changed = syncEditPhaseFromDisk(video);
+  if (inferCompletedPhases(video)) changed = true;
+  if (changed) persist();
   return video;
 }
 
@@ -255,6 +277,7 @@ export function addVideo({ path: videoPath, name, lecturer, workshop }) {
     name: displayName,
     lecturer: finalLecturer,
     workshop: finalWorkshop,
+    category: null,
     addedAt: new Date().toISOString(),
     duration_sec,
     phases: emptyPhases(),
@@ -287,6 +310,27 @@ export function updateVideoRating(id, { rating, note }) {
   if (note !== undefined) video.notes = note;
   persist();
   return video;
+}
+
+export function updateVideo(id, patch) {
+  ensureLoaded();
+  const video = cache.videos.find((v) => v.id === id);
+  if (!video) return null;
+  const ALLOWED = ['name', 'lecturer', 'workshop', 'category'];
+  for (const key of ALLOWED) {
+    if (key in patch) video[key] = patch[key];
+  }
+  persist();
+  return video;
+}
+
+export function getCategories() {
+  const cache = ensureLoaded();
+  const cats = new Set();
+  for (const v of cache.videos) {
+    if (v.category) cats.add(v.category);
+  }
+  return [...cats].sort();
 }
 
 export function removeVideo(id) {

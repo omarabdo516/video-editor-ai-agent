@@ -205,6 +205,32 @@
 - **التاريخ:** 2026-04-15
 - **المصدر:** "محمد علاء - ورشة المحاسب المالي"
 
+### tokens.lowerThird — narrower bar + auto-height padding
+- **القديم:** barWidth=820, barHeight=180 (fixed), nameSize=72, titleSize=44, padding '0 32px'
+- **الجديد:** barWidth=640, auto height via padding (barPaddingV=28, barPaddingH=48), nameSize=60, titleSize=38
+- **السبب:** Omar: "العرض كبير والطول ممكن الكلام يخبط في سقف المستطيل" — الـ 820px bar كان بياخد 76% من العرض وطويل. الـ fixed height 180 كان بيزنق الكلام الطويل. Auto-padding بيخلي المستطيل يتمدد حسب المحتوى
+- **التاريخ:** 2026-04-16
+- **المصدر:** "أحمد علي - ورشة خبير الضرايب"
+
+### tokens.overlays.defaultY (900 → 1080)
+- **القيمة القديمة:** 900 (body zone — far from captions)
+- **القيمة الجديدة:** 1080 (~240px فوق الكابشن عند y=1420 بعد حساب ارتفاع الـ overlay ~100px)
+- **السبب (تطور):** y=900 كان بعيد (520px gap). أول iteration جرّبت 1200 — Omar: "لسه لازقين في بعض". الحل النهائي 1080: margin كافي بين overlay والكابشن. الـ lower-third (y=1100) بيخلص عند 4.5s، والـ overlays بتبدأ من 15s+
+- **التاريخ:** 2026-04-16
+- **المصدر:** "أحمد علي - ورشة خبير الضرايب"
+
+### KeywordHighlightOverlay — subtle accent underline
+- **الجديد:** gradient gold underline تحت الـ primary text (3px، 70% opacity، left/right 15% inset)
+- **السبب:** Omar: "نظبط شكل ال Overlay أفضل من كدا" — الـ floating text بدون card كان plain بزيادة
+- **التاريخ:** 2026-04-16
+- **المصدر:** "أحمد علي - ورشة خبير الضرايب"
+
+### Scenes — vertical layout preferred for long Arabic labels
+- **القاعدة:** لما الـ labels عربية وطويلة (زي أسماء نماذج/إقرارات)، استخدم `process_stepper` (عمودي) بدل `process_timeline` (أفقي). الأفقي بيخلي الـ labels تتداخل في 1080px.
+- **السبب:** Omar: "مش لازم كل حاجة تتعرض بالعرض ممكن تتعرض بالطول بردو عادي" + الـ timeline scene كانت الـ node circles بتـ overflow بالنص الطويل
+- **التاريخ:** 2026-04-16
+- **المصدر:** "أحمد علي - ورشة خبير الضرايب"
+
 ---
 
 ## 🧪 Experiments للمرة الجاية

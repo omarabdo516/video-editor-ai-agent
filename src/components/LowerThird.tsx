@@ -39,7 +39,7 @@ export const LowerThird: React.FC<Props> = ({ name, title }) => {
         })
       : 0;
 
-  const translateX = slideIn * 0 + slideOut * (width + lt.barWidth);
+  const translateX = (1 - slideIn) * (width + lt.barWidth) + slideOut * (width + lt.barWidth);
   const opacity = interpolate(local, [0, 6], [0, 1], {
     extrapolateRight: 'clamp',
   });
@@ -48,12 +48,11 @@ export const LowerThird: React.FC<Props> = ({ name, title }) => {
     <div
       style={{
         position: 'absolute',
-        left: (1080 - lt.barWidth) / 2,
+        left: (width - lt.barWidth) / 2,
         top: lt.y,
         width: lt.barWidth,
-        height: lt.barHeight,
         background: `linear-gradient(135deg, ${tokens.colors.primary} 0%, #0D2E6B 100%)`,
-        borderRadius: 22,
+        borderRadius: 18,
         boxShadow: '0 14px 40px rgba(16, 71, 157, 0.5), 0 0 0 2px rgba(255,181,1,0.25) inset',
         display: 'flex',
         flexDirection: 'column',
@@ -63,7 +62,7 @@ export const LowerThird: React.FC<Props> = ({ name, title }) => {
         fontFamily: tokens.fonts.heading,
         transform: `translateX(${translateX}px)`,
         opacity,
-        padding: '0 32px',
+        padding: `${lt.barPaddingV + 6}px ${lt.barPaddingH}px`,
       }}
     >
       <div
@@ -72,7 +71,8 @@ export const LowerThird: React.FC<Props> = ({ name, title }) => {
           fontSize: lt.nameSize,
           fontWeight: 800,
           letterSpacing: '-0.5px',
-          lineHeight: 1.1,
+          lineHeight: 1.15,
+          textAlign: 'center',
         }}
       >
         {name}
@@ -82,8 +82,10 @@ export const LowerThird: React.FC<Props> = ({ name, title }) => {
           color: tokens.colors.accent,
           fontSize: lt.titleSize,
           fontWeight: 600,
-          marginTop: 6,
+          marginTop: 16,
           letterSpacing: '0.3px',
+          lineHeight: 1.15,
+          textAlign: 'center',
         }}
       >
         {title}

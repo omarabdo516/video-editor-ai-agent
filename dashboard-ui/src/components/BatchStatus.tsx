@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useBatchStore } from '../store/useBatchStore';
 import { useDashboardStore } from '../store/useDashboardStore';
 import { ProgressBar } from './ProgressBar';
+import { getBatchEta } from '../utils/phaseEstimates';
 
 const PHASE_LABEL: Record<string, string> = {
   phase1: 'Phase 1',
@@ -17,6 +18,14 @@ export function BatchStatus() {
   const videos = useDashboardStore((s) => s.videos);
 
   const logRef = useRef<HTMLDivElement>(null);
+
+  // Tick every second for ETA updates
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    if (!active || active.status !== 'running') return;
+    const id = window.setInterval(() => setTick((t) => t + 1), 1000);
+    return () => window.clearInterval(id);
+  }, [active?.status]);
 
   useEffect(() => {
     const el = logRef.current;
@@ -55,6 +64,10 @@ export function BatchStatus() {
     : cancelled
     ? 'Cancelled'
     : active.status;
+
+  const batchEta = running
+    ? getBatchEta(videos, active.phase, active.total, completedCount, active.startedAt)
+    : null;
 
   const statusColor = failed
     ? 'var(--color-status-failed)'
@@ -110,6 +123,19 @@ export function BatchStatus() {
         progress={progressFrac}
         color={failed ? 'danger' : done ? 'success' : 'accent'}
       />
+
+      {/* ETA row */}
+      {batchEta && (
+        <div
+          className="flex items-center justify-between px-1 text-[10px]"
+          style={{ color: 'var(--color-text-muted)' }}
+        >
+          <span>{batchEta.perVideo}</span>
+          <span style={{ color: 'var(--color-text-secondary)' }}>
+            {batchEta.remaining}
+          </span>
+        </div>
+      )}
 
       <div
         ref={logRef}

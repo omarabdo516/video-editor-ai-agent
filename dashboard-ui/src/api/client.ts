@@ -21,6 +21,11 @@ import type {
 
 const API = '/api';
 
+/** Returns the URL for a video's thumbnail image (generated on-demand by the API). */
+export function thumbnailUrl(videoId: string): string {
+  return `${API}/videos/${encodeURIComponent(videoId)}/thumbnail`;
+}
+
 async function jsonOrThrow(r: Response, label: string): Promise<unknown> {
   if (!r.ok) {
     let msg = `${label}: ${r.status}`;
@@ -63,6 +68,29 @@ export async function addVideo(input: AddVideoInput): Promise<Video> {
     'addVideo',
   )) as { video: Video };
   return body.video;
+}
+
+export async function updateVideo(
+  id: string,
+  patch: { name?: string; lecturer?: string; workshop?: string; category?: string | null },
+): Promise<Video> {
+  const body = (await jsonOrThrow(
+    await fetch(`${API}/videos/${encodeURIComponent(id)}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(patch),
+    }),
+    'updateVideo',
+  )) as { video: Video };
+  return body.video;
+}
+
+export async function getCategories(): Promise<string[]> {
+  const body = (await jsonOrThrow(
+    await fetch(`${API}/videos/categories`),
+    'getCategories',
+  )) as { categories: string[] };
+  return body.categories;
 }
 
 export async function removeVideo(id: string): Promise<void> {

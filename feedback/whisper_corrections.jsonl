@@ -113,3 +113,68 @@
 {"original":"ايس","corrected":"اقيس","context_before":"عايز","context_after":"المخزون","time_sec":127.64,"project":"أحمد عاشور - تحليل مالي","date":"2026-04-15"}
 {"original":"بايس","corrected":"بقيس","context_before":"كنت","context_after":"حركة","time_sec":131.28,"project":"أحمد عاشور - تحليل مالي","date":"2026-04-15"}
 {"original":"بتنخبطش","corrected":"بتتلخبطش","context_before":"ما","context_after":"مقصودش","time_sec":136.6,"project":"أحمد عاشور - تحليل مالي","date":"2026-04-15"}
+{"original":"او","corrected":"هو","context_before":"","context_after":"احنا","time_sec":0,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"منين","corrected":"مننا","context_before":"عايز","context_after":"ايه","time_sec":13.94,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"عايزها","corrected":"عايزة","context_before":"الضرائب","context_after":"منين","time_sec":16.02,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"منين","corrected":"مننا","context_before":"عايزها","context_after":"ايه","time_sec":16.3,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"عايزها","corrected":"عايزة","context_before":"ايه","context_after":"منك","time_sec":16.84,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"بمنطقة","corrected":"بمنتهي","context_before":"كلمتين","context_after":"البساطة","time_sec":18.88,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"خضعين","corrected":"خاضعين","context_before":"احنا","context_after":"لها","time_sec":24.96,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"عايزة","corrected":"صح","context_before":"صح","context_after":"تعرف","time_sec":33.02,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"تعرف","corrected":"عايز","context_before":"عايزة","context_after":"او","time_sec":33.58,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"عايز","corrected":"تعرف","context_before":"او","context_after":"تعرف","time_sec":34.26,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"جرى","corrected":"جرب","context_before":"حد","context_after":"بيدخل","time_sec":45.1,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"بيدخل","corrected":"يدخل","context_before":"جرى","context_after":"على","time_sec":45.36,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"عليها","corrected":"عليا","context_before":"انا","context_after":"التزام","time_sec":62.66,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"الكومة","corrected":"القيمة","context_before":"زي","context_after":"المضافة","time_sec":76.98,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"نمازج","corrected":"نماذج","context_before":"عندنا","context_after":"زي","time_sec":82.12,"project":"أحمد علي - ورشة خبير الضرايب","date":"2026-04-16"}
+{"original":"اقرامية","corrected":"اكرامية","context_before":"تدفع","context_after":"عشان","time_sec":1.02,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"لكش","corrected":"قالكش","context_before":"ما","context_after":"اسمع","time_sec":9.1,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"اسمع","corrected":"اسمنت","context_before":"لكش","context_after":"انت","time_sec":9.34,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"انت","corrected":"ولا","context_before":"اسمع","context_after":"ولا","time_sec":9.54,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"ولا","corrected":"ظلط","context_before":"انت","context_after":"زارة","time_sec":9.68,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"اي","corrected":"ايا","context_before":"اللازمة","context_after":"ان","time_sec":12.82,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"ان","corrected":"كانت","context_before":"اي","context_after":"كانت","time_sec":13.02,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"بلطج","corrected":"بلطجي","context_before":"ايه","context_after":"واقف","time_sec":15.52,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"سجاية","corrected":"سجاير","context_before":"علبة","context_after":"من","time_sec":19.78,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"الوقت","corrected":"الواد","context_before":"غيره","context_after":"هيجي","time_sec":21.18,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"صح","corrected":"واقعة","context_before":"واقعة","context_after":"نتفعل","time_sec":22.3,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"العرب","corrected":"لأ","context_before":"لا","context_after":"حبيب","time_sec":23.94,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"حبيب","corrected":"حبايبنا","context_before":"العرب","context_after":"تمام","time_sec":24.4,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"خلاص","corrected":"تمام","context_before":"تمام","context_after":"","time_sec":25.36,"project":"محمد ريان ورشة الشامل 1","date":"2026-04-16"}
+{"original":"اود","corrected":"اودو","context_before":"زي","context_after":"واوريكل","time_sec":2.18,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"انا","corrected":"اية","context_before":"علي","context_after":"دلوقتي","time_sec":4.14,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"صحيح","corrected":"خامة","context_before":"خامة","context_after":"كده","time_sec":10.8,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"كم","corrected":"كام","context_before":"عندي","context_after":"مرة","time_sec":12.9,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"صحيح","corrected":"صح","context_before":"مرة","context_after":"كده","time_sec":15.22,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"هديك","corrected":"Headache","context_before":"بقى","context_after":"ضغط","time_sec":16.44,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"ضغط","corrected":"ضخم","context_before":"هديك","context_after":"فراح","time_sec":16.68,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"سكلي","corrected":"سكنلي","context_before":"انت","context_after":"في","time_sec":17.92,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"وزارة","corrected":"والظلط","context_before":"والاسمنت","context_after":"مرة","time_sec":22.22,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"اعم","corrected":"اعمل","context_before":"المشاريع","context_after":"وطبعا","time_sec":23.88,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"وطبعا","corrected":"مية","context_before":"اعم","context_after":"بتحمل","time_sec":24.2,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"بدي","corrected":"متخيل","context_before":"انت","context_after":"خالية","time_sec":25.16,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"خالية","corrected":"يعني","context_before":"بدي","context_after":"يعني","time_sec":25.34,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"يعني","corrected":"ايه","context_before":"خالية","context_after":"ايه","time_sec":25.52,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"ايه","corrected":"مية","context_before":"يعني","context_after":"مية","time_sec":25.62,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"مية","corrected":"مشروع","context_before":"ايه","context_after":"مشروع","time_sec":25.74,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"انا","corrected":"انهي","context_before":"خامة","context_after":"هس","time_sec":29.6,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"هس","corrected":"سيرفر","context_before":"انا","context_after":"그래서","time_sec":29.86,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"그래서","corrected":"اللي","context_before":"هس","context_after":"فقالك","time_sec":30.22,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"ياربأ","corrected":"ياربي","context_before":"واعمللي","context_after":"الف","time_sec":34.26,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"للكس","corrected":"نفس","context_before":"هما","context_after":"الميات","time_sec":36.76,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"الميات","corrected":"الأسمنت","context_before":"للكس","context_after":"ما","time_sec":37.1,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"ما","corrected":"والظلط","context_before":"الميات","context_after":"دة","time_sec":37.44,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"وأتعدى","corrected":"وظلط","context_before":"واسمنت","context_after":"صيانة","time_sec":42.68,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"وسوائين","corrected":"وسواقين","context_before":"صيانة","context_after":"ورخص","time_sec":43.92,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"طبعا","corrected":"طب","context_before":"صح","context_after":"انا","time_sec":46.64,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"بيت","corrected":"ميت","context_before":"عندي","context_after":"عربية","time_sec":47.8,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"الشركة","corrected":"شركة","context_before":"ف","context_after":"نقليات","time_sec":48.42,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"تحديد","corrected":"تحتيه","context_before":"وتعمل","context_after":"العربات","time_sec":51.08,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"العربات","corrected":"العربيات","context_before":"تحديد","context_after":"بتاعته","time_sec":51.34,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"الاكرامات","corrected":"الاكراميات","context_before":"تكلفة","context_after":"عمومية","time_sec":53.8,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"بيحمل","corrected":"اللي","context_before":"لانه","context_after":"على","time_sec":58.02,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"مركز","corrected":"بيحمل","context_before":"على","context_after":"تكلفة","time_sec":58.36,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"تكلفة","corrected":"مركز","context_before":"مركز","context_after":"مصاريف","time_sec":58.62,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"التشغيل","corrected":"النكلفة","context_before":"مركز","context_after":"هي","time_sec":62.84,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"الاصل","corrected":"اصلا","context_before":"التشغيل","context_after":"تمام","time_sec":63.9,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}

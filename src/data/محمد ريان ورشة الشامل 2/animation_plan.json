@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-16",
+  "generated_by": "Claude Code (Claude Opus 4.6)",
+  "source_video_basename": "محمد ريان ورشة الشامل 2",
+  "video": {
+    "duration_sec": 64.66
+  },
+  "source": {
+    "video": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/محمد ريان ورشة الشامل 2.mp4",
+    "video_scaled": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 2/scaled.1080x1920.mp4",
+    "captions": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 2/captions.json",
+    "face_map": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 2/scaled.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/Saed Tantawy/RS/MATRIAL 2026/Montage/p5/First Bulk/_pipeline/محمد ريان ورشة الشامل 2/audio.16k.wav.energy.json"
+  },
+  "caption_style": "hormozi",
+  "smart_zoom_plan": {
+    "source": "محمد ريان ورشة الشامل 2",
+    "spring": "smooth",
+    "moments": [
+      {
+        "id": "zoom_1",
+        "startSec": 32.7,
+        "endSec": 36.2,
+        "zoomLevel": 1.4,
+        "centerX": 0.578,
+        "centerY": 0.394,
+        "easing": "crash_zoom",
+        "reason": "أعلى energy في الفيديو (0.3414) — 'هما ألف خامة مرة واحدة' — لحظة التأكيد على بساطة الحل بأعلى حماس. Face conf 0.822.",
+        "anchor_subtitle_id": 31,
+        "anchor_text": "هما الف خامة مرا واحدة"
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "equation",
+      "key_moment_ref": 2,
+      "start_sec": 7.6,
+      "end_sec": 13,
+      "duration_sec": 5.4,
+      "entrance": "blur_reveal",
+      "exit": "fade",
+      "anchor_subtitle_ids": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "anchor_text": "لو أنا فتحت لكل مشروع عندي حساب مستقل لازم أحط تحت كل مشروع الألف خامة",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "المشكلة",
+      "title_size": 64,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "equation",
+          "terms": [
+            { "text": "1", "label": "مشروع" },
+            { "text": "×" },
+            { "text": "1,000", "label": "خامة" },
+            { "text": "=", "label": "" },
+            { "text": "1,000", "label": "حساب", "is_result": true }
+          ],
+          "footer": "لكل مشروع!"
+        }
+      ],
+      "reason": "بيوضح المشكلة بصرياً — كل مشروع محتاج ألف حساب مستقل، equation واضحة للمشاهد"
+    },
+    {
+      "id": "scene_2",
+      "type": "full_screen_scene",
+      "scene_type": "counter",
+      "key_moment_ref": 5,
+      "start_sec": 26.22,
+      "end_sec": 31.22,
+      "duration_sec": 5,
+      "entrance": "scale_bounce",
+      "exit": "scale_out",
+      "anchor_subtitle_ids": [
+        25,
+        26,
+        27
+      ],
+      "anchor_text": "مية مشروع في ألف خامة يعني بقى مية ألف",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "أنهي سيرفر هيتحمل؟",
+      "title_size": 64,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "counter",
+          "value": 100000,
+          "label_top": "100 مشروع × 1,000 خامة",
+          "label_bottom": "خامة في شجرة الحسابات"
+        }
+      ],
+      "reason": "رقم صادم 100,000 — الـ count-up effect بيخلي المشاهد يحس بحجم المشكلة"
+    },
+    {
+      "id": "scene_3",
+      "type": "full_screen_scene",
+      "scene_type": "process_stepper",
+      "key_moment_ref": 6,
+      "start_sec": 41.38,
+      "end_sec": 47,
+      "duration_sec": 5.62,
+      "entrance": "stagger_cascade",
+      "exit": "slide_down",
+      "anchor_subtitle_ids": [
+        37,
+        38,
+        39
+      ],
+      "anchor_text": "أنا بعمل لكل عربية مركز تكلفة — صيانة واسمنت وزلط وسواقين ورخص",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "كل عربية = مركز تكلفة",
+      "title_size": 64,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "step_card",
+          "label": "صيانة",
+          "status": "done"
+        },
+        {
+          "type": "step_card",
+          "label": "أسمنت",
+          "status": "done"
+        },
+        {
+          "type": "step_card",
+          "label": "زلط",
+          "status": "done"
+        },
+        {
+          "type": "step_card",
+          "label": "سواقين",
+          "status": "done"
+        },
+        {
+          "type": "step_card",
+          "label": "رخص",
+          "status": "done"
+        }
+      ],
+      "reason": "مثال عملي — كل card بتنزل واحدة ورا التانية عشان المشاهد يحس بالتراكم"
+    },
+    {
+      "id": "scene_4",
+      "type": "full_screen_scene",
+      "scene_type": "comparison_two_paths",
+      "key_moment_ref": 7,
+      "start_sec": 56.5,
+      "end_sec": 61.6,
+      "duration_sec": 5.1,
+      "entrance": "blur_reveal",
+      "exit": "fade",
+      "anchor_subtitle_ids": [
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "anchor_text": "الإكراميات عمومية — ما تحملش على مركز تكلفة. اللي بيحمل = مصاريف التشغيل",
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "title": "إيه اللي بيتحمّل؟",
+      "title_size": 64,
+      "title_font": "Cairo",
+      "title_weight": 700,
+      "elements": [
+        {
+          "type": "comparison_two_paths",
+          "left": {
+            "label": "مصاريف التشغيل",
+            "icon": "check",
+            "steps": ["صيانة", "أسمنت", "زلط", "سواقين"]
+          },
+          "right": {
+            "label": "العموميات",
+            "icon": "x",
+            "steps": ["إكراميات", "مصاريف عمومية"]
+          }
+        }
+      ],
+      "reason": "القاعدة الختامية — comparison واضحة: تشغيل ✓ vs عموميات ✗"
+    }
+  ],
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "stamp",
+      "start_sec": 16.06,
+      "end_sec": 19.5,
+      "keyword": "Headache ضخم",
+      "primary_text": "Headache ضخم",
+      "primary_color": "accent",
+      "primary_size": 72,
+      "primary_weight": 800,
+      "y_px": 900,
+      "key_moment_ref": 3,
+      "reason": "لحظة التحول — بيوصف المشكلة بأنها headache ضخم عشان يمهّد للحل"
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 48.42,
+      "end_sec": 51.5,
+      "keyword": "شركة نقليات",
+      "primary_text": "شركة نقليات",
+      "primary_color": "accent",
+      "primary_size": 72,
+      "primary_weight": 800,
+      "secondary_text": "مثال عملي",
+      "secondary_size": 32,
+      "y_px": 900,
+      "reason": "تثبيت المثال العملي — 200 عربية في شركة نقليات كنموذج لمراكز التكلفة"
+    }
+  ],
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "word_pop",
+      "start_sec": -0.12,
+      "end_sec": 0.63,
+      "word": "شجرة",
+      "anchor_subtitle_id": 0,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_2",
+      "type": "mini_zoom",
+      "start_sec": 3.22,
+      "end_sec": 4.42,
+      "zoom_level": 1.08,
+      "center_x": 0.497,
+      "center_y": 0.326,
+      "intensity": "strong",
+      "anchor_subtitle_id": 3,
+      "anchor_text": "بيلعب علي اية؟",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_3",
+      "type": "caption_underline",
+      "start_sec": 22.3,
+      "end_sec": 23.5,
+      "anchor_subtitle_id": 20,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_4",
+      "type": "word_pop",
+      "start_sec": 38.28,
+      "end_sec": 39.03,
+      "word": "والظلط",
+      "anchor_subtitle_id": 33,
+      "intensity": "medium",
+      "source": "emphasis"
+    }
+  ],
+  "chapter_dividers": [],
+  "lower_third": {
+    "lecturer_name": "محمد ريان",
+    "workshop_name": "ورشة المحاسب الشامل",
+    "start_sec": 0.5,
+    "duration_sec": 4
+  },
+  "outro": {
+    "duration_sec": 5,
+    "tagline": "بنحقق طموحك المحاسبي"
+  },
+  "validation_notes": {
+    "scene_count": 4,
+    "scene_spacing_min_sec": 15,
+    "scene_spacing_actual": [
+      18.62,
+      15.16,
+      14.52
+    ],
+    "overlay_count": 2,
+    "overlay_spacing_actual": [
+      32.36
+    ],
+    "zoom_count": 1,
+    "micro_count": 12,
+    "total_events": 19,
+    "cadence_sec": 3.4
+  },
+  "micro_events_generated_at": "2026-04-16",
+  "micro_events_stats": {
+    "total": 4,
+    "cadence_sec": 16.16,
+    "by_type": {
+      "word_pop": 2,
+      "mini_zoom": 1,
+      "caption_underline": 1
+    },
+    "by_source": {
+      "emphasis": 4
+    }
+  }
+}

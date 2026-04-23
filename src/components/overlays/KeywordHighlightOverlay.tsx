@@ -133,21 +133,36 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
 
         {/* Two-line variant */}
         {hasPrimary && (
-          <div
-            style={{
-              fontFamily: tokens.fonts.body,
-              fontWeight: overlay.primary_weight || 800,
-              fontSize: overlay.primary_size || 64,
-              color:
-                overlay.primary_color === 'accent'
-                  ? tokens.colors.accent
-                  : overlay.primary_color || tokens.colors.accent,
-              lineHeight: 1.1,
-              textShadow: TEXT_SHADOW,
-              letterSpacing: '-0.5px',
-            }}
-          >
-            {overlay.primary_text}
+          <div style={{ display: 'inline-block', position: 'relative' }}>
+            <div
+              style={{
+                fontFamily: tokens.fonts.body,
+                fontWeight: overlay.primary_weight || 800,
+                fontSize: overlay.primary_size || 64,
+                color:
+                  overlay.primary_color === 'accent'
+                    ? tokens.colors.accent
+                    : overlay.primary_color || tokens.colors.accent,
+                lineHeight: 1.1,
+                textShadow: TEXT_SHADOW,
+                letterSpacing: '-0.5px',
+              }}
+            >
+              {overlay.primary_text}
+            </div>
+            {/* Accent underline — subtle gold bar below the primary text */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: -6,
+                left: '15%',
+                right: '15%',
+                height: 3,
+                borderRadius: 2,
+                background: `linear-gradient(90deg, transparent, ${tokens.colors.accent}, transparent)`,
+                opacity: 0.7,
+              }}
+            />
           </div>
         )}
 

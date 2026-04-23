@@ -34,6 +34,7 @@ export interface Video {
   name: string;
   lecturer: string | null;
   workshop: string | null;
+  category: string | null;
   addedAt: string;
   duration_sec: number | null;
   phases: Record<PhaseId, PhaseState>;

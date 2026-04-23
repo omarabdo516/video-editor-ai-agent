@@ -108,17 +108,16 @@ export function RatingInput({ videoId, currentRating, currentNote }: Props) {
               type="button"
               onMouseEnter={() => setHover(star)}
               onClick={() => setRating(star)}
-              className="text-xl leading-none transition-transform hover:scale-110"
+              className="flex h-8 w-8 items-center justify-center rounded text-lg leading-none transition-transform hover:scale-110"
               style={{
                 color:
                   star <= displayRating
                     ? 'var(--color-brand-accent)'
                     : 'var(--color-text-muted)',
                 background: 'transparent',
-                padding: 0,
                 border: 'none',
               }}
-              aria-label={`${star} stars`}
+              aria-label={`Rate ${star} out of 5 stars`}
             >
               ★
             </button>

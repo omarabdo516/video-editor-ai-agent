@@ -27,6 +27,14 @@ import path from 'node:path';
 import url from 'node:url';
 
 const __filename = url.fileURLToPath(import.meta.url);
+
+function readJSON(filePath) {
+  try {
+    return JSON.parse(readFileSync(filePath, 'utf8'));
+  } catch (err) {
+    throw new Error(`Failed to parse ${filePath}: ${err.message}`);
+  }
+}
 const __dirname = path.dirname(__filename);
 const REPO = path.resolve(__dirname, '..');
 
@@ -35,13 +43,6 @@ const OCCUPY_BUFFER_SEC = 1.2; // micro-event must be this far from a big-event 
 const MIN_MICRO_GAP_SEC = 3.0; // min distance between consecutive micro-events
 const MAX_GAP_FILL_SEC = 6.0; // fill gaps larger than this with synthetic word_pops
 const TARGET_CADENCE_SEC = 4.0; // target cadence for reels retention
-
-// Type assignment by intensity
-const TYPE_BY_INTENSITY = {
-  strong: 'mini_zoom',
-  medium: 'word_pop', // will also alternate with caption_underline
-  low: 'accent_flash',
-};
 
 // ─── main ──────────────────────────────────────────────────────────────────
 function main() {
@@ -58,20 +59,20 @@ function main() {
   if (!existsSync(analysisPath)) throw new Error(`Not found: ${analysisPath}`);
   if (!existsSync(planPath)) throw new Error(`Not found: ${planPath}`);
 
-  const analysis = JSON.parse(readFileSync(analysisPath, 'utf8'));
-  const plan = JSON.parse(readFileSync(planPath, 'utf8'));
+  const analysis = readJSON(analysisPath);
+  const plan = readJSON(planPath);
 
   // Resolve captions (may live in content_analysis.source) + face_map
   const captionsPath = plan.source?.captions || analysis.source?.captions;
-  const faceMapPath = plan.source?.face_map || analysis.source?.metadata?.replace(/\.metadata\.json$/, '.face_map.json');
+  const faceMapPath = plan.source?.face_map || analysis.source?.face_map || analysis.source?.metadata?.replace(/\.metadata\.json$/, '.face_map.json');
   if (!captionsPath || !faceMapPath) {
     throw new Error(
       `Could not resolve captions + face_map.\n  captions: ${captionsPath}\n  face_map: ${faceMapPath}`,
     );
   }
 
-  const captions = JSON.parse(readFileSync(captionsPath, 'utf8'));
-  const faceMap = JSON.parse(readFileSync(faceMapPath, 'utf8'));
+  const captions = readJSON(captionsPath);
+  const faceMap = readJSON(faceMapPath);
   const faces = faceMap.faces || [];
 
   const duration = analysis.video?.duration_sec ?? captions.totalDuration;
