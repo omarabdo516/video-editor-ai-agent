@@ -6,7 +6,7 @@
 // (planner is concurrent-safe; render is GPU-serialized server-side).
 
 import { create } from 'zustand';
-import type { ProgressEvent, ValidatorVerdict } from '../api/types';
+import type { ProgressEvent, ValidatorVerdict, Video } from '../api/types';
 import {
   planAndRender,
   subscribeToProgress,
@@ -96,6 +96,11 @@ interface PlanStore {
   closePanel: (videoId: string) => void;
   reset: (videoId: string) => void;
   submitRating: (videoId: string, rating: number, note: string) => Promise<void>;
+  /** Re-attach to any plan/render jobs that were running when the page
+   *  reloaded. Driven by the dashboard's video state (phases.plan.lastJobId
+   *  + phases.render.lastJobId). The SSE backend replays its line buffer
+   *  for late subscribers, so the LogViewer fills in retroactively. */
+  resumeFromVideos: (videos: Video[]) => void;
 }
 
 const TOKEN_RE_INPUT = /\[planner\] prompt: (\d+) bytes \(~(\d+) input tokens\)/;
@@ -223,6 +228,25 @@ function onPlanError(videoId: string, message: string): void {
     ...cur,
     lines: pushBounded(cur.lines, `[error] ${message}`),
   });
+}
+
+/** Subscribe to a plan job's SSE stream and wire all events to the
+ *  module-level handlers. Returns the unsubscribe fn. Used by both
+ *  startPlan (fresh) and resumeFromVideos (after a reload). */
+function subscribePlanStream(videoId: string, planJobId: string): () => void {
+  const unsub = subscribeToProgress(planJobId, (ev) => {
+    if (ev.type === 'line') onPlanLine(videoId, ev.text);
+    else if (ev.type === 'validator-passed') onValidatorPassed(videoId, ev.verdict);
+    else if (ev.type === 'validator-rejected') onValidatorRejected(videoId, ev.verdict);
+    else if (ev.type === 'done') onPlanDone(videoId, ev.exitCode);
+    else if (ev.type === 'error') onPlanError(videoId, ev.message);
+  });
+  usePlanStore.setState((s) => {
+    const subs = new Map(s._subs);
+    subs.set(videoId, unsub);
+    return { _subs: subs };
+  });
+  return unsub;
 }
 
 // ─── render-job discovery + handlers ────────────────────────────────────
@@ -420,18 +444,7 @@ export const usePlanStore = create<PlanStore>((set, get) => ({
       pendingVerdict: null,
     });
 
-    const unsub = subscribeToProgress(planJobId, (ev) => {
-      if (ev.type === 'line') onPlanLine(videoId, ev.text);
-      else if (ev.type === 'validator-passed') onValidatorPassed(videoId, ev.verdict);
-      else if (ev.type === 'validator-rejected') onValidatorRejected(videoId, ev.verdict);
-      else if (ev.type === 'done') onPlanDone(videoId, ev.exitCode);
-      else if (ev.type === 'error') onPlanError(videoId, ev.message);
-    });
-    set((s) => {
-      const subs = new Map(s._subs);
-      subs.set(videoId, unsub);
-      return { _subs: subs };
-    });
+    subscribePlanStream(videoId, planJobId);
   },
 
   retry: async (videoId) => {
@@ -450,6 +463,53 @@ export const usePlanStore = create<PlanStore>((set, get) => ({
   reset: (videoId) => {
     cleanup(videoId);
     setState(videoId, { mode: 'idle' });
+  },
+
+  resumeFromVideos: (videos) => {
+    const state = get();
+    for (const video of videos) {
+      const cur = state.byVideoId[video.id];
+      // Don't clobber an active panel — if Omar already triggered something
+      // in this session, leave it alone.
+      if (cur && cur.mode !== 'idle') continue;
+      // Don't re-attach if we already have a live subscription (defensive).
+      if (state._subs.has(video.id)) continue;
+
+      const planPhase = video.phases.plan;
+      const renderPhase = video.phases.render;
+
+      // Render running → resume in rendering mode. Plan must have already
+      // succeeded for render to spawn; verdict is preserved on phases.plan.
+      if (renderPhase?.status === 'running' && renderPhase.lastJobId) {
+        const verdict: ValidatorVerdict = planPhase?.validatorVerdict ?? {
+          passed: true,
+          hardViolations: [],
+          softWarnings: [],
+        };
+        transitionToRendering(
+          video.id,
+          planPhase?.lastJobId ?? '',
+          renderPhase.lastJobId,
+          [], // planLines unrecoverable after reload — acceptable
+          {}, // tokens unrecoverable
+          verdict,
+        );
+        continue;
+      }
+
+      // Plan running → resume in planning mode. SSE replay re-fills the
+      // line buffer; pendingVerdict comes from state if validator already ran.
+      if (planPhase?.status === 'running' && planPhase.lastJobId) {
+        setState(video.id, {
+          mode: 'planning',
+          jobId: planPhase.lastJobId,
+          lines: [],
+          tokens: {},
+          pendingVerdict: planPhase.validatorVerdict ?? null,
+        });
+        subscribePlanStream(video.id, planPhase.lastJobId);
+      }
+    }
   },
 
   submitRating: async (videoId, rating, note) => {

@@ -17,6 +17,13 @@ interface Props {
   video: Video;
 }
 
+// Toggle the legacy "🤖 Send to Claude" copy-paste handoff. The Stage α
+// "خطّط وأرندر" panel replaces it. Kept behind a flag so we can `revert`
+// to the old workflow in seconds if a Stage α bug surfaces.
+//
+// To re-enable: VITE_STAGE_ALPHA_LEGACY=1 npm run dashboard
+const SHOW_LEGACY_HANDOFF = import.meta.env.VITE_STAGE_ALPHA_LEGACY === '1';
+
 const ALL_PHASE_IDS: PhaseId[] = [
   'phase1',
   'transcribe',
@@ -245,14 +252,16 @@ export function VideoCard({ video }: Props) {
         <PhaseButton video={video} phase="phase1" label="Phase 1" />
         <PhaseButton video={video} phase="transcribe" label="Transcribe" />
         <PhaseButton video={video} phase="edit" label="Edit" onClick={handleEdit} />
-        <PhaseButton
-          video={video}
-          phase="analyze"
-          label="🤖 Send to Claude"
-          disabled={!transcribeDone}
-          disabledReason="Transcribe must finish first"
-          onClick={handleAnalyze}
-        />
+        {SHOW_LEGACY_HANDOFF && (
+          <PhaseButton
+            video={video}
+            phase="analyze"
+            label="🤖 Send to Claude (legacy)"
+            disabled={!transcribeDone}
+            disabledReason="Transcribe must finish first"
+            onClick={handleAnalyze}
+          />
+        )}
         <PhaseButton video={video} phase="microEvents" label="Micro Events" />
         <PhaseButton video={video} phase="render" label="Render" />
         <button
@@ -339,7 +348,7 @@ export function VideoCard({ video }: Props) {
         />
       )}
 
-      {handoffOpen && (
+      {SHOW_LEGACY_HANDOFF && handoffOpen && (
         <ClaudeHandoffModal video={video} onClose={() => setHandoffOpen(false)} />
       )}
     </article>

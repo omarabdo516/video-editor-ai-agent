@@ -18,6 +18,9 @@ export interface PhaseState {
   lastJobId?: string | null;
   exitCode?: number | null;
   error?: string | null;
+  /** Set by the brand validator on the `plan` phase only (S1.1). Optional
+   *  on every phase since other phases don't run a validator. */
+  validatorVerdict?: ValidatorVerdict | null;
 }
 
 export interface VideoOutputs {

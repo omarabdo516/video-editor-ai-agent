@@ -7,6 +7,7 @@ import { ToastContainer } from './components/ToastContainer';
 import { ShortcutsHelp } from './components/ShortcutsHelp';
 import { useDashboardStore } from './store/useDashboardStore';
 import { useBatchStore } from './store/useBatchStore';
+import { usePlanStore } from './store/usePlanStore';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { toast } from './store/useToastStore';
 import { getEditHandoff } from './api/client';
@@ -19,7 +20,13 @@ function App() {
   const [helpOpen, setHelpOpen] = useState(false);
 
   useEffect(() => {
-    void refresh();
+    // First mount — fetch videos, then re-attach to any plan/render jobs
+    // that were running when the page reloaded (S1.5 session-resume).
+    void (async () => {
+      await refresh();
+      const videos = useDashboardStore.getState().videos;
+      usePlanStore.getState().resumeFromVideos(videos);
+    })();
   }, [refresh]);
 
   useEffect(() => {
