@@ -166,6 +166,21 @@ async function buildPrompt(videoPath, opts = {}) {
   const recentRatings = lastNRatings(feedbackLog, 10);
   const styleEvolutionTail = lastNLines(styleEvolution, 60);
 
+  // Canonical schema reference — a real, well-formed animation_plan from a
+  // past reel. Used as a gold-standard example to teach Claude the exact
+  // shape (NOT its content). We pick a plan from a DIFFERENT video so Claude
+  // doesn't just copy the source material; it has to copy structure only.
+  const canonicalRef = readSafe(
+    path.join(
+      REPO_ROOT,
+      'src',
+      'data',
+      'محمد ريان ورشة الشامل 2',
+      'animation_plan.json',
+    ),
+    'canonical schema reference plan',
+  );
+
   // Read the prompt template (the creative-director brief).
   const templatePath = path.join(
     REPO_ROOT,
@@ -219,9 +234,20 @@ async function buildPrompt(videoPath, opts = {}) {
     captions,
     '```',
     '',
+    '## CONTEXT 9 — Canonical schema example (FROM A DIFFERENT REEL — copy SHAPE not content)',
+    '',
+    'This is a real, validated animation_plan.json from "محمد ريان ورشة الشامل 2".',
+    'Your output animation_plan.json MUST have the same top-level keys, the same scene shape,',
+    'and the same element conventions (especially: elements is an array; step_card uses N elements).',
+    '',
+    '```json',
+    canonicalRef ?? '(canonical reference missing)',
+    '```',
+    '',
     '---',
     '',
     'Now produce your output as specified above. Three markers, then nothing.',
+    'Match CONTEXT 9 schema structurally — invent only the content that fits THIS transcript.',
     '',
   ].join('\n');
 

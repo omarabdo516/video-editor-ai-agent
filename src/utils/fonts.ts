@@ -85,31 +85,39 @@ const fontFaces = [
   },
 ];
 
-// Register all @font-face rules and wait for them to load before rendering.
+// Font loading strategy: register the @font-face rules eagerly (so the
+// browser starts fetching the woff2 files), then continueRender IMMEDIATELY
+// without waiting for them. We tried four variants of the
+// delayRender/Promise pattern (including a hard setTimeout fallback) and
+// every one of them hung intermittently under 14-way concurrency —
+// Puppeteer worker JS threads can stall long enough that timers don't fire
+// reliably. Source: https://github.com/remotion-dev/remotion/issues — the
+// Promise-based wait pattern is fragile under high parallelism.
+//
+// Trade-off: the very first 1-2 frames a Puppeteer worker renders MIGHT
+// show fallback fonts before the woff2 finishes loading. In practice
+// woff2 loads in tens of milliseconds (files are tiny: 30-45 KB) and
+// Remotion reuses each Puppeteer instance across many frames, so the
+// number of fallback-font frames is negligible. Far better than crashing.
 const waitForFonts = delayRender('Loading local fonts');
 
 if (typeof document !== 'undefined') {
   try {
-    const promises = fontFaces.map((f) => {
+    fontFaces.forEach((f) => {
       const face = new FontFace(f.family, `url('${f.src}') format('woff2')`, {
         weight: f.weight,
         style: f.style,
         unicodeRange: f.unicodeRange,
       });
       document.fonts.add(face);
-      return face.load();
+      // fire-and-forget; the browser will use whatever's loaded by render time
+      face.load().catch(() => {});
     });
-
-    Promise.all(promises)
-      .then(() => continueRender(waitForFonts))
-      .catch((err) => {
-        console.error('Font loading failed:', err);
-        continueRender(waitForFonts);
-      });
   } catch (err) {
     console.error('Font setup failed:', err);
-    continueRender(waitForFonts);
   }
-} else {
-  continueRender(waitForFonts);
 }
+
+// Continue immediately — do NOT wait. Puppeteer's font cache will catch
+// up before the visual frames need them.
+continueRender(waitForFonts);

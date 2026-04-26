@@ -36,6 +36,83 @@ A short paragraph in Egyptian Arabic. Explain: what creative choice did you take
 
 **Important:** After the third marker (`=== reflection ===`) write nothing else. No closing remarks, no summary, no apology, no follow-up question.
 
+## STRICT SCHEMA RULES — NON-NEGOTIABLE
+
+The Remotion components consume `animation_plan.json` directly. If you deviate from the schema below, the render will crash. Read these rules carefully:
+
+### 1. Every plan MUST include a `source` field at the top level
+
+```json
+"source": {
+  "video": "<absolute path to the source mp4>",
+  "video_scaled": "<absolute path to scaled.1080x1920.mp4>",
+  "captions": "<absolute path to captions.json>",
+  "face_map": "<absolute path to face_map.json>",
+  "energy": "<absolute path to energy.json>",
+  "metadata": "<absolute path to metadata.json>"
+}
+```
+Take the values from `CONTEXT 8 — Transcript`'s file path and the parent `_pipeline/<basename>/` directory layout. Do NOT skip this field.
+
+### 2. Every scene MUST have this exact shape:
+
+```json
+{
+  "id": "scene_1",                            // string "scene_<n>", NOT integer
+  "type": "full_screen_scene",                // ALWAYS this literal string
+  "scene_type": "<one of the vocab below>",   // determines element types
+  "start_sec": <number>,
+  "end_sec": <number>,
+  "duration_sec": <number>,
+  "entrance": "<fade|scale_bounce|blur_reveal|stagger_cascade>",
+  "exit": "<fade|scale_out|slide_down>",
+  "title": "<short title or empty string>",
+  "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+  "elements": [ /* see scene_type table below */ ],
+  "reason": "<short explanation>"
+}
+```
+
+The `elements` field is **always an array**. NEVER nest content as a single object with a `cards` or `tokens` array inside `content`. Each visual unit is its own element in the array.
+
+### 3. Element shapes per scene_type
+
+| scene_type | elements array shape |
+|------------|----------------------|
+| `definition` | 1 element: `{type: "definition", term, term_sub, definition, example, icon}` |
+| `big_metaphor` | 1 element: `{type: "big_metaphor", headline, subline, footer}` |
+| `comparison_two_paths` | 1 element: `{type: "comparison_two_paths", left: {label, ...}, right: {label, ...}}` |
+| `counter` | 1 element: `{type: "counter", top_label, number, bottom_label}` |
+| `equation` | 1 element: `{type: "equation", terms: [{text, label, is_result?}, {text: "+"}, ...], footer?}` |
+| `process_stepper` | **N elements** (one per step): `{type: "step_card", label, status: "done"\|"current"\|"pending", status_badge?}` |
+| `process_timeline` | **N elements** (one per node): `{type: "timeline_horizontal", label, status}` |
+
+The big distinction: **stepper and timeline use multiple elements (one per visual item). Everything else uses one element with the structured fields inside it.**
+
+### 4. Overlays use a single shape
+
+```json
+{
+  "id": <int>,
+  "type": "keyword_highlight" | "stamp",
+  "start_sec": <number>,
+  "end_sec": <number>,
+  "duration_sec": <number>,
+  "y_px": 1080,
+  "primary_text": "<the text>",
+  "primary_color": "accent" | "white",
+  "underline": true | false,
+  "no_card_background": true,
+  "reason": "<short>"
+}
+```
+
+### 5. A canonical real-world example will follow as CONTEXT 9.
+
+**Treat CONTEXT 9 as the gold-standard schema reference.** Match its structure exactly. The example is from a different reel, so don't copy its content — copy its shape.
+
+If your output deviates from CONTEXT 9's structure on any of: top-level keys, scene keys, `elements` being an array, element shapes per scene_type — the render will fail. There is no auto-recovery for schema bugs.
+
 ---
 
 ## Hard rules (the validator enforces these)
