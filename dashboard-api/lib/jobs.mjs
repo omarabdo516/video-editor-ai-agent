@@ -126,8 +126,13 @@ export function waitForJob(jobId) {
   });
 }
 
-/** Start the spawned process and wire its output into the job. */
-export function runJob(job) {
+/** Start the spawned process and wire its output into the job.
+ *
+ * options.afterExit (optional): async hook that runs AFTER the child exits
+ * but BEFORE finish() closes SSE subscribers. Use this to emit additional
+ * lines/events on the same SSE stream (e.g. validator verdict).
+ */
+export function runJob(job, options = {}) {
   const child = spawn(job.cmd, job.args, {
     cwd: REPO_ROOT,
     shell: false,
@@ -163,12 +168,38 @@ export function runJob(job) {
     finish(job, 'failed', -1);
   });
 
-  child.on('exit', (code) => {
+  child.on('exit', async (code) => {
+    if (options.afterExit) {
+      try {
+        await options.afterExit(job, code ?? -1);
+      } catch (err) {
+        pushLine(`[afterExit error] ${err.message}`);
+      }
+    }
     const status = code === 0 ? 'done' : 'failed';
     finish(job, status, code ?? -1);
   });
 
   return job;
+}
+
+/** Append a line to a job's buffer and broadcast it to live SSE subscribers.
+ * Safe to call after child exit but before finish() runs (e.g. from an
+ * afterExit hook). No-op if the job is gone.
+ */
+export function appendJobLine(jobId, text) {
+  const job = jobs.get(jobId);
+  if (!job) return;
+  if (job.lines.length >= LINE_BUFFER_LIMIT) job.lines.shift();
+  job.lines.push(text);
+  broadcast(job, 'line', { text });
+}
+
+/** Broadcast a custom SSE event on a job's stream. No-op if the job is gone. */
+export function emitJobEvent(jobId, event, data) {
+  const job = jobs.get(jobId);
+  if (!job) return;
+  broadcast(job, event, data);
 }
 
 function finish(job, status, exitCode) {

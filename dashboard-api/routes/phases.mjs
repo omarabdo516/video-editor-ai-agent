@@ -1,10 +1,12 @@
 import { Router } from 'express';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import {
   createJob,
   runJob,
   waitForJob,
   commandForPhase,
+  appendJobLine,
+  emitJobEvent,
 } from '../lib/jobs.mjs';
 import { getVideo, updateVideoPhase } from '../lib/state.mjs';
 import {
@@ -12,9 +14,11 @@ import {
   captionsPath,
   videoBasename,
   resolveExisting,
+  animationPlanPath,
 } from '../lib/paths.mjs';
 import { buildHandoffMessage } from '../lib/handoff.mjs';
 import { startEditor } from '../lib/editorSession.mjs';
+import { validatePlan, loadBrandRules, formatVerdict } from '../lib/brandValidator.mjs';
 
 export const phasesRouter = Router();
 
@@ -78,7 +82,44 @@ phasesRouter.post('/:id/plan', (req, res) => {
   }
   const videoId = req.params.id;
   const planJob = createJob(videoId, 'plan', lookup.cmd, lookup.args);
-  runJob(planJob);
+
+  // afterExit hook: runs validator while plan job's SSE subscribers are
+  // still connected, so the verdict streams in the same panel.
+  const afterExit = async (job, exitCode) => {
+    if (exitCode !== 0) return; // planner failed; nothing to validate
+    const video = getVideo(videoId);
+    if (!video) return;
+    const planFile = animationPlanPath(video.path);
+    let plan;
+    try {
+      plan = JSON.parse(readFileSync(planFile, 'utf8'));
+    } catch (err) {
+      appendJobLine(job.id, `[validator] could not read plan at ${planFile}: ${err.message}`);
+      job.validatorVerdict = { passed: false, hardViolations: [{ rule: 'io', path: planFile, message: err.message }], softWarnings: [] };
+      return;
+    }
+    let verdict;
+    try {
+      verdict = validatePlan(plan, loadBrandRules());
+    } catch (err) {
+      appendJobLine(job.id, `[validator] threw: ${err.message}`);
+      job.validatorVerdict = { passed: false, hardViolations: [{ rule: 'validator_error', path: '', message: err.message }], softWarnings: [] };
+      return;
+    }
+    job.validatorVerdict = verdict;
+    updateVideoPhase(videoId, 'plan', { validatorVerdict: verdict });
+    appendJobLine(job.id, '');
+    for (const line of formatVerdict(verdict).split('\n')) {
+      appendJobLine(job.id, line);
+    }
+    if (verdict.passed) {
+      emitJobEvent(job.id, 'validator-passed', { verdict });
+    } else {
+      emitJobEvent(job.id, 'validator-rejected', { verdict });
+    }
+  };
+
+  runJob(planJob, { afterExit });
   updateVideoPhase(videoId, 'plan', {
     status: 'running',
     startedAt: planJob.startedAt,
@@ -87,13 +128,19 @@ phasesRouter.post('/:id/plan', (req, res) => {
     exitCode: null,
   });
 
-  // Background chain: when plan finishes successfully, kick off render.
-  // Errors here are non-fatal (the user can retry render manually).
+  // Background chain: when plan finishes successfully AND validator passes,
+  // kick off render. Errors here are non-fatal (the user can retry).
   waitForJob(planJob.id)
     .then(({ exitCode, status }) => {
       if (status !== 'done' || exitCode !== 0) {
         console.log(
           `[plan→render] plan job ${planJob.id} did not succeed (status=${status}, code=${exitCode}); skipping auto-render`,
+        );
+        return;
+      }
+      if (planJob.validatorVerdict && !planJob.validatorVerdict.passed) {
+        console.log(
+          `[plan→render] validator rejected plan for video ${videoId}; skipping auto-render`,
         );
         return;
       }
