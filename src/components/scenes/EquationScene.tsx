@@ -11,12 +11,12 @@ const CONNECTOR_PATH = 'M 0 0 L 860 0';
 type Props = { scene: Scene };
 
 /**
- * EquationScene — left-to-right equation builder. Tokens appear one-by-one
+ * EquationScene â€” left-to-right equation builder. Tokens appear one-by-one
  * with a bounce, operators fade in between them. The "result" token gets
  * a special treatment: pop scale + accent glow pulse.
  *
- * Supports any equation shape: "A = B + C", "الربح = الإيراد - التكلفة",
- * "أصل = خصوم + حقوق الملكية"
+ * Supports any equation shape: "A = B + C", "Ø§Ù„Ø±Ø¨Ø­ = Ø§Ù„Ø¥ÙŠØ±Ø§Ø¯ - Ø§Ù„ØªÙƒÙ„ÙØ©",
+ * "Ø£ØµÙ„ = Ø®ØµÙˆÙ… + Ø­Ù‚ÙˆÙ‚ Ø§Ù„Ù…Ù„ÙƒÙŠØ©"
  */
 export const EquationScene: React.FC<Props> = ({ scene }) => {
   const frame = useCurrentFrame();
@@ -30,7 +30,7 @@ export const EquationScene: React.FC<Props> = ({ scene }) => {
   const titleProgress = spring({ frame, fps, config: tokens.springs.bounce });
   const bgPulse = (Math.sin(frame * 0.05) + 1) / 2;
 
-  // Dynamic term stagger — Phase 10 Round A. Equations with 3 tokens get
+  // Dynamic term stagger â€” Phase 10 Round A. Equations with 3 tokens get
   // wide spacing (feels deliberate); 5+ tokens tighten so the reveal
   // doesn't drag past the scene budget.
   const TERM_STAGGER = getStaggerDelay(el.terms.length);
@@ -38,7 +38,7 @@ export const EquationScene: React.FC<Props> = ({ scene }) => {
   const TERM_BASE_DELAY = 15;
 
   // Connector line draws in starting with the first term, finishing around
-  // when the last term lands — visually "stitches" the equation together.
+  // when the last term lands â€” visually "stitches" the equation together.
   const connectorStartFrame = TERM_BASE_DELAY + 4;
   const connectorEndFrame =
     TERM_BASE_DELAY + Math.max(1, el.terms.length) * TERM_STAGGER + 8;
@@ -96,7 +96,7 @@ export const EquationScene: React.FC<Props> = ({ scene }) => {
         </div>
       )}
 
-      {/* Equation row — LTR layout for math even though UI is RTL.
+      {/* Equation row â€” LTR layout for math even though UI is RTL.
           Wrapped in a relative container so the animated connector line (SVG
           drawn with evolvePath) can sit behind the terms as a "number-line". */}
       <div
@@ -112,7 +112,7 @@ export const EquationScene: React.FC<Props> = ({ scene }) => {
           padding: '0 40px',
         }}
       >
-        {/* Accent connector — draws left-to-right as terms land. Sits behind
+        {/* Accent connector â€” draws left-to-right as terms land. Sits behind
             the text (zIndex 0) with a glow filter for brand feel. */}
         <svg
           width={860}
@@ -198,7 +198,7 @@ const EquationTermView: React.FC<{
   const pulse = term.is_result ? (Math.sin(pulseT * 0.14) + 1) / 2 : 0;
 
   // Operators get a lighter treatment (smaller + no label + white)
-  const isOperator = /^[+\-×÷=()]$/.test(term.text.trim());
+  const isOperator = /^[+\-Ã—Ã·=()]$/.test(term.text.trim());
 
   const fontSize = isOperator ? 88 : term.is_result ? 112 : 96;
   const color = term.is_result
@@ -220,7 +220,7 @@ const EquationTermView: React.FC<{
       <div
         style={{
           fontFamily: tokens.fonts.body,
-          fontWeight: 800,
+          fontWeight: 700,
           fontSize,
           color,
           lineHeight: 1,

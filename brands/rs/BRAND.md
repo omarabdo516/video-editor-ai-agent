@@ -63,11 +63,14 @@
 
 ## 🔤 الخطوط
 
+> **محدّث 2026-04-26**: الخطوط اتغيّرت من Cairo + Tajawal لـ **Alexandria + IBM Plex Sans Arabic**. الـ code migration خلصت في نفس اليوم — الـ woff2 الجديدة في `public/fonts/`، و `src/utils/fonts.ts` + `src/tokens.ts` + الـ CSS الـ dashboard + subtitle-editor كلهم محدّثين. **ملاحظة weight:** IBM Plex Sans Arabic أقصى weight 700 (Bold) مش 800 — الكابشنز كانت Tajawal ExtraBold 800، بقت IBM Plex Sans Arabic Bold 700.
+
 | Family | Weight الأساسي | الاستخدام |
 |--------|----------------|-----------|
-| **Cairo** | Bold (700) | العناوين، Chapter titles، Lower-third name، Outro tagline، Scene titles |
-| **Tajawal** | ExtraBold (800) | الكابشنز (word-by-word)، أرقام كبيرة، highlight overlays |
+| **Alexandria** | Bold (700) | العناوين، Chapter titles، Lower-third name، Outro tagline، Scene titles |
+| **IBM Plex Sans Arabic** | ExtraBold (800) | الكابشنز (word-by-word)، أرقام كبيرة، highlight overlays |
 
+- **Cairo و Tajawal مش معتمدين بعد دلوقتي** لأي ريل RS جديد.
 - **Direction:** RTL دايماً.
 - **الأرقام في النص العربي:** أرقام إنجليزية عادية (`1, 2, 3`) — الأرقام الهندية (`١، ٢، ٣`) ممنوعة لأنها بتوحي بطابع ديني/تقليدي أكتر من corporate.
 - **Text shadow إجباري** لما النص فوق الفيديو — `0 0 12px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.7)` (زي اللي في `WordCaption.tsx`).
@@ -126,14 +129,14 @@
 
 ### الكابشنز
 - **Style:** Highlighted Phrase — الكلمة الحالية بـ Accent (#FFB501) + scale 1.06x، الباقي أبيض.
-- **Font:** Tajawal ExtraBold 56px (على comp 1080×1920).
+- **Font:** IBM Plex Sans Arabic Bold 56px (على comp 1080×1920).
 - **Max Width:** 820px (يتوسّط أفقياً).
 - **Y Position:** `1420` (أسفل منتصف الشاشة، فوق الـ bottom safe area بشوية).
 - **Chunk size:** 6 كلمات في الـ segment الواحد (إلا لو الجملة قصيرة).
 
 ### الـ Lower Third
 - يظهر مرة واحدة في أول `0.5` ثانية، يستمر `4` ثواني، يسلد out.
-- فيه اسم المحاضر (Cairo Bold 60px أبيض) + اسم الورشة (Tajawal 38px accent).
+- فيه اسم المحاضر (Alexandria Bold 60px أبيض) + اسم الورشة (IBM Plex Sans Arabic 38px accent).
 - الباكجراوند Primary (`#10479D`).
 - العرض: `640px` (اتصغّر من 820 — كان dominant بزيادة). الارتفاع: auto بـ padding.
 
@@ -141,10 +144,10 @@
 - المدة: `5` ثوان (اتّزوّدت من 2.5 في Apr 2026 عشان تسع الـ CTA الكامل).
 - Layout كامل من فوق لتحت:
   - **Logo** top-center، 300px، y=340
-  - **Tagline** "بنحقق طموحك المحاسبي" — accent color Cairo Bold 46px، y=640
-  - **CTA Primary** "احجز ورشتك الجاية" — أبيض Tajawal ExtraBold 68px، y=820
+  - **Tagline** "بنحقق طموحك المحاسبي" — accent color Alexandria Bold 46px، y=640
+  - **CTA Primary** "احجز ورشتك الجاية" — أبيض IBM Plex Sans Arabic Bold 68px، y=820
   - **CTA Subtext** "راسلنا على رسائل الصفحة أو زور موقعنا" — أبيض 34px مع opacity 0.9، y=930
-  - **Website** `rspaac.com` — accent Tajawal ExtraBold 60px، LTR direction، y=1110
+  - **Website** `rspaac.com` — accent IBM Plex Sans Arabic Bold 60px، LTR direction، y=1110
   - **Social icons row** (y=1320، 96px each، gap 36px):
     - Instagram · Facebook · TikTok · LinkedIn · YouTube
     - SVG paths من simple-icons (CC0) في `src/components/SocialIcons.tsx`

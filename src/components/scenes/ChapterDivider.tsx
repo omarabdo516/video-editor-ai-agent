@@ -4,16 +4,16 @@ import { evolvePath } from '@remotion/paths';
 import { tokens } from '../../tokens';
 import type { ChapterDivider as ChapterDividerData } from '../../types';
 
-// Horizontal underline path (0 → 300 wide, centered around 0,0 via viewBox)
+// Horizontal underline path (0 â†’ 300 wide, centered around 0,0 via viewBox)
 const UNDERLINE_PATH = 'M 0 0 L 300 0';
 
 type Props = { divider: ChapterDividerData };
 
 /**
- * ChapterDivider — brief full-screen section break. 2-3 seconds total:
- * fade in → title slides up with bounce → subtitle fades in → hold → fade out.
+ * ChapterDivider â€” brief full-screen section break. 2-3 seconds total:
+ * fade in â†’ title slides up with bounce â†’ subtitle fades in â†’ hold â†’ fade out.
  *
- * Lighter than a full scene — doesn't cover the lecturer for long.
+ * Lighter than a full scene â€” doesn't cover the lecturer for long.
  * Used to mark topic shifts in a reel.
  */
 export const ChapterDivider: React.FC<Props> = ({ divider }) => {
@@ -55,7 +55,7 @@ export const ChapterDivider: React.FC<Props> = ({ divider }) => {
     config: tokens.springs.enter,
   });
 
-  // Underline sweeps in — draws as an SVG stroke with evolvePath
+  // Underline sweeps in â€” draws as an SVG stroke with evolvePath
   const underlineProgress = interpolate(frame, [10, 26], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
@@ -120,7 +120,7 @@ export const ChapterDivider: React.FC<Props> = ({ divider }) => {
       <div
         style={{
           fontFamily: tokens.fonts.heading,
-          fontWeight: 800,
+          fontWeight: 700,
           fontSize: 96,
           color: tokens.colors.white,
           textAlign: 'center',
@@ -136,7 +136,7 @@ export const ChapterDivider: React.FC<Props> = ({ divider }) => {
         {divider.title}
       </div>
 
-      {/* Accent underline — drawn with @remotion/paths evolvePath so the
+      {/* Accent underline â€” drawn with @remotion/paths evolvePath so the
           stroke draws in left-to-right instead of scaling from zero width */}
       <svg
         width={320}

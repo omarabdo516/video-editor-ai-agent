@@ -39,15 +39,17 @@
 
 | الاستخدام | Family | Weight | Size (1080×1920) |
 |-----------|--------|--------|------------------|
-| Scene title / Chapter divider | **Cairo** | 700 (Bold) | 72-96px |
-| Scene body text | **Cairo** | 400 (Regular) | 40-48px |
-| Label / sublabel | **Cairo** | 600 (SemiBold) | 28-32px |
-| رقم كبير (counter) | **Cairo** | 800 (ExtraBold) | 120-160px |
-| Keyword highlight overlay | **Cairo** | 700 (Bold) | 72px |
-| Caption (Highlighted Phrase) | **Tajawal** | 800 (ExtraBold) | 56px |
-| Lower-third name | **Cairo** | 700 (Bold) | 72px |
-| Lower-third workshop | **Tajawal** | 800 (ExtraBold) | 44px |
-| Outro tagline | **Cairo** | 700 (Bold) | 56px |
+| Scene title / Chapter divider | **Alexandria** | 700 (Bold) | 72-96px |
+| Scene body text | **Alexandria** | 400 (Regular) | 40-48px |
+| Label / sublabel | **Alexandria** | 600 (SemiBold) | 28-32px |
+| رقم كبير (counter) | **Alexandria** | 700 (Bold) | 120-160px |
+| Keyword highlight overlay | **Alexandria** | 700 (Bold) | 72px |
+| Caption (Highlighted Phrase) | **IBM Plex Sans Arabic** | 700 (Bold) | 56px |
+| Lower-third name | **Alexandria** | 700 (Bold) | 72px |
+| Lower-third workshop | **IBM Plex Sans Arabic** | 700 (Bold) | 44px |
+| Outro tagline | **Alexandria** | 700 (Bold) | 56px |
+
+> **محدّث 2026-04-26:** الخطوط اتغيّرت من Cairo + Tajawal لـ Alexandria + IBM Plex Sans Arabic. IBM Plex Sans Arabic أقصى weight 700، فالـ rows اللي كانت 800 (ExtraBold) في Tajawal/Cairo اتنزّلت لـ 700.
 
 ### قواعد
 - **RTL إجباري** على أي نص عربي (`direction: 'rtl'`).
@@ -56,7 +58,7 @@
   textShadow: '0 0 12px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.7), 0 2px 4px rgba(0,0,0,1)'
   ```
 - **الأرقام:** دايماً إنجليزية (`1, 2, 3`) — مش هندية (`١، ٢، ٣`). السبب: corporate look.
-- **مفيش italic.** Tajawal و Cairo مش مصممين italic للعربي.
+- **مفيش italic.** Alexandria و IBM Plex Sans Arabic مش مصممين italic للعربي.
 
 ---
 

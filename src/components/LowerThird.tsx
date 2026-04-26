@@ -69,7 +69,7 @@ export const LowerThird: React.FC<Props> = ({ name, title }) => {
         style={{
           color: tokens.colors.white,
           fontSize: lt.nameSize,
-          fontWeight: 800,
+          fontWeight: 700,
           letterSpacing: '-0.5px',
           lineHeight: 1.15,
           textAlign: 'center',

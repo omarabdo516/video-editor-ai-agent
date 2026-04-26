@@ -13,7 +13,7 @@
 **افتح PowerShell كـ Administrator** وشغّل:
 
 ```powershell
-cd "C:\Users\PUZZLE\Documents\Claude\_tools\after-effects-mcp"
+cd "C:\Users\PUZZLE\Documents\GrowthMora\_tools\after-effects-mcp"
 npm run install-bridge
 ```
 
@@ -51,12 +51,12 @@ C:\Program Files\Adobe\Adobe After Effects 2025\Support Files\Scripts\ScriptUI P
 
 ---
 
-## ✅ 4. تنصيب فونتات Cairo + Tajawal
+## ✅ 4. الفونتات (Alexandria + IBM Plex Sans Arabic)
 
-- روح [Google Fonts → Cairo](https://fonts.google.com/specimen/Cairo) → Download Family
-- روح [Google Fonts → Tajawal](https://fonts.google.com/specimen/Tajawal) → Download Family
-- فك الـ zip → مرر كل الـ `.ttf` files → right-click → **Install for all users**
-- **اقفل AE** قبل ما تنصّب الفونتات، وافتحه بعد التنصيب (AE بيعمل cache للفونتات عند الفتح)
+الفونتات مبنية في الـ repo نفسه — موجودة في [`public/fonts/`](public/fonts/) كـ woff2 files. مفيش حاجة تنصّبها على نظامك للـ Remotion render.
+
+- لو حابب تستخدمهم على نظامك للـ design preview: حمّلهم من [Alexandria](https://fonts.google.com/specimen/Alexandria) و [IBM Plex Sans Arabic](https://fonts.google.com/specimen/IBM+Plex+Sans+Arabic)
+- لو الفونتات مفقودة في الـ repo (clone جديد بدون LFS مثلاً): شغّل `node scripts/download_brand_fonts.mjs` لإعادة تنزيلهم
 
 ---
 
@@ -119,7 +119,7 @@ Claude هيستخدم الـ `/rs-reels` skill ويشتغل.
 | 1 | Install Bridge Script | 30 ثانية | ✅ |
 | 2 | AE Scripting Permissions | 1 دقيقة | ❌ |
 | 3 | Middle Eastern Text Engine | 1 دقيقة + restart AE | ❌ |
-| 4 | Cairo + Tajawal fonts | 3 دقائق | ✅ |
+| 4 | Fonts (Alexandria + IBM Plex Sans Arabic) | bundled — 0 دقائق | ✅ |
 | 5 | FFmpeg (optional) | 5 دقائق | ✅ |
 | 6 | Open bridge panel في AE | 10 ثواني | ❌ |
 

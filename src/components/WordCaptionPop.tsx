@@ -15,13 +15,13 @@ const EMPHASIS_LEAD_SEC = 0.15;
 const EMPHASIS_TAIL_SEC = 0.30;
 
 /**
- * WordCaptionPop — "Pop" caption style.
+ * WordCaptionPop â€” "Pop" caption style.
  *
  * Shows ONE huge word at a time, centered in the body zone. Each word
  * replaces the previous on its word-level timing boundary. Brief scale
  * bounce on entrance.
  *
- * This is the classic TikTok/Reels "word by word massive" style — the
+ * This is the classic TikTok/Reels "word by word massive" style â€” the
  * lecturer's voice drives the rhythm, and the single word commands the
  * viewer's attention.
  *
@@ -66,13 +66,13 @@ export const WordCaptionPop: React.FC<Props> = ({
     return false;
   }, [emphasisTimes, nowSec]);
 
-  // Phase 10 Round B — F7: dynamic font size per WORD LENGTH (chars)
+  // Phase 10 Round B â€” F7: dynamic font size per WORD LENGTH (chars)
   // since Pop only ever shows one word at a time. Short punchy words
   // get bigger; long compound words shrink to avoid overflow.
   const baseSize = popSizeForWord(activeWord.word, 140);
   const size = isEmphasisActive ? baseSize * 1.15 : baseSize;
 
-  // Position — body zone (y ≈ 900-1080), centered horizontally
+  // Position â€” body zone (y â‰ˆ 900-1080), centered horizontally
   const y = 900;
 
   return (
@@ -91,7 +91,7 @@ export const WordCaptionPop: React.FC<Props> = ({
       <div
         style={{
           fontFamily: tokens.fonts.body,
-          fontWeight: 800,
+          fontWeight: 700,
           fontSize: size,
           color: isEmphasisActive ? tokens.colors.accent : tokens.colors.white,
           lineHeight: 1,
@@ -123,13 +123,13 @@ export const WordCaptionPop: React.FC<Props> = ({
 };
 
 /**
- * Phase 10 Round B — F7: char-count-driven font sizing for Pop style.
+ * Phase 10 Round B â€” F7: char-count-driven font sizing for Pop style.
  * Keeps short/punchy words commanding and prevents long compound words
  * from overflowing the body zone.
  */
 function popSizeForWord(word: string, baseSize: number): number {
   const len = word.length;
-  if (len <= 3) return Math.round(baseSize * 1.18); // "هو"، "ده"
+  if (len <= 3) return Math.round(baseSize * 1.18); // "Ù‡Ùˆ"ØŒ "Ø¯Ù‡"
   if (len <= 5) return baseSize;                    // baseline
   if (len <= 8) return Math.round(baseSize * 0.88);
   return Math.round(baseSize * 0.76);               // long compounds

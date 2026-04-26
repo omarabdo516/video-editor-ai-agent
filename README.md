@@ -27,10 +27,10 @@ The current output style is for **RS Financial Services** (`brands/rs/`). The di
 
 - **Node.js ≥ 18** (tested on Windows 11)
 - **FFmpeg** at `C:/ffmpeg/bin/ffmpeg.exe` (or edit `preprocess-audio.js`)
-- **Python 3.11** with the `whisper-env` venv at `C:/Users/PUZZLE/Documents/Claude/_tools/whisper-env/.venv/`
+- **Python 3.11** with the `whisper-env` venv at `C:/Users/PUZZLE/Documents/GrowthMora/_tools/whisper-env/.venv/`
   - `pip install faster-whisper mediapipe librosa opencv-python soundfile numpy`
 - **GPU** strongly recommended — tested on RTX 5060 Ti 16GB
-- **Cairo + Tajawal fonts** are loaded via `@remotion/google-fonts` automatically
+- **Alexandria + IBM Plex Sans Arabic fonts** are bundled as local woff2 files in `public/fonts/` — no DNS needed at render time
 
 ### Install
 
@@ -108,7 +108,7 @@ node caps.js import path/to/lecture.mp4.captions.srt
 ## Project structure
 
 ```
-video-editor-ai-agent/
+platform/agents/video-editor-ai-agent/
 ├── CLAUDE.md                   ← Claude Code instructions / current state
 ├── README.md                   ← you are here
 ├── rs-reels.mjs                ← end-to-end CLI (make / studio / phase1)
@@ -181,7 +181,7 @@ video-editor-ai-agent/
 │   └── src/
 │       ├── App.tsx             ← layout (toolbar / video / list / waveform / edit)
 │       ├── main.tsx
-│       ├── index.css           ← Tailwind v4 + Cairo/Tajawal + RTL
+│       ├── index.css           ← Tailwind v4 + Alexandria/IBM Plex Sans Arabic + RTL
 │       ├── store/useSubtitleStore.ts  ← Zustand with 50-step undo/redo
 │       ├── components/
 │       │   ├── VideoPlayer.tsx
@@ -238,7 +238,7 @@ The repo `.gitignore` excludes all of these — the only thing tracked here is t
 The active brand profile lives at [`brands/rs/BRAND.md`](brands/rs/BRAND.md). It defines:
 
 - **Colors:** `#10479D` (primary blue), `#FFB501` (accent gold), `#0D1F3C` (overlay dark)
-- **Fonts:** Cairo Bold (headings), Tajawal ExtraBold (captions)
+- **Fonts:** Alexandria Bold (headings), IBM Plex Sans Arabic Bold (captions)
 - **Logo placement:** top-center (not bottom-right — the bottom is captions territory in 9:16)
 - **Tagline:** "بنحقق طموحاتك المحاسبية"
 - **Voice:** Egyptian colloquial, expert + approachable

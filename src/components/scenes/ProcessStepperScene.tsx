@@ -25,7 +25,7 @@ export const ProcessStepperScene: React.FC<Props> = ({ scene }) => {
     config: tokens.springs.bounce,
   });
 
-  // Background shimmer — slow pulsing radial gradient under everything
+  // Background shimmer â€” slow pulsing radial gradient under everything
   const bgPulse = (Math.sin(frame * 0.05) + 1) / 2; // 0..1
 
   return (
@@ -42,7 +42,7 @@ export const ProcessStepperScene: React.FC<Props> = ({ scene }) => {
         gap: 56,
       }}
     >
-      {/* Background atmosphere — soft radial pulse */}
+      {/* Background atmosphere â€” soft radial pulse */}
       <div
         style={{
           position: 'absolute',
@@ -102,7 +102,7 @@ const StepCard: React.FC<{
   totalCards: number;
 }> = ({ card, frame, fps, index, totalCards }) => {
   // Dynamic stagger: wider spacing for few cards, tighter for many.
-  // Phase 10 Round A — keeps total stagger time ~constant across counts.
+  // Phase 10 Round A â€” keeps total stagger time ~constant across counts.
   const perCardStep = getStaggerDelay(totalCards);
   const delay = card.stagger_delay_frames ?? 12 + index * perCardStep;
   const localFrame = Math.max(0, frame - delay);
@@ -171,7 +171,7 @@ const StepCard: React.FC<{
           alignItems: 'center',
           justifyContent: 'center',
           fontFamily: tokens.fonts.heading,
-          fontWeight: 800,
+          fontWeight: 700,
           fontSize: tokens.scenes.stepCardNumberSize,
           flexShrink: 0,
           border: isCurrent ? `3px solid ${accent}` : '2px solid rgba(255,255,255,0.22)',
@@ -198,7 +198,7 @@ const StepCard: React.FC<{
         <div
           style={{
             fontFamily: tokens.fonts.body,
-            fontWeight: 800,
+            fontWeight: 700,
             fontSize: tokens.scenes.stepCardLabelSize,
             color: isCurrent ? dark : white,
             lineHeight: 1.05,

@@ -6,9 +6,9 @@ import type { OverlayItem } from '../../types';
 type Props = { overlay: OverlayItem };
 
 /**
- * Floating text overlay — sits in the body zone (y=900 default), above
+ * Floating text overlay â€” sits in the body zone (y=900 default), above
  * the lower-third and caption zone. Text floats without a background
- * card — a strong layered drop shadow keeps it legible against any
+ * card â€” a strong layered drop shadow keeps it legible against any
  * video frame.
  *
  * Supports:
@@ -57,7 +57,7 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
   const singleText = !hasPrimary ? overlay.keyword || overlay.text || '' : null;
 
   // Heavy layered shadow so gold text stays legible over any video
-  // frame — replaces the old background card entirely.
+  // frame â€” replaces the old background card entirely.
   const TEXT_SHADOW = [
     '0 0 16px rgba(0,0,0,0.85)',
     '0 4px 18px rgba(0,0,0,0.75)',
@@ -82,13 +82,13 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
       <div
         style={{
           position: 'relative',
-          // No background / border / shadow card — the text floats.
+          // No background / border / shadow card â€” the text floats.
           direction: 'rtl',
           textAlign: 'center',
           maxWidth: width - 200,
         }}
       >
-        {/* Badge — still rendered when present (badges are for stamp-style
+        {/* Badge â€” still rendered when present (badges are for stamp-style
             callouts and stay useful even without a card) */}
         {overlay.badge && (
           <div
@@ -101,7 +101,7 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
               padding: '6px 14px',
               borderRadius: 6,
               fontFamily: tokens.fonts.heading,
-              fontWeight: 800,
+              fontWeight: 700,
               fontSize: 24,
               letterSpacing: '0.5px',
               boxShadow: '0 6px 18px rgba(255, 181, 1, 0.5)',
@@ -150,7 +150,7 @@ export const KeywordHighlightOverlay: React.FC<Props> = ({ overlay }) => {
             >
               {overlay.primary_text}
             </div>
-            {/* Accent underline — subtle gold bar below the primary text */}
+            {/* Accent underline â€” subtle gold bar below the primary text */}
             <div
               style={{
                 position: 'absolute',

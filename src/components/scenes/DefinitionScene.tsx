@@ -6,8 +6,8 @@ import type { Scene, DefinitionElement } from '../../types';
 type Props = { scene: Scene };
 
 /**
- * DefinitionScene — "the term" above + body text below + optional icon.
- * Used for concept explanations ("الأصول الثابتة = ...", "IFRS = ...").
+ * DefinitionScene â€” "the term" above + body text below + optional icon.
+ * Used for concept explanations ("Ø§Ù„Ø£ØµÙˆÙ„ Ø§Ù„Ø«Ø§Ø¨ØªØ© = ...", "IFRS = ...").
  *
  * Animation order:
  *   1. Icon scales in with bounce
@@ -117,7 +117,7 @@ export const DefinitionScene: React.FC<Props> = ({ scene }) => {
       <div
         style={{
           fontFamily: tokens.fonts.body,
-          fontWeight: 800,
+          fontWeight: 700,
           fontSize: 110,
           color: tokens.colors.accent,
           textAlign: 'center',

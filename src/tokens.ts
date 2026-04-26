@@ -12,10 +12,10 @@ export const tokens = {
     overlay: 'rgba(13, 31, 60, 0.85)',
   },
   fonts: {
-    heading: 'Cairo',
-    body: 'Tajawal',
+    heading: 'Alexandria',
+    body: 'IBM Plex Sans Arabic',
     headingWeight: 700,
-    bodyWeight: 800,
+    bodyWeight: 700, // IBM Plex Sans Arabic max is 700 (Bold); was 800 with Tajawal
   },
   captions: {
     fontSize: 56,

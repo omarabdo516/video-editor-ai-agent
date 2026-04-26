@@ -6,11 +6,11 @@ import type { Scene, CounterElement } from '../../types';
 type Props = { scene: Scene };
 
 /**
- * CounterScene — massive number that counts up from 0 to `value` with
+ * CounterScene â€” massive number that counts up from 0 to `value` with
  * ease-out interpolation. Optional top + bottom labels. Used for
- * statistics, social proof, or "+50,000 محاسب اتدرّب".
+ * statistics, social proof, or "+50,000 Ù…Ø­Ø§Ø³Ø¨ Ø§ØªØ¯Ø±Ù‘Ø¨".
  *
- * The number itself does the heavy lifting visually — don't add too many
+ * The number itself does the heavy lifting visually â€” don't add too many
  * decorative elements around it. Big, centered, bouncy.
  */
 export const CounterScene: React.FC<Props> = ({ scene }) => {
@@ -120,7 +120,7 @@ export const CounterScene: React.FC<Props> = ({ scene }) => {
           <span
             style={{
               fontFamily: tokens.fonts.body,
-              fontWeight: 800,
+              fontWeight: 700,
               fontSize: 90,
               color: tokens.colors.accent,
               opacity: 0.85,
@@ -132,7 +132,7 @@ export const CounterScene: React.FC<Props> = ({ scene }) => {
         <span
           style={{
             fontFamily: tokens.fonts.body,
-            fontWeight: 800,
+            fontWeight: 700,
             fontSize: 180,
             color: tokens.colors.accent,
             lineHeight: 1,
@@ -148,7 +148,7 @@ export const CounterScene: React.FC<Props> = ({ scene }) => {
           <span
             style={{
               fontFamily: tokens.fonts.body,
-              fontWeight: 800,
+              fontWeight: 700,
               fontSize: 100,
               color: tokens.colors.accent,
               marginLeft: 4,
@@ -187,6 +187,6 @@ export const CounterScene: React.FC<Props> = ({ scene }) => {
 };
 
 function formatNumber(n: number): string {
-  // Use English digits per brand spec (no ١٢٣)
+  // Use English digits per brand spec (no Ù¡Ù¢Ù£)
   return n.toLocaleString('en-US');
 }

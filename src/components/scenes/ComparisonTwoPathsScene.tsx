@@ -7,7 +7,7 @@ type Props = { scene: Scene };
 
 /**
  * Side-by-side comparison (wrong path vs right path), vertically centered.
- * The right (✓) column slides up from the right, then the left (✗) from
+ * The right (âœ“) column slides up from the right, then the left (âœ—) from
  * the left after a stagger. The accent side pulses to draw the eye.
  */
 export const ComparisonTwoPathsScene: React.FC<Props> = ({ scene }) => {
@@ -154,7 +154,7 @@ const PathColumn: React.FC<{
           alignItems: 'center',
           justifyContent: 'center',
           fontSize: 66,
-          fontWeight: 800,
+          fontWeight: 700,
           color: isAccent ? tokens.colors.dark : tokens.colors.white,
           marginBottom: 6,
           transform: `scale(${0.3 + iconProgress * 0.7})`,
@@ -162,14 +162,14 @@ const PathColumn: React.FC<{
           boxShadow: isAccent ? '0 16px 36px rgba(255,181,1,0.5)' : 'none',
         }}
       >
-        {side.icon === 'check' ? '✓' : side.icon === 'x' ? '✗' : '?'}
+        {side.icon === 'check' ? 'âœ“' : side.icon === 'x' ? 'âœ—' : '?'}
       </div>
 
       {/* Label */}
       <div
         style={{
           fontFamily: tokens.fonts.heading,
-          fontWeight: 800,
+          fontWeight: 700,
           fontSize: 44,
           color: labelColor,
           textAlign: 'center',
@@ -184,7 +184,7 @@ const PathColumn: React.FC<{
       {/* Steps stack (each fades in with its own delay) */}
       {side.steps.map((step, idx) => {
         const isHighlight = step === side.highlight;
-        const isArrow = step === '↓';
+        const isArrow = step === 'â†“';
         const stepDelay = 14 + idx * 4;
         const stepProgress = spring({
           frame: Math.max(0, localFrame - stepDelay),

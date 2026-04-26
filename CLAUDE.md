@@ -240,7 +240,7 @@
   - [x] `mini_zoom` = merged into smart_zoom_plan (not a separate component)
 - [x] [`src/tokens.ts`](src/tokens.ts) — design tokens + scenes + overlays + springs presets
 - [x] [`src/utils/chunk.ts`](src/utils/chunk.ts) — caption rechunking
-- [x] [`src/utils/fonts.ts`](src/utils/fonts.ts) — @remotion/google-fonts (Cairo + Tajawal)
+- [x] [`src/utils/fonts.ts`](src/utils/fonts.ts) — local woff2 (Alexandria + IBM Plex Sans Arabic)
 
 - [x] **Caption styles (2)**:
   - [x] [`WordCaption.tsx`](src/components/WordCaption.tsx) — Hormozi (default) — all words in segment + active-word highlight + emphasis boost
@@ -366,7 +366,7 @@ brands/
 3. اقرأ [`feedback/style_evolution.md`](feedback/style_evolution.md) — تفضيلات المستخدم
 4. شوف [`feedback/best_components/`](feedback/best_components/) لو فيه component مشابه
 5. **استخدم القيم من `src/tokens.ts`** — مفيش hardcoded values في الـ components
-6. **الخط Cairo أو Tajawal. الكتابة RTL. الأرقام إنجليزية.**
+6. **الخط Alexandria (للعناوين) أو IBM Plex Sans Arabic (للجسم/الكابشن). الكتابة RTL. الأرقام إنجليزية.**
 
 ---
 
@@ -416,8 +416,8 @@ brands/
 | Face detection | MediaPipe 0.10.33 (Tasks API) | BlazeFace short-range — `scripts/models/` |
 | Audio analysis | librosa 0.11.0 | RMS + dramatic pause detection |
 | Audio I/O | FFmpeg | `C:/ffmpeg/bin/ffmpeg.exe` (Windows) |
-| Python venv | uv-managed | `C:/Users/PUZZLE/Documents/Claude/_tools/whisper-env/.venv` |
-| Fonts | @remotion/google-fonts | Cairo + Tajawal (Arabic subsets) |
+| Python venv | uv-managed | `C:/Users/PUZZLE/Documents/GrowthMora/_tools/whisper-env/.venv` |
+| Fonts | local woff2 (`public/fonts/`) | Alexandria + IBM Plex Sans Arabic (Arabic + Latin subsets) |
 | Hardware target | RTX 5060 Ti + i7-14700K + 32GB DDR5 | Render config tuned for it |
 
 ---

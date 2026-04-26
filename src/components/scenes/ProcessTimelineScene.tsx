@@ -7,7 +7,7 @@ type Props = { scene: Scene };
 
 /**
  * Horizontal timeline of nodes, vertically centered. Each node:
- *  - lands with a bounce (scale 0.3 → 1.0)
+ *  - lands with a bounce (scale 0.3 â†’ 1.0)
  *  - the "done" node gets a continuous pulse glow
  *  - the connecting line draws progressively as each node arrives
  */
@@ -27,11 +27,11 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
   if (!timeline) return null;
 
   const items = timeline.items;
-  // Dynamic stagger (Phase 10 Round A) — fewer items get wider spacing
+  // Dynamic stagger (Phase 10 Round A) â€” fewer items get wider spacing
   // so a 2-node timeline still feels deliberate, and 5+ nodes tighten.
   const stagger = timeline.stagger_per_item_frames ?? getStaggerDelay(items.length);
   const nodeSize = tokens.scenes.timelineNodeSize;
-  // Gap must be wide enough for Arabic labels ("ميزان مراجعة" ~ 280px at 48px/800)
+  // Gap must be wide enough for Arabic labels ("Ù…ÙŠØ²Ø§Ù† Ù…Ø±Ø§Ø¬Ø¹Ø©" ~ 280px at 48px/800)
   // so adjacent labels don't overlap. At 3 nodes with nodeSize=120 + gap=230:
   // totalWidth = 3*120 + 2*230 = 820px, fits inside 1080 with room to spare.
   const gap = 230;
@@ -99,7 +99,7 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
           height: nodeSize + 120,
         }}
       >
-        {/* Connecting line — animated fill */}
+        {/* Connecting line â€” animated fill */}
         {items.length > 1 && (() => {
           // Progress from 0..1 across how many nodes have "landed"
           const maxLineFill = items.length > 1 ? 1 : 0;
@@ -156,7 +156,7 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
 
           return (
             <React.Fragment key={idx}>
-              {/* Node circle — positioned at its slot */}
+              {/* Node circle â€” positioned at its slot */}
               <div
                 style={{
                   position: 'absolute',
@@ -179,7 +179,7 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontFamily: tokens.fonts.heading,
-                  fontWeight: 800,
+                  fontWeight: 700,
                   fontSize: 60,
                   color: isDone ? tokens.colors.dark : tokens.colors.white,
                   opacity: progress,
@@ -194,7 +194,7 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
                 {item.status_text || (idx + 1)}
               </div>
 
-              {/* Label — independent absolute container, wider than the node
+              {/* Label â€” independent absolute container, wider than the node
                   so long Arabic labels don't collide with neighbors */}
               <div
                 style={{
@@ -203,7 +203,7 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
                   top: nodeSize + 28,
                   width: labelSlotWidth,
                   fontFamily: tokens.fonts.body,
-                  fontWeight: 800,
+                  fontWeight: 700,
                   fontSize: tokens.scenes.timelineLabelSize + 4,
                   color:
                     isDone || isNext ? tokens.colors.white : 'rgba(255,255,255,0.48)',
@@ -224,7 +224,7 @@ export const ProcessTimelineScene: React.FC<Props> = ({ scene }) => {
         })}
       </div>
 
-      {/* Footer caption — fades in after all timeline nodes land */}
+      {/* Footer caption â€” fades in after all timeline nodes land */}
       {footer && (() => {
         const fdelay = footer.delay_frames ?? 60;
         const fProgress = spring({

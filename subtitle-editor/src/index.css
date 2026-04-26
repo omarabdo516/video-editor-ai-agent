@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap');
 @import 'tailwindcss';
 
 @theme {
-  --font-cairo: 'Cairo', system-ui, sans-serif;
-  --font-tajawal: 'Tajawal', system-ui, sans-serif;
+  --font-heading: 'Alexandria', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans Arabic', system-ui, sans-serif;
 
   /* RS brand colors — keep these in sync with brands/rs/BRAND.md */
   --color-brand-primary: #10479d;
@@ -31,7 +31,7 @@ body {
   padding: 0;
   background: var(--color-bg-base);
   color: var(--color-text-primary);
-  font-family: var(--font-cairo);
+  font-family: var(--font-heading);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -42,12 +42,21 @@ body {
 }
 
 /* RTL helpers — applied per element with dir="rtl", not globally */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* Legacy aliases — kept for any straggler markup using the old class names */
 .font-cairo {
-  font-family: var(--font-cairo);
+  font-family: var(--font-heading);
 }
 
 .font-tajawal {
-  font-family: var(--font-tajawal);
+  font-family: var(--font-body);
 }
 
 /* Waveform container — wavesurfer renders LTR even in RTL contexts */
