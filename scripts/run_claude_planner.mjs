@@ -320,14 +320,29 @@ function applyTaglineAutoFix(plan, brandRulesText) {
 
 function runClaude(promptText) {
   return new Promise((resolve, reject) => {
-    console.log('[planner] spawning claude -p --bare --tools ""');
+    // We deliberately do NOT pass --bare. --bare disables OAuth and the
+    // OS keychain, requiring ANTHROPIC_API_KEY. Omar runs on Max plan via
+    // OAuth, so dropping --bare is required for auth to work. The cost is
+    // that auto-memory + project CLAUDE.md auto-load — which is fine: the
+    // context they add is consistent with what we inline anyway.
+    //
+    // On Windows the binary is `claude.cmd`. Node's spawn() refuses to
+    // execute .cmd files directly (CVE-2024-27980 hardening), so we use
+    // shell: true to delegate to cmd.exe. This matches the launcher's
+    // existing pattern (launcher/launcher.mjs spawns npm the same way).
+    // The deprecation warning is acceptable — our args are hardcoded,
+    // not user input, so injection is not a risk.
+    const isWin = process.platform === 'win32';
+    const claudeBin = isWin ? 'claude.cmd' : 'claude';
+    console.log(`[planner] spawning ${claudeBin} -p --tools "" --output-format text`);
     const child = spawn(
-      'claude',
-      ['-p', '--bare', '--tools', '', '--output-format', 'text'],
+      claudeBin,
+      ['-p', '--tools', '', '--output-format', 'text', '--no-session-persistence'],
       {
         stdio: ['pipe', 'pipe', 'pipe'],
         cwd: REPO_ROOT,
         env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
+        shell: isWin,
       },
     );
 
