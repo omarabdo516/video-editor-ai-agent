@@ -38,24 +38,52 @@ import path from 'node:path';
 import os from 'node:os';
 import url from 'node:url';
 
+import {
+  videoBasename,
+  scaledVideoPath,
+  captionsPath as canonicalCaptionsPath,
+  faceMapPath,
+  energyPath,
+  metadataPath,
+} from '../lib/paths.mjs';
+
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const REPO_ROOT = path.resolve(__dirname, '..');
 
 // ─── path helpers ────────────────────────────────────────────────────────
 
-function videoBasename(videoPath) {
-  return path.basename(videoPath, path.extname(videoPath));
+function captionsPath(videoPath) {
+  // Prefer the canonical _pipeline/ layout. Fall back to legacy sidecar so
+  // older videos (pre folder reorg) still resolve.
+  const canonical = canonicalCaptionsPath(videoPath);
+  if (existsSync(canonical)) return canonical;
+  const dir = path.dirname(videoPath);
+  return path.join(dir, `${videoBasename(videoPath)}.captions.json`);
 }
 
-function captionsPath(videoPath) {
-  // Matches dashboard-api/lib/paths.mjs canonical layout.
-  const base = videoBasename(videoPath);
-  const dir = path.dirname(videoPath);
-  const canonical = path.join(dir, '_pipeline', base, 'captions.json');
-  if (existsSync(canonical)) return canonical;
-  // Legacy: <video>.captions.json next to video.
-  return path.join(dir, `${base}.captions.json`);
+/** Build the canonical {video, video_scaled, captions, face_map, energy,
+ *  metadata} block that EVERY animation_plan and content_analysis must carry.
+ *  Used to overwrite Claude's invented basenames after parse — Claude has
+ *  been seen to replace the real filename with a thematic one (e.g.
+ *  "أحمد علي - الالتزامات والمعاد" instead of the actual workshop name).
+ *
+ *  All paths are normalized to forward slashes for cross-platform JSON
+ *  consistency (Node's fs accepts both on Windows; existing plans all use /).
+ */
+function toForwardSlashes(p) {
+  return p.replace(/\\/g, '/');
+}
+
+function computeSourceObject(videoPath) {
+  return {
+    video: toForwardSlashes(videoPath),
+    video_scaled: toForwardSlashes(scaledVideoPath(videoPath)),
+    captions: toForwardSlashes(canonicalCaptionsPath(videoPath)),
+    face_map: toForwardSlashes(faceMapPath(videoPath)),
+    energy: toForwardSlashes(energyPath(videoPath)),
+    metadata: toForwardSlashes(metadataPath(videoPath)),
+  };
 }
 
 function dataDir(videoPath) {
@@ -342,6 +370,45 @@ function applyTaglineAutoFix(plan, brandRulesText) {
   return { plan: JSON.parse(fixed), fixCount };
 }
 
+// ─── source-field overwrites ─────────────────────────────────────────────
+
+/** Mutate plan + contentAnalysis in place, replacing Claude-invented basename
+ *  fields with the truth from the input video. Returns the list of fields
+ *  that actually changed (so the caller can log them). Idempotent.
+ */
+function applySourceOverwrites(plan, contentAnalysis, realBasename, sourceObject) {
+  const changes = [];
+
+  const setField = (obj, key, expected, label) => {
+    if (!obj) return;
+    const before = obj[key];
+    const beforeStr = typeof before === 'object' ? JSON.stringify(before) : String(before ?? '');
+    const expectedStr = typeof expected === 'object' ? JSON.stringify(expected) : String(expected);
+    if (beforeStr === expectedStr) return;
+    obj[key] = expected;
+    changes.push({ path: label, before: beforeStr.slice(0, 80), after: expectedStr.slice(0, 80) });
+  };
+
+  // animation_plan
+  if (plan) {
+    setField(plan, 'source_video_basename', realBasename, 'animation_plan.source_video_basename');
+    setField(plan, 'source', sourceObject, 'animation_plan.source');
+    if (plan.smart_zoom_plan) {
+      setField(plan.smart_zoom_plan, 'source', realBasename, 'animation_plan.smart_zoom_plan.source');
+    }
+  }
+
+  // content_analysis
+  if (contentAnalysis) {
+    setField(contentAnalysis, 'source_video_basename', realBasename, 'content_analysis.source_video_basename');
+    if ('source' in contentAnalysis) {
+      setField(contentAnalysis, 'source', sourceObject, 'content_analysis.source');
+    }
+  }
+
+  return changes;
+}
+
 // ─── claude subprocess ───────────────────────────────────────────────────
 
 function runClaude(promptText) {
@@ -491,6 +558,26 @@ async function main() {
   );
   if (fixCount > 0) {
     console.log(`[planner] tagline auto-fix applied: ${fixCount} replacement(s)`);
+  }
+
+  // Overwrite Claude-invented source fields with the truth derived from the
+  // input video path. Claude has been seen to invent thematic basenames
+  // (e.g. "أحمد علي - الالتزامات والمعاد" instead of the real
+  // "أحمد علي - ورشة خبير الضرايب") in source_video_basename and
+  // smart_zoom_plan.source, even when the source.* paths happen to be right.
+  const realBasename = videoBasename(videoPath);
+  const sourceObject = computeSourceObject(videoPath);
+  const overwrites = applySourceOverwrites(
+    planFixed,
+    parsed.contentAnalysis,
+    realBasename,
+    sourceObject,
+  );
+  if (overwrites.length > 0) {
+    console.log(`[planner] source-field overwrite: ${overwrites.length} field(s) corrected`);
+    for (const o of overwrites) {
+      console.log(`  ${o.path}: "${o.before}" → "${o.after}"`);
+    }
   }
 
   // Write outputs.
