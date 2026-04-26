@@ -1,0 +1,201 @@
+{
+  "$schema_version": "1",
+  "$comment": "RS brand identity in machine-readable form. Source of truth for the brand validator (Stage alpha). Sync with src/tokens.ts and BRAND.md when values change.",
+
+  "brand": {
+    "id": "rs",
+    "name": "RS Financial Services",
+    "slug": "rs",
+    "founded": 2014,
+    "language": "ar-EG",
+    "direction": "rtl",
+    "tagline": {
+      "canonical": "بنحقق طموحك المحاسبي",
+      "form": "singular",
+      "policy_on_wrong_form": "auto_fix_silent",
+      "auto_fix_replacements": {
+        "بنحقق طموحاتك المحاسبية": "بنحقق طموحك المحاسبي",
+        "بنحقق طموحاتكم المحاسبية": "بنحقق طموحك المحاسبي",
+        "بنحقق طموحاتك": "بنحقق طموحك",
+        "نحقق طموحاتك المحاسبية": "بنحقق طموحك المحاسبي"
+      }
+    }
+  },
+
+  "hard_constraints": {
+    "$comment": "Layer 1 — red lines. Render validator rejects any plan that violates these.",
+
+    "comp": {
+      "width": 1080,
+      "height": 1920,
+      "fps": 30
+    },
+
+    "colors_allowed": [
+      {
+        "hex": "#10479D",
+        "name": "primary",
+        "purpose": "outro background, lower-third bar, chapter dividers, scene backgrounds (dark)"
+      },
+      {
+        "hex": "#FFB501",
+        "name": "accent",
+        "purpose": "active caption word, keyword highlights, tagline, any positive emphasis"
+      },
+      {
+        "hex": "#0D1F3C",
+        "name": "dark",
+        "purpose": "transparent overlay over video, caption background (when needed), scene backgrounds"
+      },
+      {
+        "hex": "#FFFFFF",
+        "name": "white",
+        "purpose": "regular caption words, body text on dark backgrounds"
+      }
+    ],
+    "colors_policy": "any_color_outside_allowed_list_is_rejected",
+
+    "fonts_allowed": [
+      {
+        "family": "Alexandria",
+        "role": "heading",
+        "weight_range": [100, 900],
+        "purpose": "scene titles, chapter dividers, lower-third name, outro tagline, large numbers"
+      },
+      {
+        "family": "IBM Plex Sans Arabic",
+        "role": "body",
+        "weight_range": [100, 700],
+        "purpose": "captions (word-by-word), keyword overlays, body text"
+      }
+    ],
+    "fonts_policy": "any_font_outside_allowed_list_is_rejected",
+
+    "logo": {
+      "always_visible": true,
+      "exceptions": ["outro"],
+      "min_width_px": 170,
+      "max_width_px": 420,
+      "transformations_banned": [
+        "stretch",
+        "rotate",
+        "outline",
+        "glow",
+        "color_shift",
+        "place_over_speaker_face"
+      ]
+    },
+
+    "captions": {
+      "single_style_per_reel": true,
+      "allowed_styles": ["hormozi", "pop", "karaoke", "box", "typewriter", "classic"],
+      "default_style": "hormozi"
+    },
+
+    "sfx": {
+      "default_enabled": false,
+      "override_requires_explicit_request": true,
+      "rationale": "Synthesized SFX felt distracting in the first reel; reverted by Omar 2026-04-15"
+    },
+
+    "numerals": {
+      "use": "western_arabic",
+      "examples_allowed": ["1", "2", "3", "100", "2014"],
+      "examples_banned": ["١", "٢", "٣", "١٠٠", "٢٠١٤"],
+      "rationale": "Western numerals read corporate; Arabic-Indic numerals read religious/traditional"
+    },
+
+    "language": {
+      "primary": "ar-EG",
+      "tone_required": ["practical", "confident", "approachable"],
+      "tone_banned": ["arrogant", "overly_formal", "academic", "salesy", "hyperbolic"]
+    },
+
+    "vocabulary": {
+      "preferred_terms": {
+        "ورشة": "use this, not كورس / دورة",
+        "تطبيق عملي": "use this, not محتوى نظري",
+        "ملفات شركات حقيقية": "use this, not تمارين / أنشطة",
+        "متدرب": "use this, not طالب / متعلم",
+        "محاضر": "use this, not مدرّب / teacher"
+      }
+    }
+  },
+
+  "soft_preferences": {
+    "$comment": "Layer 2 — defaults Claude leans toward. Validator warns but does not reject.",
+
+    "lower_third": {
+      "bar_width_px": 640,
+      "bar_height": "auto",
+      "padding_v_px": 28,
+      "padding_h_px": 48,
+      "name_size_px": 60,
+      "title_size_px": 38,
+      "duration_sec": 4,
+      "rationale": "Was 820px wide; felt dominant. 640 with auto-height padding feels balanced (Omar feedback 2026-04-25)"
+    },
+
+    "scene_layout": {
+      "prefer_vertical_for_long_arabic_labels": true,
+      "body_zone_y_px": 900,
+      "rationale": "y=900 is the only safe zone above lower-third (1100-1460) and captions (1420). Vertical scenes (process_stepper) handle long Arabic better than horizontal (process_timeline)."
+    },
+
+    "emphasis": {
+      "prefer": "inline_caption_word_boost",
+      "avoid": "floating_emphasis_element",
+      "rationale": "Boost the current caption word in place. Floating elements feel busy and compete with captions."
+    },
+
+    "overlays": {
+      "default_y_px": 1080,
+      "min_clearance_to_caption_px": 240,
+      "no_card_background": true,
+      "use_accent_underline": true,
+      "rationale": "y=1200 was too close to captions; y=900 too far. 1080 leaves ~240px clear margin."
+    },
+
+    "smart_zoom": {
+      "face_confidence_min": 0.5,
+      "spacing_min_seconds": 30,
+      "fallback_for_short_reels": "single_big_zoom_on_highest_impact_moment_plus_mini_zooms",
+      "rationale": "Zooming on low-confidence faces looks weird; under 90s reels rarely have two windows that pass both gates."
+    },
+
+    "scenes": {
+      "spacing_min_seconds": 15,
+      "count_cap": null,
+      "rationale": "Pick every high/medium key_moment that fits 15s spacing. Never artificially cap scene count (Omar feedback)."
+    },
+
+    "captions_general": {
+      "max_words_per_chunk": 6,
+      "font_size_px_default": 56,
+      "max_width_px": 820,
+      "y_position_px": 1420,
+      "text_shadow": "0 0 12px rgba(0,0,0,0.85), 0 4px 16px rgba(0,0,0,0.7)"
+    },
+
+    "outro": {
+      "duration_sec": 5,
+      "logo_width_px": 300,
+      "tagline_size_px": 46,
+      "cta_primary_size_px": 68,
+      "cta_subtext_size_px": 34,
+      "website_size_px": 60,
+      "social_icon_size_px": 96,
+      "social_icon_gap_px": 36
+    },
+
+    "review_principle": {
+      "name": "review_via_render",
+      "description": "Omar judges animation/visual specs only after watching the render, not by reading JSON",
+      "implication_for_planner": "deliver renders for sign-off; do not ask Omar to validate visuals from the plan alone"
+    }
+  },
+
+  "creative_freedom_note": {
+    "$comment": "Anything not constrained above is open ground for Claude. Examples (non-exhaustive): scene compositions, animation choreography, pacing & rhythm, hook structure (first 3s), moment selection within the captions, new element types, transitions between scenes, micro-event placement. The only test is: do the hard constraints hold and is the render rated well by Omar?"
+  }
+}

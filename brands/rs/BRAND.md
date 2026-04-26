@@ -3,9 +3,15 @@
 > **قبل ما تكتب أي component أو نص يظهر في فيديو لـ RS — اقرأ الملف ده.**
 > القواعد هنا إجبارية ولها أولوية على أي `docs/design-system.md` أو `feedback/style_evolution.md`.
 >
+> 🔒 **القواعد القابلة للتنفيذ آلياً** (الـ hard constraints + soft preferences) موجودة في
+> [`brand-rules.json`](brand-rules.json) — ده الـ machine-readable source of truth اللي
+> الـ brand validator + Claude planner بيقروه. الملف ده (BRAND.md) بيشرح الـ "ليه" + السياق
+> البشري؛ الـ JSON بيحمل الأرقام والقواعد الـ enforceable. لو فيه تعارض بين الاتنين —
+> الـ JSON بيكسب لأنه اللي بيتنفّذ في الكود.
+>
 > ⚠️ ده الـ brand profile لـ **RS Financial Services**. لو هتشتغل على برند تاني، أنشئ
-> `brands/<client>/BRAND.md` جديد ووصّل الـ tokens المناسبة في `src/tokens.ts`
-> (multi-brand support هيتضاف في refactor مستقبلي).
+> `brands/<client>/BRAND.md` + `brands/<client>/brand-rules.json` جديدين ووصّل الـ tokens
+> المناسبة في `src/tokens.ts` (multi-brand support هيتضاف في refactor مستقبلي).
 
 ---
 
