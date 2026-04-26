@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { PhaseId, Video } from '../api/types';
 import { useDashboardStore } from '../store/useDashboardStore';
+import { usePlanStore } from '../store/usePlanStore';
 import { PhaseButton } from './PhaseButton';
 import { PipelineStepper } from './PipelineStepper';
 import { ProgressBar } from './ProgressBar';
 import { LogViewer } from './LogViewer';
 import { ClaudeHandoffModal } from './ClaudeHandoffModal';
 import { RatingInput } from './RatingInput';
+import { PlanRenderPanel } from './PlanRenderPanel';
 import { getEditHandoff } from '../api/client';
 import { useModalStore } from '../store/useModalStore';
 import { getPhaseEtaLabel, getElapsedSec, formatEta } from '../utils/phaseEstimates';
@@ -75,6 +77,14 @@ export function VideoCard({ video }: Props) {
 
   const transcribeDone = video.phases.transcribe?.status === 'done';
   const renderDone = video.phases.render?.status === 'done';
+  const phase1Done = video.phases.phase1?.status === 'done';
+  const editDone = video.phases.edit?.status === 'done';
+  const canPlan = phase1Done && transcribeDone && editDone;
+  const planActive = usePlanStore((s) => {
+    const ps = s.byVideoId[video.id];
+    return ps != null && ps.mode !== 'idle';
+  });
+  const startPlan = usePlanStore((s) => s.startPlan);
   const activePhase = useMemo(() => pickActivePhase(video), [video]);
   const activeState = activePhase ? video.phases[activePhase] : null;
   const activeJobId = activeState?.lastJobId ?? null;
@@ -142,6 +152,19 @@ export function VideoCard({ video }: Props) {
   };
 
   const handleAnalyze = () => setHandoffOpen(true);
+
+  const handlePlan = () => {
+    void startPlan(video.id);
+  };
+
+  const planDisabledReason = (() => {
+    if (canPlan) return null;
+    const missing: string[] = [];
+    if (!phase1Done) missing.push('Phase 1');
+    if (!transcribeDone) missing.push('Transcribe');
+    if (!editDone) missing.push('Edit');
+    return `خلّص ${missing.join(' + ')} الأول`;
+  })();
 
   const phaseLabel = activePhase
     ? {
@@ -232,6 +255,32 @@ export function VideoCard({ video }: Props) {
         />
         <PhaseButton video={video} phase="microEvents" label="Micro Events" />
         <PhaseButton video={video} phase="render" label="Render" />
+        <button
+          type="button"
+          onClick={handlePlan}
+          disabled={!canPlan || planActive}
+          title={
+            planDisabledReason ??
+            (planActive
+              ? 'الـ plan شغّال — شوف اللوحة تحت'
+              : 'تخطيط Claude + render تلقائي')
+          }
+          className="rounded-md px-3 py-1.5 text-xs font-bold transition disabled:cursor-not-allowed"
+          style={{
+            background: canPlan && !planActive ? 'var(--color-brand-accent)' : 'transparent',
+            color:
+              canPlan && !planActive
+                ? 'var(--color-brand-dark)'
+                : 'var(--color-text-muted)',
+            border:
+              canPlan && !planActive
+                ? 'none'
+                : '1px solid var(--color-border-subtle)',
+            opacity: canPlan && !planActive ? 1 : 0.6,
+          }}
+        >
+          🎬 خطّط وأرندر
+        </button>
       </div>
 
       {activeRunning && (
@@ -279,7 +328,10 @@ export function VideoCard({ video }: Props) {
         />
       )}
 
-      {renderDone && (
+      {/* Stage α — plan + render panel (inline below). Renders null when idle. */}
+      <PlanRenderPanel videoId={video.id} />
+
+      {renderDone && !planActive && (
         <RatingInput
           videoId={video.id}
           currentRating={video.rating}

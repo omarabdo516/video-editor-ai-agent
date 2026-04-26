@@ -2,6 +2,14 @@
 
 ## 📍 Next Up — اللي بنبدأ فيه دلوقتي
 
+> **آخر تحديث:** 2026-04-26 — **Feature 005 Sprint 1 / Tasks S1.1 + S1.2 + S1.3 + S1.4 shipped**.
+>
+> **S1.4 — wire `<PlanRenderPanel>` في `<VideoCard>`** ✅. زرار "🎬 خطّط وأرندر" بقى آخر زرار في الـ phase buttons row في [`dashboard-ui/src/components/VideoCard.tsx`](dashboard-ui/src/components/VideoCard.tsx). الـ button بـ accent (gold) background لما enabled، transparent + dim لما disabled. **disabled state** لما (phase1 ∨ transcribe ∨ edit) ≠ done — الـ tooltip بيعرض اللي ناقص بصياغة "خلّص Phase 1 + Transcribe الأول" حسب اللي ناقص. **disabled تاني** لما الـ plan شغّال بالفعل (`planActive` selector من usePlanStore بيـ check لو الـ state mode ≠ idle/undefined) — الـ tooltip بيقول "الـ plan شغّال — شوف اللوحة تحت". الـ click handler `handlePlan` بيستدعي `usePlanStore.getState().startPlan(video.id)` عبر selector. الـ `<PlanRenderPanel videoId>` mounted inline بعد الـ logs وقبل الـ rating row (returns null لو idle، فمفيش flicker للـ videos اللي مش متخطّطة). الـ legacy card-level `<RatingInput>` بقى يـ skip لو planActive عشان الـ panel نفسه فيه rating block (في mode `done-awaiting-rating` و `rated`) — مفيش duplication للـ widget.
+>
+> **Verification**: `npx tsc --noEmit` clean. الـ existing 22 brand-validator tests passing. أول real plan-and-render run من الـ Dashboard UI لازم يحصل قبل ما نـ mark Sprint 1 demo (S1.7). الـ session-resume على Dashboard reload (S1.5) لسه pending — حالياً لو reloaded في النص، الـ panel يرجع لـ idle.
+>
+> الـ **next**: S1.5 — session-resume، يـ scan كل الفيديوهات اللي phases.plan.status=='running' ∨ phases.render.status=='running' ويـ re-subscribe للـ SSE streams.
+>
 > **آخر تحديث:** 2026-04-26 — **Feature 005 Sprint 1 / Tasks S1.1 + S1.2 + S1.3 shipped**.
 >
 > **S1.3 — `<PlanRenderPanel>` (frontend)** ✅. الـ panel بيتعرض inline تحت الـ VideoCard لما الـ plan job نشط (placement: confirmed بـ AskUserQuestion). الملفات:
