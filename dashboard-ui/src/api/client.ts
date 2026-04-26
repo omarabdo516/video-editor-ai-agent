@@ -17,6 +17,9 @@ import type {
   BulkAddResponse,
   MegaHandoffResponse,
   MegaCommitResponse,
+  PlanStartResponse,
+  ReflectionResponse,
+  ValidatorVerdict,
 } from './types';
 
 const API = '/api';
@@ -200,6 +203,32 @@ export async function runPhase(
     ),
     `runPhase(${phase})`,
   )) as JobStartResponse;
+  return body;
+}
+
+/** Stage α — POST /api/videos/:id/plan starts the Claude planner subprocess.
+ *  On planner success the backend automatically queues a render job (chained
+ *  in routes/phases.mjs). Subscribe to the returned jobId via
+ *  subscribeToProgress to stream planner stdout + validator-passed/rejected
+ *  events; render-job discovery is via getVideo polling.
+ */
+export async function planAndRender(videoId: string): Promise<PlanStartResponse> {
+  const body = (await jsonOrThrow(
+    await fetch(`${API}/videos/${encodeURIComponent(videoId)}/plan`, {
+      method: 'POST',
+    }),
+    'planAndRender',
+  )) as PlanStartResponse;
+  return body;
+}
+
+/** Fetch the planner's reflection.txt for a video. Returns 404 if the
+ *  reflection file is missing (e.g. video hasn't been planned yet). */
+export async function getReflection(videoId: string): Promise<ReflectionResponse> {
+  const body = (await jsonOrThrow(
+    await fetch(`${API}/videos/${encodeURIComponent(videoId)}/reflection`),
+    'getReflection',
+  )) as ReflectionResponse;
   return body;
 }
 
@@ -387,6 +416,26 @@ export function subscribeToProgress(
       onEvent({ type: 'done', exitCode: -1 });
     } finally {
       es.close();
+    }
+  });
+
+  // Stage α — emitted by routes/phases.mjs /plan after the brand validator runs.
+  // Stream stays open: 'done' fires immediately after.
+  es.addEventListener('validator-passed', (ev) => {
+    try {
+      const data = JSON.parse((ev as MessageEvent).data) as { verdict: ValidatorVerdict };
+      onEvent({ type: 'validator-passed', verdict: data.verdict });
+    } catch {
+      /* ignore malformed frame */
+    }
+  });
+
+  es.addEventListener('validator-rejected', (ev) => {
+    try {
+      const data = JSON.parse((ev as MessageEvent).data) as { verdict: ValidatorVerdict };
+      onEvent({ type: 'validator-rejected', verdict: data.verdict });
+    } catch {
+      /* ignore malformed frame */
     }
   });
 

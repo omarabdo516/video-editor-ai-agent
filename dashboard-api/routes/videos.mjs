@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { existsSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, statSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import {
@@ -11,7 +11,12 @@ import {
   getCategories,
 } from '../lib/state.mjs';
 import { parseVideoName } from '../lib/parseName.mjs';
-import { videoBasename, thumbnailPath, ensurePipelineDir } from '../lib/paths.mjs';
+import {
+  videoBasename,
+  thumbnailPath,
+  ensurePipelineDir,
+  REPO_ROOT,
+} from '../lib/paths.mjs';
 
 const FFMPEG = 'C:/ffmpeg/bin/ffmpeg.exe';
 
@@ -112,6 +117,31 @@ videosRouter.get('/:id/thumbnail', async (req, res) => {
     res.sendFile(path.resolve(thumbPath));
   } catch (e) {
     res.status(500).json({ error: `thumbnail error: ${e.message}` });
+  }
+});
+
+// ─── Reflection — Stage α planner output ───────────────────────────────
+// GET /api/videos/:id/reflection
+// Returns { text } from src/data/<basename>/reflection.txt.
+// 404 if the file doesn't exist (video hasn't been planned yet).
+videosRouter.get('/:id/reflection', (req, res) => {
+  const video = getVideo(req.params.id);
+  if (!video) return res.status(404).json({ error: 'video not found' });
+  const file = path.join(
+    REPO_ROOT,
+    'src',
+    'data',
+    videoBasename(video.path),
+    'reflection.txt',
+  );
+  if (!existsSync(file)) {
+    return res.status(404).json({ error: 'reflection not available' });
+  }
+  try {
+    const text = readFileSync(file, 'utf8');
+    res.json({ text });
+  } catch (e) {
+    res.status(500).json({ error: `reflection read failed: ${e.message}` });
   }
 });
 

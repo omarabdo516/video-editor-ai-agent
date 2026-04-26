@@ -66,10 +66,32 @@ export interface EditHandoffResponse {
   note: string;
 }
 
+export interface ViolationEntry {
+  rule: string;
+  path: string;
+  message: string;
+}
+
+export interface ValidatorVerdict {
+  passed: boolean;
+  hardViolations: ViolationEntry[];
+  softWarnings: ViolationEntry[];
+}
+
 export type ProgressEvent =
   | { type: 'line'; text: string }
   | { type: 'done'; exitCode: number; status?: string }
-  | { type: 'error'; message: string };
+  | { type: 'error'; message: string }
+  | { type: 'validator-passed'; verdict: ValidatorVerdict }
+  | { type: 'validator-rejected'; verdict: ValidatorVerdict };
+
+export interface ReflectionResponse {
+  text: string;
+}
+
+export interface PlanStartResponse extends JobStartResponse {
+  autoRenderOnSuccess?: boolean;
+}
 
 export interface AddVideoInput {
   path: string;
