@@ -46,6 +46,13 @@ export const PHASE_COMMANDS = {
     cmd: 'node',
     args: ['scripts/generate_micro_events.mjs', video.name],
   }),
+  // Stage α — Claude planner replaces the copy-paste handoff. Spawns
+  // `claude -p --bare --tools ""` via run_claude_planner.mjs which
+  // assembles context + parses Claude's stdout into the two JSON files.
+  plan: (video) => ({
+    cmd: 'node',
+    args: ['scripts/run_claude_planner.mjs', video.path],
+  }),
   render: (video) => ({
     cmd: 'node',
     args: [

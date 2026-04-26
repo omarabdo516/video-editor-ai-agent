@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import {
   createJob,
   runJob,
+  waitForJob,
   commandForPhase,
 } from '../lib/jobs.mjs';
 import { getVideo, updateVideoPhase } from '../lib/state.mjs';
@@ -59,6 +60,80 @@ phasesRouter.post('/:id/micro-events', (req, res) =>
 phasesRouter.post('/:id/render', (req, res) =>
   startPhase(req.params.id, 'render', res),
 );
+
+// ─── /plan — Stage α: Claude planner + auto-render chain ──────────────────
+//
+// Replaces the copy-paste handoff. Spawns scripts/run_claude_planner.mjs
+// which assembles full creative-director context, invokes `claude -p`,
+// and writes content_analysis.json + animation_plan.json to disk.
+//
+// On success, automatically queues the render job. The UI sees plan=done
+// followed by render=running in the video state without a second click.
+phasesRouter.post('/:id/plan', (req, res) => {
+  const lookup = commandForPhase(req.params.id, 'plan');
+  if (lookup.error) {
+    return res
+      .status(lookup.error === 'video not found' ? 404 : 400)
+      .json({ error: lookup.error });
+  }
+  const videoId = req.params.id;
+  const planJob = createJob(videoId, 'plan', lookup.cmd, lookup.args);
+  runJob(planJob);
+  updateVideoPhase(videoId, 'plan', {
+    status: 'running',
+    startedAt: planJob.startedAt,
+    lastJobId: planJob.id,
+    finishedAt: null,
+    exitCode: null,
+  });
+
+  // Background chain: when plan finishes successfully, kick off render.
+  // Errors here are non-fatal (the user can retry render manually).
+  waitForJob(planJob.id)
+    .then(({ exitCode, status }) => {
+      if (status !== 'done' || exitCode !== 0) {
+        console.log(
+          `[plan→render] plan job ${planJob.id} did not succeed (status=${status}, code=${exitCode}); skipping auto-render`,
+        );
+        return;
+      }
+      const renderLookup = commandForPhase(videoId, 'render');
+      if (renderLookup.error) {
+        console.warn(`[plan→render] render lookup failed: ${renderLookup.error}`);
+        return;
+      }
+      const renderJob = createJob(
+        videoId,
+        'render',
+        renderLookup.cmd,
+        renderLookup.args,
+      );
+      runJob(renderJob);
+      updateVideoPhase(videoId, 'render', {
+        status: 'running',
+        startedAt: renderJob.startedAt,
+        lastJobId: renderJob.id,
+        finishedAt: null,
+        exitCode: null,
+      });
+      console.log(
+        `[plan→render] auto-started render job ${renderJob.id} for video ${videoId}`,
+      );
+    })
+    .catch((err) => {
+      console.error(`[plan→render] chain error: ${err.message}`);
+    });
+
+  res.status(202).json({
+    jobId: planJob.id,
+    status: 'running',
+    phase: 'plan',
+    videoId,
+    cmd: lookup.cmd,
+    args: lookup.args,
+    autoRenderOnSuccess: true,
+  });
+});
 
 // ─── /edit — spawns rs-reels.mjs edit and returns a ready-to-open URL ───
 //

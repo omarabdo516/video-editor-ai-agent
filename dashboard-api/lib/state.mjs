@@ -31,6 +31,7 @@ const PHASE_KEYS = [
   'transcribe',
   'edit',
   'analyze',
+  'plan',
   'microEvents',
   'render',
 ];
