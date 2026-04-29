@@ -16,3 +16,8 @@
 # Use **/audio.16k.wav so it catches the file regardless of how deep the
 # per-reference folder nests it (e.g. For\ RS/_analysis/<name>/audio.16k.wav).
 **/audio.16k.wav
+
+# Render-check debug artifacts — ad-hoc render output sanity-check JPGs
+# at the references/ root level (outside the documented per-reference
+# `_analysis/` workflow). Never committed.
+_render_check*/
