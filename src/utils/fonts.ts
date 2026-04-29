@@ -83,6 +83,28 @@ const fontFaces = [
       'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD',
     src: staticFile('fonts/IBMPlexSansArabic-Bold-latin.woff2'),
   },
+
+  // ─── Cairo (numerals-only third font) ───────────────────────
+  // Used specifically for digits/dates (e.g. 1, 2, 3 step badges,
+  // 6.6.2026 dates). Variable woff2 covers weights 700-900.
+  // Added 2026-04-29 per Omar feedback v3 (numerals in Alexandria
+  // looked too geometric; Cairo's numerals read more friendly).
+  {
+    family: 'Cairo',
+    weight: '700 900',
+    style: 'normal',
+    unicodeRange:
+      'U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC',
+    src: staticFile('fonts/Cairo-arabic.woff2'),
+  },
+  {
+    family: 'Cairo',
+    weight: '700 900',
+    style: 'normal',
+    unicodeRange:
+      'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD',
+    src: staticFile('fonts/Cairo-latin.woff2'),
+  },
 ];
 
 // Font loading strategy: register the @font-face rules eagerly (so the

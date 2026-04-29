@@ -85,6 +85,10 @@ export const tokens = {
     bounce: { damping: 12, stiffness: 150, mass: 1.0 },
     smooth: { damping: 30, stiffness: 80, mass: 1.2 },
   },
+  // Per-purpose font references. `numeric` is for digits, dates, step
+  // badges — Cairo reads more friendly than Alexandria for numerals
+  // (Omar feedback 2026-04-29).
+  numericFont: 'Cairo, "IBM Plex Sans Arabic", system-ui, sans-serif',
   // ─── Phase 10 Round A Tier 2 — A6: smart zoom easing variety ───────
   // Named curves for Smart Zoom ramps. Phase 6 picks one per moment
   // based on audio energy (high → crash_zoom, medium → dolly_in, low →
