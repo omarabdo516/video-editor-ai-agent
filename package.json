@@ -13,7 +13,12 @@
     "make": "node rs-reels.mjs",
     "dashboard:api": "node dashboard-api/server.mjs",
     "dashboard:ui": "cd dashboard-ui && npm run dev",
-    "dashboard": "concurrently --names api,ui --prefix-colors yellow,cyan \"npm run dashboard:api\" \"npm run dashboard:ui\""
+    "dashboard": "concurrently --names api,ui --prefix-colors yellow,cyan \"npm run dashboard:api\" \"npm run dashboard:ui\"",
+    "typecheck": "tsc --noEmit",
+    "typecheck:dashboard": "cd dashboard-ui && tsc --noEmit",
+    "typecheck:editor": "cd subtitle-editor && tsc --noEmit",
+    "typecheck:all": "npm run typecheck && npm run typecheck:dashboard && npm run typecheck:editor",
+    "test": "node --test \"dashboard-api/lib/__tests__/**/*.test.mjs\""
   },
   "dependencies": {
     "@remotion/cli": "^4.0.448",
