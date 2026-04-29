@@ -1,0 +1,18 @@
+# Reference videos: don't commit the source files themselves.
+# They're often someone else's copyrighted work, and they're large.
+# We DO commit the _analysis/ output (frames + JSON + analysis.md) so the
+# learnings travel with the repo.
+
+*/source.*
+*/source
+
+# Track _analysis/ contents by default (frames, scene_cuts.json, metadata,
+# analysis.md, etc.) — this un-ignores anything caught by parent rules.
+!*/_analysis/
+!*/_analysis/**
+
+# Audio extracted during analysis (large WAV, regenerable). The exclusion
+# MUST come AFTER the un-ignore above, otherwise it gets re-included.
+# Use **/audio.16k.wav so it catches the file regardless of how deep the
+# per-reference folder nests it (e.g. For\ RS/_analysis/<name>/audio.16k.wav).
+**/audio.16k.wav

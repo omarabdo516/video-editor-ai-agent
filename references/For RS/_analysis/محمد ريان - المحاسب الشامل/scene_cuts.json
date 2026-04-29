@@ -1,0 +1,307 @@
+{
+  "source": "references/For RS/source.mp4",
+  "duration_sec": 73.812042,
+  "threshold": 0.4,
+  "cut_count": 0,
+  "cuts": [],
+  "uniform_fps": 1,
+  "uniform_frame_count": 74,
+  "uniform_frames": [
+    {
+      "time": 0,
+      "file": "frames/uniform/frame_t0000.0s.jpg"
+    },
+    {
+      "time": 1,
+      "file": "frames/uniform/frame_t0001.0s.jpg"
+    },
+    {
+      "time": 2,
+      "file": "frames/uniform/frame_t0002.0s.jpg"
+    },
+    {
+      "time": 3,
+      "file": "frames/uniform/frame_t0003.0s.jpg"
+    },
+    {
+      "time": 4,
+      "file": "frames/uniform/frame_t0004.0s.jpg"
+    },
+    {
+      "time": 5,
+      "file": "frames/uniform/frame_t0005.0s.jpg"
+    },
+    {
+      "time": 6,
+      "file": "frames/uniform/frame_t0006.0s.jpg"
+    },
+    {
+      "time": 7,
+      "file": "frames/uniform/frame_t0007.0s.jpg"
+    },
+    {
+      "time": 8,
+      "file": "frames/uniform/frame_t0008.0s.jpg"
+    },
+    {
+      "time": 9,
+      "file": "frames/uniform/frame_t0009.0s.jpg"
+    },
+    {
+      "time": 10,
+      "file": "frames/uniform/frame_t0010.0s.jpg"
+    },
+    {
+      "time": 11,
+      "file": "frames/uniform/frame_t0011.0s.jpg"
+    },
+    {
+      "time": 12,
+      "file": "frames/uniform/frame_t0012.0s.jpg"
+    },
+    {
+      "time": 13,
+      "file": "frames/uniform/frame_t0013.0s.jpg"
+    },
+    {
+      "time": 14,
+      "file": "frames/uniform/frame_t0014.0s.jpg"
+    },
+    {
+      "time": 15,
+      "file": "frames/uniform/frame_t0015.0s.jpg"
+    },
+    {
+      "time": 16,
+      "file": "frames/uniform/frame_t0016.0s.jpg"
+    },
+    {
+      "time": 17,
+      "file": "frames/uniform/frame_t0017.0s.jpg"
+    },
+    {
+      "time": 18,
+      "file": "frames/uniform/frame_t0018.0s.jpg"
+    },
+    {
+      "time": 19,
+      "file": "frames/uniform/frame_t0019.0s.jpg"
+    },
+    {
+      "time": 20,
+      "file": "frames/uniform/frame_t0020.0s.jpg"
+    },
+    {
+      "time": 21,
+      "file": "frames/uniform/frame_t0021.0s.jpg"
+    },
+    {
+      "time": 22,
+      "file": "frames/uniform/frame_t0022.0s.jpg"
+    },
+    {
+      "time": 23,
+      "file": "frames/uniform/frame_t0023.0s.jpg"
+    },
+    {
+      "time": 24,
+      "file": "frames/uniform/frame_t0024.0s.jpg"
+    },
+    {
+      "time": 25,
+      "file": "frames/uniform/frame_t0025.0s.jpg"
+    },
+    {
+      "time": 26,
+      "file": "frames/uniform/frame_t0026.0s.jpg"
+    },
+    {
+      "time": 27,
+      "file": "frames/uniform/frame_t0027.0s.jpg"
+    },
+    {
+      "time": 28,
+      "file": "frames/uniform/frame_t0028.0s.jpg"
+    },
+    {
+      "time": 29,
+      "file": "frames/uniform/frame_t0029.0s.jpg"
+    },
+    {
+      "time": 30,
+      "file": "frames/uniform/frame_t0030.0s.jpg"
+    },
+    {
+      "time": 31,
+      "file": "frames/uniform/frame_t0031.0s.jpg"
+    },
+    {
+      "time": 32,
+      "file": "frames/uniform/frame_t0032.0s.jpg"
+    },
+    {
+      "time": 33,
+      "file": "frames/uniform/frame_t0033.0s.jpg"
+    },
+    {
+      "time": 34,
+      "file": "frames/uniform/frame_t0034.0s.jpg"
+    },
+    {
+      "time": 35,
+      "file": "frames/uniform/frame_t0035.0s.jpg"
+    },
+    {
+      "time": 36,
+      "file": "frames/uniform/frame_t0036.0s.jpg"
+    },
+    {
+      "time": 37,
+      "file": "frames/uniform/frame_t0037.0s.jpg"
+    },
+    {
+      "time": 38,
+      "file": "frames/uniform/frame_t0038.0s.jpg"
+    },
+    {
+      "time": 39,
+      "file": "frames/uniform/frame_t0039.0s.jpg"
+    },
+    {
+      "time": 40,
+      "file": "frames/uniform/frame_t0040.0s.jpg"
+    },
+    {
+      "time": 41,
+      "file": "frames/uniform/frame_t0041.0s.jpg"
+    },
+    {
+      "time": 42,
+      "file": "frames/uniform/frame_t0042.0s.jpg"
+    },
+    {
+      "time": 43,
+      "file": "frames/uniform/frame_t0043.0s.jpg"
+    },
+    {
+      "time": 44,
+      "file": "frames/uniform/frame_t0044.0s.jpg"
+    },
+    {
+      "time": 45,
+      "file": "frames/uniform/frame_t0045.0s.jpg"
+    },
+    {
+      "time": 46,
+      "file": "frames/uniform/frame_t0046.0s.jpg"
+    },
+    {
+      "time": 47,
+      "file": "frames/uniform/frame_t0047.0s.jpg"
+    },
+    {
+      "time": 48,
+      "file": "frames/uniform/frame_t0048.0s.jpg"
+    },
+    {
+      "time": 49,
+      "file": "frames/uniform/frame_t0049.0s.jpg"
+    },
+    {
+      "time": 50,
+      "file": "frames/uniform/frame_t0050.0s.jpg"
+    },
+    {
+      "time": 51,
+      "file": "frames/uniform/frame_t0051.0s.jpg"
+    },
+    {
+      "time": 52,
+      "file": "frames/uniform/frame_t0052.0s.jpg"
+    },
+    {
+      "time": 53,
+      "file": "frames/uniform/frame_t0053.0s.jpg"
+    },
+    {
+      "time": 54,
+      "file": "frames/uniform/frame_t0054.0s.jpg"
+    },
+    {
+      "time": 55,
+      "file": "frames/uniform/frame_t0055.0s.jpg"
+    },
+    {
+      "time": 56,
+      "file": "frames/uniform/frame_t0056.0s.jpg"
+    },
+    {
+      "time": 57,
+      "file": "frames/uniform/frame_t0057.0s.jpg"
+    },
+    {
+      "time": 58,
+      "file": "frames/uniform/frame_t0058.0s.jpg"
+    },
+    {
+      "time": 59,
+      "file": "frames/uniform/frame_t0059.0s.jpg"
+    },
+    {
+      "time": 60,
+      "file": "frames/uniform/frame_t0060.0s.jpg"
+    },
+    {
+      "time": 61,
+      "file": "frames/uniform/frame_t0061.0s.jpg"
+    },
+    {
+      "time": 62,
+      "file": "frames/uniform/frame_t0062.0s.jpg"
+    },
+    {
+      "time": 63,
+      "file": "frames/uniform/frame_t0063.0s.jpg"
+    },
+    {
+      "time": 64,
+      "file": "frames/uniform/frame_t0064.0s.jpg"
+    },
+    {
+      "time": 65,
+      "file": "frames/uniform/frame_t0065.0s.jpg"
+    },
+    {
+      "time": 66,
+      "file": "frames/uniform/frame_t0066.0s.jpg"
+    },
+    {
+      "time": 67,
+      "file": "frames/uniform/frame_t0067.0s.jpg"
+    },
+    {
+      "time": 68,
+      "file": "frames/uniform/frame_t0068.0s.jpg"
+    },
+    {
+      "time": 69,
+      "file": "frames/uniform/frame_t0069.0s.jpg"
+    },
+    {
+      "time": 70,
+      "file": "frames/uniform/frame_t0070.0s.jpg"
+    },
+    {
+      "time": 71,
+      "file": "frames/uniform/frame_t0071.0s.jpg"
+    },
+    {
+      "time": 72,
+      "file": "frames/uniform/frame_t0072.0s.jpg"
+    },
+    {
+      "time": 73,
+      "file": "frames/uniform/frame_t0073.0s.jpg"
+    }
+  ]
+}

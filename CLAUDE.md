@@ -117,6 +117,8 @@
 
 > **Phase 11 Session 1 (corrections tracker):** الـ transcribe phase بيحفظ `<video>.captions.raw.json` مرة واحدة (gitignored). لما الـ subtitle editor يـ POST الـ approved captions، [`scripts/diff_captions.mjs`](scripts/diff_captions.mjs) بتشتغل fire-and-forget وتـ append word-level corrections لـ [`feedback/whisper_corrections.jsonl`](feedback/whisper_corrections.jsonl) — ده dataset طبيعي للـ Whisper LoRA fine-tune المستقبلي (التفاصيل في [`docs/phase-11-whisper-finetuning.md`](docs/phase-11-whisper-finetuning.md)). مفيش effort إضافي من Omar.
 
+> **Reference Analysis Workflow (2026-04-29):** نظام جديد لاستيراد reels خارجية (أي creator تاني) وتحليلها frame-by-frame كـ design references. الـ folder `references/<name>/` فيه `source.mp4` (gitignored) + `_analysis/` فيها frames + scene cuts + audio energy + analysis.md منظّمة. الـ scripts: [`scripts/analyze_reference.mjs`](scripts/analyze_reference.mjs) (orchestrator) + [`scripts/extract_reference_frames.mjs`](scripts/extract_reference_frames.mjs) (ffmpeg uniform + scene-cut sampling). Claude بيقرا الـ frames بالـ Read tool (multimodal) ويملا analysis.md، الـ patterns القوية بتتنقل لـ [`feedback/reference_library.md`](feedback/reference_library.md). الـ workflow الكامل في [`docs/reference-analysis-workflow.md`](docs/reference-analysis-workflow.md). الاستخدام: `node scripts/analyze_reference.mjs references/<name>/source.mp4` ثم اطلب من Claude "حلّل الـ reference بتاع `references/<name>/`".
+
 **الـ Scene types المتاحة حالياً (7):**
 - `process_stepper` — stepper بـ 3+ cards مرتبة عمودياً + stagger + status badges
 - `process_timeline` — horizontal nodes مع connector line + done/next/future states

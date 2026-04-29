@@ -1,0 +1,136 @@
+{
+  "source": "C:\\Users\\omara\\Documents\\Claude\\_tools\\video-editor-ai-agent\\references\\For RS\\_analysis\\محمد ريان - المحاسب الشامل\\audio.16k.wav",
+  "duration": 73.708,
+  "mean_energy": 0.123843,
+  "std_energy": 0.063631,
+  "high_threshold": 0.219289,
+  "low_threshold": 0.037153,
+  "total_emphasis_points": 25,
+  "emphasis_moments": [
+    {
+      "time": 0.704,
+      "energy": 0.2311,
+      "type": "high_energy"
+    },
+    {
+      "time": 2.784,
+      "energy": 0.2825,
+      "type": "high_energy"
+    },
+    {
+      "time": 5.152,
+      "energy": 0.2235,
+      "type": "dramatic_pause"
+    },
+    {
+      "time": 7.776,
+      "energy": 0.2721,
+      "type": "dramatic_pause"
+    },
+    {
+      "time": 10.592,
+      "energy": 0.2582,
+      "type": "high_energy"
+    },
+    {
+      "time": 13.76,
+      "energy": 0.2298,
+      "type": "high_energy"
+    },
+    {
+      "time": 15.936,
+      "energy": 0.2474,
+      "type": "high_energy"
+    },
+    {
+      "time": 17.984,
+      "energy": 0.2309,
+      "type": "high_energy"
+    },
+    {
+      "time": 20.544,
+      "energy": 0.2362,
+      "type": "high_energy"
+    },
+    {
+      "time": 23.296,
+      "energy": 0.2669,
+      "type": "dramatic_pause"
+    },
+    {
+      "time": 25.664,
+      "energy": 0.2277,
+      "type": "dramatic_pause"
+    },
+    {
+      "time": 28.832,
+      "energy": 0.2424,
+      "type": "high_energy"
+    },
+    {
+      "time": 31.296,
+      "energy": 0.2338,
+      "type": "high_energy"
+    },
+    {
+      "time": 33.728,
+      "energy": 0.2227,
+      "type": "high_energy"
+    },
+    {
+      "time": 40.864,
+      "energy": 0.2913,
+      "type": "high_energy"
+    },
+    {
+      "time": 44.736,
+      "energy": 0.233,
+      "type": "high_energy"
+    },
+    {
+      "time": 46.784,
+      "energy": 0.2491,
+      "type": "high_energy"
+    },
+    {
+      "time": 51.36,
+      "energy": 0.2381,
+      "type": "high_energy"
+    },
+    {
+      "time": 54.784,
+      "energy": 0.2494,
+      "type": "high_energy"
+    },
+    {
+      "time": 57.184,
+      "energy": 0.2648,
+      "type": "dramatic_pause"
+    },
+    {
+      "time": 59.584,
+      "energy": 0.2304,
+      "type": "high_energy"
+    },
+    {
+      "time": 62.272,
+      "energy": 0.271,
+      "type": "high_energy"
+    },
+    {
+      "time": 64.48,
+      "energy": 0.2351,
+      "type": "high_energy"
+    },
+    {
+      "time": 67.648,
+      "energy": 0.2371,
+      "type": "high_energy"
+    },
+    {
+      "time": 70.144,
+      "energy": 0.2207,
+      "type": "high_energy"
+    }
+  ]
+}
