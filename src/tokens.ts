@@ -182,18 +182,20 @@ export const tokens = {
     timelineConnectorThickness: 6,
   },
   overlays: {
-    // Between body zone and caption zone. y=900 was too far (520px gap),
-    // y=1200 was too close (elements touching). y=1080 leaves ~240px
-    // clear margin to captions at 1420 after the overlay's ~100px height.
-    // Lower-third (y=1100) is gone by 4.5s; overlays start at 15s+.
-    defaultY: 1080,
+    // BELOW captions (y=1420 + ~140px caption block + 60px clearance ≈ 1620).
+    // Sits in the safe zone above the Instagram UI (~1720+).
+    // Earlier versions used y=1080 (above captions, floating text) but Omar
+    // flagged that as visually clashing with the speaker's face. v3 design:
+    // a pill-card BELOW the captions, slide-up + fade-up animation.
+    defaultY: 1620,
     defaultPaddingX: 36,
     defaultPaddingY: 20,
-    defaultRadius: 12,
-    defaultPrimarySize: 64,
-    defaultSecondarySize: 32,
-    fadeFrames: 8,
-    slideOffsetPx: 24,
+    defaultRadius: 18,
+    defaultPrimarySize: 56,
+    defaultSecondarySize: 28,
+    // Longer fade for buttery slide-up enter / soft slide-up exit
+    fadeFrames: 14,
+    slideOffsetPx: 44,
   },
   // ─── Phase 10 Round B — F1: SFX layer ─────────────────────────────
   // Disabled by default. Omar reviewed the first reel with SFX on
