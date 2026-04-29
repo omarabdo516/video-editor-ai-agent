@@ -42,6 +42,32 @@
 
 اقرأ content_analysis + subtitles + face_map + audio_energy + design-system + RS_BRAND
 
+#### 6.2.1: احسب الـ face bounding box (إجباري قبل أي overlay)
+
+من `face_map.json` احسب الـ face zone في pixels (الـ frame 1080×1920). قبل ما تكتب أي overlay y_px، **لازم** تعمل الحساب ده:
+
+```
+face_top_px    = (min(face_center_y) - max(face_height) / 2) × 1920
+face_bottom_px = (max(face_center_y) + max(face_height) / 2) × 1920
+```
+
+استخدم MIN/MAX عبر الـ samples في time range الـ overlay (مش الـ video كله). لو الـ face بيتحرك significantly عبر الـ time range (range > 200px)، خد الـ extreme bounds للحماية.
+
+**زونتين متاحة لأي overlay:**
+
+| Zone | النطاق | استخدمها لو |
+|------|--------|-------------|
+| Above face | `[220, face_top_px - 80]` | room ≥ 200px |
+| Below face | `[face_bottom_px + 80, 1500]` | room ≥ 200px |
+
+لو الزونتين متاحتين، اختار **اللي room أكبر** (المسافة الأبعد عن face center).
+لو الزونتين tight، اختار اللي أبعد عن face center.
+لو `no_face_percentage > 30%` في time range، fallback على y_px=900 (default body zone).
+
+**سجّل القرار في `reason` field:** مثلاً `"y_px=420 above face zone — face top=759, room=539px above"`.
+
+**ممنوع:** y_px جوّه `[face_top_px, face_bottom_px]` — يبقى overlay على وش المتكلم (anti-pattern موثّق في feedback/style_evolution.md و memory/feedback_face_aware_overlay_positioning.md).
+
 ### Step 6.3: بناء الخطة
 
 لكل key_moment في content_analysis، قرر:
