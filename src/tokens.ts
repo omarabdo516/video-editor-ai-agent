@@ -95,9 +95,13 @@ export const tokens = {
   // smooth_glide). Ramp frames scale with the curve's aggressiveness.
   smartZoomCurves: {
     smooth_glide: {
-      spring: { damping: 30, stiffness: 60, mass: 1.5 },
-      rampInFrames: 16,
-      rampOutFrames: 12,
+      // Most gentle preset: very long ramps + heavy-damped spring. Use for
+      // short-clip promo reels where any visible zoom punch feels jarring.
+      // For a 9s zoom: 4s ramp in + 2s hold + 3s ramp out = nearly continuous
+      // motion, no perceptible "snap" to/from a held zoom level.
+      spring: { damping: 40, stiffness: 45, mass: 2.0 },
+      rampInFrames: 120,
+      rampOutFrames: 90,
     },
     dolly_in: {
       spring: { damping: 22, stiffness: 90, mass: 1.0 },
