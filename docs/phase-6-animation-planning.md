@@ -29,6 +29,15 @@
 
 **Phase 10 Round C — data-driven planning**: اقرأ [`feedback/performance_insights.md`](../feedback/performance_insights.md). لو فيه 3+ reels متقاسة، Claude Code لازم يكيّف قراراته على الـ patterns المرصودة (hook type, visual pacing, caption variant, scene count). لو لسه مفيش data، كمّل بالقواعد الـ default.
 
+**Reference Library — external pattern application**: اقرأ [`feedback/reference_library.md`](../feedback/reference_library.md). الملف ده فيه patterns مستخرجة من reels خارجية (creators تانيين) Omar اختار يدرسهم. **فكّر** في الـ patterns بعد ما تـ-draft الـ content_analysis، وقبل ما تـ-commit للـ scene types في الـ animation_plan. **لما الـ fit واضح (مش forced fit)، طبّقه. لما مفيش fit مناسب، اشرح ليه باختصار في الـ plan** (مثلاً top-level `reference_consideration` field). Cap: 1-2 patterns لكل reel — أكتر من 3 بيـ-حوّل الريل لـ pastiche. كل entry معاها status:
+
+- **`steal`** — جاهزة للتطبيق لو الـ fit واضح (مثلاً: numbered chapter overlays لو الورشة فيها modules 3-5، bookend title لو فيه workshop title واضح). مش obligatory — fit-driven.
+- **`adapt`** — لو طبّقت، استخدم بـ التعديلات المكتوبة في الـ entry.
+- **`study`** — مرجع للفهم بس، لا تطبّق مباشرة.
+- **`avoid`** — تأكد إن الـ plan ما يعملش الـ anti-pattern ده.
+
+لو الـ library فاضي أو مفيش pattern مناسب لتركيب الفيديو ده، كمّل بالـ defaults وسجّل ده في `reference_consideration` (مثلاً: "no library pattern fits a single-concept definition; using default scene_type").
+
 ### Step 6.2: اقرأ كل ملفات البيانات
 
 اقرأ content_analysis + subtitles + face_map + audio_energy + design-system + RS_BRAND

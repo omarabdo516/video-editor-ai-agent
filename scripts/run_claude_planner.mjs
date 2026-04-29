@@ -185,6 +185,10 @@ async function buildPrompt(videoPath, opts = {}) {
     path.join(REPO_ROOT, 'feedback', 'style_evolution.md'),
     'style_evolution.md',
   );
+  const referenceLibrary = readSafe(
+    path.join(REPO_ROOT, 'feedback', 'reference_library.md'),
+    'reference_library.md',
+  );
   const feedbackLog = readSafe(
     path.join(REPO_ROOT, 'feedback', 'log.json'),
     'feedback/log.json',
@@ -251,6 +255,12 @@ async function buildPrompt(videoPath, opts = {}) {
     '## CONTEXT 6 — Style evolution (last 60 lines of feedback/style_evolution.md)',
     '',
     styleEvolutionTail || '(empty)',
+    '',
+    '## CONTEXT 6.5 — Reference library (feedback/reference_library.md)',
+    '',
+    'Patterns extracted from external reference reels. Each entry is tagged `steal` / `adapt` / `study` / `avoid`. **Consider** these patterns AFTER you draft the content_analysis but BEFORE you commit to scene types in the animation_plan. **When a pattern is a strong fit — not a forced fit — apply it.** Use 1-2 per reel; never more than 3 (more than that turns the reel into a pastiche). **When no pattern fits, that is a valid outcome** — note the reason briefly in the plan (e.g. a top-level `reference_consideration` string like "no library pattern fits a single-concept definition; using default scene_type"). `adapt` → apply with the modifications listed in the entry. `study` → understand the principle, do not copy directly. `avoid` → ensure the plan does NOT do this.',
+    '',
+    referenceLibrary || '(empty — no external references analyzed yet)',
     '',
     '## CONTEXT 7 — Cross-session memory (~/.claude/projects/.../memory/)',
     '',
