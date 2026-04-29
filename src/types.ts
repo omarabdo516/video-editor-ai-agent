@@ -88,7 +88,7 @@ export type StepCardElement = {
   step: number;
   label: string;
   icon?: string;
-  status?: 'current' | 'next' | 'future';
+  status?: 'current' | 'next' | 'future' | 'highlighted';
   status_badge?: string;
   stagger_delay_frames?: number;
 };

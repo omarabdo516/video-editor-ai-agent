@@ -33,6 +33,7 @@ export const ProcessStepperScene: React.FC<Props> = ({ scene }) => {
       style={{
         position: 'absolute',
         inset: 0,
+        direction: 'rtl',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -52,22 +53,41 @@ export const ProcessStepperScene: React.FC<Props> = ({ scene }) => {
         }}
       />
 
-      {/* Title */}
+      {/* Title block with accent rule */}
       <div
         style={{
-          fontFamily: scene.title_font ?? tokens.fonts.heading,
-          fontWeight: scene.title_weight ?? 700,
-          fontSize: scene.title_size ?? tokens.scenes.titleDefaultSize,
-          color: tokens.colors.white,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 18,
           opacity: titleProgress,
           transform: `translateY(${(1 - titleProgress) * 36}px) scale(${0.85 + titleProgress * 0.15})`,
-          letterSpacing: '-1.5px',
-          textShadow: '0 2px 14px rgba(0,0,0,0.5), 0 0 40px rgba(255,181,1,0.15)',
-          textAlign: 'center',
-          margin: 0,
         }}
       >
-        {scene.title}
+        <div
+          style={{
+            fontFamily: scene.title_font ?? tokens.fonts.heading,
+            fontWeight: scene.title_weight ?? 800,
+            fontSize: scene.title_size ?? tokens.scenes.titleDefaultSize,
+            color: tokens.colors.white,
+            letterSpacing: '-1.5px',
+            textShadow: '0 2px 14px rgba(0,0,0,0.5), 0 0 40px rgba(255,181,1,0.18)',
+            textAlign: 'center',
+            margin: 0,
+          }}
+        >
+          {scene.title}
+        </div>
+        {/* Accent underline rule — animates width with the title */}
+        <div
+          style={{
+            width: 120 * titleProgress,
+            height: 5,
+            borderRadius: 3,
+            background: `linear-gradient(90deg, ${tokens.colors.accent} 0%, #FFCB47 100%)`,
+            boxShadow: '0 0 18px rgba(255,181,1,0.55)',
+          }}
+        />
       </div>
 
       {/* Cards stack */}
@@ -116,6 +136,10 @@ const StepCard: React.FC<{
 
   // Continuous pulse glow on the "current" card (only, after its entrance)
   const isCurrent = card.status === 'current';
+  // "highlighted" — equal-emphasis variant: accent border + accent step circle
+  // on a calm dark background (not full yellow). For roadmap-style lists where
+  // every item carries equal weight (no single "active" step).
+  const isHighlighted = card.status === 'highlighted';
   const pulseT = Math.max(0, frame - delay - 18);
   const pulse = (Math.sin(pulseT * 0.12) + 1) / 2; // 0..1
   const glowIntensity = isCurrent ? 0.4 + pulse * 0.35 : 0;
@@ -140,20 +164,30 @@ const StepCard: React.FC<{
         borderRadius: tokens.scenes.stepCardRadius,
         background: isCurrent
           ? `linear-gradient(135deg, ${accent} 0%, #FFCB47 100%)`
-          : 'rgba(255,255,255,0.07)',
+          : isHighlighted
+            ? 'rgba(255,255,255,0.10)'
+            : 'rgba(255,255,255,0.07)',
         border: isCurrent
           ? `4px solid ${accent}`
-          : '2px solid rgba(255,255,255,0.18)',
+          : isHighlighted
+            ? `3px solid ${accent}`
+            : '2px solid rgba(255,255,255,0.18)',
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
         opacity: enterProgress,
         transform: `translateY(${(1 - enterProgress) * 56}px) scale(${0.85 + enterProgress * 0.15}) rotate(${(1 - enterProgress) * -1.5}deg)`,
         boxShadow: isCurrent
           ? `0 18px 50px rgba(255, 181, 1, ${0.35 + glowIntensity * 0.3}), 0 0 0 ${6 + glowIntensity * 12}px rgba(255,181,1,${0.08 + glowIntensity * 0.1})`
-          : '0 14px 36px rgba(0,0,0,0.32)',
+          : isHighlighted
+            ? '0 14px 36px rgba(0,0,0,0.32), 0 0 24px rgba(255,181,1,0.15)'
+            : '0 14px 36px rgba(0,0,0,0.32)',
         display: 'flex',
         alignItems: 'center',
-        flexDirection: 'row-reverse', // RTL
+        // direction:rtl is set on the scene root → flexDirection:row puts
+        // the first DOM item (number circle) on the RIGHT (RTL leading edge).
+        // This was 'row-reverse' which double-flipped against direction:rtl
+        // and put the number on the LEFT — Omar called this out as not RTL.
+        flexDirection: 'row',
         padding: '0 36px',
         gap: 28,
         transition: 'box-shadow 0.1s linear',
@@ -162,22 +196,38 @@ const StepCard: React.FC<{
       {/* Step number circle (bounces in after the card) */}
       <div
         style={{
-          width: 110,
-          height: 110,
+          width: 120,
+          height: 120,
           borderRadius: '50%',
-          background: isCurrent ? dark : 'rgba(255,255,255,0.12)',
-          color: isCurrent ? accent : white,
+          background: isCurrent
+            ? dark
+            : isHighlighted
+              ? `linear-gradient(135deg, ${accent} 0%, #FFCB47 100%)`
+              : 'rgba(255,255,255,0.12)',
+          color: isCurrent
+            ? accent
+            : isHighlighted
+              ? dark
+              : white,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontFamily: tokens.fonts.heading,
-          fontWeight: 700,
+          fontFamily: tokens.numericFont,
+          fontWeight: 900,
           fontSize: tokens.scenes.stepCardNumberSize,
           flexShrink: 0,
-          border: isCurrent ? `3px solid ${accent}` : '2px solid rgba(255,255,255,0.22)',
+          border: isCurrent
+            ? `3px solid ${accent}`
+            : isHighlighted
+              ? `3px solid #FFCB47`
+              : '2px solid rgba(255,255,255,0.22)',
           transform: `scale(${0.4 + numberProgress * 0.6})`,
           opacity: numberProgress,
-          boxShadow: isCurrent ? `0 0 30px rgba(255,181,1,0.5)` : 'none',
+          boxShadow: isCurrent
+            ? `0 0 30px rgba(255,181,1,0.5)`
+            : isHighlighted
+              ? `0 8px 24px rgba(255,181,1,0.45), 0 0 0 6px rgba(255,181,1,0.10)`
+              : 'none',
         }}
       >
         {card.step}
@@ -203,6 +253,7 @@ const StepCard: React.FC<{
             color: isCurrent ? dark : white,
             lineHeight: 1.05,
             letterSpacing: '-0.5px',
+            textShadow: isHighlighted ? '0 2px 8px rgba(0,0,0,0.4)' : 'none',
           }}
         >
           {card.label}
@@ -213,7 +264,11 @@ const StepCard: React.FC<{
               fontFamily: tokens.fonts.heading,
               fontSize: 30,
               fontWeight: 700,
-              color: isCurrent ? dark : 'rgba(255,255,255,0.6)',
+              color: isCurrent
+                ? dark
+                : isHighlighted
+                  ? accent
+                  : 'rgba(255,255,255,0.6)',
               opacity: 0.95,
             }}
           >
@@ -221,6 +276,46 @@ const StepCard: React.FC<{
           </div>
         )}
       </div>
+
+      {/* Subtle accent corner ornament — RTL leading edge = top-right of card */}
+      {isHighlighted && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 14,
+            right: 14, // physical right = RTL leading edge
+            width: 32,
+            height: 32,
+            opacity: enterProgress * 0.6,
+            pointerEvents: 'none',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: 32,
+              height: 4,
+              background: accent,
+              borderRadius: 2,
+              boxShadow: '0 0 12px rgba(255,181,1,0.5)',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: 4,
+              height: 32,
+              background: accent,
+              borderRadius: 2,
+              boxShadow: '0 0 12px rgba(255,181,1,0.5)',
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
