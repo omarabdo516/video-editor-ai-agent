@@ -1,0 +1,495 @@
+# Video Editor AI Agent — Codex Instructions
+
+## 📍 Next Up — اللي بنبدأ فيه دلوقتي
+
+> **آخر تحديث:** 2026-04-26 — **Feature 005 Sprint 1 — wiring fix**: الـ S1.4 + S1.6 wiring الأصلي اتـ apply على [`VideoCard.tsx`](dashboard-ui/src/components/VideoCard.tsx) اللي طلع dead code (الـ component الـ active في الـ Dashboard هو [`VideoDetailPanel.tsx`](dashboard-ui/src/components/VideoDetailPanel.tsx) الـ `VideoCard` بيـ import-ـه `VideoList.tsx` اللي مفيش حد بيـ import-ـه). نتيجة: الـ Dashboard كان لسه شايف الـ workflow القديم بدون الزرار الجديد. الـ fix: نقل الـ identical changes (import usePlanStore + PlanRenderPanel، canPlan/planActive selectors، handlePlan + planDisabledReason، الزرار الذهبي بعد Render، wrap Send to Codex بـ `SHOW_LEGACY_HANDOFF`، mount `<PlanRenderPanel videoId>`، skip RatingInput لما planActive، wrap modal بـ env flag) لـ VideoDetailPanel. **VideoCard + VideoList يفضلوا dead code** للحظة (مفيش delete) لو اتشال لاحقاً نفس الـ pattern. الـ Vite HMR هيلتقط الـ change تلقائياً، Omar يعمل **Ctrl+Shift+R** على الـ tab يشوف الزرار.
+>
+> **آخر تحديث:** 2026-04-26 — **Feature 005 Sprint 1 / Tasks S1.1 + S1.2 + S1.3 + S1.4 + S1.5 + S1.6 shipped**. الـ S1.7 (sprint demo + tag) في انتظار manual run من Omar من الـ Dashboard.
+>
+> **S1.5 — session-resume on Dashboard mount** ✅. الـ panel يـ auto-restore بعد reload لو فيه plan/render شغّال على الـ backend. [`usePlanStore.resumeFromVideos(videos)`](dashboard-ui/src/store/usePlanStore.ts) action جديد بيـ scan كل فيديو وللـ render running يـ transitionToRendering مع `verdict` من `phases.plan.validatorVerdict`، وللـ plan running يـ initialize 'planning' state ويـ subscribe على الـ plan SSE stream عبر `subscribePlanStream` helper جديد extracted من startPlan (DRY refactor — الـ unsubscribe + handler dispatch shared بين startPlan والـ resume). الـ SSE backend بيعمل replay للـ buffered 500 lines عند الـ subscription المتأخرة فالـ LogViewer بيتعمر retroactively. [`App.tsx`](dashboard-ui/src/App.tsx) — الـ first-mount effect بقى يستنى الـ `refresh()` يخلص ثم ينادي `usePlanStore.getState().resumeFromVideos(videos)`. الـ `PhaseState` type في api/types.ts اتـ extend بـ `validatorVerdict?: ValidatorVerdict | null` field عشان الـ resume يقدر يقرا الـ verdict من الـ video state.
+>
+> **S1.6 — feature flag للـ legacy ClaudeHandoffModal** ✅. الـ "🤖 Send to Codex" button + الـ modal mount في [`VideoCard.tsx`](dashboard-ui/src/components/VideoCard.tsx) بقوا wrapped في `{SHOW_LEGACY_HANDOFF && ...}` constant. الـ flag = `import.meta.env.VITE_STAGE_ALPHA_LEGACY === '1'`. **Default off** فالزرار مخفي والـ modal مش بيـ render. **للـ revert** لو حصل bug في الـ Stage α panel: `VITE_STAGE_ALPHA_LEGACY=1 npm run dashboard` يرجع الـ legacy workflow فوراً بدون code change. الـ button label بقى "🤖 Send to Codex (legacy)" لما ظاهر عشان واضح إنه fallback. الـ ClaudeHandoffModal.tsx + `handleAnalyze` + `handoffOpen` state يفضلوا موجودين (TypeScript بيـ count الـ conditional JSX كـ usage فمفيش noUnusedLocals errors).
+>
+> **Verification**: `npx tsc --noEmit` clean. الـ 22 brand-validator tests passing. الـ Dashboard لسه شغّال في الـ background على http://localhost:7778 (API) + http://localhost:5175 (UI) — Vite HMR بيـ auto-reload الـ changes.
+>
+> الـ **next**: S1.7 — Omar يـ render فيديو واحد على الأقل من الـ Dashboard (`🎬 خطّط وأرندر`)، يـ rate، نـ verify الـ feedback/log.json، ثم `git tag stage-alpha-ui-complete`. ده manual verification — مش code work.
+>
+> **آخر تحديث:** 2026-04-26 — **Feature 005 Sprint 1 / Tasks S1.1 + S1.2 + S1.3 + S1.4 shipped**.
+>
+> **S1.4 — wire `<PlanRenderPanel>` في `<VideoCard>`** ✅. زرار "🎬 خطّط وأرندر" بقى آخر زرار في الـ phase buttons row في [`dashboard-ui/src/components/VideoCard.tsx`](dashboard-ui/src/components/VideoCard.tsx). الـ button بـ accent (gold) background لما enabled، transparent + dim لما disabled. **disabled state** لما (phase1 ∨ transcribe ∨ edit) ≠ done — الـ tooltip بيعرض اللي ناقص بصياغة "خلّص Phase 1 + Transcribe الأول" حسب اللي ناقص. **disabled تاني** لما الـ plan شغّال بالفعل (`planActive` selector من usePlanStore بيـ check لو الـ state mode ≠ idle/undefined) — الـ tooltip بيقول "الـ plan شغّال — شوف اللوحة تحت". الـ click handler `handlePlan` بيستدعي `usePlanStore.getState().startPlan(video.id)` عبر selector. الـ `<PlanRenderPanel videoId>` mounted inline بعد الـ logs وقبل الـ rating row (returns null لو idle، فمفيش flicker للـ videos اللي مش متخطّطة). الـ legacy card-level `<RatingInput>` بقى يـ skip لو planActive عشان الـ panel نفسه فيه rating block (في mode `done-awaiting-rating` و `rated`) — مفيش duplication للـ widget.
+>
+> **Verification**: `npx tsc --noEmit` clean. الـ existing 22 brand-validator tests passing. أول real plan-and-render run من الـ Dashboard UI لازم يحصل قبل ما نـ mark Sprint 1 demo (S1.7). الـ session-resume على Dashboard reload (S1.5) لسه pending — حالياً لو reloaded في النص، الـ panel يرجع لـ idle.
+>
+> الـ **next**: S1.5 — session-resume، يـ scan كل الفيديوهات اللي phases.plan.status=='running' ∨ phases.render.status=='running' ويـ re-subscribe للـ SSE streams.
+>
+> **آخر تحديث:** 2026-04-26 — **Feature 005 Sprint 1 / Tasks S1.1 + S1.2 + S1.3 shipped**.
+>
+> **S1.3 — `<PlanRenderPanel>` (frontend)** ✅. الـ panel بيتعرض inline تحت الـ VideoCard لما الـ plan job نشط (placement: confirmed بـ AskUserQuestion). الملفات:
+> - [`dashboard-ui/src/store/usePlanStore.ts`](dashboard-ui/src/store/usePlanStore.ts) — zustand store keyed by videoId. Discriminated union `PlanState` بـ 8 modes (idle / planning / validator-rejected / planner-failed / rendering / render-failed / done-awaiting-rating / rated). الـ store بيشترك في الـ planner SSE عبر `subscribeToProgress`، يـ parse الـ token estimates من lines (regex على `[planner] prompt|output: N bytes (~M tokens)`), ويتعامل مع الـ events الجديدة `validator-passed`/`validator-rejected`. لما الـ plan exits نظيف + validator passed → يبدأ poll لـ `getVideo(id).phases.render.lastJobId` كل 1.5s (max 15s)، يلاقي الـ render jobId، يـ unsubscribe من الـ plan stream، يـ subscribe على الـ render stream. الـ render lines بيحاول يـ extract progress من regex `(\d+)/(\d+) frames`، fallback indeterminate. لما الـ render exits 0 → يـ fetch `getReflection(id)` ويـ flip لـ `done-awaiting-rating`. الـ cleanup map (`_subs` + `_polls`) بيـ guarantee مفيش leaks.
+> - [`dashboard-ui/src/components/PlanRenderPanel.tsx`](dashboard-ui/src/components/PlanRenderPanel.tsx) — top-level dispatcher بـ `renderByMode(state, props)` بيرسم 7 panel shells مختلفة. كل shell عنده accent border-inline-start بلون الـ status (running=accent, success=done, failed=red). الـ rated mode بيقرا `video.rating` من useDashboardStore فالـ RatingInput الموجود بيشتغل بدون duplication.
+> - [`dashboard-ui/src/components/plan/TokenSpendBadge.tsx`](dashboard-ui/src/components/plan/TokenSpendBadge.tsx) — small pill بيـ format `~12.3K in / ~3.5K out`، الـ "out" نصف-شفاف لحد ما الـ planner يخلص.
+> - [`dashboard-ui/src/components/plan/ValidatorVerdictDisplay.tsx`](dashboard-ui/src/components/plan/ValidatorVerdictDisplay.tsx) — render structured violations + warnings. variant=`full` للـ rejected mode، variant=`warnings-only` للـ post-render success.
+> - [`dashboard-ui/src/components/plan/ReflectionDisplay.tsx`](dashboard-ui/src/components/plan/ReflectionDisplay.tsx) — RTL blockquote بـ accent border. بيـ accept `initialText` prop عشان لو الـ store لقّم الـ reflection بالفعل (post-render path) ما يـ fetch مرة تانية.
+>
+> **Backend additions** (small):
+> - [`dashboard-ui/src/api/types.ts`](dashboard-ui/src/api/types.ts) — types جديدة: `ViolationEntry`, `ValidatorVerdict`, `ReflectionResponse`, `PlanStartResponse`. الـ `ProgressEvent` discriminated union اتـ extend بـ `validator-passed` / `validator-rejected`.
+> - [`dashboard-ui/src/api/client.ts`](dashboard-ui/src/api/client.ts) — `planAndRender(videoId)` + `getReflection(videoId)`. الـ `subscribeToProgress` اكتسب 2 event listeners جديدة بيـ JSON.parse الـ verdict ويـ forward.
+> - [`dashboard-api/routes/videos.mjs`](dashboard-api/routes/videos.mjs) — endpoint جديد `GET /api/videos/:id/reflection` بيقرا `src/data/<basename>/reflection.txt` ويرجع `{text}`. 404 لو الفايل مش موجود.
+>
+> **Verification**: `npx tsc --noEmit` clean في الـ root + dashboard-ui. الـ 22 brand-validator tests لسه passing. الـ panel نفسه ما اتـ wire بعد في الـ VideoCard — ده S1.4. للـ manual end-to-end (Omar): يحتاج temporary button في VideoCard ينادي `usePlanStore.getState().startPlan(videoId)`.
+>
+> الـ **next**: S1.4 — wire الـ panel في `<VideoCard>` بـ زرار "🎬 خطّط وأرندر" (disabled لو phase1/transcribe/edit مش done).
+>
+> **آخر تحديث:** 2026-04-26 — **Feature 005 Sprint 1 / Tasks S1.1 + S1.2 shipped**. Spec Kit feature `005-video-editor-smart-dashboard` (specs في الـ GrowthMora root، مش في الـ video-editor repo) بدأت تنفيذ.
+>
+> **S1.1 — Brand Validator** ✅. ملف جديد [`dashboard-api/lib/brandValidator.mjs`](dashboard-api/lib/brandValidator.mjs) — pure function `validatePlan(plan, brandRules) → {passed, hardViolations, softWarnings}` بيقرا [`brands/rs/brand-rules.json`](brands/rs/brand-rules.json) ويعمل recursive walk على الـ animation_plan. الـ **hard checks** (block render): comp dimensions / colors_allowed (hex pattern + named colors في 5 fields) / fonts_allowed / hide_logo على non-outro / tagline match canonical (auto-fixable form بيتـ flag كـ "wrapper missed it") / caption_style single value + in allowed list / sfx.enabled requires explicit_request / Arabic-Indic numerals (٠-٩) في user-facing text. الـ **soft warnings**: lower_third sizing / overlay y_px ∈ [1000,1200] / scene spacing ≥ 15s. 22 unit test في [`dashboard-api/lib/__tests__/brandValidator.test.mjs`](dashboard-api/lib/__tests__/brandValidator.test.mjs) — pass + 8 hard fail + 3 soft + 2 accept edge cases + helpers. الـ wiring في [`routes/phases.mjs`](dashboard-api/routes/phases.mjs): الـ `/plan` route بقى يشغّل الـ validator في `afterExit` hook (جديد على [`jobs.mjs`](dashboard-api/lib/jobs.mjs) `runJob(job, {afterExit})`) — بيجري بعد child exit وقبل ما SSE subscribers يتقفلوا، فالـ verdict بيـ stream في نفس الـ panel. لو passed → render auto-spawn زي قبل + emit SSE event `validator-passed`. لو rejected → skip render + emit SSE event `validator-rejected`. الـ verdict بيتحفظ في `getVideo(id).phases.plan.validatorVerdict`. **Real plan demo** على Ahmed Ali شغّال — passing مع soft finding واحد: scene 3→4 gap = 13.38s (تحت 15s preference). Commit `12a1b1a`.
+>
+> **S1.2 — `source` field auto-injection** ✅. [`scripts/run_claude_planner.mjs`](scripts/run_claude_planner.mjs) بقى يستورد path helpers من [`lib/paths.mjs`](lib/paths.mjs) ويـ overwrite الـ source fields بعد parseOutput + tagline auto-fix وقبل الـ writes. الـ helpers الجديدة: `computeSourceObject(videoPath)` بيرجّع `{video, video_scaled, captions, face_map, energy, metadata}` بـ forward-slash paths consistent (cross-platform JSON safe، الـ existing plans كلها /). `applySourceOverwrites(plan, contentAnalysis, basename, sourceObject)` بيعمل overwrite لـ 5 حقول: `animation_plan.source_video_basename` + `animation_plan.source` + `animation_plan.smart_zoom_plan.source` (لو موجود) + `content_analysis.source_video_basename` + `content_analysis.source`. الـ overwrite idempotent (run تاني = 0 changes) ويـ log كل field اتعدّل (before → after). **Smoke test على Ahmed Ali** مسك 4 invented fields: `source_video_basename` (3 places) كان "أحمد علي - الالتزامات والمعاد" → بقى "أحمد علي - ورشة خبير الضرايب"، و `content_analysis.source` كان عنده `face_map` ناقص + backslash separators → بقى كامل + forward slash. الـ `animation_plan.source` كان صح فما اتغيّرش (الـ helper بيـ skip لو equal). الـ **next**: S1.3 — frontend `<PlanRenderPanel>` component (zustand slice + 4 modes panel + RatingControl + ReflectionDisplay + TokenSpendBadge).
+>
+> **آخر تحديث:** 2026-04-16 — **أحمد علي - ورشة خبير الضرايب** (Phase 5+6+6.5 + UI polish). Content analysis + animation plan (6 scenes, 2 zooms, 3 overlays, 6 micro events). بعد الـ render الأول Omar ادّى feedback على 3 حاجات: (1) LowerThird عريض + الكلام لازق → barWidth 820→640, auto-height padding, nameSize 72→60, titleSize 44→38. (2) Overlay بعيد عن الكابشن → defaultY اتظبط من 900 → 1200 (لازق) → 1080 (safe margin ~240px فوق الكابشن). أضفنا accent underline للـ overlay. (3) ProcessTimeline أفقي labels بتـ overflow → اتحوّل لـ process_stepper عمودي. Omar: "مش لازم كل حاجة تتعرض بالعرض ممكن تتعرض بالطول".
+>
+> **Editor /edit fix + port hygiene** (follow-up للـ Pipeline reorg). الـ refactor ساب reference قديم لـ `captionsPath` في [`rs-reels.mjs:802`](rs-reels.mjs#L802) (الـ variable اتعمله rename لـ `captionsPathResolved`). النتيجة: `node rs-reels.mjs edit <video>` كان بيـ throw `captionsPath is not defined` بعد ما الـ file server يقوم على 7777 وقبل ما Vite تتسبن، فالـ subprocess كان يموت بـ exit 1، والـ file server يموت معاه. الـ Dashboard API كان بيـ wait بس على port 5173 فبيرجع `ready: true` بناءً على Vite **orphan** من session سابق — والـ user يفتح URL لـ Vite ميتة على ديسك مختلف. الـ fix: (a) `captionsPath` → `captionsPathResolved`. (b) [`editorSession.mjs`](dashboard-api/lib/editorSession.mjs) بقى يـ sweep أي orphan على 5173/7777 قبل الـ spawn عبر `Get-NetTCPConnection -State Listen | Stop-Process -Force`، (c) `waitForPort()` بقى يـ probe **الاتنين** في parallel (`Promise.all([waitForPort(5173), waitForPort(7777)])`) فالـ `ready: true` بقى يضمن الـ file server شغّال فعلاً مش بس Vite. End-to-end verified: 502 الـ initial اتحلّ، الـ subtitle editor فتح على أحمد علي - ورشة خبير الضرايب بـ video + captions auto-loaded.
+>
+> **Pipeline folder reorganization**. كل الـ intermediate files اللي بيولّدها الـ pipeline بقت تروح في `<video-dir>/_pipeline/<basename>/` والـ final reels بقت في `<video-dir>/Output/`. الـ source videos بس اللي بيفضلوا at top level. الـ motivation: كل batch كان بيملأ الـ working folder بـ ~10 ملفات لكل فيديو (scaled, wav, face_map, energy, metadata, captions, captions.raw, speech_rhythm, captions.srt, reel). على 10 فيديوهات = 100 ملف في folder واحد → unusable. الحل: canonical path helpers في [`lib/paths.mjs`](lib/paths.mjs) (repo root) بيرجّعوا paths زي `_pipeline/<basename>/scaled.1080x1920.mp4` و `Output/<basename>-reel.mp4`. `rs-reels.mjs` + `dashboard-api/lib/paths.mjs` كلهم import من الـ single source of truth. الـ 3 Python scripts (video_metadata.py, face_detect.py, audio_energy.py) كانوا بالفعل بياخدوا `--output` — بس نضيفها في كل invocation من rs-reels. الـ backward compat: `resolveExisting()` بيـ check الـ canonical path الأول، يرجع legacy path لو موجود (prepareVideo/preprocessAudio/... تبطل re-scale على الفيديوهات القديمة). الـ migration script [`scripts/migrate_to_pipeline_folder.mjs`](scripts/migrate_to_pipeline_folder.mjs) بيـ scan فولدر + `pendingMigrations()` + `migrateFile()` idempotent + `--dry-run` + `--recursive` flags. جُرّب على "First Bulk": 33 ملف اتحركوا للـ 4 فيديوهات، الـ top-level بقى (4 source videos + _pipeline/ + Output/). الـ Dashboard `loadState()` بيعمل one-shot refresh على الـ `outputs` بتاعة كل video عبر `derivedOutputs()` فـ الـ videos.json القديم تلقائياً بتتحدث paths بعد reload واحدة.
+>
+> **Edit phase auto-detection + dashboard auto-refresh**. الـ subtitle editor بيحفظ عبر rs-reels file server (port 7777) اللي في process مختلف عن الـ Dashboard API (port 7778)، فالـ Dashboard ما كانش عنده signal إن Omar خلّص edit. الحل: filesystem polling. [`syncEditPhaseFromDisk()`](dashboard-api/lib/state.mjs) في state.mjs بيقارن mtime بتاع `captions.json` مع `captions.raw.json` (snapshot من Phase 11 session 1 corrections tracker)، لو أحدث بـ 500ms+ → edit phase بيتحدث تلقائياً لـ `status: 'done'` مع `source: 'filesystem'`. للـ videos القديمة اللي مفيش عندها raw.json، fallback على comparison ضد `transcribe.finishedAt`. بيشتغل في getVideos() + getVideo() — كل read بيعمل sync + persist لو فيه تغيير. الـ frontend اكتسب auto-poll كل 5s في App.tsx — بيـ refresh() لو `document.visibilityState === 'visible'` (paused لما الـ tab مخفي عشان مفيش waste). smoke test verified: 2 من 4 videos اللي Omar عدّلها فعلاً اتقبضوا كـ edit=done [src:filesystem] بدون manual intervention.
+>
+> **Mega-Batch Mode B (Parallel workflow)**. الـ BatchToolbar اكتسب row تانية "🚀 Mega-Batch" فيها 4 زرارات بالتسلسل: **1️⃣ Prep All** → chains `phase1` batch ثم `transcribe` batch sequentially (frontend orchestration فوق الـ existing batch runner). **2️⃣ Send All to Codex** → يفتح MegaHandoffModal بياخد aggregated message من `POST /api/mega/handoff-all` (واحد message فيه كل الفيديوهات + instructions لـ Codex يعملهم في session واحدة بالتتابع). **3️⃣ Render All** → delegates للـ existing bulk render. **4️⃣ Commit Batch** → ينادي `POST /api/mega/commit-batch` اللي بيعمل: (a) upsert feedback/log.json بـ entry لكل فيديو (counts من animation_plan.json)، (b) prepend batch summary block لـ AGENTS.md Next Up، (c) `git add` specific files (feedback/log.json + AGENTS.md + src/data/<slug>/ لكل فيديو)، (d) `git commit` بـ auto-generated message فيه الـ ratings + context. الـ commit بيـ validate إن كل الـ videos عندها rating قبل ما يبدأ — الـ button disabled لو فيه rating ناقص. **Mode A (Serial)** اتأجّل لحد ما نشوف Mode B كافي ولا لأ بعد بعض الـ batches الحقيقية.
+>
+> **Launcher (desktop shortcut + icon)**. [`launcher/`](launcher/) folder فيه launcher.mjs Node script + rs-dashboard.cmd visible wrapper + rs-dashboard.vbs hidden wrapper + install-shortcut.ps1 (بيولّد `.lnk` على الـ desktop بالـ RS logo كـ `.ico`، bright from `brands/rs/assets/logo.png` عبر ffmpeg). الـ launcher.mjs بيشغّل الـ API + الـ Vite كـ children تحت إدارته، يستنى port 7778 (API) + port من stdout الـ Vite (بيـ fallback من 5174 لحد ما يلاقي port فاضي)، يعمل probe على IPv4 + IPv6 في parallel عشان Vite بتبقى IPv6-only على Windows، يفتح الـ browser تلقائياً على الـ URL الصح. Ctrl+C / window close → `taskkill /F /T /PID` على كل الـ tree فمفيش orphan node/vite processes. Setup مرة واحدة: `powershell -ExecutionPolicy Bypass -File launcher/install-shortcut.ps1` ثم double-click الـ "RS Reels Dashboard" على الـ desktop.
+>
+> **Dashboard iteration #2: managed subtitle editor + IPv6 probe fix**. الـ Edit button في الـ VideoCard كان بيفتح URL للـ subtitle editor على `localhost:5173` بس الـ Vite dev server ما كانش مشغّل (كان Phase 11 session 2 trade-off: "run rs-reels edit in a separate terminal"). ده اتحلّ: `POST /api/videos/:id/edit` بقى يـ spawn `node rs-reels.mjs edit <path>` كـ **managed singleton subprocess** في [`dashboard-api/lib/editorSession.mjs`](dashboard-api/lib/editorSession.mjs)، ينتظر port 5173 يـ accept connections عبر `waitForPort()` (max 30s, poll every 400ms)، ويرجع `{ready: true}` للـ frontend. الـ frontend يفتح الـ URL بس لما `ready === true`. لما Omar يدوس Edit على فيديو تاني → الـ session القديم يتقفل (taskkill /T على Windows) + session جديد يتبدي. لما الـ Dashboard API shutdown (SIGINT/SIGTERM) → `shutdownEditor()` في الـ shutdown hook يكنس الـ editor subprocess. **Bug اتحلّ مع ده**: Vite على Windows بيـ bind IPv6 فقط (`::1:5173` مش `127.0.0.1:5173`)، فالـ `waitForPort()` بيجرّب الاتنين (`127.0.0.1` + `::1`) في parallel ويرجع `true` لو أي واحد منهم succeeded. **CORS fix كمان**: الـ API كان مقبل بس `localhost:5174`، دلوقتي بيقبل أي `localhost:517[0-9]` عشان لو orphan Vite dev servers حجزت 5174/5175/5176، الـ UI اللي على 5177 أو 5178 ييبقى شغّال مع الـ API.
+>
+> **Dashboard iteration #1 (earlier today)**: **folder scan + name auto-parse**. الـ AddVideoForm بقى فيه tab "فولدر كامل" جنب "فيديو واحد": `POST /api/videos/scan-folder` بيـ walk الفولدر (optional recursive)، يتجاهل الـ derived outputs (`.1080x1920.mp4`, `-reel.mp4`)، ويرجع كل الـ videos مع parsed lecturer/workshop + `alreadyTracked` flag. الـ UI بيعرض editable grid بـ checkboxes، select all / clear، inline lecturer+workshop editing. `POST /api/videos/bulk-add` بيـ add الكل بـ single call. الـ single-video form بقى برضه يعمل auto-parse on path blur — يستدعي `POST /api/videos/parse` ويـ fill الـ lecturer/workshop fields من اسم الملف (convention: `<lecturer> - <workshop>`). الـ parser في [`dashboard-api/lib/parseName.mjs`](dashboard-api/lib/parseName.mjs) — بيـ detect الـ workshop side بالكلمات `ورشة / دورة / محاضرة / كورس / جلسة`، fallback للـ convention (first = lecturer). الـ `addVideo()` في state.mjs بقى يـ auto-parse برضه لو الـ caller ما بعتش lecturer/workshop.
+>
+> **Phase 11 كامل** (Sessions 1 + 2 + 3 + 4 + 5 + 6). الـ workflow الأساسي للفيديو الجديد بقى عبر **Dashboard UI** (localhost:5174) مش CLI. Codex session بتدخل بس للـ Phase 5 + 6 + 6.5 عبر الـ handoff mechanism (copy-paste، مفيش API invocation). Phase 1 / Transcribe / Edit / Micro Events / Render كلهم من الـ UI بدون Codex session ولا tokens. الـ canonical guide: [`docs/dashboard-workflow.md`](docs/dashboard-workflow.md) — فيه screenshots-in-words لكل زرار، الـ Codex handoff steps، bulk mode، troubleshooting، والـ background Whisper corrections tracker.
+>
+> **الـ 6 sessions اللي خلصت:**
+> 1. Whisper corrections tracker — [`scripts/diff_captions.mjs`](scripts/diff_captions.mjs) + [`feedback/whisper_corrections.jsonl`](feedback/whisper_corrections.jsonl) + [`docs/phase-11-whisper-finetuning.md`](docs/phase-11-whisper-finetuning.md). Fire-and-forget diff بين الـ raw Whisper output + الـ approved captions — zero Omar effort.
+> 2. Dashboard API backend — [`dashboard-api/`](dashboard-api/) (Express + SSE + persistent state + ffprobe duration). 5 phase routes + rating route + handoff route + batch routes.
+> 3. Dashboard React UI core — [`dashboard-ui/`](dashboard-ui/) (Vite 8 + React 19 + TS + Tailwind v4 + Zustand). VideoList + VideoCard + 5 phase buttons + SSE live progress.
+> 4. Polish + Codex handoff + rating UI — ProgressBar + LogViewer + ClaudeHandoffModal + RatingInput + `/handoff` endpoint + rating → feedback/log.json.
+> 5. Bulk mode — [`dashboard-api/lib/batch.mjs`](dashboard-api/lib/batch.mjs) sequential runner + `waitForJob()` helper + BatchToolbar + BatchStatus + [`useBatchStore.ts`](dashboard-ui/src/store/useBatchStore.ts). `continueOnError` default = `true`. GPU single → strictly sequential. 4 batchable phases: phase1, transcribe, microEvents, render.
+> 6. Docs + memories + context sync + workflow migration (الـ session دي).
+
+**الحالة:** Phase 0-11 كاملين. **Phase 10** كان (Round A Tier 1+2 + Round B + Round C). 4 reels راندرت end-to-end: محمد ريان × 3 (4/5, 3.5/5, 3/5) + محمد علاء × 1 (3.6/5). الـ primary workflow من دلوقتي = Dashboard. Codex ما بتشغّلش scripts من Bash في الـ normal flow.
+
+**الخطوة الجاية:** **content farming على scale**. استخدم الـ Dashboard لكل فيديو جديد. لو عندك 5-10 فيديوهات جاهزين نفس الوقت، اختار الـ checkboxes واعمل bulk phase1 / transcribe / render. الـ `feedback/log.json` + `feedback/whisper_corrections.jsonl` بيتراكموا طبيعي ليوم الـ Whisper LoRA fine-tune (threshold: 500+ corrections أو 30+ projects).
+
+**ما اتضافش في Phase 10:**
+- ❌ محذوف نهائياً: Emotion Colors (F13) · Intro 3.5s (F6) · Auto-CTA (F11) · Notifications (F15) · BG Music (F2) · SFX (F1 — طبّقت ثم اتقفلت)
+- ⏸️ مؤجّل: Retention Heatmap (F21) · Audio Ducking (F17) · Auto-Splitter (F4)
+
+اقرأ بالترتيب في الـ session الجاي:
+1. الملف ده بالكامل (AGENTS.md)
+2. [`docs/dashboard-workflow.md`](docs/dashboard-workflow.md) — الـ primary workflow guide
+3. [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — قواعد البراند
+4. [`feedback/style_evolution.md`](feedback/style_evolution.md) — **أعلى أولوية** — تفضيلات المتراكمة
+5. `~/.Codex/projects/.../memory/` — memory files (user-level, auto-loaded) — فيها `feedback_dashboard_workflow.md` + `reference_dashboard_location.md`
+6. [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) — 3-tier architecture
+7. [`docs/scene-validation-rules.md`](docs/scene-validation-rules.md) — **15s scene spacing** (مش 45)
+
+**الـ inputs المطلوبة من المستخدم لفيديو جديد:**
+- ملف الفيديو (.mp4 / .mov)
+- اسم المحاضر
+- اسم الورشة
+- caption style: hormozi (default) — **ما تخلطش caption styles في نفس الريل** إلا لو Omar طلب صراحةً
+
+**الـ Pipeline للفيديو الجديد (via Dashboard — الـ default flow):**
+```
+1. npm run dashboard                             (API + UI مع بعض، instant)
+2. افتح http://localhost:5174 → "+ Add Video"   (enter path + lecturer + workshop)
+3. Click "Phase 1"                               (preprocessing, ~3-5 min — مفيش Codex)
+4. Click "Transcribe"                            (whisper + fix + raw snapshot, ~2-3 min — مفيش Codex)
+5. Terminal تانية: node rs-reels.mjs edit <path> (بيشغّل file server :7777 + editor :5173)
+   Click "Edit" في الـ Dashboard → يفتح الـ editor في tab جديدة → راجع → Approve
+   (fire-and-forget بيـ append corrections لـ feedback/whisper_corrections.jsonl)
+6. Click "🤖 Send to Codex"                      → modal → Copy to Clipboard
+   Paste في Codex session جديدة → Codex بيعمل Phase 5 + 6 + 6.5 + validation (~5-10 min)
+   Codex بيرجعك للـ Dashboard لما تخلص
+7. Click "Render"                                (remotion, ~5-8 min — مفيش Codex)
+8. Rate inline على الـ card                       (1-5 stars + note → feedback/log.json)
+```
+
+> Bulk mode: لو عندك فيديوهات multiple في نفس الوقت، اختار الـ checkboxes → BatchToolbar فوق → اختار phase → "Run on N". الـ runner sequential (GPU واحد). التفاصيل في `docs/dashboard-workflow.md` Section 8.
+
+**الـ Pipeline القديم (CLI-only, for debugging):** لسه شغّال كـ fallback. `node rs-reels.mjs make <video> ...` بتاخد نفس الـ args ونفس الـ output. استخدمها للـ range render (`--from / --to`)، `performance` subcommand، أو debugging أي script فيه bug مطلوب تشوفه مباشر في stdout. الـ `rs-reels.mjs` بيطبع banner صغير بيـ nudge ناحية الـ Dashboard في الـ startup.
+
+> **Phase 11 Session 1 (corrections tracker):** الـ transcribe phase بيحفظ `<video>.captions.raw.json` مرة واحدة (gitignored). لما الـ subtitle editor يـ POST الـ approved captions، [`scripts/diff_captions.mjs`](scripts/diff_captions.mjs) بتشتغل fire-and-forget وتـ append word-level corrections لـ [`feedback/whisper_corrections.jsonl`](feedback/whisper_corrections.jsonl) — ده dataset طبيعي للـ Whisper LoRA fine-tune المستقبلي (التفاصيل في [`docs/phase-11-whisper-finetuning.md`](docs/phase-11-whisper-finetuning.md)). مفيش effort إضافي من Omar.
+
+> **Reference Analysis Workflow (2026-04-29):** نظام جديد لاستيراد reels خارجية (أي creator تاني) وتحليلها frame-by-frame كـ design references. الـ folder `references/<name>/` فيه `source.mp4` (gitignored) + `_analysis/` فيها frames + scene cuts + audio energy + analysis.md منظّمة. الـ scripts: [`scripts/analyze_reference.mjs`](scripts/analyze_reference.mjs) (orchestrator) + [`scripts/extract_reference_frames.mjs`](scripts/extract_reference_frames.mjs) (ffmpeg uniform + scene-cut sampling). Codex بيقرا الـ frames بالـ Read tool (multimodal) ويملا analysis.md، الـ patterns القوية بتتنقل لـ [`feedback/reference_library.md`](feedback/reference_library.md). الـ workflow الكامل في [`docs/reference-analysis-workflow.md`](docs/reference-analysis-workflow.md). الاستخدام: `node scripts/analyze_reference.mjs references/<name>/source.mp4` ثم اطلب من Codex "حلّل الـ reference بتاع `references/<name>/`".
+
+**الـ Scene types المتاحة حالياً (7):**
+- `process_stepper` — stepper بـ 3+ cards مرتبة عمودياً + stagger + status badges
+- `process_timeline` — horizontal nodes مع connector line + done/next/future states
+- `comparison_two_paths` — ✗ vs ✓ columns
+- `big_metaphor` — massive headline + subline + footer (closing moments)
+- `definition` — term accent + definition body + optional icon/example
+- `equation` — LTR equation with tokens that appear one-by-one + labeled terms + result highlight
+- `counter` — massive count-up number + top/bottom labels (social proof, stats)
+
+**الـ plan template:** كل scene element يحدد الـ type بالـ element type (مش الـ scene_type)، والـ FullScreenScene dispatcher بيختار الـ component صح.
+
+**قبل أي تعديل كبير على scenes موجودة:** استنى feedback محدد من المستخدم.
+
+---
+
+## 🎯 المشروع ده إيه
+
+**Video Editor AI Agent** = نظام آلي لمونتاج الريلز التعليمية العربية. بياخد فيديو خام لمحاضر، وبيطلع ريل 9:16 احترافي مع كابشنز متزامنة، Smart Zoom على الوش في لحظات الحماس، lower-third، logo bug، outro، وفي المستقبل: Full-screen scenes + overlays + animation planning ذكي.
+
+**Stack:** Remotion + faster-whisper + MediaPipe + librosa + Codex (الـ Brain).
+
+**اللهجة المستهدفة:** عامية مصرية (initially) — قابلة للتوسع لأي عربية.
+
+**الـ AI:** مفيش Codex API. **أنت (Codex) هو الـ Brain** اللي بيعمل التحليل والـ animation planning بين الـ phases.
+
+---
+
+## 🏷️ الـ Brand النشط دلوقتي: RS Financial Services
+
+المشروع ده مبني على نظام **multi-brand**:
+- كل برند ليه فولدر في `brands/<client>/`
+- كل برند فيه `BRAND.md` (هوية + قواعد) + `assets/` (لوجو + أصول)
+- حالياً: `brands/rs/` فقط (RS Financial Services)
+- مستقبلاً: ممكن نضيف `brands/<other-client>/` ونـ swap الـ tokens.ts
+
+**القاعدة:** قبل أي شغل لـ RS، اقرأ [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — فيه كل القواعد الإجبارية.
+
+---
+
+## 📖 ترتيب القراءة في أي session جديدة
+
+1. **الملف ده (AGENTS.md)** — current state + قرارات معمارية
+2. **[`brands/rs/BRAND.md`](brands/rs/BRAND.md)** — هوية البراند النشط (إجباري — أعلى أولوية)
+3. **[`feedback/style_evolution.md`](feedback/style_evolution.md)** — تفضيلات المستخدم المتراكمة
+4. **[`docs/design-system.md`](docs/design-system.md)** — قواعد الـ design + الـ rationale
+5. **[`feedback/best_components/`](feedback/best_components/)** — أفضل كود محفوظ (فاضي حالياً)
+
+---
+
+## ✅ الحالة الحالية (Phase A + B + C خلصوا)
+
+### Phase 0 ✅ (كامل)
+- [x] Remotion v4.0.448 + TypeScript + React 18
+- [x] بنية المجلدات: `brands/rs/`, `scripts/`, `feedback/`, `templates/`, `input/`, `output/`, `data/`, `docs/`, `samples/`, `public/`, `src/`
+- [x] [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — هوية RS الكاملة
+- [x] [`docs/design-system.md`](docs/design-system.md) — design rationale
+- [x] [`feedback/log.json`](feedback/log.json) + [`feedback/style_evolution.md`](feedback/style_evolution.md)
+- [x] Legacy AE pipeline اتحذف (build-reels.jsx, generate-reels.js, rs-brand-tokens.json)
+
+### Phase 1 ✅ (كامل)
+- [x] **FFmpeg audio preprocess** ([`preprocess-audio.js`](preprocess-audio.js)) — highpass/lowpass + loudnorm + 16kHz mono
+- [x] **Video pre-scale** للـ 1080×1920 (center crop) — في `rs-reels.mjs`
+- [x] **Video metadata** ([`scripts/video_metadata.py`](scripts/video_metadata.py)) — ffprobe → JSON
+- [x] **Face detection** ([`scripts/face_detect.py`](scripts/face_detect.py)) — MediaPipe Tasks API + BlazeFace short-range
+- [x] **Audio energy** ([`scripts/audio_energy.py`](scripts/audio_energy.py)) — librosa RMS + dramatic-pause detection
+- [x] **CLI:** `node rs-reels.mjs phase1 <video>` — يشغّل الأربع خطوات بالـ caching
+
+### Phase 2 ✅
+- [x] **faster-whisper** (مش WhisperX — أسرع على CUDA + نفس الجودة) — [`scripts/transcribe.py`](scripts/transcribe.py) + Node wrapper [`transcribe.js`](transcribe.js)
+- [x] Model: `large-v3`، CUDA + float16، beam=10، patience=2.0، VAD filter
+- [x] Initial prompt محاسبي مصري + word-level timestamps
+- [x] **Egyptian Arabic fix** ([`fix-captions.js`](fix-captions.js)) — ض↔د، ث↔س، إلخ
+- [x] **SRT edit workflow:** [`caps.js`](caps.js) export JSON → SRT → user edits → import SRT
+
+### Phase 3 ✅ (Phase C — كامل)
+- [x] **Subtitle Editor UI** في [`subtitle-editor/`](subtitle-editor/) — Vite 8 + React 19 + TypeScript + Tailwind v4 + Zustand + wavesurfer.js v7
+- [x] [`subtitle-editor/src/components/VideoPlayer.tsx`](subtitle-editor/src/components/VideoPlayer.tsx) — HTML5 video + caption overlay + bidirectional sync مع الـ store
+- [x] [`subtitle-editor/src/components/WaveformTimeline.tsx`](subtitle-editor/src/components/WaveformTimeline.tsx) — wavesurfer.js مع Regions + Timeline plugins، drag-to-resize، zoom slider
+- [x] [`subtitle-editor/src/components/SubtitleList.tsx`](subtitle-editor/src/components/SubtitleList.tsx) — scrollable list + search + word count badges (5-7 = أخضر، غيره = أصفر)
+- [x] [`subtitle-editor/src/components/SubtitleEditPanel.tsx`](subtitle-editor/src/components/SubtitleEditPanel.tsx) — start/end inputs + textarea + Split/Merge/Delete + Move first/last word
+- [x] [`subtitle-editor/src/components/Toolbar.tsx`](subtitle-editor/src/components/Toolbar.tsx) — Import (.srt/.json) + Export SRT + Approve & Save JSON + Undo/Redo
+- [x] [`subtitle-editor/src/components/KeyboardHandler.tsx`](subtitle-editor/src/components/KeyboardHandler.tsx) — Space/Arrows/Ctrl+Z/Ctrl+Shift+Z/Delete/S/M/Ctrl+Shift+←/→
+- [x] [`subtitle-editor/src/components/Dropzone.tsx`](subtitle-editor/src/components/Dropzone.tsx) — drag-drop video + .srt/.json
+- [x] [`subtitle-editor/src/store/useSubtitleStore.ts`](subtitle-editor/src/store/useSubtitleStore.ts) — Zustand store مع 50-step undo/redo + كل الـ edit actions
+- [x] **TypeScript path alias** `@agent/* → ../src/*` — الـ editor بيستورد `CaptionsData` و `WordTiming` types مباشرة من الـ agent (single source of truth)
+- [x] **Auto-load via URL params** — `?video=URL&captions=URL&name=...` لما الـ rs-reels CLI يفتح الـ editor
+
+### Phase 4 ✅ (via subtitle-editor + caps.js)
+- [x] الـ subtitle editor الجديد بيقبل `.captions.json` + `.srt` ويحفظ approved JSON
+- [x] الـ caps.js workflow القديم لسه شغّال للـ users اللي بيفضّلوا VS Code/Subtitle Edit
+
+### Phase 5 ✅
+- [x] **Content analysis** — sections + key_moments + keywords + emphasis_moments + phase_6_hints
+- [x] الـ output في `src/data/<video_basename>/content_analysis.json` (مش جنب الفيديو — عشان الـ learning loop)
+- [x] **Done by Codex in-context** — مفيش API calls
+- [x] الفيديو الأول اللي اتحلل: `محمد ريان - ورشة الشامل` (203 segments → 6 sections, 13 key_moments, 17 keywords, 39 emphasis)
+- [x] [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) اتحدّث ليطابق الواقع
+
+### Phase 6 ✅ (كامل)
+- [x] **Animation planning** — full plan: scenes + smart_zooms + overlays + micro_events + timing
+- [x] الـ output في `src/data/<video_basename>/animation_plan.json`
+- [x] **Validation**: scenes ≥45s spacing, zooms ≥30s + face conf ≥0.5, overlays ≥20s
+- [x] Phase 6.5 (micro-events): `scripts/generate_micro_events.mjs` — auto-generator يقرا emphasis_moments ويولّد Tier 2 beats لـ retention rhythm كل ~4 ثواني
+- [x] **Done by Codex in-context** — مفيش API calls
+- [x] الفيديو الأول اللي اتخطط: `محمد ريان - ورشة الشامل` (4 scenes, 4 big zooms, 5 overlays, 30 micro events = 43 total, cadence 4.86s)
+
+### Phase 10 Round A ✅ (animation variety — Tier 1 + Tier 2)
+
+**Tier 1 (core primitives):**
+- [x] **A1 — Scene entrance variety (4 presets)**: [`FullScreenScene.tsx`](src/components/scenes/FullScreenScene.tsx) wrapper بياخد `scene.entrance?: 'fade' | 'scale_bounce' | 'blur_reveal' | 'stagger_cascade'`. default بيتحدد من الـ element type.
+- [x] **A2 — Dynamic stagger helper**: [`getStaggerDelay(n)`](src/tokens.ts) exported من tokens.ts. `tokens.scenes.dynamicStagger = { few: 15, some: 10, many: 7 }`.
+- [x] **A3 — Element stagger refinement**: ProcessStepperScene + ProcessTimelineScene + EquationScene بقوا بيقروا `getStaggerDelay` بدل القيم الثابتة.
+- [x] **A4 — WordCaption emphasis variants**: 3 variants (`normal` / `pop` / `glow`) — نفس الذهبي بـ scale + letter-spacing + shadow intensity مختلفة. `EmphasisBeat` type جديد. `resolveEmphasisIntensity` في Reel.tsx بيقبل legacy `low/medium/high` + الـ enum الجديد.
+
+**Tier 2 (expansion):**
+- [x] **A5 — Scene exit variety (3 presets)**: `scene.exit?: 'fade' | 'scale_out' | 'slide_down'`. بيتركّب فوق الـ enter transform بـ `combineTransforms()`. defaults per element type (stepper→slide_down, big_metaphor→scale_out, definition→fade).
+- [x] **A6 — Smart zoom easing variety (3 curves)**: `tokens.smartZoomCurves = { smooth_glide, dolly_in, crash_zoom }` — كل curve فيها spring config + rampIn/rampOut frames. `ZoomMoment.easing?: SmartZoomEasing` optional. SmartZoom.tsx بيقرا per-moment. default `dolly_in` (legacy-equivalent).
+- [x] **A7 — Micro events expansion**: [`CornerSweep.tsx`](src/components/micro/CornerSweep.tsx) (diagonal 45° accent line sweep من corner) + [`BorderPulse.tsx`](src/components/micro/BorderPulse.tsx) (2px border pulse حوالين caption zone). اضافة في `MicroEventType` + MicroEventHost dispatch.
+
+### Phase 10 Round B ✅ (polish layer)
+- [x] **F7 — Dynamic font size**: [`computeDynamicFontSize(wordCount, base)`](src/components/WordCaption.tsx) — WordCaption بيتكبّر للـ segments القصيرة (≤3 كلمات = +20%) ويصغّر للمزحومة (≥8 = -20%). WordCaptionPop بياخد [`popSizeForWord(word, base)`](src/components/WordCaptionPop.tsx) اللي بيصغّر حسب طول الكلمة (chars) عشان لا تفيض من الـ body zone.
+- [x] **F5 — Motion Backgrounds**: [`MotionBackground.tsx`](src/components/scenes/MotionBackground.tsx) — gradient angle بيتذبذب ±4° كل 6s + color-stop shift بيتحرك بـ sine خفيف كل 8s. بيتركّب داخل [`FullScreenScene`](src/components/scenes/FullScreenScene.tsx) كـ child sibling قبل SceneBody.
+- [x] **F3 — Progress bar**: [`ProgressBar.tsx`](src/components/ProgressBar.tsx) — 4px thin bar في y=210 (تحت logo bug، جوه safe area، بعيد عن Instagram UI). white track + accent fill + soft glow.
+- [x] **F1 — SFX layer**: 4 أصوات synthesized بـ ffmpeg (pink/brown noise + sine bursts) في [`public/sfx/`](public/sfx/). [`SfxLayer.tsx`](src/components/SfxLayer.tsx) بيقرا الـ scenes + overlays + zoomPlan + يدور Audio Sequence عند كل event. `tokens.sfx.enabled = false` بيقفّلهم كلهم. volumes quiet (12-20%).
+- [x] **F20 — Speech rhythm script**: [`scripts/speech_rhythm.py`](scripts/speech_rhythm.py) — بياخد captions.json ويطلع speech_rhythm.json فيها pace classification + pause detection (micro / breath / dramatic) + summary stats. متكامل في `rs-reels.mjs make` pipeline بعد transcribe (fails soft).
+- [x] **F12 — Manual transitions**: ✅ مغطّى أصلاً بـ A1 (entrance variety) + A5 (exit variety) — مفيش حاجة جديدة مطلوبة.
+
+### Phase 10 Round C ✅ (data foundation)
+- [x] **F19 — Performance loop**: [`rs-reels.mjs performance <video_or_project> --views N --retention 0.65 ...`](rs-reels.mjs) subcommand. بيكتب entry في [`feedback/performance_data.json`](feedback/performance_data.json) — metrics (views/reach/saves/shares/likes/comments/retention/drop-off) + snapshot من الـ animation_plan (caption_style, num_scenes, num_zooms, num_overlays, num_micro_events). [`feedback/performance_insights.md`](feedback/performance_insights.md) فيه template الـ patterns اللي Codex يـ refresh بعد 3+ entries. Phase 6 docs اتحدّثت عشان تقرا الـ insights في البداية.
+- [x] **F9 — Hook detector (docs update)**: [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) — Step 5.2 جديد "Hook Analysis" بيحلل أول 3s من الـ captions. لو ضعيف (بداية مؤسسية)، يقترح `alternative_start_sec` من أول 30s فيها سؤال/statement. `hook_analysis` block جديد في schema. Phase 6 بيسأل المستخدم قبل تطبيق الاقتراح (Step 6.3).
+- [x] **F23 — Adaptive difficulty (docs update)**: [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) — كل key_moment بياخد `difficulty: simple | medium | complex` + `difficulty_score` + `visual_complexity`. [`docs/phase-6-animation-planning.md`](docs/phase-6-animation-planning.md) — Step 6.3 فيه جدول بيربط difficulty بـ scene_type + عدد عناصر + duration + entrance + stagger. برضو Phase 6 docs بتشرح إزاي نكتب `scene.entrance/exit` و `zoom_moment.easing` و `word_pop.intensity`.
+
+### Phase 7 ⚠️ (base كامل — iteration مستمر)
+
+**موجود وشغّال:**
+- [x] [`src/Reel.tsx`](src/Reel.tsx) — main composition: 3-tier event system (major / micro / continuous)
+- [x] [`src/Root.tsx`](src/Root.tsx) — registration + preview-props + animationPlan support
+- [x] [`src/components/VideoTrack.tsx`](src/components/VideoTrack.tsx)
+- [x] [`src/components/VideoBreathing.tsx`](src/components/VideoBreathing.tsx) — **NEW** Tier 3 continuous 1.5% scale oscillation
+- [x] [`src/components/WordCaption.tsx`](src/components/WordCaption.tsx) — Hormozi-like word highlighting **+ emphasis boost** (scale 1.28 + accent glow when emphasis time active)
+- [x] [`src/components/LogoBug.tsx`](src/components/LogoBug.tsx) — **بيفضل ظاهر طول الوقت** (يغطي scenes كمان — feedback من Omar)
+- [x] [`src/components/LowerThird.tsx`](src/components/LowerThird.tsx)
+- [x] [`src/components/Outro.tsx`](src/components/Outro.tsx)
+- [x] [`src/components/SmartZoom.tsx`](src/components/SmartZoom.tsx) — spring ramp + face-centered transform + edge clamping (+ mini zooms من Tier 2)
+- [x] **Scene components (7)**:
+  - [x] [`scenes/FullScreenScene.tsx`](src/components/scenes/FullScreenScene.tsx) — wrapper + element-driven dispatcher
+  - [x] [`scenes/ProcessStepperScene.tsx`](src/components/scenes/ProcessStepperScene.tsx) — 3 cards stagger
+  - [x] [`scenes/ProcessTimelineScene.tsx`](src/components/scenes/ProcessTimelineScene.tsx) — horizontal nodes
+  - [x] [`scenes/ComparisonTwoPathsScene.tsx`](src/components/scenes/ComparisonTwoPathsScene.tsx) — ✗ vs ✓
+  - [x] [`scenes/BigMetaphorScene.tsx`](src/components/scenes/BigMetaphorScene.tsx) — headline + subline
+  - [x] [`scenes/DefinitionScene.tsx`](src/components/scenes/DefinitionScene.tsx) — **NEW** term + definition + optional icon/example
+  - [x] [`scenes/EquationScene.tsx`](src/components/scenes/EquationScene.tsx) — **NEW** left-to-right equation builder with labels
+  - [x] [`scenes/CounterScene.tsx`](src/components/scenes/CounterScene.tsx) — **NEW** massive count-up number with top/bottom labels
+- [x] **Chapter divider (NEW)**:
+  - [x] [`scenes/ChapterDivider.tsx`](src/components/scenes/ChapterDivider.tsx) — 2-3s section break (kicker + title + underline + subtitle)
+- [x] **Overlay components (2)**:
+  - [x] [`overlays/Overlay.tsx`](src/components/overlays/Overlay.tsx) — dispatcher
+  - [x] [`overlays/KeywordHighlightOverlay.tsx`](src/components/overlays/KeywordHighlightOverlay.tsx) — pill + badge
+  - [x] [`overlays/StampOverlay.tsx`](src/components/overlays/StampOverlay.tsx) — bordered rotated stamp
+- [x] **Micro-event components (Tier 2)**:
+  - [x] [`micro/MicroEventHost.tsx`](src/components/micro/MicroEventHost.tsx) — dispatcher
+  - [x] [`micro/CaptionUnderline.tsx`](src/components/micro/CaptionUnderline.tsx) — animated underline under captions
+  - [x] [`micro/AccentFlash.tsx`](src/components/micro/AccentFlash.tsx) — edge bar flash
+  - [x] `word_pop` = in-caption boost (not a separate component — handled via WordCaption emphasisTimes prop)
+  - [x] `mini_zoom` = merged into smart_zoom_plan (not a separate component)
+- [x] [`src/tokens.ts`](src/tokens.ts) — design tokens + scenes + overlays + springs presets
+- [x] [`src/utils/chunk.ts`](src/utils/chunk.ts) — caption rechunking
+- [x] [`src/utils/fonts.ts`](src/utils/fonts.ts) — local woff2 (Alexandria + IBM Plex Sans Arabic)
+
+- [x] **Caption styles (2)**:
+  - [x] [`WordCaption.tsx`](src/components/WordCaption.tsx) — Hormozi (default) — all words in segment + active-word highlight + emphasis boost
+  - [x] [`WordCaptionPop.tsx`](src/components/WordCaptionPop.tsx) — **NEW** Pop style — one huge word at a time, body zone, bouncy
+
+**ناقص (iteration مستقبلي):**
+- [ ] Caption styles (4 باقي): Karaoke, Box, Typewriter, Classic
+- [ ] Scene types جدد: chart, diagram
+- [ ] `@remotion/captions` integration
+- [ ] Scene polish من feedback الـ user بعد ما شاف الـ full render
+
+### Phase 8 ✅ (كامل)
+- [x] [`rs-reels.mjs`](rs-reels.mjs) — hybrid CLI (`make` + `studio` + `phase1` + `edit`)
+- [x] **HTTP file server** (port 7777) — refactored من video-only لـ multi-route، بيخدم video + captions + أي ملف
+- [x] Async render (`spawn` بدل `spawnSync`) — الـ HTTP server يـ serve أثناء الريندر
+- [x] [`remotion.config.ts`](remotion.config.ts) — concurrency=14، ANGLE renderer، 12GB cache، `hardware-acceleration=if-possible`
+- [x] **Verified:** اتريندر فيديو حقيقي "محمد ريان - ورشة الشامل" (293MB، 203 segments)
+- [x] zoom_plan.json auto-loading (لو موجود next to source video)
+- [x] `edit` subcommand — يشغّل الـ subtitle editor مع auto-load للـ video + captions
+
+### Phase 9 ✅ (infrastructure + first entry)
+- [x] [`feedback/log.json`](feedback/log.json) — first project entry (محمد ريان - ورشة الشامل) مع 8 feedback items
+- [x] [`feedback/style_evolution.md`](feedback/style_evolution.md) — 8 entries من الـ session الأول
+- [x] Memory system — 7 memory files في `~/.Codex/projects/.../memory/` (user-level)
+- [x] [`docs/phase-9-feedback.md`](docs/phase-9-feedback.md) — اتحدّث ليطابق الـ in-context implementation
+- [ ] Automation: أسئلة rating UI/script (اختياري — دلوقتي Codex بيسألهم في الـ context)
+
+### Phase B (Batch) ❌
+- [ ] Multi-video batch processing
+
+---
+
+## 🏗️ قرارات معمارية
+
+### 1. CLI: Hybrid (monolithic + phase-based)
+
+```bash
+# الاستخدام السريع (happy path — كل حاجة في command واحد):
+node rs-reels.mjs make   <video> --lecturer "..." --workshop "..."   # full pipeline
+node rs-reels.mjs studio <video> --lecturer "..." --workshop "..."   # Remotion Studio preview
+
+# الاستخدام التفصيلي (phase-by-phase):
+node rs-reels.mjs phase1 <video>     # ✅ audio + scale + metadata + face_map + energy
+node rs-reels.mjs edit   <video>     # ✅ subtitle editor (Vite + wavesurfer)
+# Phase 2: node rs-reels.mjs phase2 (planned)
+# Phase 5/6: Codex بيعمل التحليل في الـ context مش في command
+```
+
+### 2. Tokens vs Design System
+
+- [`src/tokens.ts`](src/tokens.ts) = **الأرقام للـ runtime** (TypeScript type-safe). الكود بيستورده مباشرة.
+- [`docs/design-system.md`](docs/design-system.md) = **الـ rationale + القواعد + الـ "ليه/امتى"**.
+- [`brands/rs/BRAND.md`](brands/rs/BRAND.md) = **الثوابت الإجبارية** للبراند (ألوان + خطوط + لوجو). **أعلى أولوية** — ما تتغيرش.
+
+**القاعدة:** لما feedback يعدّل قيمة → عدّل `tokens.ts` + سطر شرح في `design-system.md` + entry في `feedback/style_evolution.md`.
+
+### 3. Multi-Brand (مستقبلاً)
+
+البنية الحالية بتدعم multi-brand بشكل مبدئي:
+```
+brands/
+  rs/
+    BRAND.md          ← هوية البراند
+    assets/
+      logo.png        ← brand-owned copy
+      logo-alt.png
+  <future-client>/
+    BRAND.md
+    assets/
+      ...
+```
+
+دلوقتي `src/tokens.ts` فيه قيم RS hardcoded. الـ refactor المستقبلي:
+- يحوّل tokens.ts لـ `tokens/rs.ts`، `tokens/<client>.ts`
+- CLI يقبل `--brand <name>` flag
+- Build step يـ copy `brands/<active>/assets/*` → `public/`
+
+دلوقتي مفيش حاجة من ده — بس البنية جاهزة.
+
+### 4. Transcription: faster-whisper (مش WhisperX)
+
+- CTranslate2 backend أسرع على RTX 5060 Ti
+- نفس الجودة + word timestamps + VAD
+- أقل dependencies (مش محتاج torch manual setup)
+
+### 5. Smart Zoom: Plan-driven
+
+- **Phase 1** بيطلع raw data: `face_map.json` + `energy.json`
+- **Phase 6 (مستقبلاً)** أو Codex يدوياً بيقرأ الـ raw data ويولّد `zoom_plan.json`
+- [`src/components/SmartZoom.tsx`](src/components/SmartZoom.tsx) بيقرأ الـ plan ويرسم spring transform
+- الـ component dummy في الذكاء — كل القرارات في الـ plan
+
+---
+
+## 🔄 الـ Phases — نفذ بالترتيب
+
+كل Phase ليها ملف تفصيلي في `docs/`. اقرأ ملف الـ Phase قبل ما تبدأ فيها.
+
+| Phase | الملف | الحالة | Input → Output |
+|-------|-------|--------|----------------|
+| 0 | [`docs/phase-0-setup.md`](docs/phase-0-setup.md) | ✅ | setup → project ready |
+| 1 | [`docs/phase-1-preprocessing.md`](docs/phase-1-preprocessing.md) | ✅ | video → audio + face_map + energy + metadata |
+| 2 | [`docs/phase-2-transcription.md`](docs/phase-2-transcription.md) | ✅ | audio → captions.json + .srt |
+| 3 | [`docs/phase-3-subtitle-editor.md`](docs/phase-3-subtitle-editor.md) | ❌ | subtitle editor UI |
+| 4 | [`docs/phase-4-captions-review.md`](docs/phase-4-captions-review.md) | ✅ (caps.js) | srt → approved JSON |
+| 5 | [`docs/phase-5-content-analysis.md`](docs/phase-5-content-analysis.md) | ✅ | captions+energy+metadata → content_analysis.json |
+| 6 | [`docs/phase-6-animation-planning.md`](docs/phase-6-animation-planning.md) | ✅ | analysis → animation plan |
+| 6.5 | [`docs/phase-6.5-micro-events.md`](docs/phase-6.5-micro-events.md) | ✅ | emphasis → micro_events (Tier 2 retention) |
+| 7 | [`docs/phase-7-remotion-components.md`](docs/phase-7-remotion-components.md) | ⚠️ | base done (4 scenes, 2 overlays, 3 micro, breathing) — polish + more styles |
+| 8 | [`docs/phase-8-render.md`](docs/phase-8-render.md) | ✅ | components → final.mp4 |
+| 9 | [`docs/phase-9-feedback.md`](docs/phase-9-feedback.md) | ✅ | rating → log.json + style_evolution.md |
+| 11 | [`docs/phase-11/README.md`](docs/phase-11/README.md) + [`docs/dashboard-workflow.md`](docs/dashboard-workflow.md) | ✅ | Dashboard UI + API + Whisper tracker + Bulk mode |
+| B | ~~`docs/phase-B-batch.md`~~ | ✅ (superseded by Phase 11 Session 5 bulk mode) | — |
+
+**⚠️ لما المستخدم يقول "ابدأ Phase X" → اقرأ `docs/phase-X-...md` واشتغل.**
+
+---
+
+## 🎨 قبل كتابة أي component
+
+1. اقرأ [`brands/<active>/BRAND.md`](brands/rs/BRAND.md) — القواعد الإجبارية
+2. اقرأ [`docs/design-system.md`](docs/design-system.md) — الـ rationale
+3. اقرأ [`feedback/style_evolution.md`](feedback/style_evolution.md) — تفضيلات المستخدم
+4. شوف [`feedback/best_components/`](feedback/best_components/) لو فيه component مشابه
+5. **استخدم القيم من `src/tokens.ts`** — مفيش hardcoded values في الـ components
+6. **الخط Alexandria (للعناوين) أو IBM Plex Sans Arabic (للجسم/الكابشن). الكتابة RTL. الأرقام إنجليزية.**
+
+---
+
+## 🛡️ Scene Validation
+
+(التفاصيل في [`docs/scene-validation-rules.md`](docs/scene-validation-rules.md))
+
+- ✅ **Full-Screen Scene**: مفهوم مجرد + يتوضح بصرياً + مفيش demo. الحد الأدنى بين scenes: **45 ثانية**.
+- ✅ **Smart Zoom**: face confidence > 0.5 + audio energy عالية. الحد: **1 كل 30 ثانية**.
+- ✅ **Overlay**: keyword/رقم/تنبيه. الحد: **1 كل 20 ثانية**.
+
+---
+
+## 📝 بعد كل ريندر نهائي — إجباري
+
+(التفاصيل في [`docs/phase-9-feedback.md`](docs/phase-9-feedback.md))
+
+1. اسأل عن تقييم كل عنصر (1-5)
+2. سجّل في [`feedback/log.json`](feedback/log.json)
+3. حدّث [`feedback/style_evolution.md`](feedback/style_evolution.md)
+4. عنصر 5/5 → احفظ في [`feedback/best_components/`](feedback/best_components/)
+5. لو قيمة اتغيرت → حدّث `src/tokens.ts` + `docs/design-system.md`
+6. **حدّث الـ Context Files قبل الـ commit** (قاعدة جديدة — 2026-04-15):
+   - [`AGENTS.md`](AGENTS.md) — "Next Up" section + current state + ratings history + لو قاعدة جديدة اتضافت اكتبها هنا
+   - Memory files في `~/.Codex/projects/.../memory/` — أي feedback cross-session يتحوّل لـ memory entry
+   - [`feedback/style_evolution.md`](feedback/style_evolution.md) — "📐 القيم المعدّلة" لو قيمة rebased
+   - [`docs/dashboard-workflow.md`](docs/dashboard-workflow.md) — لو الـ Dashboard behavior اتغيّر (ports, phases, handoff, batch)
+   - أي doc تاني فيه ذكر القيمة/القاعدة القديمة (مثلاً `docs/design-system.md`)
+   - **المبدأ**: ما تـ commit source files من غير ما الـ context files اللي بتشرحها تكون synced. Omar طلب ده صراحة لأن الـ context files هي اللي بيقراها الـ session الجاي، ولازم تطابق الكود الفعلي.
+7. `git commit` — الـ commit message لازم يذكر اللي اتحدّث في الـ context files كمان، مش بس الـ source
+8. كل 3 مشاريع → اقترح variation جديدة
+
+---
+
+## 🚨 Error Recovery
+
+اقرأ [`docs/error-recovery.md`](docs/error-recovery.md)
+
+---
+
+## 🔧 Stack الحالي
+
+| Layer | Tool | Notes |
+|-------|------|-------|
+| Video engine | Remotion 4.0.448 | TypeScript + React 18 |
+| Transcription | faster-whisper (Python 3.11) | CUDA + float16 + large-v3 |
+| Face detection | MediaPipe 0.10.33 (Tasks API) | BlazeFace short-range — `scripts/models/` |
+| Audio analysis | librosa 0.11.0 | RMS + dramatic pause detection |
+| Audio I/O | FFmpeg | `C:/ffmpeg/bin/ffmpeg.exe` (Windows) |
+| Python venv | uv-managed | `C:/Users/PUZZLE/Documents/GrowthMora/_tools/whisper-env/.venv` |
+| Fonts | local woff2 (`public/fonts/`) | Alexandria + IBM Plex Sans Arabic (Arabic + Latin subsets) |
+| Hardware target | RTX 5060 Ti + i7-14700K + 32GB DDR5 | Render config tuned for it |
+
+---
+
+## 📦 Onboarding session جديدة
+
+لو المستخدم قال "اقرأ الخطة وكمّل":
+1. اقرأ الملف ده (AGENTS.md) — current state + قرارات
+2. اقرأ [`brands/rs/BRAND.md`](brands/rs/BRAND.md) — قواعد البراند
+3. اقرأ [`docs/design-system.md`](docs/design-system.md) — design rationale
+4. اقرأ [`feedback/style_evolution.md`](feedback/style_evolution.md) — تفضيلات تراكمية
+5. شوف المستخدم عايز يشتغل في أي Phase
+6. اقرأ `docs/phase-X-*.md` للـ phase اللي هتبدأ فيها
+7. **استنى موافقة قبل أي تعديل كبير**
+
+
+---
+
+## 🎓 GitHub Learning Mode
+
+المستخدم (Omar) 0 خبرة مع Git/GitHub وبيتعلم. قبل ما تنفّذ أي أمر git أو gh:
+
+1. **اكتب الأمر بالظبط** اللي هتشغّله
+2. **اشرح معناه بالعربي** — إيه اللي هيعمله بكلام بسيط
+3. **اشرح ليه دلوقتي** — ليه محتاجينه في الخطوة دي بالتحديد
+
+لو في سلسلة أوامر متتابعة، اشرح كل واحد قبل ما تشغّله. لو الأمر بيمس حاجة حساسة (force push, reset --hard, delete branch, clean -fd)، اتوقف واسأل المستخدم قبل التنفيذ حتى لو في auto mode.
+
+الهدف: المستخدم يفهم كل أمر وليه بتستخدمه — مش يتنفّذ في الخلفية من غير ما يعرف.
