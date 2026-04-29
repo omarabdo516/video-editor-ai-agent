@@ -178,3 +178,29 @@
 {"original":"تكلفة","corrected":"مركز","context_before":"مركز","context_after":"مصاريف","time_sec":58.62,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
 {"original":"التشغيل","corrected":"النكلفة","context_before":"مركز","context_after":"هي","time_sec":62.84,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
 {"original":"الاصل","corrected":"اصلا","context_before":"التشغيل","context_after":"تمام","time_sec":63.9,"project":"محمد ريان ورشة الشامل 2","date":"2026-04-16"}
+{"original":"وحش","corrected":"وحوش","context_before":"","context_after":"المحاسبة","time_sec":0,"project":"1","date":"2026-04-29"}
+{"original":"الشطبي","corrected":"الشاطبي","context_before":"في","context_after":"مش","time_sec":8.62,"project":"1","date":"2026-04-29"}
+{"original":"لرأسها","corrected":"لرؤساء","context_before":"مش","context_after":"الحسابات","time_sec":9.52,"project":"1","date":"2026-04-29"}
+{"original":"الفرشات","corrected":"الفريشات","context_before":"للمحاسبين","context_after":"اللي","time_sec":12.5,"project":"1","date":"2026-04-29"}
+{"original":"بساطة","corrected":"بساط","context_before":"لسببين","context_after":"أولا","time_sec":17.06,"project":"1","date":"2026-04-29"}
+{"original":"فرش","corrected":"فريش","context_before":"لسه","context_after":"أو","time_sec":23.74,"project":"1","date":"2026-04-29"}
+{"original":"فرش","corrected":"فريش","context_before":"أنت","context_after":"يخط","time_sec":29.22,"project":"1","date":"2026-04-29"}
+{"original":"يخط","corrected":"يخطي","context_before":"فرش","context_after":"بيك","time_sec":29.46,"project":"1","date":"2026-04-29"}
+{"original":"التعصر","corrected":"التعثر","context_before":"من","context_after":"ومش","time_sec":30.92,"project":"1","date":"2026-04-29"}
+{"original":"لكم","corrected":"ليكم","context_before":"مفيدة","context_after":"ونعمل","time_sec":60.62,"project":"1","date":"2026-04-29"}
+{"original":"حبيبنا","corrected":"حبايبنا","context_before":"","context_after":"في","time_sec":0,"project":"2","date":"2026-04-29"}
+{"original":"الأقل","corrected":"الي","context_before":"الأحب","context_after":"بمدينة","time_sec":5.86,"project":"2","date":"2026-04-29"}
+{"original":"بمدينة","corrected":"قلبي","context_before":"الأقل","context_after":"الاسكندرية","time_sec":6.24,"project":"2","date":"2026-04-29"}
+{"original":"الاسكندرية","corrected":"وهي","context_before":"بمدينة","context_after":"هنشتغل","time_sec":6.78,"project":"2","date":"2026-04-29"}
+{"original":"التمييز","corrected":"التميز","context_before":"منتهى","context_after":"في","time_sec":12.66,"project":"2","date":"2026-04-29"}
+{"original":"بالشد","corrected":"بالشاطبي","context_before":"اللي","context_after":"إن","time_sec":15.58,"project":"2","date":"2026-04-29"}
+{"original":"شغلة","corrected":"شغل","context_before":"بعض","context_after":"جامدة","time_sec":18.26,"project":"2","date":"2026-04-29"}
+{"original":"جامدة","corrected":"جامد","context_before":"شغلة","context_after":"","time_sec":18.52,"project":"2","date":"2026-04-29"}
+{"original":"حبيبنا","corrected":"حبايبنا","context_before":"","context_after":"في","time_sec":0,"project":"2","date":"2026-04-29"}
+{"original":"الأقل","corrected":"الي","context_before":"الأحب","context_after":"بمدينة","time_sec":5.86,"project":"2","date":"2026-04-29"}
+{"original":"بمدينة","corrected":"قلبي","context_before":"الأقل","context_after":"الاسكندرية","time_sec":6.24,"project":"2","date":"2026-04-29"}
+{"original":"الاسكندرية","corrected":"وهي","context_before":"بمدينة","context_after":"هنشتغل","time_sec":6.78,"project":"2","date":"2026-04-29"}
+{"original":"التمييز","corrected":"التميز","context_before":"منتهى","context_after":"في","time_sec":12.66,"project":"2","date":"2026-04-29"}
+{"original":"بالشد","corrected":"بالشاطبي","context_before":"اللي","context_after":"إن","time_sec":15.58,"project":"2","date":"2026-04-29"}
+{"original":"شغلة","corrected":"شغل","context_before":"بعض","context_after":"جامدة","time_sec":18.26,"project":"2","date":"2026-04-29"}
+{"original":"جامدة","corrected":"جامد","context_before":"شغلة","context_after":"","time_sec":18.52,"project":"2","date":"2026-04-29"}
