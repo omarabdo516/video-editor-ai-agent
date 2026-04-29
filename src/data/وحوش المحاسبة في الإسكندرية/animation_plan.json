@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-29",
+  "generated_by": "Claude Code (claude-opus-4-6)",
+  "source_video_basename": "1",
+  "video": {
+    "duration_sec": 65.34
+  },
+  "source": {
+    "video": "D:/Work/RS Academy/Videos/New Alex/1.mp4",
+    "video_scaled": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/scaled.1080x1920.mp4",
+    "captions": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/captions.json",
+    "face_map": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/scaled.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/audio.16k.wav.energy.json",
+    "metadata": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/scaled.1080x1920.mp4.metadata.json"
+  },
+  "caption_style": "hormozi",
+  "animation_plan": {
+    "source_video_basename": "1",
+    "source": {
+      "video": "D:/Work/RS Academy/Videos/New Alex/1.mp4",
+      "video_scaled": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/scaled.1080x1920.mp4",
+      "captions": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/captions.json",
+      "face_map": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/scaled.1080x1920.mp4.face_map.json",
+      "energy": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/audio.16k.wav.energy.json",
+      "metadata": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/scaled.1080x1920.mp4.metadata.json"
+    }
+  },
+  "smart_zoom_plan": {
+    "source": "1",
+    "spring": "smooth",
+    "moments": [
+      {
+        "startSec": 0.0,
+        "endSec": 8.0,
+        "zoomLevel": 1.05,
+        "centerX": 0.508,
+        "centerY": 0.473,
+        "easing": "smooth_glide",
+        "reason": "Hook + workshop announcement (8s). Tiny 1.05x zoom — barely perceptible. With smooth_glide curve: 4s ramp in + 1s hold + 3s ramp out = continuous gentle motion, no harsh in/out (Omar v5: keep zoom only in the important hook moment, very smooth)."
+      }
+    ]
+  },
+  "scenes": [
+    {
+      "id": "scene_1",
+      "type": "full_screen_scene",
+      "scene_type": "process_stepper",
+      "start_sec": 53.5,
+      "end_sec": 59,
+      "duration_sec": 5.5,
+      "entrance": "stagger_cascade",
+      "exit": "fade",
+      "title": "الأركان الثلاثة",
+      "title_size": 56,
+      "title_weight": 700,
+      "background": "linear-gradient(135deg, #0D1F3C 0%, #10479D 100%)",
+      "elements": [
+        {
+          "type": "step_card",
+          "step": 1,
+          "label": "دورة المحاسبة الكاملة",
+          "status": "highlighted",
+          "status_badge": "1"
+        },
+        {
+          "type": "step_card",
+          "step": 2,
+          "label": "الأوبريشن وتأسيس نظام الحسابات",
+          "status": "highlighted",
+          "status_badge": "2"
+        },
+        {
+          "type": "step_card",
+          "step": 3,
+          "label": "الإقفالات والتسويات",
+          "status": "highlighted",
+          "status_badge": "3"
+        }
+      ]
+    }
+  ],
+  "overlays": [
+    {
+      "id": "overlay_1",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 5,
+      "end_sec": 9.2,
+      "keyword": "ورشة المحاسب الشامل",
+      "primary_text": "6.6.2026",
+      "primary_color": "accent",
+      "primary_size": 64,
+      "primary_weight": 800,
+      "secondary_text": "نقابة المهندسين • الشاطبي",
+      "secondary_size": 28,
+      "y_px": 1620
+    },
+    {
+      "id": "overlay_2",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 18.5,
+      "end_sec": 22.8,
+      "keyword": "الجانب الاستراتيجي",
+      "primary_text": "استراتيجي",
+      "primary_color": "accent",
+      "primary_size": 64,
+      "primary_weight": 800,
+      "secondary_text": "فكر بيتبني معاك",
+      "secondary_size": 28,
+      "y_px": 1620
+    },
+    {
+      "id": "overlay_3",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 44.5,
+      "end_sec": 48.7,
+      "keyword": "الجزء التنفيذي",
+      "primary_text": "تنفيذي",
+      "primary_color": "accent",
+      "primary_size": 64,
+      "primary_weight": 800,
+      "secondary_text": "هنشتغل بإيدينا",
+      "secondary_size": 28,
+      "y_px": 1620
+    }
+  ],
+  "micro_events": [
+    {
+      "id": "micro_1",
+      "type": "word_pop",
+      "start_sec": 11.4,
+      "end_sec": 12.15,
+      "word": "هتنفع",
+      "anchor_subtitle_id": 8,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_3",
+      "type": "word_pop",
+      "start_sec": 25.06,
+      "end_sec": 25.81,
+      "word": "حسابات",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_6",
+      "type": "word_pop",
+      "start_sec": 37.1,
+      "end_sec": 37.85,
+      "word": "اللي",
+      "anchor_subtitle_id": -1,
+      "intensity": "low",
+      "source": "gap_fill"
+    },
+    {
+      "id": "micro_7",
+      "type": "caption_underline",
+      "start_sec": 40.15,
+      "end_sec": 41.35,
+      "anchor_subtitle_id": 29,
+      "intensity": "medium",
+      "source": "emphasis"
+    },
+    {
+      "id": "micro_9",
+      "type": "word_pop",
+      "start_sec": 60.55,
+      "end_sec": 61.3,
+      "word": "ليكم",
+      "anchor_subtitle_id": 43,
+      "intensity": "medium",
+      "source": "emphasis"
+    }
+  ],
+  "micro_events_generated_at": "2026-04-29",
+  "micro_events_stats": {
+    "total": 9,
+    "cadence_sec": 7.26,
+    "by_type": {
+      "word_pop": 4,
+      "mini_zoom": 4,
+      "caption_underline": 1
+    },
+    "by_source": {
+      "emphasis": 7,
+      "gap_fill": 2
+    }
+  }
+}

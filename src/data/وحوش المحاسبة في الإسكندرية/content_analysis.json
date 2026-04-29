@@ -1,0 +1,561 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-29",
+  "generated_by": "Claude Code (claude-opus-4-6)",
+
+  "source": {
+    "video": "D:/Work/RS Academy/Videos/New Alex/1.mp4",
+    "video_scaled": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/scaled.1080x1920.mp4",
+    "captions": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/captions.json",
+    "face_map": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/scaled.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/audio.16k.wav.energy.json",
+    "metadata": "D:/Work/RS Academy/Videos/New Alex/_pipeline/1/scaled.1080x1920.mp4.metadata.json"
+  },
+
+  "video": {
+    "duration_sec": 65.34,
+    "duration_str": "01:05",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 47
+  },
+
+  "lecturer": {
+    "name": "محمد ريان",
+    "title": "محاضر / مؤسس RS",
+    "workshop": "ورشة المحاسب الشامل"
+  },
+
+  "summary": "محمد ريان بيعلن عن ورشة المحاسب الشامل في الإسكندرية يوم 6.6.2026 بنقابة المهندسين في الشاطبي. الورشة مش لرؤساء الحسابات فقط، هي كمان للفريشات اللي لسه بادئين والمحاسبين البادئين. الورشة شغّالة على محورين: المحور الاستراتيجي (بيبني فكر استراتيجي) والمحور التنفيذي (شغل بإيدينا في الأركان الثلاثة الأساسية: دورة المحاسبة الكاملة، الأوبريشن وتأسيس نظام الحسابات، الإقفالات والتسويات).",
+
+  "topics": [
+    "الإعلان عن ورشة المحاسب الشامل في الإسكندرية",
+    "الجمهور المستهدف: فريش وقدامى",
+    "المحور الاستراتيجي — فكر استراتيجي",
+    "المحور التنفيذي — شغل بإيدينا",
+    "الأركان الثلاثة الأساسية: دورة المحاسبة الكاملة، الأوبريشن وتأسيس نظام الحسابات، الإقفالات والتسويات"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "الهوك + إعلان الورشة",
+      "start_sec": 0,
+      "end_sec": 9.02,
+      "start_str": "00:00",
+      "end_str": "00:09",
+      "subtitle_range": [0, 6],
+      "summary": "وحوش المحاسبة في الإسكندرية — ورشة المحاسب الشامل يوم 6.6.2026 بنقابة المهندسين في الشاطبي"
+    },
+    {
+      "id": 2,
+      "title": "الجمهور المستهدف",
+      "start_sec": 9.02,
+      "end_sec": 17.52,
+      "start_str": "00:09",
+      "end_str": "00:17",
+      "subtitle_range": [7, 12],
+      "summary": "مش لرؤساء الحسابات فقط — هتنفع للفريشات والمحاسبين البادئين"
+    },
+    {
+      "id": 3,
+      "title": "المحور الاستراتيجي — تعريف",
+      "start_sec": 17.52,
+      "end_sec": 27.38,
+      "start_str": "00:17",
+      "end_str": "00:27",
+      "subtitle_range": [13, 18],
+      "summary": "الورشة بتشتغل على الجانب الاستراتيجي — بتبني فكر استراتيجي سواء كنت فريش أو رئيس حسابات قديم"
+    },
+    {
+      "id": 4,
+      "title": "الفائدة للفريشات",
+      "start_sec": 27.38,
+      "end_sec": 37.98,
+      "start_str": "00:27",
+      "end_str": "00:37",
+      "subtitle_range": [19, 27],
+      "summary": "لو فريش وسنوات من التعثر — هتعرف محتاج تتعلم إيه وهتتعلم الأساسيات"
+    },
+    {
+      "id": 5,
+      "title": "الفائدة لرؤساء الحسابات",
+      "start_sec": 37.98,
+      "end_sec": 46.30,
+      "start_str": "00:37",
+      "end_str": "00:46",
+      "subtitle_range": [28, 33],
+      "summary": "لو رئيس حسابات — التفكير الاستراتيجي هيساعدك في إدارة المحاسبين والشركة"
+    },
+    {
+      "id": 6,
+      "title": "المحور التنفيذي + الأركان الثلاثة",
+      "start_sec": 46.30,
+      "end_sec": 59.0,
+      "start_str": "00:46",
+      "end_str": "00:59",
+      "subtitle_range": [34, 41],
+      "summary": "المحور التنفيذي — شغل بإيدينا. الأركان الثلاثة: دورة المحاسبة الكاملة، الأوبريشن وتأسيس نظام الحسابات، الإقفالات والتسويات"
+    },
+    {
+      "id": 7,
+      "title": "الختام",
+      "start_sec": 59.0,
+      "end_sec": 64.80,
+      "start_str": "00:59",
+      "end_str": "01:04",
+      "subtitle_range": [42, 46],
+      "summary": "إن شاء الله الورشة تكون مفيدة — نعمل شغل جامد مع بعض"
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "subtitle_ids": [0, 1, 2],
+      "timestamp_start_sec": 0.0,
+      "timestamp_end_sec": 4.10,
+      "timestamp_start": "00:00",
+      "timestamp_end": "00:04",
+      "content": "وحوش المحاسبة في الإسكندرية، إن شاء الله ورشة المحاسب الشامل",
+      "importance": "high",
+      "concept_type": "hook",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "smart_zoom_only",
+      "animation_description": "smart zoom على الوش يبدأ مع 'وحوش المحاسبة' — هوك قوي + ذكر إقليمي (الإسكندرية)"
+    },
+    {
+      "id": 2,
+      "subtitle_ids": [4, 5, 6],
+      "timestamp_start_sec": 4.70,
+      "timestamp_end_sec": 9.02,
+      "timestamp_start": "00:04",
+      "timestamp_end": "00:09",
+      "content": "يوم 6 6 2026 بمبنى نقابة المهندسين اللي في الشاطبي",
+      "importance": "high",
+      "concept_type": "callout",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "overlay_only",
+      "animation_description": "overlay محوري بيعرض التاريخ + المكان — أهم معلومة لوجستية في الفيديو"
+    },
+    {
+      "id": 3,
+      "subtitle_ids": [7, 8, 9, 10, 11],
+      "timestamp_start_sec": 9.02,
+      "timestamp_end_sec": 15.42,
+      "timestamp_start": "00:09",
+      "timestamp_end": "00:15",
+      "content": "مش لرؤساء الحسابات فقط — للفريشات والمحاسب البادئ",
+      "importance": "medium",
+      "concept_type": "tip",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "تباين بسيط — مش لـ X فقط، كمان لـ Y. ممكن يتعمل مع caption emphasis بدون scene"
+    },
+    {
+      "id": 4,
+      "subtitle_ids": [13, 14, 15, 16],
+      "timestamp_start_sec": 17.52,
+      "timestamp_end_sec": 22.82,
+      "timestamp_start": "00:17",
+      "timestamp_end": "00:22",
+      "content": "الورشة بتشتغل على الجانب الاستراتيجي — بتبني معاك فكر استراتيجي",
+      "importance": "high",
+      "concept_type": "definition",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "minimal",
+      "suggested_animation": "overlay_only",
+      "animation_description": "keyword overlay لكلمة 'استراتيجي' — أول ذكر للمحور الأول"
+    },
+    {
+      "id": 5,
+      "subtitle_ids": [25, 26, 27],
+      "timestamp_start_sec": 35.30,
+      "timestamp_end_sec": 38.04,
+      "timestamp_start": "00:35",
+      "timestamp_end": "00:38",
+      "content": "وهتتعلم الأساسيات اللي أنت محتاجها",
+      "importance": "medium",
+      "concept_type": "promise",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "keyword_highlight",
+      "animation_description": "وعد للجمهور الفريش — caption emphasis كافي"
+    },
+    {
+      "id": 6,
+      "subtitle_ids": [33],
+      "timestamp_start_sec": 44.50,
+      "timestamp_end_sec": 46.30,
+      "timestamp_start": "00:44",
+      "timestamp_end": "00:46",
+      "content": "ده غير الجزء التنفيذي",
+      "importance": "high",
+      "concept_type": "transition",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "overlay_only",
+      "animation_description": "جسر للمحور الثاني — overlay بيتعرض على 'تنفيذي' كـ keyword pop"
+    },
+    {
+      "id": 7,
+      "subtitle_ids": [34, 35],
+      "timestamp_start_sec": 46.30,
+      "timestamp_end_sec": 49.08,
+      "timestamp_start": "00:46",
+      "timestamp_end": "00:49",
+      "content": "المحور الثاني هو المحور التنفيذي — إحنا هنشتغل بإيدينا",
+      "importance": "high",
+      "concept_type": "tip",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "minimal",
+      "suggested_animation": "smart_zoom_only",
+      "animation_description": "smart zoom على لحظة 'بإيدينا' — energy 0.230 + emotional moment"
+    },
+    {
+      "id": 8,
+      "subtitle_ids": [38, 39, 40, 41],
+      "timestamp_start_sec": 53.50,
+      "timestamp_end_sec": 59.00,
+      "timestamp_start": "00:53",
+      "timestamp_end": "00:59",
+      "content": "بالأركان الثلاثة الأساسيين — دورة المحاسبة الكاملة، الأوبريشن وتأسيس نظام الحسابات، الإقفالات والتسويات",
+      "importance": "high",
+      "concept_type": "process",
+      "difficulty": "medium",
+      "difficulty_score": 2,
+      "visual_complexity": "standard",
+      "suggested_animation": "full_screen_scene",
+      "animation_description": "process_stepper — title 'الأركان الثلاثة'، 3 cards عمودية stagger_cascade. ده الـ centerpiece للريل"
+    }
+  ],
+
+  "hook_analysis": {
+    "first_3_seconds_text": "وحوش المحاسبة في الإسكندرية، إن شاء الله ورشة",
+    "hook_strength": "strong",
+    "reason": "بيبدأ بعبارة 'وحوش المحاسبة' (قوية ومثيرة للفضول) + ذكر إقليمي (الإسكندرية) + اعلان فوري للورشة. مفيش بداية مؤسسية مملة",
+    "suggestion": "smart zoom من 0-3.5s + word_pop على 'وحوش' لتعزيز الـ hook",
+    "alternative_start_sec": null,
+    "alternative_subtitle_id": null,
+    "visual_suggestions": [
+      "smart_zoom على الوش من 0.5-3.5s (face conf 0.99)",
+      "word_pop glow على 'وحوش' في 0.0-0.46s",
+      "AccentFlash خفيف على 'الإسكندرية' في 1.02-1.78s"
+    ]
+  },
+
+  "keywords": [
+    {
+      "term": "وحوش المحاسبة",
+      "first_seen_subtitle": 0,
+      "first_seen_sec": 0.0,
+      "category": "hook",
+      "weight": 5
+    },
+    {
+      "term": "ورشة المحاسب الشامل",
+      "first_seen_subtitle": 1,
+      "first_seen_sec": 1.78,
+      "category": "brand",
+      "weight": 5
+    },
+    {
+      "term": "6.6.2026",
+      "first_seen_subtitle": 4,
+      "first_seen_sec": 4.70,
+      "category": "date",
+      "weight": 5
+    },
+    {
+      "term": "نقابة المهندسين",
+      "first_seen_subtitle": 5,
+      "first_seen_sec": 6.50,
+      "category": "venue",
+      "weight": 4
+    },
+    {
+      "term": "الشاطبي",
+      "first_seen_subtitle": 6,
+      "first_seen_sec": 8.34,
+      "category": "location",
+      "weight": 4
+    },
+    {
+      "term": "استراتيجي",
+      "first_seen_subtitle": 14,
+      "first_seen_sec": 19.72,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "تنفيذي",
+      "first_seen_subtitle": 33,
+      "first_seen_sec": 44.50,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "بإيدينا",
+      "first_seen_subtitle": 35,
+      "first_seen_sec": 47.36,
+      "category": "concept",
+      "weight": 4
+    },
+    {
+      "term": "الأركان الثلاثة",
+      "first_seen_subtitle": 37,
+      "first_seen_sec": 49.82,
+      "category": "concept",
+      "weight": 5
+    },
+    {
+      "term": "دورة المحاسبة الكاملة",
+      "first_seen_subtitle": 39,
+      "first_seen_sec": 54.00,
+      "category": "foundation",
+      "weight": 5
+    },
+    {
+      "term": "الأوبريشن وتأسيس نظام الحسابات",
+      "first_seen_subtitle": 40,
+      "first_seen_sec": 55.58,
+      "category": "foundation",
+      "weight": 5
+    },
+    {
+      "term": "الإقفالات والتسويات",
+      "first_seen_subtitle": 41,
+      "first_seen_sec": 57.68,
+      "category": "foundation",
+      "weight": 5
+    }
+  ],
+
+  "emphasis_moments": [
+    {
+      "energy_time_sec": 1.696,
+      "energy": 0.236,
+      "energy_type": "high_energy",
+      "subtitle_id": 0,
+      "text": "وحوش المحاسبة في الإسكندرية",
+      "intensity": "strong",
+      "suggested_treatment": "smart_zoom_anchor",
+      "key_moment_ref": 1,
+      "rationale": "أعلى energy في أول 4 ثواني — الـ hook الأساسي. yoyo معاه smart zoom"
+    },
+    {
+      "energy_time_sec": 4.416,
+      "energy": 0.207,
+      "energy_type": "high_energy",
+      "subtitle_id": 4,
+      "text": "6 6 2026",
+      "intensity": "strong",
+      "suggested_treatment": "overlay_anchor",
+      "key_moment_ref": 2,
+      "rationale": "ذكر التاريخ — أهم معلومة لوجستية. overlay معاه"
+    },
+    {
+      "energy_time_sec": 11.552,
+      "energy": 0.200,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 8,
+      "text": "هي كمان هتنفع للمحاسبين",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 3,
+      "rationale": "dramatic pause قبل تعداد الجمهور — caption emphasis كافي"
+    },
+    {
+      "energy_time_sec": 16.16,
+      "energy": 0.256,
+      "energy_type": "high_energy",
+      "subtitle_id": 12,
+      "text": "وده لسببين بساط",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "تأكيد + تعداد قادم — caption emphasis"
+    },
+    {
+      "energy_time_sec": 18.432,
+      "energy": 0.269,
+      "energy_type": "high_energy",
+      "subtitle_id": 13,
+      "text": "أولا إنه الورشة بتشتغل",
+      "intensity": "strong",
+      "suggested_treatment": "overlay_anchor",
+      "key_moment_ref": 4,
+      "rationale": "بداية المحور الاستراتيجي — overlay 'استراتيجي' قادم"
+    },
+    {
+      "energy_time_sec": 22.88,
+      "energy": 0.241,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 16,
+      "text": "فسواء كنت لسه فريش",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "تأكيد على شمول الجمهور"
+    },
+    {
+      "energy_time_sec": 30.624,
+      "energy": 0.254,
+      "energy_type": "high_energy",
+      "subtitle_id": 21,
+      "text": "بيك سنوات كتيرة من",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "لحظة ألم emotional — 'سنوات كتيرة من التعثر'"
+    },
+    {
+      "energy_time_sec": 34.144,
+      "energy": 0.250,
+      "energy_type": "high_energy",
+      "subtitle_id": 25,
+      "text": "محتاج تتعلم إيه كويس",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 5,
+      "rationale": "وعد للجمهور — caption emphasis"
+    },
+    {
+      "energy_time_sec": 36.288,
+      "energy": 0.229,
+      "energy_type": "high_energy",
+      "subtitle_id": 26,
+      "text": "وهتتعلم الأساسيات",
+      "intensity": "strong",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": 5,
+      "rationale": "نتيجة الوعد — 'الأساسيات'"
+    },
+    {
+      "energy_time_sec": 40.352,
+      "energy": 0.195,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 29,
+      "text": "رئيس حسابات فالتفكير الاستراتيجي",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "تكرار 'استراتيجي' للجمهور القدامى"
+    },
+    {
+      "energy_time_sec": 44.928,
+      "energy": 0.242,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 33,
+      "text": "ده غير الجزء التنفيذي",
+      "intensity": "strong",
+      "suggested_treatment": "overlay_anchor",
+      "key_moment_ref": 6,
+      "rationale": "جسر للمحور الثاني — أهم انتقال في الفيديو"
+    },
+    {
+      "energy_time_sec": 48.512,
+      "energy": 0.230,
+      "energy_type": "high_energy",
+      "subtitle_id": 35,
+      "text": "التنفيذي إحنا هنشتغل بإيدينا",
+      "intensity": "strong",
+      "suggested_treatment": "smart_zoom_anchor",
+      "key_moment_ref": 7,
+      "rationale": "لحظة عاطفية قوية — 'بإيدينا'. smart zoom + emphasis"
+    },
+    {
+      "energy_time_sec": 51.712,
+      "energy": 0.284,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 37,
+      "text": "العمل المحاسبي بالأركان الثلاثة",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 8,
+      "rationale": "أعلى energy في الفيديو — 'الأركان الثلاثة'. مدخل لـ scene الـ centerpiece"
+    },
+    {
+      "energy_time_sec": 53.728,
+      "energy": 0.243,
+      "energy_type": "dramatic_pause",
+      "subtitle_id": 38,
+      "text": "الأساسيين ليه وهو",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 8,
+      "rationale": "تأكيد قبل بداية تعداد الأركان — scene بتدخل دلوقتي"
+    },
+    {
+      "energy_time_sec": 56.224,
+      "energy": 0.249,
+      "energy_type": "high_energy",
+      "subtitle_id": 40,
+      "text": "الأوبريشن وتأسيس نظام الحسابات",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 8,
+      "rationale": "ذكر الركن الثاني — داخل الـ scene"
+    },
+    {
+      "energy_time_sec": 58.304,
+      "energy": 0.233,
+      "energy_type": "high_energy",
+      "subtitle_id": 41,
+      "text": "والإقفالات والتسويات",
+      "intensity": "strong",
+      "suggested_treatment": "full_screen_scene_anchor",
+      "key_moment_ref": 8,
+      "rationale": "ذكر الركن الثالث — قمة الـ scene"
+    },
+    {
+      "energy_time_sec": 60.704,
+      "energy": 0.197,
+      "energy_type": "high_energy",
+      "subtitle_id": 43,
+      "text": "تكون مفيدة ليكم ونعمل",
+      "intensity": "medium",
+      "suggested_treatment": "keyword_highlight",
+      "key_moment_ref": null,
+      "rationale": "ختام — تأمل بالفائدة"
+    }
+  ],
+
+  "stats": {
+    "total_emphasis": 17,
+    "strong_emphasis": 14,
+    "medium_emphasis": 3,
+    "low_emphasis": 0,
+    "high_energy_count": 14,
+    "dramatic_pause_count": 7,
+    "avg_energy": 0.094,
+    "max_energy": 0.284,
+    "max_energy_time": 51.712,
+    "speaking_style": "energetic",
+    "words_per_sec": 4.55
+  },
+
+  "phase_6_hints": {
+    "recommended_scene_count": 1,
+    "top_priority_scenes": [
+      { "key_moment_id": 8, "reason": "Process — 'الأركان الثلاثة' centerpiece للريل (process_stepper بـ stagger_cascade)" }
+    ],
+    "smart_zoom_density": "2 zooms — face 100% present (conf 0.99). zoom على hook (0-3s) + zoom على 'بإيدينا' (47-50s)",
+    "overlays_density": "2-3 overlays — date+location في أول 5-9s، 'استراتيجي' في 18-22s، 'تنفيذي' في 44-48s",
+    "hook_action": "strong hook — no alternative start. add smart zoom + word_pop على 'وحوش'"
+  }
+}
