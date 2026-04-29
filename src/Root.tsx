@@ -40,9 +40,15 @@ export const RemotionRoot: React.FC = () => {
         durationInFrames={30}
         defaultProps={DEFAULT_PROPS}
         calculateMetadata={async ({ props }) => {
-          const totalSec =
-            (props.captions?.totalDuration ?? EMPTY_CAPTIONS.totalDuration) +
-            tokens.outro.durationSec;
+          // Lecture runs for the full video duration (so the speaker's tail
+          // breath/last syllable isn't cut by the Outro). Whisper occasionally
+          // ends the last segment a few hundred ms before the audio actually
+          // stops; trust the video's metadata duration when it's longer.
+          const captionsEnd =
+            props.captions?.totalDuration ?? EMPTY_CAPTIONS.totalDuration;
+          const videoDuration = props.animationPlan?.video?.duration_sec ?? 0;
+          const lectureSec = Math.max(captionsEnd, videoDuration);
+          const totalSec = lectureSec + tokens.outro.durationSec;
           return {
             durationInFrames: Math.max(1, Math.round(totalSec * tokens.comp.fps)),
           };

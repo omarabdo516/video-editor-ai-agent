@@ -201,7 +201,9 @@ export const Reel: React.FC<ReelProps> = ({
     });
   }, [chunked, scenes, chapterDividers]);
 
-  const lectureFrames = Math.round(captions.totalDuration * fps);
+  const videoDuration = animationPlan?.video?.duration_sec ?? 0;
+  const lectureSec = Math.max(captions.totalDuration, videoDuration);
+  const lectureFrames = Math.round(lectureSec * fps);
   const outroFrames = Math.round(tokens.outro.durationSec * fps);
 
   return (
