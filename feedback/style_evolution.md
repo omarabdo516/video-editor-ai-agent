@@ -231,6 +231,22 @@
 - **التاريخ:** 2026-04-16
 - **المصدر:** "أحمد علي - ورشة خبير الضرايب"
 
+### Overlays — face-aware y_px positioning (إجباري)
+- **القاعدة:** كل overlay y_px لازم يتحسب من face_map.json — مش default ثابت. الـ planner يقرا الـ face bounding box في الـ time range بتاع الـ overlay، ويختار y_px في زون فاضي (above face أو below face)، **مش جوّاه**.
+- **الـ math**:
+  - face_top_px = (min(face_center_y) - max(face_height)/2) × 1920
+  - face_bottom_px = (max(face_center_y) + max(face_height)/2) × 1920
+  - Above zone: `[220, face_top_px - 80]` — اختار لو room ≥ 200px
+  - Below zone: `[face_bottom_px + 80, 1500]` — اختار لو room ≥ 200px
+  - لو الزونتين tight، اختار اللي أبعد عن face center
+- **السبب:** Omar: "في مشكلة ان ساعات ال Overlays بتيجي فوق وش اللي بيتكلم ودا غلط محتاجه يختار مكان مناسب". 2026-04-29 render للـ Alex reel: الـ speaker face في y=759-1128 (قاعد على مكتب)، وأنا (Claude) حطّيت y_px=900 على الـ overlays بناء على default من reel سابق فيه speaker face عالي. النتيجة: "6-6-2026" + "نقابة المهندسين" نزلوا على وش المتكلم.
+- **Edge cases:**
+  - لو `no_face_percentage > 30%` في time range الـ overlay → fallback default y=900
+  - لو الـ face range > 200px → استخدم MIN top + MAX bottom للحساب
+  - لو لازم top zone (مثلاً bookend title)، احفظ على top بس قلّل الـ primary_size لو room ضيق
+- **التاريخ:** 2026-04-29
+- **المصدر:** الـ Alex reel (D:/Work/RS Academy/Videos/New Alex/2.mp4) — render أول كان فيه عيب overlay-on-face
+
 ---
 
 ## 🧪 Experiments للمرة الجاية
