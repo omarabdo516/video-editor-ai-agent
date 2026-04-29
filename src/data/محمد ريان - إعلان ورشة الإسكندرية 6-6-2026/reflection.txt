@@ -1,0 +1,53 @@
+Reflection — 2.mp4 (محمد ريان - ورشة المحاسب الشامل في الإسكندرية)
+2026-04-29
+
+السياق:
+الفيديو ده reel announcement قصير (19 ثانية) لإعلان ورشة "المحاسب الشامل" في الإسكندرية يوم 6-6-2026 في نقابة المهندسين بالشاطبي. محمد ريان نفسه اللي ظهر في الـ reference reel اللي حللناه قبل (ورشة القاهرة 17 يناير) — فالـ reference patterns مفروض تكون applicable مباشرة.
+
+الـ patterns اللي طبّقتها من feedback/reference_library.md:
+
+1. **Bookend title pattern** (steal) — أهم تطبيق في الخطة دي. الـ workshop title "المحاسب الشامل" بيظهر MASSIVE (96px white bold + yellow underline-style subtitle) في t=2.92-4.66 (overlay_1)، وبيرجع نفس الحجم في t=15.9-18.86 (overlay_4) بـ visual rhyme. ده الـ closure trick من الـ reference reel (t=4 ↔ t=67).
+
+2. **Build-up brand stack pattern** (steal) — lower_third + logo_bug start_sec اتعملوا override من 0.5 لـ 4.66. يعني الـ hook frame (أول 4.66 ثانية) intentionally minimal — speaker + caption + RSPAAC footer فقط، مفيش logo bug ولا workshop badge. الـ branding ينضم gradually بعد الـ first title intro. لو الـ tokens.ts default ما بيـ honor الـ per-plan override، محتاج modification في الـ Remotion side أو في الـ planner output schema.
+
+3. **Audio-synced visual events** (steal) — كل visual event في الخطة matched بـ audio emphasis point:
+   - micro_2 word_pop "لأول مرة" → emphasis at t=4.192 (energy=0.1962, أعلى في الـ reel)
+   - micro_3 "قلبي" → dramatic_pause at t=6.976
+   - zoom_1 على date → emphasis at t=10.016
+   - micro_5 "الشاطبي" → emphasis at t=14.816 (energy=0.217)
+   7 audio emphasis points + 4 overlays + 1 zoom + 5 micro_events = ~10 visual events / 19s = cadence ~1.9s. أعلى من الـ 4s target بس مناسب للريل القصير.
+
+4. **Two-tier title pattern** (steal) — venue overlay (overlay_3) بـ main 'نقابة المهندسين' yellow + subtitle 'الشاطبي' white smaller. مأخوذ من Chapter 2 example في الـ reference reel.
+
+5. **RS yellow accent equivalence** (study) — كل الـ accent عمل uses tokens.colors.accent (#FFB501)، مطابق للـ reference reel وللـ existing RS canon.
+
+الـ patterns اللي قررت أتجنّبها (مع reasoning):
+
+- ❌ **Numbered chapter overlay system** — الفيديو 19s فقط، مفيش curriculum chapters. لو طبّقتها هتبقى artificial.
+- ❌ **Anticipation announcement** ("X axes coming") — مفيش enumerable list في الـ content.
+- ❌ **Number-integrated keyword reveal** (س2026نة style) — التاريخ '6-6-2026' standalone مش embedded في كلمة عربية. بدلاً منها استخدمت standard MASSIVE yellow date treatment (مطابق للـ reference '17 يناير' في outro).
+- ❌ **Bilingual caption support** — مفيش Latin acronyms في الـ transcript.
+- ⚠️ **Inconsistent numerals** (anti-pattern) — كل الـ digits Latin (6-6-2026)، متطابق مع BRAND.md.
+
+الـ caveats اللي لازم نـ flag:
+
+1. **Title card overlay variant ناقص في الـ component system** — استخدمت الـ existing 'stamp' overlay كـ stand-in للـ bookend title (overlay_1 + overlay_4). الـ ideal solution: title_card overlay variant جديد مع proper underline accent style تحت آخر كلمة. ده work item للـ Phase 7 component additions.
+
+2. **logo_bug per-plan override** — أضفت `logo_bug_override` field في الـ plan بـ start_sec=4.66 + duration=14.2. الـ schema الحالي ممكن ما يقراهاش. لو الـ Remotion side ما بيـ implement الـ override، الـ logo هيظهر من t=0 بدلاً من t=4.66 (الـ build-up pattern مش هيتحقق). محتاج verification بعد الـ render.
+
+3. **Outro skipped** — الـ standard `outro.duration_sec=5` اتعمله 0 لإن الـ overlay_4 بيلعب دور الـ outro built-in. لو الـ Remotion render code بيـ append outro card تلقائياً regardless، هيحصل visual conflict مع الـ bookend.
+
+التوصيات للـ Phase 7 / future iterations:
+
+1. **إضافة title_card overlay component** — variant بـ massive title + optional underline accent + optional subtitle. يـ replace الـ stamp stand-in.
+2. **per-plan timing overrides** — formal mechanism في الـ schema للـ logo_bug + lower_third start_sec overrides.
+3. **Outro skip flag** — `outro.skip: true` بـ explicit semantics بدل ما الـ duration_sec=0.
+
+التوقع الذاتي للـ render:
+
+الـ reel هيشتغل صح في الـ overall structure (intro → date → venue → outro bookend)، بس:
+- لو الـ build-up overrides ما اشتغلوش، الـ logo هيظهر من t=0 (ده acceptable — مش breaking)
+- الـ bookend title هيـ approximate بـ stamp overlay — هيكون موجود بس بدون الـ underline accent المثالي
+- الباقي (zoom, micro_events, captions, date emphasis, venue) كله using existing components — مفروض يشتغل cleanly
+
+لو الـ rendered reel طلع quality 4-5/5 في الـ rating، يبقى الـ reference_library.md wire-up confirmed working و الـ patterns بتتطبق فعلاً. لو طلع 3 أو أقل، نراجع أي patterns ما اشتغلوش وليه.

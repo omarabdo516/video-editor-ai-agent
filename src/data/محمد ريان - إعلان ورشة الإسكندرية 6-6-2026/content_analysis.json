@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "phase": 5,
+  "generated_at": "2026-04-29",
+  "generated_by": "Claude Code (Claude Opus 4.6) — manual run, reference_library applied",
+
+  "source": {
+    "video": "D:/Work/RS Academy/Videos/New Alex/2.mp4",
+    "video_scaled": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/scaled.1080x1920.mp4",
+    "captions": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/captions.json",
+    "face_map": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/scaled.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/audio.16k.wav.energy.json",
+    "metadata": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/scaled.1080x1920.mp4.metadata.json"
+  },
+  "source_video_basename": "2",
+
+  "video": {
+    "duration_sec": 18.86,
+    "duration_str": "00:18",
+    "fps": 30,
+    "width": 1080,
+    "height": 1920,
+    "language": "ar",
+    "dialect": "egyptian",
+    "segment_count": 17
+  },
+
+  "lecturer": {
+    "name": "محمد ريان",
+    "title": "خبير محاسبة",
+    "workshop": "ورشة المحاسب الشامل"
+  },
+
+  "format_type": "workshop_announcement_teaser",
+  "summary": "محمد ريان بيعلن لأول مرة عن ورشة المحاسب الشامل في الإسكندرية يوم 6-6-2026 في مبنى نقابة المهندسين بالشاطبي. الفيديو personal-greeting feel مع emphasis على الإسكندرية كـ 'المدينة الأحب لقلبه' وختام بـ CTA دعوة للحضور.",
+
+  "topics": [
+    "إعلان ورشة المحاسب الشامل",
+    "أول مرة في الإسكندرية",
+    "الموعد: 6-6-2026",
+    "المكان: نقابة المهندسين الشاطبي"
+  ],
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "Greeting hook — تحية للجمهور",
+      "start_sec": 0,
+      "end_sec": 1.82,
+      "start_str": "00:00",
+      "end_str": "00:01",
+      "subtitle_range": [0, 1],
+      "summary": "تحية مفتوحة 'حبايبنا في اسكندرية إن شاء الله' — feels personal, direct address"
+    },
+    {
+      "id": 2,
+      "title": "Workshop title reveal — الإعلان الأول",
+      "start_sec": 1.82,
+      "end_sec": 4.66,
+      "start_str": "00:01",
+      "end_str": "00:04",
+      "subtitle_range": [2, 3],
+      "summary": "الإعلان: 'جايين بورشة المحاسب الشامل لأول مرة' — أهم لحظة في الـ reel، اللحظة اللي بيتقال فيها اسم الورشة + 'لأول مرة'"
+    },
+    {
+      "id": 3,
+      "title": "Location praise — مدح المدينة",
+      "start_sec": 4.66,
+      "end_sec": 7.32,
+      "start_str": "00:04",
+      "end_str": "00:07",
+      "subtitle_range": [4, 6],
+      "summary": "بيمدح الإسكندرية: 'في المدينة الأحب الي قلبي وهي مدينة الاسكندرية' — emotional bridge، يربطه بالجمهور المحلي"
+    },
+    {
+      "id": 4,
+      "title": "Workshop callback — تأكيد الورشة",
+      "start_sec": 7.32,
+      "end_sec": 10.789,
+      "start_str": "00:07",
+      "end_str": "00:10",
+      "subtitle_range": [7, 9],
+      "summary": "بيرجع يأكد: 'هنشتغل إن شاء الله مع بعض في ورشة المحاسب الشامل' — repetition للتثبيت"
+    },
+    {
+      "id": 5,
+      "title": "Date — التاريخ",
+      "start_sec": 10.789,
+      "end_sec": 11.768,
+      "start_str": "00:10",
+      "end_str": "00:11",
+      "subtitle_range": [10, 10],
+      "summary": "التاريخ: 'يوم 6-6-2026' — رقم لازم يتعرض بـ visual emphasis قوي (key info للمشاهد)"
+    },
+    {
+      "id": 6,
+      "title": "Venue — المكان والوصف",
+      "start_sec": 11.768,
+      "end_sec": 15.9,
+      "start_str": "00:11",
+      "end_str": "00:15",
+      "subtitle_range": [11, 14],
+      "summary": "المكان: 'يوم في منتهى التميز في مبنى نقابة المهندسين اللي بالشاطبي' — venue + neighborhood. الـ 'منتهى التميز' = build-up rhetoric للمكان"
+    },
+    {
+      "id": 7,
+      "title": "Outro CTA — الدعوة الختامية",
+      "start_sec": 15.9,
+      "end_sec": 18.86,
+      "start_str": "00:15",
+      "end_str": "00:18",
+      "subtitle_range": [15, 16],
+      "summary": "ختام: 'إن شاء الله منتظركم ونعمل مع بعض شغل جامد' — CTA + promise. الـ bookend موعد للـ workshop title يرجع massive"
+    }
+  ],
+
+  "key_moments": [
+    {
+      "id": 1,
+      "section_ref": 2,
+      "start_sec": 2.92,
+      "end_sec": 4.66,
+      "type": "workshop_title_reveal",
+      "anchor_subtitle_id": 3,
+      "anchor_text": "المحاسب الشامل لأول مرة",
+      "what_to_visualize": "Workshop title 'المحاسب الشامل' بـ MASSIVE bold + yellow underline accent تحت 'الشامل' — bookend pattern من reference_library: ده الـ intro reveal اللي هيرجع يظهر في الـ outro بنفس الحجم",
+      "difficulty": "simple",
+      "difficulty_score": 2,
+      "visual_complexity": "low"
+    },
+    {
+      "id": 2,
+      "section_ref": 3,
+      "start_sec": 5.38,
+      "end_sec": 7.32,
+      "type": "emotional_keyword",
+      "anchor_subtitle_id": 5,
+      "anchor_text": "الأحب الي قلبي",
+      "what_to_visualize": "word_pop على 'الأحب' أو 'قلبي' — emotional accent",
+      "difficulty": "simple",
+      "difficulty_score": 1,
+      "visual_complexity": "low"
+    },
+    {
+      "id": 3,
+      "section_ref": 5,
+      "start_sec": 10.789,
+      "end_sec": 11.768,
+      "type": "date_emphasis",
+      "anchor_subtitle_id": 10,
+      "anchor_text": "يوم 6-6-2026",
+      "what_to_visualize": "MASSIVE yellow '6-6-2026' في body zone — مطابق للـ reference 'يناير 17 القاهرة' في reel محمد ريان السابق. ده الـ key info اللي viewer لازم يحفظه",
+      "difficulty": "simple",
+      "difficulty_score": 2,
+      "visual_complexity": "low"
+    },
+    {
+      "id": 4,
+      "section_ref": 6,
+      "start_sec": 13.76,
+      "end_sec": 15.9,
+      "type": "venue_emphasis",
+      "anchor_subtitle_id": 13,
+      "anchor_text": "نقابة المهندسين اللي بالشاطبي",
+      "what_to_visualize": "Venue overlay — 'نقابة المهندسين' (yellow main) + 'الشاطبي' (white smaller subtitle) — two-tier title pattern من reference_library",
+      "difficulty": "simple",
+      "difficulty_score": 2,
+      "visual_complexity": "low"
+    },
+    {
+      "id": 5,
+      "section_ref": 7,
+      "start_sec": 15.9,
+      "end_sec": 18.86,
+      "type": "bookend_outro",
+      "anchor_subtitle_id": 15,
+      "anchor_text": "إن شاء الله منتظركم",
+      "what_to_visualize": "BOOKEND moment — workshop title 'المحاسب الشامل' يرجع MASSIVE size زي الـ intro، مع الـ date + venue stack. ده الـ visual rhyme اللي بيقفل الـ reel (steal pattern من reference_library: Bookend title pattern)",
+      "difficulty": "simple",
+      "difficulty_score": 3,
+      "visual_complexity": "medium"
+    }
+  ],
+
+  "keywords": [
+    {
+      "keyword": "اسكندرية",
+      "occurrences": [
+        { "subtitle_id": 0, "start_sec": 0.64, "end_sec": 1.1 },
+        { "subtitle_id": 6, "start_sec": 7.02, "end_sec": 7.32 }
+      ],
+      "importance": "high",
+      "reason": "اسم المدينة المستهدفة — جمهور الفيديو الأساسي"
+    },
+    {
+      "keyword": "المحاسب الشامل",
+      "occurrences": [
+        { "subtitle_id": 3, "start_sec": 2.92, "end_sec": 3.88 },
+        { "subtitle_id": 9, "start_sec": 9.633, "end_sec": 10.789 }
+      ],
+      "importance": "critical",
+      "reason": "اسم الورشة — الـ brand mark اللي محتاج bookend"
+    },
+    {
+      "keyword": "6-6-2026",
+      "occurrences": [
+        { "subtitle_id": 10, "start_sec": 11.056, "end_sec": 11.768 }
+      ],
+      "importance": "critical",
+      "reason": "التاريخ — أهم رقم في الـ reel، لازم massive yellow treatment"
+    },
+    {
+      "keyword": "نقابة المهندسين",
+      "occurrences": [
+        { "subtitle_id": 13, "start_sec": 13.76, "end_sec": 14.8 }
+      ],
+      "importance": "high",
+      "reason": "المكان — venue للـ outro CTA"
+    },
+    {
+      "keyword": "الشاطبي",
+      "occurrences": [
+        { "subtitle_id": 14, "start_sec": 15.58, "end_sec": 15.9 }
+      ],
+      "importance": "high",
+      "reason": "الحي — للـ neighborhood-specific audience"
+    },
+    {
+      "keyword": "لأول مرة",
+      "occurrences": [
+        { "subtitle_id": 3, "start_sec": 3.88, "end_sec": 4.66 }
+      ],
+      "importance": "high",
+      "reason": "الـ unique selling point — 'first time in Alex' = scarcity / FOMO"
+    }
+  ],
+
+  "emphasis_moments": [
+    { "time": 0.064, "energy": 0.1789, "type": "dramatic_pause", "matched_subtitle_id": 0 },
+    { "time": 4.192, "energy": 0.1962, "type": "high_energy", "matched_subtitle_id": 3, "note": "أعلى energy في الـ reel — على 'لأول مرة'" },
+    { "time": 6.976, "energy": 0.1667, "type": "dramatic_pause", "matched_subtitle_id": 6 },
+    { "time": 10.016, "energy": 0.1791, "type": "high_energy", "matched_subtitle_id": 9 },
+    { "time": 12.704, "energy": 0.1852, "type": "high_energy", "matched_subtitle_id": 12 },
+    { "time": 14.816, "energy": 0.217, "type": "high_energy", "matched_subtitle_id": 14, "note": "ثاني أعلى energy — على 'الشاطبي'" },
+    { "time": 17.12, "energy": 0.1673, "type": "high_energy", "matched_subtitle_id": 15 }
+  ],
+
+  "phase_6_hints": {
+    "scene_count_recommended": 0,
+    "scene_count_reason": "الـ reel 19 ثانية فقط — قصير جداً للـ full-screen scenes (scene-validation-rules بيطلب 15s spacing بين scenes). الـ content كله concrete announcement (greeting + date + venue + CTA) — مفيش concept abstract محتاج scene type. بدلاً منه: heavy use of OVERLAYS + smart_zoom + micro_events.",
+    "smart_zoom_recommended": 1,
+    "smart_zoom_reason": "Zoom واحد على لحظة الـ date '6-6-2026' (t=10.789-11.768) — gentle dolly_in على وش المحاضر مع emphasis قوي للـ key info",
+    "overlay_count_recommended": 4,
+    "overlay_strategy": "(1) Workshop title intro reveal at t=2.92-4.66 — bookend opener. (2) Date overlay at t=10.789-11.768 — massive yellow '6-6-2026'. (3) Venue overlay at t=13.76-15.9 — two-tier 'نقابة المهندسين / الشاطبي'. (4) Outro bookend at t=15.9-18.86 — title returns massive + date + venue stack.",
+    "build_up_brand_stack": "logo_bug + lower_third should NOT appear at t=0. Reveal at t=4.66 (after first title intro) — pattern from reference_library 'Build-up brand stack pattern'. Modifies tokens.ts default of t=0 logo bug.",
+    "caption_style": "hormozi",
+    "caption_style_reason": "Default RS caption style — single style for the full reel (BRAND.md rule: ما تخلطش caption styles). Word-pop accents on key terms via micro_events.",
+    "applied_reference_patterns": [
+      "Build-up brand stack pattern (steal)",
+      "Bookend title pattern (steal) — workshop title massive at intro + outro",
+      "Audio-synced visual events at ~3-4s rhythm (steal) — 7 emphasis points + 4 overlays + 1 zoom + ~5 micro = ~12 visual events / 19s = ~1.6s cadence (denser than 4s target due to short reel)",
+      "Title underline accent (steal) — yellow line under 'الشامل' in workshop title",
+      "RS yellow accent equivalence (study) — already RS canonical accent #FFB501"
+    ],
+    "skipped_reference_patterns": [
+      "Numbered chapter overlay system — reel too short, no curriculum",
+      "Anticipation announcement — reel too short for setup",
+      "Bilingual caption support — no Latin acronyms in transcript",
+      "Number-integrated keyword reveal — date '6-6-2026' is standalone, not embedded in an Arabic word"
+    ]
+  },
+
+  "hook_analysis": {
+    "first_3_seconds_text": "حبايبنا في اسكندرية إن شاء الله جايين بورشة",
+    "hook_strength": "medium-high",
+    "hook_type": "personal_address_with_announcement",
+    "notes": "بدء قوي — 'حبايبنا في اسكندرية' direct address للجمهور المستهدف، بعدين 'جايين بورشة' بـ open loop (إيه الورشة؟). الـ workshop name reveal في t=2.92-4.66 يقفل الـ loop. ده hook قوي للجمهور المحلي."
+  }
+}

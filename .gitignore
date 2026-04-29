@@ -55,6 +55,11 @@ tsconfig.tsbuildinfo
 # Note: src/data/ is the AI agent learning loop store — IS committed.
 # Keep `data/` rules anchored to root (with leading /) so they don't catch src/data/.
 
+# Captured planner prompts inside src/data/ are debug artifacts (often >100KB,
+# regenerable from the planner wrapper) — kept locally next to the data folder
+# but never committed.
+src/data/*/_prompt.md
+
 # ─── Dashboard state files — per-installation, not committed ───
 dashboard-api/state/videos.json
 dashboard-api/node_modules/

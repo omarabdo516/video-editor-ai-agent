@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "phase": 6,
+  "generated_at": "2026-04-29",
+  "generated_by": "Claude Code (Claude Opus 4.6) — manual run, reference_library applied",
+  "source_video_basename": "2",
+  "video": {
+    "duration_sec": 18.86
+  },
+  "source": {
+    "video": "D:/Work/RS Academy/Videos/New Alex/2.mp4",
+    "video_scaled": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/scaled.1080x1920.mp4",
+    "captions": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/captions.json",
+    "face_map": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/scaled.1080x1920.mp4.face_map.json",
+    "energy": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/audio.16k.wav.energy.json",
+    "metadata": "D:/Work/RS Academy/Videos/New Alex/_pipeline/2/scaled.1080x1920.mp4.metadata.json"
+  },
+  "caption_style": "hormozi",
+
+  "smart_zoom_plan": {
+    "source": "2",
+    "spring": "smooth",
+    "moments": [
+      {
+        "id": "zoom_1",
+        "startSec": 10.789,
+        "endSec": 11.768,
+        "zoomLevel": 1.18,
+        "centerX": 0.5,
+        "centerY": 0.4,
+        "easing": "dolly_in",
+        "reason": "Zoom على لحظة قول التاريخ '6-6-2026' — أعلى info-density موعد في الفيديو. dolly_in gentle مع emphasis قوي. Reference pattern: audio-synced visual events at high-energy moments (emphasis at t=10.016, energy=0.1791).",
+        "anchor_subtitle_id": 10,
+        "anchor_text": "يوم 6-6-2026"
+      }
+    ]
+  },
+
+  "scenes": [],
+
+  "scenes_skipped_reason": "Reel is 19s — below 15s scene-spacing minimum threshold for full-screen scenes. Content is concrete announcement (greeting + date + venue + CTA), not abstract concepts. Reference_library `Numbered chapter overlay system` doesn't apply here either (no curriculum chapters). Visual storytelling delivered via overlays + smart_zoom + micro_events instead.",
+
+  "face_zone_computed": {
+    "frame_height_px": 1920,
+    "face_top_px": 759,
+    "face_bottom_px": 1128,
+    "above_zone": [220, 679],
+    "above_room_px": 459,
+    "below_zone": [1208, 1500],
+    "below_room_px": 292,
+    "selected_zone": "above",
+    "selection_reason": "Above zone has 459px room vs 292px below. All overlays will use y_px in [300, 500] range to stay safely above face_top_px=759. Computed from face_map.json: face_center_y range [0.466, 0.517], face_height avg 0.140."
+  },
+
+  "overlays": [
+    {
+      "id": "overlay_1_title_intro",
+      "type": "overlay",
+      "overlay_type": "stamp",
+      "start_sec": 2.92,
+      "end_sec": 4.66,
+      "keyword": "المحاسب الشامل",
+      "primary_text": "المحاسب الشامل",
+      "primary_color": "white",
+      "primary_size": 96,
+      "primary_weight": 800,
+      "secondary_text": "لأول مرة",
+      "secondary_color": "accent",
+      "secondary_size": 48,
+      "secondary_weight": 700,
+      "y_px": 320,
+      "key_moment_ref": 1,
+      "reason": "BOOKEND OPENER (steal من reference_library). y_px=320 above face zone — face top=759, room above=459px. Workshop title massive bold + 'لأول مرة' yellow subtitle = the intro reveal اللي هيرجع يظهر في الـ outro بنفس الحجم. Pattern: 'Bookend title pattern' from feedback/reference_library.md."
+    },
+    {
+      "id": "overlay_2_date_emphasis",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 10.789,
+      "end_sec": 11.9,
+      "keyword": "6-6-2026",
+      "primary_text": "6-6-2026",
+      "primary_color": "accent",
+      "primary_size": 140,
+      "primary_weight": 800,
+      "secondary_text": "يوم",
+      "secondary_color": "white",
+      "secondary_size": 36,
+      "y_px": 380,
+      "key_moment_ref": 3,
+      "reason": "MASSIVE YELLOW DATE — مطابق للـ reference reel '17 يناير' treatment. y_px=380 above face zone (CORRECTED from y=900 which collided with face). Face top=759 — overlay text (~200px tall) fits safely in [380, 580] above face. Pattern: 'Number highlights' + face-aware positioning per feedback/style_evolution.md."
+    },
+    {
+      "id": "overlay_3_venue",
+      "type": "overlay",
+      "overlay_type": "keyword_highlight",
+      "start_sec": 13.76,
+      "end_sec": 15.9,
+      "keyword": "نقابة المهندسين",
+      "primary_text": "نقابة المهندسين",
+      "primary_color": "accent",
+      "primary_size": 64,
+      "primary_weight": 800,
+      "secondary_text": "الشاطبي",
+      "secondary_color": "white",
+      "secondary_size": 40,
+      "y_px": 400,
+      "key_moment_ref": 4,
+      "reason": "VENUE STACK — two-tier title pattern من reference_library. y_px=400 above face zone (CORRECTED from y=900). Stack height ~150px → bottom at y=550, comfortably above face_top=759. Audio-synced: emphasis at t=14.816 (energy=0.217 — أعلى energy في الـ reel)."
+    },
+    {
+      "id": "overlay_4_outro_bookend",
+      "type": "overlay",
+      "overlay_type": "stamp",
+      "start_sec": 15.9,
+      "end_sec": 18.86,
+      "keyword": "المحاسب الشامل · 6-6-2026 · الإسكندرية",
+      "primary_text": "المحاسب الشامل",
+      "primary_color": "white",
+      "primary_size": 96,
+      "primary_weight": 800,
+      "secondary_text": "6-6-2026 · الإسكندرية",
+      "secondary_color": "accent",
+      "secondary_size": 48,
+      "secondary_weight": 700,
+      "y_px": 320,
+      "key_moment_ref": 5,
+      "reason": "BOOKEND CLOSER — same composition as overlay_1 (visual rhyme at t=2.92 ↔ t=15.9). y_px=320 matches overlay_1 exactly. Pattern: 'Bookend title pattern' (steal) from feedback/reference_library.md."
+    }
+  ],
+
+  "micro_events": [
+    {
+      "id": "micro_1_iskandariya_pop",
+      "type": "word_pop",
+      "start_sec": 0.64,
+      "end_sec": 1.1,
+      "word": "اسكندرية",
+      "anchor_subtitle_id": 0,
+      "intensity": "medium",
+      "source": "emphasis",
+      "reason": "أول mention للمدينة — pop يـ punctuate الـ direct address للجمهور المحلي"
+    },
+    {
+      "id": "micro_2_lawal_marra_pop",
+      "type": "word_pop",
+      "start_sec": 3.88,
+      "end_sec": 4.66,
+      "word": "لأول مرة",
+      "anchor_subtitle_id": 3,
+      "intensity": "strong",
+      "source": "emphasis",
+      "reason": "أعلى audio energy في الـ reel (t=4.192, energy=0.1962) — اللحظة دي هي الـ scarcity hook ('first time in Alex'). Strong pop يلحق الـ vocal emphasis بتاعة المتحدث. هذا تطبيق للـ 'Audio-synced visual events' pattern من reference_library."
+    },
+    {
+      "id": "micro_3_qalbi_pop",
+      "type": "word_pop",
+      "start_sec": 6.24,
+      "end_sec": 6.78,
+      "word": "قلبي",
+      "anchor_subtitle_id": 5,
+      "intensity": "medium",
+      "source": "emphasis",
+      "reason": "Emotional accent على 'قلبي' — يـ amplify الـ personal connection بالإسكندرية. Audio dramatic pause at t=6.976."
+    },
+    {
+      "id": "micro_4_caption_underline_workshop",
+      "type": "caption_underline",
+      "start_sec": 9.633,
+      "end_sec": 10.789,
+      "anchor_subtitle_id": 9,
+      "intensity": "medium",
+      "source": "emphasis",
+      "reason": "Underline تحت 'ورشة المحاسب الشامل' — repetition setup قبل الـ date reveal. Audio emphasis at t=10.016."
+    },
+    {
+      "id": "micro_5_shaatby_pop",
+      "type": "word_pop",
+      "start_sec": 15.58,
+      "end_sec": 15.9,
+      "word": "بالشاطبي",
+      "anchor_subtitle_id": 14,
+      "intensity": "strong",
+      "source": "emphasis",
+      "reason": "ثاني أعلى energy في الـ reel (t=14.816, energy=0.217) — حي محدد للـ neighborhood targeting. Strong pop."
+    }
+  ],
+
+  "chapter_dividers": [],
+
+  "lower_third": {
+    "lecturer_name": "محمد ريان",
+    "workshop_name": "ورشة المحاسب الشامل",
+    "start_sec": 4.66,
+    "duration_sec": 4,
+    "build_up_note": "STARTS AT t=4.66 (NOT t=0.5) — applying 'Build-up brand stack pattern' (steal) من reference_library. الـ hook frame (t=0-4.66) intentionally minimal — only speaker + caption + RSPAAC footer. lower_third + logo_bug join after first title reveal. Pattern source: reference reel showed minimal hook → gradual brand layer build-up over first 5-8 seconds creates higher hook attention."
+  },
+
+  "logo_bug_override": {
+    "start_sec": 4.66,
+    "duration_sec": 14.2,
+    "build_up_note": "Same as lower_third — logo bug reveal at t=4.66 to match build-up pattern. لو tokens.ts default = 0, override per this plan."
+  },
+
+  "outro": {
+    "duration_sec": 0,
+    "tagline": null,
+    "skip_reason": "الـ reel نفسه ينتهي بـ outro CTA built-in (overlay_4_outro_bookend). مفيش حاجة للـ standalone outro card اللي بيتضاف من Remotion side. الـ bookend بيلعب دور الـ outro."
+  },
+
+  "validation_notes": {
+    "scene_count": 0,
+    "scene_spacing_min_sec": 15,
+    "scene_spacing_actual": [],
+    "overlay_count": 4,
+    "overlay_spacing_actual": [7.87, 3.81, 2.04],
+    "overlay_spacing_min_sec": 0.5,
+    "overlay_spacing_min_sec_note": "Default 20s spacing rule waived — short 19s reel needs denser visual events. Reference_library 'Audio-synced visual events at ~3-4s rhythm' justifies overlay density.",
+    "zoom_count": 1,
+    "micro_count": 5,
+    "total_events": 10,
+    "cadence_sec": 1.89,
+    "cadence_sec_note": "Denser than 4s target — appropriate for 19s reel where every second carries information. Matches reference reel's ~3s cadence.",
+    "applied_reference_patterns": [
+      "Bookend title pattern — overlay_1 ↔ overlay_4 same composition (y_px=320 both)",
+      "Build-up brand stack — lower_third + logo_bug delayed to t=4.66",
+      "Audio-synced visual events — micro_2 + micro_5 + zoom_1 timed to high-energy peaks",
+      "Two-tier chapter title — overlay_3 venue (main + subtitle)",
+      "RS yellow accent equivalence — confirmed via tokens.ts accent #FFB501",
+      "Face-aware overlay positioning (NEW, learned from first render) — all y_px computed from face_map.json face bbox, all overlays in above zone (y=320-400) since face center is low (y=894-993)"
+    ],
+    "implementation_caveats": [
+      "overlay_1_title_intro + overlay_4_outro_bookend use 'stamp' overlay_type as a stand-in. Ideal: new 'title_card' overlay variant with proper underline accent under last word ('الشامل'). Filed as future component work.",
+      "logo_bug_override is non-standard — tokens.ts default reveal time may need a per-plan override mechanism. Verify Remotion side reads this field, or modify tokens.ts.",
+      "First render (2026-04-29) had y_px=900 on overlays → collided with face (face was at y=759-1128, not the high y=400 typical of reference reel). Plan v2 corrects by reading face_map.json + selecting above zone."
+    ]
+  }
+}
