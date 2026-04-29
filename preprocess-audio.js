@@ -43,7 +43,7 @@ function main() {
     '-vn',
     '-af',
     // Speech-band filter + two-pass-equivalent loudnorm (target -16 LUFS EBU R128)
-    'highpass=f=60,lowpass=f=8000,loudnorm=I=-16:LRA=11:TP=-1.5,aresample=16000:resampler=soxr:precision=28',
+    'highpass=f=60,lowpass=f=8000,loudnorm=I=-16:LRA=11:TP=-1.5,aresample=16000',
     '-ac', '1',
     '-c:a', 'pcm_s16le',
     output,

@@ -13,7 +13,7 @@ import { spawn } from 'node:child_process';
 import path from 'node:path';
 import fs from 'node:fs';
 
-const WHISPER_VENV_PYTHON = 'C:/Users/PUZZLE/Documents/Claude/_tools/whisper-env/.venv/Scripts/python.exe';
+const WHISPER_VENV_PYTHON = `${process.env.USERPROFILE.replace(/\\/g, '/')}/Documents/Claude/_tools/whisper-env/.venv/Scripts/python.exe`;
 const TRANSCRIBE_SCRIPT = path.resolve(new URL('./scripts/transcribe.py', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
 
 function run() {

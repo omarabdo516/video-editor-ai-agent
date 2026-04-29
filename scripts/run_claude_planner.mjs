@@ -124,10 +124,9 @@ function memoryDirForRepo() {
   // names the project dir — first char lowercased, separators replaced
   // with hyphens, leading c--Users-...-video-editor-ai-agent.
   const home = os.homedir();
-  // Hardcoded for this project. If/when the repo ships beyond Omar this
-  // should be derived from cwd.
-  const projectId =
-    'c--Users-PUZZLE-Documents-GrowthMora-platform-agents-video-editor-ai-agent';
+  // Derived from this file's location, so it follows the repo across machines.
+  const repoRoot = path.resolve(path.dirname(url.fileURLToPath(import.meta.url)), '..');
+  const projectId = repoRoot.replace(/[:\\/_]/g, '-');
   return path.join(home, '.claude', 'projects', projectId, 'memory');
 }
 

@@ -20,6 +20,7 @@
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, statSync, mkdirSync, writeFileSync, readFileSync, createReadStream, copyFileSync } from 'node:fs';
 import http from 'node:http';
+import os from 'node:os';
 import path from 'node:path';
 import url from 'node:url';
 import {
@@ -96,7 +97,7 @@ function runAsync(cmd, args, opts = {}) {
 }
 
 // ─── pipeline steps ────────────────────────────────────────────────────────
-const WHISPER_VENV_PYTHON = 'C:/Users/PUZZLE/Documents/Claude/_tools/whisper-env/.venv/Scripts/python.exe';
+const WHISPER_VENV_PYTHON = `${process.env.USERPROFILE.replace(/\\/g, '/')}/Documents/Claude/_tools/whisper-env/.venv/Scripts/python.exe`;
 
 function pythonScript(scriptName) {
   return path.join(__dirname, 'scripts', scriptName);
@@ -360,8 +361,7 @@ function diffCaptionsAsync(sourceVideoPath) {
 function speechRhythm(sourceVideoPath) {
   const captionsIn = pCaptionsPath(sourceVideoPath);
   const rhythmOut = pSpeechRhythmPath(sourceVideoPath);
-  const pythonPath =
-    'C:/Users/PUZZLE/Documents/Claude/_tools/whisper-env/.venv/Scripts/python.exe';
+  const pythonPath = WHISPER_VENV_PYTHON;
   const script = path.join(__dirname, 'scripts', 'speech_rhythm.py');
   if (!fileExists(script)) {
     console.warn(`  (speech_rhythm.py missing: ${script})`);
@@ -651,7 +651,7 @@ async function renderRemotion({
       'Reel',
       output,
       `--props=${propsFile}`,
-      '--concurrency=14',
+      `--concurrency=${Math.max(1, os.cpus().length - 1)}`,
       '--timeout=120000',
       '--hardware-acceleration=if-possible',
       '--log=info',

@@ -1,8 +1,10 @@
 import { Config } from '@remotion/cli/config';
+import os from 'node:os';
 
-// Tuned for: Intel i7-14700K (28 threads) + RTX 5060 Ti (16 GB) + 32 GB DDR5
+// Auto-scaled to host. Defaults to (cores - 1), max 14.
+// Tuned ceiling for: i7-14700K (28 threads) + RTX 5060 Ti + 32 GB DDR5.
 Config.setVideoImageFormat('jpeg');
-Config.setConcurrency(14);
+Config.setConcurrency(Math.max(1, Math.min(14, os.cpus().length - 1)));
 Config.setChromiumOpenGlRenderer('angle');
 Config.setEntryPoint('./src/index.ts');
 Config.setDelayRenderTimeoutInMilliseconds(120000);
