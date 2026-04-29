@@ -441,7 +441,33 @@ export type CaptionStyleRange = {
 
 export type AnimationPlan = {
   schema_version?: number;
+  /** Pipeline phase that produced the JSON (5 = content_analysis, 6 = animation_plan) */
+  phase?: number;
+  /** ISO date string (YYYY-MM-DD) when the plan was generated */
+  generated_at?: string;
+  /** Free-text identifier of the generator (e.g. "Claude Code (Claude Opus 4.7)") */
+  generated_by?: string;
   source_video_basename?: string;
+  /** Source-video metadata snapshot — captured at plan generation time */
+  video?: {
+    duration_sec: number;
+    duration_str?: string;
+    fps?: number;
+    width?: number;
+    height?: number;
+    language?: string;
+    dialect?: string;
+    segment_count?: number;
+  };
+  /** Absolute paths to the pipeline artifacts the plan was built from */
+  source?: {
+    video?: string;
+    video_scaled?: string;
+    captions?: string;
+    face_map?: string;
+    energy?: string;
+    metadata?: string;
+  };
   /** Which caption renderer to use — default 'hormozi' */
   caption_style?: CaptionStyle;
   /** Optional per-time-window style overrides (Phase 6 auto-assigns these) */
