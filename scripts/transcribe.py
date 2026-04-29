@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -23,6 +24,30 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+# Make CUDA DLLs (cuBLAS, cuDNN, NVRTC) shipped via pip discoverable on Windows.
+# The pip-installed nvidia-* packages put their DLLs under site-packages/nvidia/<lib>/bin/
+# which Windows' default DLL loader does not search. We both register them via
+# add_dll_directory (for direct Python imports) AND prepend to PATH (so transitive
+# loads from CTranslate2's compiled DLLs can find cublas64_12.dll, cudnn64_9.dll, etc.).
+if sys.platform == "win32":
+    try:
+        import site
+        nvidia_bin_dirs: list[str] = []
+        for site_dir in site.getsitepackages() + [site.getusersitepackages()]:
+            nvidia_root = Path(site_dir) / "nvidia"
+            if nvidia_root.is_dir():
+                for sub in nvidia_root.iterdir():
+                    bin_dir = sub / "bin"
+                    if bin_dir.is_dir():
+                        nvidia_bin_dirs.append(str(bin_dir))
+        if nvidia_bin_dirs:
+            os.environ["PATH"] = os.pathsep.join(nvidia_bin_dirs) + os.pathsep + os.environ.get("PATH", "")
+            if hasattr(os, "add_dll_directory"):
+                for d in nvidia_bin_dirs:
+                    os.add_dll_directory(d)
+    except Exception as e:
+        print(f"[transcribe] warning: could not register NVIDIA DLL dirs: {e}", file=sys.stderr)
 
 
 def format_timestamp(seconds: float) -> str:
